@@ -1,0 +1,43 @@
+#character_select {
+  display: grid;
+  width: 195px;
+  height: 40px;
+  float: right;
+  overflow: hidden;
+  margin-right: 10px;
+}
+#character_select:hover {
+  overflow: unset;
+}
+.character_data {
+  cursor:pointer;
+  font-size:13px;
+  width:195px;
+  float:right;
+  color:white;
+  z-index:100;
+}
+.innerDiv {
+  min-height:35px;
+  max-height:35px;
+  max-width:195px;
+  margin: 3px;
+  background-position:center left;
+  background-size:auto 40px;
+  background-repeat:no-repeat;
+  position:relative;
+}
+.innerDiv > #left_span {
+  margin-left:55px;
+  line-height:35px;
+  font-size:18px;
+  position:absolute;
+  left:0px;
+}
+.innerDiv > #right_span {
+  margin-right:10px;
+  line-height:35px;
+  font-size:18px;
+  position:absolute;
+  right:0px;
+}

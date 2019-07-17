@@ -1,0 +1,135 @@
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
+@import url('Login.css');
+@import url('Vendors.css');
+@import url('Characterdata.css');
+@import url('Profile.css');
+@import url('Activities.css');
+@import url('Piechart.css');
+@import url('Loader.css');
+@import url('Home.css');
+@import url('Triumphs.css');
+@import url('Items.css');
+@import url('Scrollbar.css');
+@import url('Smallscreen.css');
+@import url('Mobile.css');
+:root {
+  --DarkNavyBlue: #1A1D22;
+  --NavyBlue: #21242A;
+  --LightNavyBlue: #292C33;
+}
+body {
+  margin:0px;
+  padding:0px;
+  font-family: 'Nunito', sans-serif;
+  background-color: var(--DarkNavyBlue);
+  background-attachment: fixed;
+  color:white;
+}
+.page-content {
+  width: 100%;
+  height: 100%;
+  padding-top: 50px;
+}
+.disable-hl {
+    -webkit-touch-callout:none;
+    -webkit-user-select:none;
+    -moz-user-select:none;
+    -ms-user-select:none;
+    user-select:none;
+}
+.title-bar {
+  background-color: var(--LightNavyBlue);
+  width:100%;
+  height:50px;
+  position: fixed;
+  border-bottom: 1px var(--DarkNavyBlue) solid;
+  z-index: 5;
+}
+.logo {
+  width: 30px;
+  height: 30px;
+  margin-left: 10px;
+  margin-right: 5px;
+  margin-top: -5px;
+}
+#logo_title {
+  color: white;
+  height: 50px;
+  line-height: 50px;
+  font-size: 18px;
+}
+#search-form {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+}
+#search-term {
+  background-color: var(--LightNavyBlue);
+  border-color: darkgray;
+  color: white;
+}
+#username-field {
+  background-color: var(--DarkNavyBlue);
+  border-color: darkgray;
+  color: white;
+}
+#username-field:focus {
+  box-shadow: 0 0;
+}
+.menu-bar {
+  height:35px;
+  line-height: 35px;
+  text-align: center;
+  position: relative;
+  display: inline-block;
+  margin-left: 20px;
+}
+.menu-item { display: inline-block; margin: 0px 10px; height: 28px; }
+.menu-item-disabled { display: inline-block; margin: 0px 10px; height: 28px; }
+.menu-item > a, span { color: white; text-decoration: none; }
+.menu-item-disabled > a, span { color: darkgray; cursor: default; text-decoration: none; }
+.menu-ul {
+  border-bottom: 1px lightblue solid;
+  width: 100%;
+  margin-top: -8px;
+}
+.menu-item:hover {
+  border-bottom: 1px lightblue solid;
+  cursor: pointer;
+}
+.sidemenu-item {
+  padding: 5px;
+  text-align: center;
+  cursor: pointer;
+}
+#LoginBtn {
+  margin-right: 10px;
+  padding: 6px;
+  font-size: 16px;
+}
+.DevBox {
+  min-width: 250px;
+  height: 30px;
+  background-color: var(--NavyBlue);
+  margin: auto;
+  border: 2px var(--LightNavyBlue) solid;
+  color: white;
+  display: none;
+  position: fixed;
+  bottom: 0px;
+  left: 0px;
+  font-size: small;
+  line-height: 30px;
+  text-align: center;
+  padding: 0 5 0 5;
+}
+.statBox {
+  color: white;
+  overflow: auto;
+  display: table-cell;
+  text-align: center;
+  width: 300px;
+}
+.menu-switch-icon { display: none; }
+.mobile-menu-bar { display: none; width: 0px; }

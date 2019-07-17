@@ -1,0 +1,45 @@
+@media only screen and (max-width: 600px) {
+  #search-form { display: none !important; }
+  #itemCategories { grid-template-columns: 100% !important; grid-template-rows: 150% !important; margin-bottom: 50px !important; text-align: center !important; display: block !important; }
+  .menu-bar { display: none !important; }
+  .collectibleItemContainer:hover .collectibleItemInfo { display: none !important; }
+  .menu-item:hover { border-bottom: 0px !important; }
+  .menu-ul { display: none; }
+  .menu-switch-icon {
+    display: block !important;
+    float: right;
+    font-size: 42px;
+    margin-right: 10px;
+    margin-top: -5px;
+    margin-bottom: -10px;
+  }
+  .menu-item {
+    display: block !important;
+    text-align: center;
+    font-size: 24;
+    height: 37px !important;
+  }
+  .menu-item-disabled {
+    display: block !important;
+    text-align: center;
+    font-size: 24;
+    height: 37px !important;
+  }
+
+  .ActivitiesContent { grid-template-columns: 100% !important; }
+  .container { overflow: hidden !important; }
+  #info-box { margin-top: 0px !important; }
+  .monitorArrayLabel {
+    top: 110px !important;
+    left: 97px !important;
+  }
+  .monitorResetBtn {
+    top: 140px !important;
+    left: 96px !important;
+  }
+  .triumphPage { display: none; }
+  .loginBox {
+    height: 190px !important;
+    width: 100% !important;
+  }
+}

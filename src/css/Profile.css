@@ -1,0 +1,154 @@
+:root {
+  --subclass: '';
+}
+.container {
+  text-align: center;
+  max-width: 100%;
+  padding-top: 80px;
+}
+.largeStatBox {
+  width: 900px;
+  height: 519px;
+  border: 2px var(--LightNavyBlue) solid;
+  display: inline-block;
+  vertical-align: top;
+  background: var(--DarkNavyBlue);
+}
+.smallStatBox {
+  width: 400px;
+  height: 519px;
+  border: 2px var(--LightNavyBlue) solid;
+  display: inline-block;
+  vertical-align: top;
+}
+
+/* Character Info */
+.character_info {
+  border-bottom: 2px var(--LightNavyBlue) solid;
+  height: 70px;
+  max-height: 70px;
+}
+.character_subClassIcon {
+  width:50px;
+  height:50px;
+  margin:10px;
+  display:inline-block;
+  float:left;
+  position: relative;
+}
+.character_infoBox1 {
+  margin-top: 18px;
+  display: inline-block;
+  float: left;
+  font-size: 14px;
+  max-width: 110px;
+  line-height: 16px;
+}
+.character_infoBox2 {
+  margin-top: 14px;
+  display: inline-block;
+  float: left;
+  font-size: 14px;
+  margin-left: 20px;
+}
+.character_subclass_Abilities {
+  display: inline-block;
+  float: right;
+  margin-top: 5px;
+  margin-right: 5px;
+}
+.subclass_ability {
+  display: inline-block;
+  margin: 5px;
+}
+.subclass_ability:hover { position: relative; }
+.subclass_ability div { display: none; }
+.subclass_ability:hover div {
+  background: var(--LightNavyBlue) no-repeat 100% 5%;
+  border: var(--LightNavyBlue) 1px dotted;
+  position: absolute;
+  display: block;
+  left: 45px;
+  top: 45px;
+  width: 250px;
+  padding: 5px;
+  z-index: 100;
+}
+.character_equipment {
+  height: 445px;
+  position: relative;
+}
+.character_emotes {
+  position: absolute;
+  right: 0;
+}
+.emoteBox {
+  display: inline-block;
+  margin: 5px;
+}
+.character_items {
+  float:left;
+  display: inline-block;
+  width:50%;
+  height: 100%;
+  word-break: break-word;
+}
+.classImage {
+  background-image: var(--subclass);
+  background-size: contain;
+  background-repeat: no-repeat;
+  transform: rotateY(180deg);
+  float: right;
+  display: inline-block;
+  opacity: 0.4;
+  height: 80%;
+  width:50%;
+  margin-top: 90px;
+}
+
+.itemBox {
+  margin:5px;
+  position: relative;
+  height: 50px;
+}
+
+/* Profile Info */
+
+.profile_info {
+  float: left;
+  display: inline-flex;
+  width: 100%;
+  border-bottom: 2px var(--LightNavyBlue) solid;
+  height: 70px;
+  max-height: 70px;
+}
+.profile_stats {
+  margin-left: 10px;
+  margin-top: 5px;
+  margin-top: 5px;
+  text-align: left;
+  color: lightgray;
+  font-size: 13px;
+}
+.profile_stats > p {
+  margin: 0px;
+}
+#profile_name {
+  display: inline-block;
+  font-size: 32px;
+  height: 50px;
+  line-height: 75px;
+}
+
+/* PvP Info */
+
+.pvp_block {
+  width: 100%;
+  border-bottom: 2px var(--LightNavyBlue) solid;
+}
+.valor_stats { display: inline-block; }
+.glory_stats { display: inline-block; }
+.infamy_stats { display: inline-block; }
+.valor_icon { width:100px; height:50px; background:url('/images/icons/pvp/valor_icon.png') no-repeat center / contain; }
+.glory_icon { width:100px; height:50px; background:url('/images/icons/pvp/glory_icon.png') no-repeat center / contain; }
+.infamy_icon { width:100px; height:50px; background:url('/images/icons/pvp/infamy_icon.png') no-repeat center / contain; }

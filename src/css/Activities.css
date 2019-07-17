@@ -1,0 +1,134 @@
+.ActivitiesContent {
+  padding-top: 50px;
+  height: 100%;
+  display: grid;
+  grid-template-rows: 100%;
+  grid-template-columns: minmax(300px, 500px) minmax(500px, 100%);
+  color: gainsboro;
+  background-color: var(--DarkNavyBlue);
+  font-family: "Open Sans", sans-serif;
+}
+.ActivitiesMenu {
+  grid-column: 1;
+  width: 100%;
+  height: 100%;
+  background: var(--LightNavyBlue);
+  text-align: center;
+  position: relative;
+}
+.ActivitiesMenu > #div {
+  display: block;
+  background-color: var(--LightNavyBlue);
+}
+.RecentActivitiesView {
+  grid-column: 1;
+  overflow-x: hidden;
+  height: 100%;
+  font-size: 14px;
+  border-right: 1px var(--DarkNavyBlue) solid;
+  background-color: var(--DarkNavyBlue);
+}
+.lastActivity {
+  width: 100%;
+  border: 1px var(--DarkNavyBlue) solid;
+  border-top: 0px;
+  background-color: var(--NavyBlue);
+  min-height: 70px;
+  max-height: 70px;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 15% 45% 20% 20%;
+}
+.previousActivity {
+  width: 100%;
+  border: 1px var(--DarkNavyBlue) solid;
+  border-top: 0px;
+  background-color: var(--NavyBlue);
+  min-height: 70px;
+  max-height: 70px;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 15% 45% 20% 20%;
+}
+.lastActivity:hover, .previousActivity:hover {
+  background-color: var(--LightNavyBlue);
+  cursor:pointer;
+}
+.activityTitle {
+  margin-top: 0px;
+}
+.activeDisplay { background-color: var(--LightNavyBlue); }
+.ActivityPGCR { position: relative; }
+.activityIconBG {
+  height: 50px;
+  width: 50px;
+  margin-top: 7px;
+  margin-left: 7px;
+}
+.toggleRawInfoBtn {
+  font-size: 13px;
+  margin: 5px;
+  position: absolute;
+  top: 40px;
+  right: 0px;
+}
+.copyToClipboardBtn {
+  font-size: 13px;
+  margin: 5px;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+}
+.loadingDiv {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.pgcrImage {
+  float: right;
+  width: 50%;
+  height: 100%;
+  background-position: center;
+  background-size: cover;
+}
+.pgcrPlayers {
+  float: left;
+  width: 50%;
+  height: 100%;
+}
+.pgcrTopContainer {
+  border-bottom: 1px var(--NavyBlue) solid;
+}
+.pgcrPlayersTitle {
+  display: grid;
+  background-color: var(--LightNavyBlue);
+  grid-template-columns: 70% 10% 10% 10%;
+}
+.pgcrPlayersBlob {
+  display: grid;
+  background-color: var(--NavyBlue);
+  grid-template-columns: 70% 10% 10% 10%;
+}
+.pgcrPlayerName {
+  cursor: pointer;
+}
+.pgcrPlayersBlob div { display: inline-block; margin: 2px 2px 2px 5px; }
+.pgcrPlayersTitle div { display: inline-block; margin: 2px 2px 2px 5px; }
+.hidden { display: none; }
+.completed {
+  -webkit-box-shadow: inset 2px 0px 0px 0px #259A58;
+  -moz-box-shadow: inset 2px 0px 0px 0px #259A58;
+  box-shadow: inset 2px 0px 0px 0px #259A58;
+}
+.failed {
+  -webkit-box-shadow: inset 2px 0px 0px 0px #E7373F;
+  -moz-box-shadow: inset 2px 0px 0px 0px #E7373F;
+  box-shadow: inset 2px 0px 0px 0px #E7373F;
+}
+.neutral {
+  -webkit-box-shadow: inset 2px 0px 0px 0px gray;
+  -moz-box-shadow: inset 2px 0px 0px 0px gray;
+  box-shadow: inset 2px 0px 0px 0px gray;
+}
