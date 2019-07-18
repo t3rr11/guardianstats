@@ -6,11 +6,14 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import * as main from './components/Main';
 import * as misc from './components/Misc';
 import * as bungie from './components/requests/BungieReq';
+import * as auth from './components/requests/BungieAuth';
+
 
 //Pages
 import Header from './components/layout/Header';
 import Home from './components/pages/Home';
 import Register from './components/pages/Register';
+import Failed from './components/pages/Failed';
 import About from './components/pages/About';
 import Profile from './components/pages/Profile';
 import Activities from './components/pages/Activities';
@@ -28,6 +31,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
+    if(localStorage.getItem('Authorization')) { auth.CheckAuth(); }
     this.grabData();
   }
 
@@ -48,6 +52,7 @@ class App extends React.Component {
             <Switch>
               <Route exact path="/" component={ Home }/>
               <Route path="/register" component={ Register }/>
+              <Route path="/failed" component={ Failed } />
               <Route path="/home" component={ Home } />
               <Route path="/about" component={ About } />
               <Route path="/activities" render={ props => (<Activities profile={ this.state.profile } isLoaded='true' />) } />
