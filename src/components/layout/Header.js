@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 function toggleMenuSlider() {
-
+  console.log('Toggled');
 }
 
 function Header() {
@@ -11,13 +11,13 @@ function Header() {
       <img className="logo" src='./images/logo.png' /><span id="logo_title" href="#">Guardianstats</span>
       <form className="form-inline" id="search-form" style={{ margin: '0px' }}>
         <div id="character_select"></div>
-        <button type="button" className="btn btn-info" id="LoginBtn">Connect with Bungie.net</button>
+        <button type="button" className="btn btn-info" id="LoginBtn" onClick={() => { window.location.href = 'https://www.bungie.net/en/oauth/authorize?client_id=24048&response_type=code&state=1'; }} >Connect with Bungie.net</button>
         <div className="input-group">
           <div className="input-group-prepend"><span className="input-group-text disable-hl" id="search-term">BNET</span></div>
           <input id="username-field" type="text" className="form-control" placeholder="Search for player..." aria-label="Search for player..." data-lpignore="true" />
         </div>
       </form>
-      <div className="menu-switch-icon" onClick={ toggleMenuSlider() }>≡</div>
+      <div className="menu-switch-icon" onClick={() => { toggleMenuSlider() }} >≡</div>
       <div className="menu-bar disable-hl">
         <li className="menu-item Home" id="Home"><Link to="/home">Home</Link></li>
         <li className="menu-item Profile" id="Profile"><Link to="/profile">Profile</Link></li>
