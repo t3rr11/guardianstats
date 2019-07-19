@@ -11,6 +11,7 @@ import * as auth from './components/requests/BungieAuth';
 //Pages
 import Header from './components/modules/Header';
 import Home from './components/pages/Home';
+import Login from './components/pages/Login';
 import Register from './components/pages/Register';
 import Failed from './components/pages/Failed';
 import About from './components/pages/About';
@@ -20,21 +21,12 @@ import NotFound from './components/pages/PageNotFound';
 
 //CSS
 import './css/Style.css';
-
 class App extends React.Component {
 
   state = {
     isLoaded: false,
     error: false,
     profile: []
-  }
-
-  componentDidMount() {
-    if(localStorage.getItem('Authorization')) { auth.CheckAuth(); }
-    else {
-
-    }
-    this.grabData();
   }
 
   grabData = async() => {
@@ -45,26 +37,51 @@ class App extends React.Component {
   }
 
   render() {
-    main.StartLoading();
-    return (
-      <Router>
-        <div className="App">
-          <Header />
-          <div className="page-content" id="page-content">
-            <Switch>
-              <Route exact path="/" component={ Home }/>
-              <Route path="/register" component={ Register }/>
-              <Route path="/failed" component={ Failed } />
-              <Route path="/home" component={ Home } />
-              <Route path="/about" component={ About } />
-              <Route path="/activities" render={ props => (<Activities profile={ this.state.profile } isLoaded='true' />) } />
-              <Route path="/profile" render={ props => (<Profile profile={ this.state.profile } isLoaded='true' />) } />
-              <Route path="*" component={ NotFound } />
-            </Switch>
+    if(localStorage.getItem('Authorization')) {
+      //If player has given us permission we need to check the auth and possible renew the token.
+      //Checks not coded yet.
+      auth.CheckAuth();
+      return (
+        <Router>
+          <div className="App">
+            <Header />
+            <div className="page-content" id="page-content">
+              <Switch>
+                <Route exact path="/" component={ Home }/>
+                <Route path="/register" component={ Register }/>
+                <Route path="/failed" component={ Failed } />
+                <Route path="/home" component={ Home } />
+                <Route path="/about" component={ About } />
+                <Route path="/activities" render={ props => (<Activities profile={ this.state.profile } isLoaded='true' />) } />
+                <Route path="/profile" render={ props => (<Profile profile={ this.state.profile } isLoaded='true' />) } />
+                <Route path="*" component={ NotFound } />
+              </Switch>
+            </div>
           </div>
-        </div>
-      </Router>
-    );
+        </Router>
+      );
+    }
+    else {
+      //So there are a few things we can do here,
+      //We should check to see if the person is inspecting another player, or have they just not logged in.
+      return (
+        <Router>
+          <div className="App">
+            <Header />
+            <div className="page-content" id="page-content">
+              <Switch>
+                <Route exact path="/" component={ Home }/>
+                <Route path="/register" component={ Register }/>
+                <Route path="/failed" component={ Failed } />
+                <Route path="/home" component={ Home } />
+                <Route path="/about" component={ About } />
+                <Route path="*" component={ Login } />
+              </Switch>
+            </div>
+          </div>
+        </Router>
+      );
+    }
   }
 }
 
