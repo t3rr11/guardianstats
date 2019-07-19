@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
+import Search from '../modules/Search';
 
 export class Home extends Component {
 
   render() {
     return(
-      <React.Fragment>
-        <h1>Home</h1>
-        <p>This is the homey stuffs</p>
-      </React.Fragment>
+      <div className="home-container">
+        <h1 className="home-title">Welcome to Guardianstats</h1>
+        <p className="home-text">Try out our features by connecting with bungie to see your own personal stats or by searching for a player below!</p>
+        <Search />
+      </div>
     );
   }
 }

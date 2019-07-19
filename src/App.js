@@ -4,13 +4,12 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 //Functions
 import * as main from './components/Main';
-import * as misc from './components/Misc';
 import * as bungie from './components/requests/BungieReq';
 import * as auth from './components/requests/BungieAuth';
 
 
 //Pages
-import Header from './components/layout/Header';
+import Header from './components/modules/Header';
 import Home from './components/pages/Home';
 import Register from './components/pages/Register';
 import Failed from './components/pages/Failed';
@@ -32,6 +31,9 @@ class App extends React.Component {
 
   componentDidMount() {
     if(localStorage.getItem('Authorization')) { auth.CheckAuth(); }
+    else {
+
+    }
     this.grabData();
   }
 

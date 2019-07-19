@@ -1,3 +1,4 @@
+/*eslint-disable eqeqeq*/
 import * as main from './Main';
 import * as misc from './Misc';
 import * as activities from './pages/Activities';

@@ -2,21 +2,43 @@
   width: 100%;
   height: 100%;
   text-align: center;
-  display: grid;
-  grid-template-columns: 75% 25%;
+  padding-top: 30px;
 }
-.home-column {
+.home-text {
+  width: 500px;
+  padding-bottom: 15px;
+  margin: auto;
+}
+.search-container {
+  min-width: 100px;
+  max-width: 500px;
+  margin: auto;
+}
+.search-input {
+  position: relative;
+  display: flex;
+}
+#membership-type {
   display: inline-block;
-  margin-top: 60px;
-  margin-left: 5px;
-  margin-right: 5px;
+  width: 100px;
+  background-color: var(--LightNavyBlue);
+  border-color: darkgray;
+  color: white;
+  border-radius: 10px 0px 0px 10px;
 }
-.versionTitle {
-  font-size: 24px;
-  font-weight: bold;
-  font-family: 'Open Sans', sans-serif;
+#membership-type:focus {
+  outline: none;
+  box-shadow: 0px 0px 2px white;
 }
-.versionInfo {
-  font-size: 14px;
-  font-family: 'Open Sans', sans-serif;
+#username {
+  margin-left: -1px;
+  display: inline-block;
+  background-color: var(--DarkNavyBlue);
+  border-color: darkgray;
+  color: white;
+  border-radius: 0px 10px 10px 0px;
+}
+#username:focus {
+  outline: none;
+  box-shadow: 0px 0px 2px white;
 }

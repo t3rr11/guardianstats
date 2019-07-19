@@ -1,6 +1,7 @@
+/*eslint-disable eqeqeq*/
 export function GetFromStorage(storedItem) { try { return JSON.parse(localStorage.getItem(storedItem)); } catch (err) { return localStorage.getItem(storedItem) } }
 export function formatTime(TimeinSeconds) {
-  var seconds, years, months, weeks, days, hours, minutes, seconds;
+  var years, months, weeks, days, hours, minutes, seconds;
 
   seconds = Math.floor(Number(TimeinSeconds));
   years    = Math.floor(seconds / (24*60*60*7*4.34*12));

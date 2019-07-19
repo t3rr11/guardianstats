@@ -8,7 +8,7 @@ function toggleMenuSlider() {
 function Header() {
   return(
     <header className="title-bar">
-      <img className="logo" src='./images/logo.png' /><span id="logo_title" href="#">Guardianstats</span>
+      <img className="logo" alt='Logo' src='./images/logo.png' /><span id="logo_title" href="#">Guardianstats</span>
       <form className="form-inline" id="search-form" style={{ margin: '0px' }}>
         <div id="character_select"></div>
         <button type="button" className="btn btn-info" id="LoginBtn" onClick={() => { window.location.href = 'https://www.bungie.net/en/oauth/authorize?client_id=24048&response_type=code&state=1'; }} >Connect with Bungie.net</button>
