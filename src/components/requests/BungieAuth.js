@@ -13,7 +13,10 @@ export async function GetAuthentication(code) {
   .then((responseText) => {
     const response = JSON.parse(responseText);
     if(response.error) { window.location.href = '/failed'; }
-    else { localStorage.setItem('Authorization', JSON.stringify(response)); window.location.href = '/'; }
+    else {
+      localStorage.setItem('Authorization', JSON.stringify(response));
+      SetCurrentBungieNetUser();
+    }
   })
   .catch((error) => { console.error(error); });
 }
@@ -24,6 +27,20 @@ export const BearerHeaders = (access_token) => {
     "X-API-Key": "1b83a7bc78324068bb068ca8197ca3bf",
     "Authorization": `Bearer ${ access_token }`
   };
+}
+
+export async function SetCurrentBungieNetUser() {
+  fetch(`https://www.bungie.net/Platform/User/GetCurrentBungieNetUser/`, {
+    method: 'GET',
+    headers: BearerHeaders(JSON.parse(localStorage.getItem('Authorization')).access_token)
+  })
+  .then((res) => res.text())
+  .then((res) => {
+    localStorage.setItem('BungieAccount', JSON.stringify(JSON.parse(res).Response));
+    localStorage.setItem('SelectedAccount', 'Please Select Plaform');
+    window.location.href = '/';
+  })
+  .catch((error) => { console.error(error); });
 }
 
 export async function CheckAuth() {
