@@ -1,3 +1,5 @@
+import React, { Component }  from 'react';
+
 /*eslint-disable eqeqeq*/
 export function GetFromStorage(storedItem) { try { return JSON.parse(localStorage.getItem(storedItem)); } catch (err) { return localStorage.getItem(storedItem) } }
 export function formatTime(TimeinSeconds) {
@@ -50,4 +52,4 @@ export async function ClearLoadingScreen() {
     //$("#loaderBG").remove();
   //});
 }
-export async function ReturnLoader() { const loader = ("<div class='loader'><span></span><span></span><span></span><span></span></div>"); return loader; }
+export const ReturnLoader = ( <div className='loader'><span></span><span></span><span></span><span></span></div> );
