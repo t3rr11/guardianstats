@@ -24,6 +24,7 @@ import './css/Style.css';
 class App extends React.Component {
 
   componentDidMount() {
+    auth.CheckAuth();
     timers.StartAuthTimer();
   }
 
@@ -31,7 +32,6 @@ class App extends React.Component {
     if(localStorage.getItem('Authorization')) {
       //If player has given us permission we need to check the auth and possible renew the token.
       //Checks not coded yet.
-      auth.CheckAuth();
       return (
         <Router>
           <div className="App">
