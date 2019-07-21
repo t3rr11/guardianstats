@@ -3,10 +3,9 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 //Functions
-import * as main from './components/Main';
-import * as misc from './components/Misc';
+//import * as misc from './components/Misc';
 import * as auth from './components/requests/BungieAuth';
-import * as preload from './components/requests/Preload';
+import * as timers from './components/Timers';
 
 //Pages
 import Header from './components/modules/Header';
@@ -23,6 +22,10 @@ import NotFound from './components/pages/PageNotFound';
 //CSS
 import './css/Style.css';
 class App extends React.Component {
+
+  componentDidMount() {
+    timers.StartAuthTimer();
+  }
 
   render() {
     if(localStorage.getItem('Authorization')) {

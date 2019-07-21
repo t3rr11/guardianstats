@@ -1,6 +1,6 @@
 /*eslint-disable eqeqeq*/
-import * as main from './Main';
 import * as misc from './Misc';
+import * as auth from './requests/BungieAuth';
 import * as activities from './pages/Activities';
 
 var AuthTimer = null;
@@ -23,12 +23,11 @@ export async function StartAuthTimer() {
   AuthTimer = setInterval(function() {
     if(tokenExpiresIn == 0){
       StopTimer('Auth');
-      main.RenewToken();
+      auth.RenewToken();
     }
     else {
       tokenExpiresIn--;
-      //Display this data somewhere.
-      //console.log("Access Token expires in: " + misc.formatTime(tokenExpiresIn));
+      document.getElementById('DevBox').innerHTML = `Access Token expires in: ${ misc.formatTime(tokenExpiresIn) }`;
     }
   }, 1000);
 }

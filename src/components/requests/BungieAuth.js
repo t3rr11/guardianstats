@@ -1,3 +1,5 @@
+import * as timers from '../Timers';
+
 export async function GetAuthentication(code) {
   const encodedAuth = 'Basic ' + new Buffer('24048:oSj5RgkwtiqxdsDUaEH4H0bmIj-vggwGMmzc9XnAs0A').toString('base64');
   fetch(`https://www.bungie.net/platform/app/oauth/token/`, {
@@ -9,12 +11,12 @@ export async function GetAuthentication(code) {
     }),
     body: `grant_type=authorization_code&code=${code}`
   })
-  .then((response) => response.text())
-  .then((responseText) => {
-    const response = JSON.parse(responseText);
+  .then(async (response) => {
+    response = JSON.parse(await response.text());
     if(response.error) { window.location.href = '/failed'; }
     else {
       localStorage.setItem('Authorization', JSON.stringify(response));
+      localStorage.setItem("NextCheck", new Date().getTime() + 3600000);
       SetCurrentBungieNetUser();
     }
   })
@@ -34,9 +36,9 @@ export async function SetCurrentBungieNetUser() {
     method: 'GET',
     headers: BearerHeaders(JSON.parse(localStorage.getItem('Authorization')).access_token)
   })
-  .then((res) => res.text())
-  .then((res) => {
-    localStorage.setItem('BungieAccount', JSON.stringify(JSON.parse(res).Response));
+  .then(async (response) =>  {
+    response = JSON.parse(await response.text());
+    localStorage.setItem('BungieAccount', JSON.stringify(response.Response));
     localStorage.setItem('SelectedAccount', 'Please Select Platform');
     window.location.href = '/';
   })
@@ -48,8 +50,10 @@ export async function SetCurrentMembershipInfo(username) {
     method: 'GET',
     headers: BearerHeaders(JSON.parse(localStorage.getItem('Authorization')).access_token)
   })
-  .then((res) => res.text())
-  .then((res) => { localStorage.setItem('BasicMembershipInfo', JSON.stringify(JSON.parse(res).Response[0])); })
+  .then(async (response) =>  {
+    response = JSON.parse(await response.text());
+    localStorage.setItem('BasicMembershipInfo', JSON.stringify(response.Response[0]));
+  })
   .catch((error) => { console.error(error); });
 }
 
@@ -58,14 +62,36 @@ export async function CheckAuth() {
     method: 'GET',
     headers: BearerHeaders(JSON.parse(localStorage.getItem('Authorization')).access_token)
   })
-  .then((response) => response.text())
-  .then((responseText) => {
-    try {
-      const response = JSON.parse(responseText);
+  .then(async (response) => {
+    if(response.status === 401){ RenewToken(JSON.parse(localStorage.getItem('Authorization')).refresh_token); return; }
+    else {
+      response = JSON.parse(await response.text());
       if(response.error) { console.log(response); }
-      else { console.log(response); }
     }
-    catch(err) { console.log(`Error: ${ responseText }`); return; }
+  })
+  .catch((error) => { console.error(error); });
+}
+
+export async function RenewToken(refresh_token) {
+  const encodedAuth = 'Basic ' + new Buffer('24048:oSj5RgkwtiqxdsDUaEH4H0bmIj-vggwGMmzc9XnAs0A').toString('base64');
+  fetch(`https://www.bungie.net/platform/app/oauth/token/`, {
+    method: 'POST',
+    headers: new Headers({
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'X-API-Key': '1b83a7bc78324068bb068ca8197ca3bf',
+      'Authorization': encodedAuth
+    }),
+    body: `grant_type=refresh_token&refresh_token=${ refresh_token }`
+  })
+  .then(async (response) => {
+    response = JSON.parse(await response.text());
+    if(response.error) { console.log(response); }
+    else {
+      localStorage.setItem('Authorization', JSON.stringify(response));
+      localStorage.setItem("NextCheck", new Date().getTime() + 3600000);
+      console.log(`Authorization has been renewed!`);
+      timers.StartAuthTimer();
+    }
   })
   .catch((error) => { console.error(error); });
 }

@@ -30,6 +30,7 @@ export class Header extends React.Component {
 
       const selectedAccount = localStorage.getItem('SelectedAccount');
       var platforms = [];
+      // eslint-disable-next-line
       var platformUsername = null;
 
       if(Object.keys(accountInfo).includes('blizzardDisplayName')) { platforms.push({ 'platform': 'BNET', 'name': accountInfo.blizzardDisplayName, 'selected': '' }); }
@@ -56,7 +57,7 @@ export class Header extends React.Component {
               <p style={{ textAlign: 'center' }}>Settings</p>
               <p style={{ textAlign: 'center' }}>Logout</p>
             </div>
-            <select name="LoginBtn" type="dropdown" className='btn btn-warning' id="LoginBtn" defaultValue="Please Select Platform" onChange={() => { this.setPlatform(); this.setState(this.state); }}>
+            <select name="LoginBtn" type="dropdown" className='btn btn-warning custom' id="LoginBtn" defaultValue="Please Select Platform" onChange={() => { this.setPlatform(); this.setState(this.state); }} style={{ backgroundImage: 'url("../images/icons/blackcaret.png")' }}>
               <option value="Please Select Platform">Please Select Platform</option>
               { platforms.map(plat => ( <option value={ plat.platform }> { plat.platform + ': ' + plat.name } </option> )) }
             </select>
@@ -76,7 +77,7 @@ export class Header extends React.Component {
               <p style={{ textAlign: 'center' }}>Settings</p>
               <p style={{ textAlign: 'center' }}>Logout</p>
             </div>
-            <select name="LoginBtn" type="dropdown" className='btn btn-info' id="LoginBtn" defaultValue={ localStorage.getItem('SelectedAccount') } onChange={() => { this.setPlatform(); this.setState(this.state); }}>
+            <select name="LoginBtn" type="dropdown" className='btn btn-info custom' id="LoginBtn" defaultValue={ localStorage.getItem('SelectedAccount') } onChange={() => { this.setPlatform(); this.setState(this.state); }} style={{ backgroundImage: 'url("../images/icons/caret.png")' }}>
               { platforms.map(plat => ( <option value={ plat.platform } key={ plat.platform }> { plat.platform + ': ' + plat.name } </option> )) }
             </select>
             <div className="menu-switch-icon" onClick={() => { toggleMenuSlider() }} >≡</div>

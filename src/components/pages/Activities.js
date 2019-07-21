@@ -6,7 +6,7 @@ import Error from '../modules/Error';
 export class Activities extends Component {
 
   state = {
-    Profile: [{ Data: [], Completed: false, Error: null }]
+    Profile: [{ Data: [], Completed: false, isError: null }]
   }
 
   componentDidMount() {
@@ -16,17 +16,17 @@ export class Activities extends Component {
   grabData = async() => {
     bungie.GetProfile('4', '4611686018471334813', '200,202,600,800').then(
       (result) => { this.setState({ Profile: { Completed: true, Data: result } }) },
-      (error) => { this.setState({ Profile: { Completed: true, Error: error } }) }
+      (error) => { this.setState({ Profile: { Completed: true, isError: error } }) }
     );
   }
 
   render() {
     //Define Consts and Variables
-    const { Data, Completed, Error } = this.state.Profile;
+    const { Data, Completed, isError } = this.state.Profile;
 
     //Check for errors, show loader, or display content.
     if(!Completed) { return <Loader /> }
-    else if(Error) { return <Error error={Error} /> }
+    else if(isError) { return <Error error={isError} /> }
     else {
       let objects = Object.keys(Data);
       return (

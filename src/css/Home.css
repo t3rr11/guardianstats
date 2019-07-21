@@ -21,6 +21,7 @@
 #membership-type {
   display: inline-block;
   width: 100px;
+  height: 38px;
   background-color: var(--LightNavyBlue);
   border-color: darkgray;
   color: white;
