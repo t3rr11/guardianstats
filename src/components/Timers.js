@@ -23,7 +23,7 @@ export async function StartAuthTimer() {
   AuthTimer = setInterval(function() {
     if(tokenExpiresIn == 0){
       StopTimer('Auth');
-      auth.RenewToken();
+      auth.RenewToken(JSON.parse(localStorage.getItem('Authorization')).refresh_token);
     }
     else {
       tokenExpiresIn--;

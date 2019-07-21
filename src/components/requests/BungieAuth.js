@@ -1,7 +1,8 @@
 import * as timers from '../Timers';
 
+const encodedAuth = 'Basic ' + new Buffer('24048:oSj5RgkwtiqxdsDUaEH4H0bmIj-vggwGMmzc9XnAs0A').toString('base64');
+
 export async function GetAuthentication(code) {
-  const encodedAuth = 'Basic ' + new Buffer('24048:oSj5RgkwtiqxdsDUaEH4H0bmIj-vggwGMmzc9XnAs0A').toString('base64');
   fetch(`https://www.bungie.net/platform/app/oauth/token/`, {
     method: 'POST',
     headers: new Headers({
@@ -73,7 +74,6 @@ export async function CheckAuth() {
 }
 
 export async function RenewToken(refresh_token) {
-  const encodedAuth = 'Basic ' + new Buffer('24048:oSj5RgkwtiqxdsDUaEH4H0bmIj-vggwGMmzc9XnAs0A').toString('base64');
   fetch(`https://www.bungie.net/platform/app/oauth/token/`, {
     method: 'POST',
     headers: new Headers({

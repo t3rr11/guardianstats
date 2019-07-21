@@ -96,8 +96,8 @@ body {
   transition: transform .8s ease-in-out;
 }
 .settings-cog:hover {
-  -webkit-transform: rotate(180deg);
-  transform: rotate(180deg);
+  -webkit-transform: rotate(100deg);
+  transform: rotate(100deg);
 }
 .settings-container {
   width: 200px;
