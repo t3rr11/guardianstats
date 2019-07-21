@@ -77,6 +77,28 @@ body {
 #username-field:focus {
   box-shadow: 0 0;
 }
+#LoginBtn {
+  padding: 6px;
+  font-size: 16px;
+  float: right;
+  margin-top: 5px;
+}
+.settings-cog {
+  width: 30px;
+  height: 30px;
+  margin: 9px 7px 10px 9px;
+  display: inline-block;
+  float: right;
+  cursor:pointer;
+  background-size: contain;
+  background-repeat: no-repeat;
+  -webkit-transition: -webkit-transform .8s ease-in-out;
+  transition: transform .8s ease-in-out;
+}
+.settings-cog:hover {
+  -webkit-transform: rotate(180deg);
+  transform: rotate(180deg);
+}
 .menu-bar {
   height:35px;
   line-height: 35px;
@@ -102,14 +124,6 @@ body {
   padding: 5px;
   text-align: center;
   cursor: pointer;
-}
-#LoginBtn {
-  margin-right: 10px;
-  padding: 6px;
-  font-size: 16px;
-  float: right;
-  margin-top: 5px;
-  margin-right: 5px;
 }
 .DevBox {
   min-width: 250px;

@@ -31,6 +31,7 @@ export class Header extends React.Component {
         return(
           <header className="title-bar">
             <img className="logo" alt='Logo' src='./images/logo.png' /><span id="logo_title" href="#">Guardianstats</span>
+            <div className="settings-cog" style={{ backgroundImage: 'url("./images/icons/cog.png")' }}></div>
             <select name="LoginBtn" type="dropdown" className='btn btn-warning' id="LoginBtn" onChange={() => { setPlatform(); this.setState(this.state); }}>
               <option value="Please Select Platform">Please Select Platform</option>
               { platforms.map(plat => ( <option value={ plat.platform }> { plat.platform + ': ' + plat.name } </option> )) }
@@ -46,6 +47,7 @@ export class Header extends React.Component {
         return(
           <header className="title-bar">
             <img className="logo" alt='Logo' src='./images/logo.png' /><span id="logo_title" href="#">Guardianstats</span>
+            <div className="settings-cog" style={{ backgroundImage: 'url("./images/icons/cog.png")' }}></div>
             <select name="LoginBtn" type="dropdown" className='btn btn-info' id="LoginBtn" onChange={() => { setPlatform(); this.setState(this.state); }}>
               { platforms.map(plat => ( <option value={ plat.platform } key={ plat.platform }> { plat.platform + ': ' + plat.name } </option> )) }
             </select>
