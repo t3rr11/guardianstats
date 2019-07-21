@@ -2,15 +2,16 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 function toggleMenuSlider() { console.log('Toggled'); }
-function setPlatform() {
-  var selectBox = document.getElementById('LoginBtn');
-  localStorage.setItem('SelectedAccount', selectBox.options[selectBox.selectedIndex].value);
-}
+function setPlatform() { var selectBox = document.getElementById('LoginBtn'); localStorage.setItem('SelectedAccount', selectBox.options[selectBox.selectedIndex].value); }
 function GotoAuth() { window.location.href = 'https://www.bungie.net/en/oauth/authorize?client_id=24048&response_type=code&state=1'; }
 
 export class Header extends React.Component {
 
-  state = { temp: '' }
+  state = {
+    showSettings: false
+  }
+
+  toggleSettings = () => { this.setState({ showSettings: !this.state.showSettings }); }
 
   render() {
     const { accountInfo } = this.props;
@@ -31,7 +32,11 @@ export class Header extends React.Component {
         return(
           <header className="title-bar">
             <img className="logo" alt='Logo' src='./images/logo.png' /><span id="logo_title" href="#">Guardianstats</span>
-            <div className="settings-cog" style={{ backgroundImage: 'url("./images/icons/cog.png")' }}></div>
+            <div className="settings-cog" style={{ backgroundImage: 'url("./images/icons/cog.png")' }} onClick={ this.toggleSettings }></div>
+            <div className="settings-container" style={{ display: `${this.state.showSettings ? 'block' : 'none'}` }}>
+              <p style={{ textAlign: 'center' }}>Settings</p>
+              <p style={{ textAlign: 'center' }}>Logout</p>
+            </div>
             <select name="LoginBtn" type="dropdown" className='btn btn-warning' id="LoginBtn" onChange={() => { setPlatform(); this.setState(this.state); }}>
               <option value="Please Select Platform">Please Select Platform</option>
               { platforms.map(plat => ( <option value={ plat.platform }> { plat.platform + ': ' + plat.name } </option> )) }
@@ -47,7 +52,11 @@ export class Header extends React.Component {
         return(
           <header className="title-bar">
             <img className="logo" alt='Logo' src='./images/logo.png' /><span id="logo_title" href="#">Guardianstats</span>
-            <div className="settings-cog" style={{ backgroundImage: 'url("./images/icons/cog.png")' }}></div>
+            <div className="settings-cog" style={{ backgroundImage: 'url("./images/icons/cog.png")' }} onClick={ this.toggleSettings }></div>
+            <div className="settings-container" style={{ display: `${this.state.showSettings ? 'block' : 'none'}` }}>
+              <p style={{ textAlign: 'center' }}>Settings</p>
+              <p style={{ textAlign: 'center' }}>Logout</p>
+            </div>
             <select name="LoginBtn" type="dropdown" className='btn btn-info' id="LoginBtn" onChange={() => { setPlatform(); this.setState(this.state); }}>
               { platforms.map(plat => ( <option value={ plat.platform } key={ plat.platform }> { plat.platform + ': ' + plat.name } </option> )) }
             </select>
