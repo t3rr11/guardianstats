@@ -14,7 +14,8 @@ export class Items extends Component {
   }
 
   grabData = async() => {
-    bungie.GetProfile('4', '4611686018471334813', '200,202,600,800').then(
+    const { displayName, membershipId, membershipType } = JSON.parse(localStorage.getItem('BasicMembershipInfo'));
+    bungie.GetProfile(membershipType, membershipId, '200,202,600,800').then(
       (result) => { this.setState({ Profile: { Completed: true, Data: result } }) },
       (error) => { this.setState({ Profile: { Completed: true, isError: error } }) }
     );
