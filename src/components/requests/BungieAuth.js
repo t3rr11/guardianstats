@@ -37,9 +37,19 @@ export async function SetCurrentBungieNetUser() {
   .then((res) => res.text())
   .then((res) => {
     localStorage.setItem('BungieAccount', JSON.stringify(JSON.parse(res).Response));
-    localStorage.setItem('SelectedAccount', 'Please Select Plaform');
+    localStorage.setItem('SelectedAccount', 'Please Select Platform');
     window.location.href = '/';
   })
+  .catch((error) => { console.error(error); });
+}
+
+export async function SetCurrentMembershipInfo(username) {
+  fetch(`https://www.bungie.net/Platform/Destiny2/SearchDestinyPlayer/-1/ ${ username } /`, {
+    method: 'GET',
+    headers: BearerHeaders(JSON.parse(localStorage.getItem('Authorization')).access_token)
+  })
+  .then((res) => res.text())
+  .then((res) => { localStorage.setItem('BasicMembershipInfo', JSON.stringify(JSON.parse(res).Response[0])); })
   .catch((error) => { console.error(error); });
 }
 

@@ -17,6 +17,7 @@ import Failed from './components/pages/Failed';
 import About from './components/pages/About';
 import Profile from './components/pages/Profile';
 import Activities from './components/pages/Activities';
+import Items from './components/pages/Items';
 import NotFound from './components/pages/PageNotFound';
 
 //CSS
@@ -40,6 +41,7 @@ class App extends React.Component {
                 <Route path="/home" component={ Home } />
                 <Route path="/about" component={ About } />
                 <Route path="/activities" render={ props => (<Activities />) } />
+                <Route path="/items" render={ props => (<Items />) } />
                 <Route path="/profile" render={ props => (<Profile />) } />
                 <Route path="*" component={ NotFound } />
               </Switch>
