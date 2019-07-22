@@ -49,11 +49,12 @@ class App extends React.Component {
         this.setState({ error: null, status: { status: 'updatingManifest', statusText: 'Updating Manifest...' } });
         const update = await database.updateManifest();
         if(!update) { this.setState({ status: { error: update, status: 'error', statusText: update } }); }
-        else { this.manifestLoaded(); }
+        else { this.manifestLoaded(); this.setLastManifestCheck(); }
       }
       else {
         //If the database versions match, then it is the most recent, procced to loading.
         this.manifestLoaded();
+        this.setLastManifestCheck();
       }
     }
     else if(!databaseExists) {
@@ -67,6 +68,7 @@ class App extends React.Component {
           db.table('manifest').add({ version: currentVersion.version, value: newManifest });
           console.log('Manifest Added Successfully!');
           this.manifestLoaded();
+          this.setLastManifestCheck();
         }
         catch (err) { console.log(err); this.setState({ status: { error: err.message, status: 'error', statusText: err.message } }); }
       }
@@ -78,20 +80,30 @@ class App extends React.Component {
     }
     else { this.setState({ status: { error: databaseExists, status: 'error', statusText: databaseExists } }); }
   }
+
   manifestLoaded() { this.setState({ error: null, status: { status: 'ready', statusText: 'Ready to go!' } }); }
+  setLastManifestCheck() { localStorage.setItem('lastManifestCheck', new Date().getTime()) }
+  shouldCheckManifest() {
+    if(localStorage.getItem("lastManifestCheck") === null){ return true }
+    if(parseInt(localStorage.getItem('lastManifestCheck')) + (1000 * 60 * 60) > new Date().getTime()) { return false; }
+    else { return true; }
+  }
+  forceManifestUpdate() { this.checkManifest(); }
 
   render() {
-    //Toggle this to stop manifest checking
-
-    //Fake:
-    //const { status, statusText, error } = { status: 'ready', statusText: 'Ready to go!', error: null };
-
-    //Real:
     const { status, statusText, error } = this.state.status;
     if(status === 'error') { return <Error error={ statusText } /> }
     else if(status !== 'ready') {
-      if(status === 'checkManifest') { this.checkManifest(); }
-      return <Loader statusText={ statusText } />;
+      if(status === 'checkManifest') {
+        if(this.shouldCheckManifest()) {
+          this.checkManifest();
+          return <Loader statusText={ statusText } />;
+        }
+        else {
+          this.manifestLoaded();
+          return null;
+        }
+      }
     }
     else {
       if(localStorage.getItem('Authorization')) {
