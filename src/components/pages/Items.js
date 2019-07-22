@@ -41,7 +41,7 @@ export class Items extends Component {
     }
     else {
       return (
-        <div id="itemCategories">
+        <div id="itemCategories" className="scrollbar">
           {
             data.PresentationNodes[data.ExoticNode.hash].children.presentationNodes.map(category => (
               <div key={ category.presentationNodeHash } id={ category.presentationNodeHash } className="itemSubCategory">

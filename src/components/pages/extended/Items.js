@@ -31,31 +31,33 @@ export async function getItemData() {
 
 export async function enumerateItemState(state) {
   return {
-    none: this.flagEnum(state, 0),
-    notAcquired: this.flagEnum(state, 1),
-    obscured: this.flagEnum(state, 2),
-    invisible: this.flagEnum(state, 4),
-    cannotAffordMaterialRequirements: this.flagEnum(state, 8),
-    inventorySpaceUnavailable: this.flagEnum(state, 16),
-    uniquenessViolation: this.flagEnum(state, 32),
-    purchaseDisabled: this.flagEnum(state, 64)
+    none: flagEnum(state, 0),
+    notAcquired: flagEnum(state, 1),
+    obscured: flagEnum(state, 2),
+    invisible: flagEnum(state, 4),
+    cannotAffordMaterialRequirements: flagEnum(state, 8),
+    inventorySpaceUnavailable: flagEnum(state, 16),
+    uniquenessViolation: flagEnum(state, 32),
+    purchaseDisabled: flagEnum(state, 64)
   };
 }
-
-export async function checkObtainedItem(childHash) {
-  const { ProfileCollectibles } = this.state.data;
-  if(this.enumerateItemState(ProfileCollectibles[childHash].state).notAcquired === true) {
-    return "notAcquired";
-  }
-  return "";
-}
-
-export async function checkObtainedArmor(childHash) {
-  const { CharacterCollectibles } = this.state.data;
-  for(var i in CharacterCollectibles) {
-    if(this.enumerateItemState(CharacterCollectibles[i].collectibles[childHash].state).notAcquired === true) {
-      return "notAcquired";
+export async function checkObtained(ProfileCollectibles, CharacterCollectibles, collectibleHash) {
+  try {
+    if(enumerateItemState(ProfileCollectibles[collectibleHash].state).notAcquired === true) {
+      return "collectibleItemImage notAcquired";
+    }
+    else {
+      return "collectibleItemImage";
     }
   }
-  return "";
+  catch (err) {
+    for(var i in CharacterCollectibles) {
+      if(enumerateItemState(CharacterCollectibles[i].collectibles[collectibleHash].state).notAcquired === true) {
+        return "collectibleItemImage notAcquired";
+      }
+      else {
+        return "collectibleItemImage";
+      }
+    }
+  }
 }
