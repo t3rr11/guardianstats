@@ -27,4 +27,6 @@ export async function updateManifest() {
   }
 }
 
+export async function getManifest() { return (await db.table('manifest').toCollection().first()).value; }
+
 export default db;

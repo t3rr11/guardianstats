@@ -78,23 +78,26 @@ class App extends React.Component {
     }
     else { this.setState({ status: { error: databaseExists, status: 'error', statusText: databaseExists } }); }
   }
-  manifestLoaded() {
-    this.setState({ error: null, status: { status: 'ready', statusText: 'Ready to go!' } });
-    this.loadAuth();
-    this.loadTimers();
-  }
-  loadAuth() { auth.CheckAuth(); }
-  loadTimers () { timers.StartAuthTimer(); }
+  manifestLoaded() { this.setState({ error: null, status: { status: 'ready', statusText: 'Ready to go!' } }); }
 
   render() {
-    const { status, statusText, error } = this.state.status;
-    if(status === 'error') { return <Error error={ error } /> }
+    //Toggle this to stop manifest checking
+
+    //Fake:
+    const { status, statusText, error } = { status: 'ready', statusText: 'Ready to go!', error: null };
+
+    //Real:
+    //const { status, statusText, error } = this.state.status;
+    if(status === 'error') { return <Error error={ statusText } /> }
     else if(status !== 'ready') {
       if(status === 'checkManifest') { this.checkManifest(); }
       return <Loader statusText={ statusText } />;
     }
     else {
       if(localStorage.getItem('Authorization')) {
+        auth.CheckAuth();
+        timers.StartAuthTimer();
+
         //If player has given us permission we need to check the auth and possible renew the token.
         //Checks not coded yet.
         return (

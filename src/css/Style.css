@@ -168,3 +168,21 @@ select.custom {
 select.custom::-ms-expand {
   display: none;
 }
+.error-container {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width:100%;
+  height:100px;
+  text-align: center;
+}
+.error-icon {
+  background-size: cover;
+  width: 300px;
+  height: 300px;
+  margin: auto;
+}
+.transition {
+  -webkit-transition: -webkit-transform .5s linear;
+}

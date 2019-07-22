@@ -22,6 +22,7 @@ export class Header extends React.Component {
     else if(plaform === 'XBL') { auth.SetCurrentMembershipInfo(this.props.accountInfo.xboxDisplayName); }
     else if(plaform === 'STADIA') { auth.SetCurrentMembershipInfo(this.props.accountInfo.stadiaDisplayName); }
     else if(plaform === 'STEAM') { auth.SetCurrentMembershipInfo(this.props.accountInfo.steamDisplayName); }
+    window.location.reload();
   }
 
   render() {
@@ -59,7 +60,7 @@ export class Header extends React.Component {
             </div>
             <select name="LoginBtn" type="dropdown" className='btn btn-warning custom' id="LoginBtn" defaultValue="Please Select Platform" onChange={() => { this.setPlatform(); this.setState(this.state); }} style={{ backgroundImage: 'url("../images/icons/blackcaret.png")' }}>
               <option value="Please Select Platform">Please Select Platform</option>
-              { platforms.map(plat => ( <option value={ plat.platform }> { plat.platform + ': ' + plat.name } </option> )) }
+              { platforms.map(plat => ( <option key={ plat.platform } value={ plat.platform }> { plat.platform + ': ' + plat.name } </option> )) }
             </select>
             <div className="menu-switch-icon" onClick={() => { toggleMenuSlider() }} >≡</div>
             <div className="menu-bar disable-hl"> { menuItems } </div>
