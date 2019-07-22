@@ -84,10 +84,10 @@ class App extends React.Component {
     //Toggle this to stop manifest checking
 
     //Fake:
-    const { status, statusText, error } = { status: 'ready', statusText: 'Ready to go!', error: null };
+    //const { status, statusText, error } = { status: 'ready', statusText: 'Ready to go!', error: null };
 
     //Real:
-    //const { status, statusText, error } = this.state.status;
+    const { status, statusText, error } = this.state.status;
     if(status === 'error') { return <Error error={ statusText } /> }
     else if(status !== 'ready') {
       if(status === 'checkManifest') { this.checkManifest(); }

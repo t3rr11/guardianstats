@@ -10,15 +10,23 @@ export async function getProfile() {
 }
 
 export async function getItemData() {
+  //Get required infomation from the manifest and bungie account records.
   var ManifestCollectibles, ProfileData, PresentationNodes = null;
   await Promise.all([db.getCollectibles(), db.getPresentationNodes(), this.getProfile()]).then(results => {
     ManifestCollectibles = results[0];
     PresentationNodes = results[1];
     ProfileData = results[2];
   });
+
+  //Set consts.
   const ProfileCollectibles = ProfileData.profileCollectibles.data.collectibles;
   const CharacterCollectibles = ProfileData.characterCollectibles.data;
   const ExoticNode = PresentationNodes[1068557105];
+
+  //Check if the item has been obtained.
+  await checkObtained(ProfileCollectibles, CharacterCollectibles, ManifestCollectibles);
+
+  //Return data to main items.js file for render.
   return {
     ProfileData: ProfileData,
     ProfileCollectibles: ProfileCollectibles,
@@ -41,23 +49,18 @@ export async function enumerateItemState(state) {
     purchaseDisabled: flagEnum(state, 64)
   };
 }
-export async function checkObtained(ProfileCollectibles, CharacterCollectibles, collectibleHash) {
-  try {
-    if(enumerateItemState(ProfileCollectibles[collectibleHash].state).notAcquired === true) {
-      return "collectibleItemImage notAcquired";
-    }
-    else {
-      return "collectibleItemImage";
-    }
+
+export async function checkObtained(ProfileCollectibles, CharacterCollectibles, ManifestCollectibles) {
+  for(i in ProfileCollectibles) {
+    const enumState = await enumerateItemState(await ProfileCollectibles[i].state);
+    if(enumState.notAcquired) { ManifestCollectibles[i].obtained = false; }
+    else { ManifestCollectibles[i].obtained = true; }
   }
-  catch (err) {
-    for(var i in CharacterCollectibles) {
-      if(enumerateItemState(CharacterCollectibles[i].collectibles[collectibleHash].state).notAcquired === true) {
-        return "collectibleItemImage notAcquired";
-      }
-      else {
-        return "collectibleItemImage";
-      }
+  for(var i in CharacterCollectibles) {
+    for(var j in CharacterCollectibles[i].collectibles) {
+      const enumState = await enumerateItemState(await CharacterCollectibles[i].collectibles[j].state);
+      if(enumState.notAcquired) { ManifestCollectibles[j].obtained = false; }
+      else { ManifestCollectibles[j].obtained = true; }
     }
   }
 }

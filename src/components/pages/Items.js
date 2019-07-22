@@ -53,7 +53,7 @@ export class Items extends Component {
                       {
                         data.PresentationNodes[node.presentationNodeHash].children.collectibles.map(collectible => (
                           <div key={ collectible.collectibleHash } id={ collectible.collectibleHash } className="collectibleItemContainer">
-                            <img src={ 'https://bungie.net' + data.ManifestCollectibles[collectible.collectibleHash].displayProperties.icon } className="collectibleItemImage" />
+                            <img src={ 'https://bungie.net' + data.ManifestCollectibles[collectible.collectibleHash].displayProperties.icon } className={ data.ManifestCollectibles[collectible.collectibleHash].obtained ? 'collectibleItemImage' : 'collectibleItemImage notAcquired' } />
                             <div className="collectibleItemInfo">{ data.ManifestCollectibles[collectible.collectibleHash].displayProperties.name }</div>
                           </div>
                         ))

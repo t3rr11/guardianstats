@@ -48,5 +48,5 @@
   height: 60px;
   width: 60px;
 }
-.notAcquired .collectibleItemImage { opacity: 0.3; }
-.notAcquired .collectibleItemInfo { opacity: 1; }
+.notAcquired { opacity: 0.3; }
+.collectibleItemInfo .notAcquired { opacity: 1; }
