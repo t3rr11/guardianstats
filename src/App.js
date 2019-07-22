@@ -46,6 +46,7 @@ class App extends React.Component {
 
       if(storedVersion.version !== currentVersion.version) {
         //If the database is old, proceed to update it.
+        this.setState({ error: null, status: { status: 'updatingManifest', statusText: 'Updating Manifest...' } });
         const update = await database.updateManifest();
         if(!update) { this.setState({ status: { error: update, status: 'error', statusText: update } }); }
         else { this.manifestLoaded(); }
@@ -57,6 +58,7 @@ class App extends React.Component {
     }
     else if(!databaseExists) {
       //If database does not exist. Then it will download it now.
+      this.setState({ error: null, status: { status: 'downloadingManifest', statusText: 'Downloading Manifest...' } });
       try {
         const currentVersion = await bungie.GetManifestVersion();
         const newManifest = await bungie.GetManifest(currentVersion.jsonWorldContentPaths['en']);
