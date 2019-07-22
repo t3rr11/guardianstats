@@ -18,13 +18,23 @@
   --NavyBlue: #21242A;
   --LightNavyBlue: #292C33;
 }
+html {
+  height: 100%;
+}
 body {
+  height: 100%;
   margin:0px;
   padding:0px;
   font-family: 'Nunito', sans-serif;
   background-color: var(--DarkNavyBlue);
   background-attachment: fixed;
   color:white;
+}
+#root {
+  height: 100%;
+}
+.App {
+  height: 100%;
 }
 .page-content {
   width: 100%;

@@ -28,5 +28,7 @@ export async function updateManifest() {
 }
 
 export async function getManifest() { return (await db.table('manifest').toCollection().first()).value; }
+export async function getCollectibles() { return (await db.table('manifest').toCollection().first()).value.DestinyCollectibleDefinition; }
+export async function getPresentationNodes() { return (await db.table('manifest').toCollection().first()).value.DestinyPresentationNodeDefinition; }
 
 export default db;

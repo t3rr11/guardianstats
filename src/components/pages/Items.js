@@ -1,40 +1,32 @@
 import React, { Component } from 'react';
-import * as bungie from '../requests/BungieReq';
-import * as db from '../requests/db/Database';
 import Loader from '../modules/Loader';
 import Error from '../modules/Error';
+
+import * as checks from './extended/Checks';
+import * as extendedItems from './extended/Items';
 
 export class Items extends Component {
 
   state = {
     status: { error: null, status: 'startup', statusText: 'Loading Items...' },
-    data: [],
-    manifest: null
+    data: null
   }
 
   componentDidMount() {
-    this.checkPlatform();
+    if(checks.checkPlatform){ this.getItems(); }
+    else { this.setState({ status: { error: 'NotSelectedPlatform', status: 'error', statusText: 'You have not selected your platform yet.' } }); }
   }
-
-  async checkPlatform() {
-    if(localStorage.getItem('SelectedAccount') !== 'Please Select Platform') { await this.setManifest(); this.getItems(); }
-    else { this.setState({ status: { error: 'NotSelectedPlatform', status: 'error', statusText: 'You have not selected your platform yet.' } }) }
-  }
-
-  async setManifest() { this.setState({ manifest: await db.getManifest() }) }
 
   async getItems() {
-    const ExoticNode = 1068557105;
-    console.log('Got items!');
-    console.log(this.state.manifest);
-  }
-
-  grabData = async() => {
-    const { displayName, membershipId, membershipType } = JSON.parse(localStorage.getItem('BasicMembershipInfo'));
-    bungie.GetProfile(membershipType, membershipId, '200,202,600,800').then(
-      (result) => { this.setState({ data: result, status: { error: null, status: 'completed', statusText: 'Finshed Loading Items' } }) },
-      (error) => { this.setState({ status: { error: error, status: 'error', statusText: 'Error getting profile data from bungie.' } }) }
-    );
+    const data = await extendedItems.getItemData();
+    this.setState({
+      status: {
+        error: null,
+        status: 'completed',
+        statusText: 'Finished loading item data.'
+      },
+      data
+    });
   }
 
   render() {
@@ -48,17 +40,32 @@ export class Items extends Component {
       return <Loader statusText={ statusText } />
     }
     else {
-      try {
-        let objects = Object.keys(data);
-        return (
-          <div>
-            <p>Finished loading...</p>
-            { objects.map(item => ( <li key={item}> { item } </li> )) }
-            <div style={{ wordBreak: 'break-word' }}>{ JSON.stringify(data) }</div>
-          </div>
-        );
-      }
-      catch (err) { return <Error error={ err } /> }
+      return (
+        <div id="itemCategories">
+          {
+            data.PresentationNodes[data.ExoticNode.hash].children.presentationNodes.map(category => (
+              <div key={ category.presentationNodeHash } id={ category.presentationNodeHash } className="itemSubCategory">
+                <p className="itemSubCategoryTitle">{ data.PresentationNodes[category.presentationNodeHash].displayProperties.name }</p>
+                {
+                  data.PresentationNodes[category.presentationNodeHash].children.presentationNodes.map(node => (
+                    <div key={ node.presentationNodeHash } id={ node.presentationNodeHash } className="itemCollectibleCategory">
+                      <p className="itemCollectibleCategoryTitle">{ data.PresentationNodes[node.presentationNodeHash].displayProperties.name }</p>
+                      {
+                        data.PresentationNodes[node.presentationNodeHash].children.collectibles.map(collectible => (
+                          <div key={ collectible.collectibleHash } id={ collectible.collectibleHash } className="collectibleItemContainer">
+                            <img src={ 'https://bungie.net' + data.ManifestCollectibles[collectible.collectibleHash].displayProperties.icon } className="collectibleItemImage" />
+                            <div className="collectibleItemInfo">{ data.ManifestCollectibles[collectible.collectibleHash].displayProperties.name }</div>
+                          </div>
+                        ))
+                      }
+                    </div>
+                  ))
+                }
+              </div>
+            ))
+          }
+        </div>
+      );
     }
   }
 }

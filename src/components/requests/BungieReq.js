@@ -1,7 +1,7 @@
 async function apiRequest(path, isStat, isAuthRequired) {
   //Headers for requests
-  const headers = { headers: { "X-API-Key": '1b83a7bc78324068bb068ca8197ca3bf', 'Content-Type': 'application/json' } };
-  const authHeaders = { headers: { "Authorization": `Bearer` } }
+  const headers = { headers: { "X-API-Key": "1b83a7bc78324068bb068ca8197ca3bf", "Content-Type": "application/json" } };
+  const authHeaders = { headers: { "X-API-Key": "1b83a7bc78324068bb068ca8197ca3bf", "Content-Type": "application/json", "Authorization": `Bearer ${ JSON.parse(localStorage.getItem('Authorization')).access_token }` } }
 
   const request = await fetch(`https://${isStat ? 'stats' : 'www'}.bungie.net${path}`, isAuthRequired ? authHeaders : headers);
   const response = await request.json();
@@ -19,6 +19,6 @@ async function apiRequest(path, isStat, isAuthRequired) {
   }
 }
 
-export const GetProfile = async (membershipType, membershipId, components, auth = false) => apiRequest(`/Platform/Destiny2/${membershipType}/Profile/${membershipId}/?components=${components}`, false, false);
+export const GetProfile = async (membershipType, membershipId, components) => apiRequest(`/Platform/Destiny2/${membershipType}/Profile/${membershipId}/?components=${components}`, false, false);
 export const GetManifestVersion = async () => apiRequest(`/Platform/Destiny2/Manifest/`, false, false);
 export const GetManifest = async url => fetch(`https://www.bungie.net${ url }`).then(a => a.json());
