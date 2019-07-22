@@ -29,14 +29,21 @@ export class Items extends Component {
     if(!Completed) { return <Loader /> }
     else if(isError) { return <Error error={isError} /> }
     else {
-      let objects = Object.keys(Data);
-      return (
-        <div>
-          <p>Finished loading...</p>
-          { objects.map(item => ( <li key={item}> { item } </li> )) }
-          <div style={{ wordBreak: 'break-word' }}>{ JSON.stringify(Data) }</div>
-        </div>
-      );
+      try {
+        let objects = Object.keys(Data);
+        return (
+          <div>
+            <p>Finished loading...</p>
+            { objects.map(item => ( <li key={item}> { item } </li> )) }
+            <div style={{ wordBreak: 'break-word' }}>{ JSON.stringify(Data) }</div>
+          </div>
+        );
+      }
+      catch (err) {
+        return (
+          <div> { Data } </div>
+        );
+      }
     }
   }
 }
