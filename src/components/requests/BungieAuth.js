@@ -47,7 +47,7 @@ export async function SetCurrentBungieNetUser() {
 }
 
 export async function SetCurrentMembershipInfo(username) {
-  fetch(`https://www.bungie.net/Platform/Destiny2/SearchDestinyPlayer/-1/ ${ username } /`, {
+  await fetch(`https://www.bungie.net/Platform/Destiny2/SearchDestinyPlayer/-1/ ${ username } /`, {
     method: 'GET',
     headers: BearerHeaders(JSON.parse(localStorage.getItem('Authorization')).access_token)
   })

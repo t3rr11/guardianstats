@@ -8,25 +8,23 @@ import * as extendedItems from './extended/Items';
 export class Items extends Component {
 
   state = {
-    status: { error: null, status: 'startup', statusText: 'Loading Items...' },
+    status: { error: null, status: 'startUp', statusText: 'Loading Items...' },
     data: null
   }
 
   componentDidMount() {
-    if(checks.checkPlatform){ this.getItems(); }
-    else { this.setState({ status: { error: 'NotSelectedPlatform', status: 'error', statusText: 'You have not selected your platform yet.' } }); }
+    if(checks.checkPlatform){  }
+    else {  }
   }
 
   async getItems() {
-    const data = await extendedItems.getItemData();
-    this.setState({
-      status: {
-        error: null,
-        status: 'completed',
-        statusText: 'Finished loading item data.'
-      },
-      data
-    });
+    try {
+      const data = await extendedItems.getItemData();
+      this.setState({ status: { error: null, status: 'completed', statusText: 'Finished loading item data.' }, data });
+    }
+    catch (err) {
+      this.setState({ status: { error: 'NotSelectedPlatform', status: 'error', statusText: 'You have not selected your platform yet.' } });
+    }
   }
 
   render() {
@@ -36,10 +34,7 @@ export class Items extends Component {
 
     //Check for errors, show loader, or display content.
     if(status === 'error') { return <Error error={ statusText } /> }
-    else if(status !== 'completed') {
-      return <Loader statusText={ statusText } />
-    }
-    else {
+    else if(status === 'completed') {
       return (
         <div id="itemCategories" className="scrollbar">
           {
@@ -66,6 +61,10 @@ export class Items extends Component {
           }
         </div>
       );
+    }
+    else {
+      if(status === 'startUp') { this.getItems(); }
+      return <Loader statusText={ statusText } />
     }
   }
 }

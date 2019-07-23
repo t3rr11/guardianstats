@@ -30,8 +30,8 @@ class App extends React.Component {
 
   state = {
     status: {
-      status: 'checkManifest',
-      statusText: 'Checking the Manifest...',
+      status: 'startUp',
+      statusText: 'Starting up...',
       error: null
     }
   }
@@ -44,18 +44,21 @@ class App extends React.Component {
       const storedVersion = await db.table('manifest').toCollection().first();
       const currentVersion = await bungie.GetManifestVersion();
 
-      if(storedVersion.version !== currentVersion.version) {
-        //If the database is old, proceed to update it.
-        this.setState({ error: null, status: { status: 'updatingManifest', statusText: 'Updating Manifest...' } });
-        const update = await database.updateManifest();
-        if(!update) { this.setState({ status: { error: update, status: 'error', statusText: update } }); }
-        else { this.manifestLoaded(); this.setLastManifestCheck(); }
+      try {
+        if(storedVersion.version !== currentVersion.version) {
+          //If the database is old, proceed to update it.
+          this.setState({ error: null, status: { status: 'updatingManifest', statusText: 'Updating Manifest...' } });
+          const update = await database.updateManifest();
+          if(!update) { this.setState({ status: { error: update, status: 'error', statusText: update } }); }
+          else { this.manifestLoaded(); this.setLastManifestCheck(); }
+        }
+        else {
+          //If the database versions match, then it is the most recent, procced to loading.
+          this.manifestLoaded();
+          this.setLastManifestCheck();
+        }
       }
-      else {
-        //If the database versions match, then it is the most recent, procced to loading.
-        this.manifestLoaded();
-        this.setLastManifestCheck();
-      }
+      catch (err) { this.setState({ status: { error: err, status: 'error', statusText: err } }); }
     }
     else if(!databaseExists) {
       //If database does not exist. Then it will download it now.
@@ -84,28 +87,18 @@ class App extends React.Component {
   manifestLoaded() { this.setState({ error: null, status: { status: 'ready', statusText: 'Ready to go!' } }); }
   setLastManifestCheck() { localStorage.setItem('lastManifestCheck', new Date().getTime()) }
   shouldCheckManifest() {
-    if(localStorage.getItem("lastManifestCheck") === null){ return true }
-    if(parseInt(localStorage.getItem('lastManifestCheck')) + (1000 * 60 * 60) > new Date().getTime()) { return false; }
-    else { return true; }
+    if(localStorage.getItem("lastManifestCheck") === null){ this.setState({ status: { status: 'checkManifest', statusText: 'Checking the Manifest...' } }); }
+    else {
+      if(parseInt(localStorage.getItem('lastManifestCheck')) + (1000 * 60 * 60) > new Date().getTime()) { this.setState({ status: { status: 'ready', statusText: 'Ready to go!' } }); }
+      else { this.setState({ status: { status: 'checkManifest', statusText: 'Checking the Manifest...' } }); }
+    }
   }
   forceManifestUpdate() { this.checkManifest(); }
 
   render() {
     const { status, statusText, error } = this.state.status;
     if(status === 'error') { return <Error error={ statusText } /> }
-    else if(status !== 'ready') {
-      if(status === 'checkManifest') {
-        if(this.shouldCheckManifest()) {
-          this.checkManifest();
-          return <Loader statusText={ statusText } />;
-        }
-        else {
-          this.manifestLoaded();
-          return null;
-        }
-      }
-    }
-    else {
+    else if(status === 'ready') {
       if(localStorage.getItem('Authorization')) {
         auth.CheckAuth();
         timers.StartAuthTimer();
@@ -154,6 +147,11 @@ class App extends React.Component {
           </Router>
         );
       }
+    }
+    else {
+      if(status === 'startUp') { this.shouldCheckManifest(); }
+      else if(status === 'checkManifest') { this.checkManifest(); }
+      return <Loader statusText={ statusText } />;
     }
   }
 }

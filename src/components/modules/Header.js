@@ -13,22 +13,36 @@ export class Header extends React.Component {
 
   toggleSettings = () => { this.setState({ showSettings: !this.state.showSettings }); }
 
-  setPlatform = () => {
+  async setPlatform () {
     var selectBox = document.getElementById('LoginBtn');
     var plaform = selectBox.options[selectBox.selectedIndex].value;
     localStorage.setItem('SelectedAccount', plaform);
-    if(plaform === 'BNET') { var username = this.props.accountInfo.blizzardDisplayName; username = username.replace('#', '%23'); auth.SetCurrentMembershipInfo(username); }
-    else if(plaform === 'PSN') { auth.SetCurrentMembershipInfo(this.props.accountInfo.psnDisplayName); }
-    else if(plaform === 'XBL') { auth.SetCurrentMembershipInfo(this.props.accountInfo.xboxDisplayName); }
-    else if(plaform === 'STADIA') { auth.SetCurrentMembershipInfo(this.props.accountInfo.stadiaDisplayName); }
-    else if(plaform === 'STEAM') { auth.SetCurrentMembershipInfo(this.props.accountInfo.steamDisplayName); }
-    window.location.reload();
+    if(plaform === 'BNET') {
+      var username = this.props.accountInfo.blizzardDisplayName; username = username.replace('#', '%23');
+      await auth.SetCurrentMembershipInfo(username);
+      window.location.reload();
+    }
+    else if(plaform === 'PSN') {
+      await auth.SetCurrentMembershipInfo(this.props.accountInfo.psnDisplayName);
+      window.location.reload();
+    }
+    else if(plaform === 'XBL') {
+      await auth.SetCurrentMembershipInfo(this.props.accountInfo.xboxDisplayName);
+      window.location.reload();
+    }
+    else if(plaform === 'STADIA') {
+      await auth.SetCurrentMembershipInfo(this.props.accountInfo.stadiaDisplayName);
+      window.location.reload();
+    }
+    else if(plaform === 'STEAM') {
+      await auth.SetCurrentMembershipInfo(this.props.accountInfo.steamDisplayName);
+      window.location.reload();
+    }
   }
 
   render() {
     const { accountInfo } = this.props;
     if(accountInfo) {
-
       const selectedAccount = localStorage.getItem('SelectedAccount');
       var platforms = [];
       // eslint-disable-next-line
