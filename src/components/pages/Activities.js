@@ -1,46 +1,39 @@
 import React, { Component } from 'react';
-import * as bungie from '../requests/BungieReq';
 import Loader from '../modules/Loader';
 import Error from '../modules/Error';
+
+import * as checks from './extended/Checks';
+import * as extendedItems from './extended/Items';
 
 export class Activities extends Component {
 
   state = {
-    Profile: [{ Data: [], Completed: false, isError: null }]
-  }
-
-  componentDidMount() {
-    this.grabData();
-  }
-
-  grabData = async() => {
-    bungie.GetProfile('4', '4611686018471334813', '200,202,600,800').then(
-      (result) => { this.setState({ Profile: { Completed: true, Data: result } }) },
-      (error) => { this.setState({ Profile: { Completed: true, isError: error } }) }
-    );
+    status: { error: null, status: 'startUp', statusText: 'Loading Recent Activites...' },
+    data: null
   }
 
   render() {
     //Define Consts and Variables
-    const { Data, Completed, isError } = this.state.Profile;
+    const { status, statusText } = this.state.status;
+    const { data } = this.state;
 
     //Check for errors, show loader, or display content.
-    if(!Completed) { return <Loader /> }
-    else if(isError) { return <Error error={isError} /> }
-    else {
-      let objects = Object.keys(Data);
+    if(status === 'error') { return <Error error={ statusText } /> }
+    else if(status === 'completed') {
       return (
-        <div>
-          <p>Finished loading...</p>
-          { objects.map(item => ( <li key={item}> { item } </li> )) }
-          <div style={{ wordBreak: 'break-word' }}>{ JSON.stringify(Data) }</div>
+        <div id="actvities" className="scrollbar">
+
         </div>
       );
+    }
+    else {
+      if(status === 'startUp') { return(<div>Completed</div>) }
+      return <Loader statusText={ statusText } />
     }
   }
 }
 
-export async function CheckActivityUpdates() {
+export function checkActivityUpdates() {
 
 }
 

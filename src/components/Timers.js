@@ -34,5 +34,5 @@ export async function StartAuthTimer() {
 export async function StartActivityTimer() {
   try { if(ActivityWatcher != null){ StopTimer('Activity'); } } catch (err) {  }
   console.log('Activity Watcher Started.');
-  ActivityWatcher = setInterval(activities.CheckActivityUpdates, 30000);
+  ActivityWatcher = setInterval(activities.checkActivityUpdates, 30000);
 }

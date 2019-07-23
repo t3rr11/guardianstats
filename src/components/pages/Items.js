@@ -12,11 +12,6 @@ export class Items extends Component {
     data: null
   }
 
-  componentDidMount() {
-    if(checks.checkPlatform){  }
-    else {  }
-  }
-
   async getItems() {
     try {
       const data = await extendedItems.getItemData();
