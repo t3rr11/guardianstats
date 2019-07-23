@@ -120,12 +120,12 @@ export class Header extends React.Component {
 const menuItems = (
   <React.Fragment>
     <li className="menu-item Home" id="Home"><Link to="/home">Home</Link></li>
-    <li className="menu-item Profile" id="Profile"><Link to="/profile">Profile</Link></li>
-    <li className="menu-item Activities" id="Activities"><Link to="/activities">Activities</Link></li>
-    <li className="menu-item Items" id="Items"><Link to="/items">Items</Link></li>
-    <li className="menu-item Triumphs" id="Triumphs"><Link to="/triumphs">Triumphs</Link></li>
-    <li className="menu-item-disabled Vendors" id="Vendors"><span>Vendors</span></li>
-    <li className="menu-item Tools" id="Tools"><Link to="/tools">Tools</Link></li>
+    <li className="menu-item-disabled" id="Profile"><span>Profile</span></li>
+    <li className="menu-item" id="Activities"><Link to="/activities">Activities</Link></li>
+    <li className="menu-item" id="Items"><Link to="/items">Items</Link></li>
+    <li className="menu-item-disabled" id="Triumphs"><span>Triumphs</span></li>
+    <li className="menu-item-disabled" id="Vendors"><span>Vendors</span></li>
+    <li className="menu-item-disabled" id="Tools"><span>Tools</span></li>
   </React.Fragment>
 );
 
