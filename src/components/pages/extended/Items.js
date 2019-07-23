@@ -5,7 +5,7 @@ import * as bungie from '../../requests/BungieReq';
 const flagEnum = (state, value) => !!(state & value);
 
 export async function getProfile() {
-  const { displayName, membershipId, membershipType } = JSON.parse(localStorage.getItem('BasicMembershipInfo'));
+  const { membershipId, membershipType } = JSON.parse(localStorage.getItem('BasicMembershipInfo'));
   return await bungie.GetProfile(membershipType, membershipId, '200,202,600,800');
 }
 
@@ -51,16 +51,16 @@ export async function enumerateItemState(state) {
 }
 
 export async function checkObtained(ProfileCollectibles, CharacterCollectibles, ManifestCollectibles) {
-  for(i in ProfileCollectibles) {
-    const enumState = await enumerateItemState(await ProfileCollectibles[i].state);
-    if(enumState.notAcquired) { ManifestCollectibles[i].obtained = false; }
-    else { ManifestCollectibles[i].obtained = true; }
+  for(var pHash in ProfileCollectibles) {
+    const enumState = await enumerateItemState(await ProfileCollectibles[pHash].state);
+    if(enumState.notAcquired) { ManifestCollectibles[pHash].obtained = false; }
+    else { ManifestCollectibles[pHash].obtained = true; }
   }
-  for(var i in CharacterCollectibles) {
-    for(var j in CharacterCollectibles[i].collectibles) {
-      const enumState = await enumerateItemState(await CharacterCollectibles[i].collectibles[j].state);
-      if(enumState.notAcquired) { ManifestCollectibles[j].obtained = false; }
-      else { ManifestCollectibles[j].obtained = true; }
+  for(var cHash in CharacterCollectibles) {
+    for(var ccHash in CharacterCollectibles[cHash].collectibles) {
+      const enumState = await enumerateItemState(await CharacterCollectibles[cHash].collectibles[ccHash].state);
+      if(enumState.notAcquired) { ManifestCollectibles[ccHash].obtained = false; }
+      else { ManifestCollectibles[ccHash].obtained = true; }
     }
   }
 }

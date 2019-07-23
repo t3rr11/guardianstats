@@ -29,7 +29,7 @@ export class Items extends Component {
 
   render() {
     //Define Consts and Variables
-    const { status, statusText, error } = this.state.status;
+    const { status, statusText } = this.state.status;
     const { data } = this.state;
 
     //Check for errors, show loader, or display content.
@@ -48,7 +48,7 @@ export class Items extends Component {
                       {
                         data.PresentationNodes[node.presentationNodeHash].children.collectibles.map(collectible => (
                           <div key={ collectible.collectibleHash } id={ collectible.collectibleHash } className="collectibleItemContainer">
-                            <img src={ 'https://bungie.net' + data.ManifestCollectibles[collectible.collectibleHash].displayProperties.icon } className={ data.ManifestCollectibles[collectible.collectibleHash].obtained ? 'collectibleItemImage' : 'collectibleItemImage notAcquired' } />
+                            <img alt='Icon' src={ 'https://bungie.net' + data.ManifestCollectibles[collectible.collectibleHash].displayProperties.icon } className={ data.ManifestCollectibles[collectible.collectibleHash].obtained ? 'collectibleItemImage' : 'collectibleItemImage notAcquired' } />
                             <div className="collectibleItemInfo">{ data.ManifestCollectibles[collectible.collectibleHash].displayProperties.name }</div>
                           </div>
                         ))

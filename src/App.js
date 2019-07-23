@@ -96,7 +96,7 @@ class App extends React.Component {
   forceManifestUpdate() { this.checkManifest(); }
 
   render() {
-    const { status, statusText, error } = this.state.status;
+    const { status, statusText } = this.state.status;
     if(status === 'error') { return <Error error={ statusText } /> }
     else if(status === 'ready') {
       if(localStorage.getItem('Authorization')) {
