@@ -3,8 +3,9 @@
   width: 195px;
   height: 40px;
   float: right;
-  overflow: hidden;
   margin-right: 10px;
+  margin-top: 5px;
+  overflow: hidden;
 }
 #character_select:hover {
   overflow: unset;
@@ -25,13 +26,15 @@
   background-position:center left;
   background-size:auto 40px;
   background-repeat:no-repeat;
+  background-color: black;
   position:relative;
 }
 .innerDiv > #left_span {
-  margin-left:55px;
+  margin-left:48px;
   line-height:35px;
   font-size:18px;
   position:absolute;
+  cursor: pointer;
   left:0px;
 }
 .innerDiv > #right_span {
@@ -39,5 +42,6 @@
   line-height:35px;
   font-size:18px;
   position:absolute;
+  cursor: pointer;
   right:0px;
 }

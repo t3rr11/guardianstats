@@ -9,6 +9,7 @@ import * as bungie from './components/requests/BungieReq';
 import * as database from './components/requests/db/Database';
 import db from './components/requests/db/Database';
 import * as timers from './components/Timers';
+import * as checks from './components/scripts/Checks';
 
 //Pages
 import Header from './components/modules/Header';
@@ -37,6 +38,13 @@ class App extends React.Component {
   }
 
   async checkManifest() {
+    if(await checks.checkManifest()){
+      if(await checks.updateManifest()){ this.manifestLoaded(); }
+      else { this.setState({ status: { status: 'getManifest', statusText: 'Checking the Manifest...' } }) }
+    }
+    else { this.setState({ status: { status: 'getManifest', statusText: 'Checking the Manifest...' } }) }
+  }
+  async getManifest() {
     //Checking Manifest
     const databaseExists = await database.checkManifestExists();
     if(databaseExists) {
@@ -83,17 +91,27 @@ class App extends React.Component {
     }
     else { this.setState({ status: { error: databaseExists, status: 'error', statusText: databaseExists } }); }
   }
-
-  manifestLoaded() { this.setState({ error: null, status: { status: 'ready', statusText: 'Ready to go!' } }); }
-  setLastManifestCheck() { localStorage.setItem('lastManifestCheck', new Date().getTime()) }
-  shouldCheckManifest() {
-    if(localStorage.getItem("lastManifestCheck") === null){ this.setState({ status: { status: 'checkManifest', statusText: 'Checking the Manifest...' } }); }
-    else {
-      if(parseInt(localStorage.getItem('lastManifestCheck')) + (1000 * 60 * 60) > new Date().getTime()) { this.setState({ status: { status: 'ready', statusText: 'Ready to go!' } }); }
-      else { this.setState({ status: { status: 'checkManifest', statusText: 'Checking the Manifest...' } }); }
+  async manifestLoaded() { this.setState({ status: { status: 'checkProfile', statusText: 'Checking if needs to obtain profile information' } }); }
+  async setLastManifestCheck() { localStorage.setItem('lastManifestCheck', new Date().getTime()) }
+  async forceManifestUpdate() { this.getManifest(); }
+  async checkProfile() {
+    if(await checks.checkLogin()) {
+      if(await checks.checkPlatform()){ this.setState({ status: { status: 'getProfile', statusText: 'Getting profile information...' } }) }
+      else { this.setState({ status: { status: 'ready', statusText: 'Ready to go!' } }) }
     }
+    else { this.setState({ status: { status: 'ready', statusText: 'Ready to go!' } }) }
   }
-  forceManifestUpdate() { this.checkManifest(); }
+  async getProfile() {
+    const basicMembershipInfo = JSON.parse(localStorage.getItem('BasicMembershipInfo'));
+    const profileInfo = await bungie.GetProfile(basicMembershipInfo.membershipType, basicMembershipInfo.membershipId, '100,200');
+    const characters = profileInfo.characters.data;
+    var lastOnlineCharacter = 0;
+    for(var i in characters) { if(new Date(characters[i].dateLastPlayed) > lastOnlineCharacter) { lastOnlineCharacter = characters[i]; } }
+    if(localStorage.getItem('SelectedCharacter') === null) { localStorage.setItem('SelectedCharacter', lastOnlineCharacter.characterId); }
+    localStorage.setItem('ProfileInfo', JSON.stringify(profileInfo));
+    this.profileLoaded();
+  }
+  async profileLoaded() { this.setState({ status: { status: 'ready', statusText: 'Ready to go!' } }); }
 
   render() {
     const { status, statusText } = this.state.status;
@@ -102,9 +120,6 @@ class App extends React.Component {
       if(localStorage.getItem('Authorization')) {
         auth.CheckAuth();
         timers.StartAuthTimer();
-
-        //If player has given us permission we need to check the auth and possible renew the token.
-        //Checks not coded yet.
         return (
           <Router>
             <div className="App">
@@ -127,8 +142,6 @@ class App extends React.Component {
         );
       }
       else {
-        //So there are a few things we can do here,
-        //We should check to see if the person is inspecting another player, or have they just not logged in.
         return (
           <Router>
             <div className="App">
@@ -149,8 +162,10 @@ class App extends React.Component {
       }
     }
     else {
-      if(status === 'startUp') { this.shouldCheckManifest(); }
-      else if(status === 'checkManifest') { this.checkManifest(); }
+      if(status === 'startUp') { this.checkManifest(); }
+      else if(status === 'getManifest') { this.getManifest(); }
+      else if(status === 'checkProfile') { this.checkProfile(); }
+      else if(status === 'getProfile') { this.getProfile(); }
       return <Loader statusText={ statusText } />;
     }
   }

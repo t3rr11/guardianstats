@@ -1,5 +1,5 @@
-import * as db from '../../requests/db/Database';
-import * as bungie from '../../requests/BungieReq';
+import * as db from '../requests/db/Database';
+import * as bungie from '../requests/BungieReq';
 
 //Consts
 const flagEnum = (state, value) => !!(state & value);
