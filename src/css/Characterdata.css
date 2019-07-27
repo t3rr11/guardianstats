@@ -36,6 +36,7 @@
   position:absolute;
   cursor: pointer;
   left:0px;
+  color: white;
 }
 .innerDiv > #right_span {
   margin-right:10px;
@@ -44,4 +45,5 @@
   position:absolute;
   cursor: pointer;
   right:0px;
+  color: white;
 }
