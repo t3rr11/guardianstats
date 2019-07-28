@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import Loader from '../modules/Loader';
-import Error from '../modules/Error';
+import Loader from '../../modules/Loader';
+import Error from '../../modules/Error';
 
-import { startUpPageChecks } from '../scripts/Checks';
+import { startUpPageChecks } from '../../scripts/Checks';
 
 export class Activities extends Component {
 

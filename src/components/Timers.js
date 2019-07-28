@@ -1,7 +1,7 @@
 /*eslint-disable eqeqeq*/
 import * as misc from './Misc';
 import * as auth from './requests/BungieAuth';
-import * as activities from './pages/Activities';
+import * as activities from './pages/activities/Activities';
 
 var AuthTimer = null;
 var ActivityWatcher = null;

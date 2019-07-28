@@ -2,28 +2,29 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
-//Functions
-//import * as misc from './components/Misc';
-import * as auth from './components/requests/BungieAuth';
-import * as bungie from './components/requests/BungieReq';
-import * as database from './components/requests/db/Database';
-import db from './components/requests/db/Database';
-import * as timers from './components/Timers';
-import * as checks from './components/scripts/Checks';
-
-//Pages
+//Modules
 import Header from './components/modules/Header';
 import Loader from './components/modules/Loader';
 import Error from './components/modules/Error';
-import Home from './components/pages/Home';
-import Login from './components/pages/Login';
-import Register from './components/pages/Register';
-import Failed from './components/pages/Failed';
-import About from './components/pages/About';
-import Profile from './components/pages/Profile';
-import Activities from './components/pages/Activities';
-import Items from './components/pages/Items';
-import NotFound from './components/pages/PageNotFound';
+
+//Pages
+import Home from './components/pages/home/Home';
+import Login from './components/pages/login/Login';
+import Register from './components/pages/register/Register';
+import Failed from './components/pages/register/Failed';
+import Profile from './components/pages/profile/Profile';
+import Items from './components/pages/items/Items';
+import About from './components/pages/about/About';
+import Activities from './components/pages/activities/Activities';
+import NotFound from './components/pages/pnf/PageNotFound';
+
+//Functions
+import db from './components/requests/db/Database';
+import * as auth from './components/requests/BungieAuth';
+import * as bungie from './components/requests/BungieReq';
+import * as database from './components/requests/db/Database';
+import * as timers from './components/Timers';
+import * as checks from './components/scripts/Checks';
 
 //CSS
 import './css/Style.css';

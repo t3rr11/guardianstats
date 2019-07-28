@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import qs from 'query-string';
 
-import * as auth from '../requests/BungieAuth';
+import * as auth from '../../requests/BungieAuth';
 
 export class Register extends Component {
 

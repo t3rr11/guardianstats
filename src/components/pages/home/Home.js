@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Search from '../modules/Search';
+import Search from '../../modules/Search';
 
 export class Home extends Component {
 
