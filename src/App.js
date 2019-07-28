@@ -9,14 +9,14 @@ import Error from './components/modules/Error';
 
 //Pages
 import Home from './components/pages/home/Home';
-import Login from './components/pages/login/Login';
-import Register from './components/pages/register/Register';
-import Failed from './components/pages/register/Failed';
 import Profile from './components/pages/profile/Profile';
 import Items from './components/pages/items/Items';
 import About from './components/pages/about/About';
 import Activities from './components/pages/activities/Activities';
-import NotFound from './components/pages/pnf/PageNotFound';
+import Register from './components/pages/others/Register';
+import Failed from './components/pages/others/Failed';
+import Login from './components/pages/others/Login';
+import NotFound from './components/pages/others/PageNotFound';
 
 //Functions
 import db from './components/requests/db/Database';
