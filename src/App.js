@@ -97,7 +97,7 @@ class App extends React.Component {
   async forceManifestUpdate() { this.getManifest(); }
   async checkProfile() {
     if(await checks.checkLogin()) {
-      if(await checks.checkPlatform()){ this.setState({ status: { status: 'getProfile', statusText: 'Getting profile information...' } }) }
+      if(await checks.checkPlatform()){ this.setState({ status: { status: 'getProfile', statusText: 'Grabbing profile info...' } }) }
       else { this.setState({ status: { status: 'ready', statusText: 'Ready to go!' } }) }
     }
     else { this.setState({ status: { status: 'ready', statusText: 'Ready to go!' } }) }

@@ -12,7 +12,7 @@ export class Loader extends Component {
           <span></span>
         </div>
         <div className="loaderText">
-          <h5> { this.props.statusText } </h5>
+          <p> { this.props.statusText } </p>
         </div>
       </div>
     );
