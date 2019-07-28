@@ -19,10 +19,10 @@ import Login from './components/pages/others/Login';
 import NotFound from './components/pages/others/PageNotFound';
 
 //Functions
-import db from './components/requests/db/Database';
+import db from './components/requests/Database';
 import * as auth from './components/requests/BungieAuth';
 import * as bungie from './components/requests/BungieReq';
-import * as database from './components/requests/db/Database';
+import * as database from './components/requests/Database';
 import * as timers from './components/Timers';
 import * as checks from './components/scripts/Checks';
 

@@ -8,7 +8,7 @@ export class Activities extends Component {
 
   state = {
     status: { error: null, status: 'startUp', statusText: 'Loading Recent Activites...' },
-    data: null
+    activities: null
   }
 
   async componentDidMount() {

@@ -1,4 +1,4 @@
-import * as db from '../requests/db/Database';
+import * as db from '../requests/Database';
 import * as bungie from '../requests/BungieReq';
 
 //Consts

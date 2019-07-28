@@ -1,5 +1,5 @@
 import Dexie from 'dexie';
-import * as bungie from '../BungieReq';
+import * as bungie from './BungieReq';
 
 const db = new Dexie('guardianstats');
 db.version(1).stores({ manifest: 'version, value' });
