@@ -11,7 +11,10 @@ export class Activities extends Component {
 
   state = {
     status: { error: null, status: 'startUp', statusText: 'Loading recent activites...' },
-    activities: null
+    activities: null,
+    currentActivity : null,
+    ManifestActivities: null,
+    PGCRs: null
   }
 
   async componentDidMount() {
@@ -31,15 +34,39 @@ export class Activities extends Component {
   async grabActivityData() {
     const basicMI = JSON.parse(localStorage.getItem('BasicMembershipInfo'));
     const selectedCharacter = localStorage.getItem('SelectedCharacter');
-    const activityData = await bungie.GetActivityHistory(basicMI.membershipType, basicMI.membershipId, selectedCharacter, 100, 0);
+    const activityData = await bungie.GetActivityHistory(basicMI.membershipType, basicMI.membershipId, selectedCharacter, 15, 0);
     const ManifestActivities = await db.getActivityDefinition();
-    this.setState({ status: { status: 'ready', statusText: 'Finished loading...' }, activities: activityData.activities, ManifestActivities });
+    this.setState({
+      status: { status: 'gettingPGCRs', 'statusText': 'Getting battle reports...' },
+      activities: activityData.activities,
+      currentActivity: parseInt(activityData.activities[0].activityDetails.instanceId),
+      ManifestActivities
+    });
+    this.grabPGCRs(activityData.activities);
+
+  }
+
+  async grabPGCRs(activities) {
+    var PGCRs;
+    var count = 0;
+    for(var i in activities) {
+      bungie.GetPGCR(activities[i].activityDetails.instanceId).then((pgcr) => {
+        count++;
+        const instanceId = activities[i].activityDetails.instanceId;
+        PGCRs += { instanceId: pgcr };
+        if(count === 15) { this.finishedGrabbingPGCRs(PGCRs); }
+      }, this);
+    }
+  }
+
+  async finishedGrabbingPGCRs(PGCRs) {
+    this.setState({ status: { status: 'ready', statusText: 'Finished loading...' }, PGCRs });
   }
 
   render() {
     //Define Consts and Variables
     const { status, statusText } = this.state.status;
-    const { activities, ManifestActivities } = this.state;
+    const { activities, currentActivity, ManifestActivities, PGCRs } = this.state;
 
     //Check for errors, show loader, or display content.
     if(status === 'error') { return <Error error={ statusText } /> }
@@ -63,16 +90,12 @@ export class Activities extends Component {
             }, this)}
           </div>
           <div className="ActivityPGCR activityScrollbar" id="ActivityPGCR">
-            <Loader />
+            { PGCRs[currentActivity] }
           </div>
         </div>
       );
     }
-    else {
-      if(status === 'startUp') { return <Loader statusText={ statusText } /> }
-      if(status === 'checking') { return <Loader statusText={ statusText } /> }
-      if(status === 'getActivities') { return <Loader statusText={ statusText } /> }
-    }
+    else { return <Loader statusText={ statusText } /> }
   }
 }
 
