@@ -27,18 +27,7 @@
   border-right: 1px var(--DarkNavyBlue) solid;
   background-color: var(--DarkNavyBlue);
 }
-.lastActivity {
-  width: 100%;
-  border: 1px var(--DarkNavyBlue) solid;
-  border-top: 0px;
-  background-color: var(--NavyBlue);
-  min-height: 70px;
-  max-height: 70px;
-  overflow: hidden;
-  display: grid;
-  grid-template-columns: 15% 45% 20% 20%;
-}
-.previousActivity {
+.leftActivityContainer {
   width: 100%;
   border: 1px var(--DarkNavyBlue) solid;
   border-top: 0px;

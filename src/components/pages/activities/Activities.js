@@ -43,24 +43,42 @@ export class Activities extends Component {
       ManifestActivities
     });
     this.grabPGCRs(activityData.activities);
-
   }
-
   async grabPGCRs(activities) {
-    var PGCRs;
+    var PGCRs = {};
     var count = 0;
     for(var i in activities) {
-      bungie.GetPGCR(activities[i].activityDetails.instanceId).then((pgcr) => {
+      bungie.GetPGCR(activities[i].activityDetails.instanceId).then((pgcr) => { //eslint-disable-line no-loop-func
         count++;
-        const instanceId = activities[i].activityDetails.instanceId;
-        PGCRs += { instanceId: pgcr };
+        PGCRs[activities[count-1].activityDetails.instanceId] = pgcr;
         if(count === 15) { this.finishedGrabbingPGCRs(PGCRs); }
       }, this);
     }
   }
-
-  async finishedGrabbingPGCRs(PGCRs) {
-    this.setState({ status: { status: 'ready', statusText: 'Finished loading...' }, PGCRs });
+  async finishedGrabbingPGCRs(PGCRs) { this.setState({ status: { status: 'ready', statusText: 'Finished loading...' }, PGCRs }); }
+  async makeActiveDisplay(instanceId) { this.setState({ currentActivity: parseInt(instanceId) }); }
+  addCompletedClass(activity) {
+    if(activity.values.standing) {
+      const completed = activity.values.standing.basic.value === 0 ? 'completed' : 'failed';
+      const isSelected = this.state.currentActivity === parseInt(activity.activityDetails.instanceId) ? 'activeDisplay' : "";
+      return `leftActivityContainer ${ completed } ${ isSelected }`;
+    }
+    else {
+      if(activity.values.completed) {
+        const completed = activity.values.completed.basic.value === 0 ? 'completed' : 'failed';
+        const isSelected = this.state.currentActivity === parseInt(activity.activityDetails.instanceId) ? 'activeDisplay' : "";
+        return `leftActivityContainer ${ completed } ${ isSelected }`;
+      }
+      else {
+        const isSelected = this.state.currentActivity === parseInt(activity.activityDetails.instanceId) ? 'activeDisplay' : "";
+        return `leftActivityContainer neutral ${ isSelected }`;
+      }
+    }
+  }
+  adjustEntriesBoxSizing(activity) {
+    const instanceId = activity.activityDetails.instanceId;
+    if(activity.entries.length > 6) { const heightOf = activity.entries.length * 28 + 28; return { height: heightOf }; }
+    else { return { height: '196px' }; }
   }
 
   render() {
@@ -76,9 +94,10 @@ export class Activities extends Component {
           <div className="RecentActivitiesView activityScrollbar">
             { activities.slice(0, 15).map(function(activity) {
               var icon = `https://bungie.net${ManifestActivities[activity.activityDetails.referenceId].displayProperties.icon}`
+              var classProp = this.addCompletedClass(activity);
               return (
-                <div key={ activity.activityDetails.instanceId } className="previousActivity" id={ activity.activityDetails.instanceId } onClick={ (() => this.MakeActiveDisplay(activity.activityDetails.instanceId)) }>
-                  <img src={icon} style={{ height: '50px', width: '50px', marginTop: '7px', marginLeft: '7px' }} />
+                <div key={ activity.activityDetails.instanceId } className={ classProp } id={ activity.activityDetails.instanceId } onClick={ (() => this.makeActiveDisplay(activity.activityDetails.instanceId)) }>
+                  <img src={icon} alt="Icon" style={{ height: '50px', width: '50px', marginTop: '7px', marginLeft: '7px' }} />
                   <p className='activityTitle'>
                     <span style={{ display: 'block' }}> { modeTypes(activity.activityDetails.mode) }: { ManifestActivities[activity.activityDetails.referenceId].displayProperties.name } </span>
                     <span style={{ display: 'block' }}> Time Played: { activity.values.timePlayedSeconds.basic.displayValue } </span>
@@ -90,7 +109,31 @@ export class Activities extends Component {
             }, this)}
           </div>
           <div className="ActivityPGCR activityScrollbar" id="ActivityPGCR">
-            { PGCRs[currentActivity] }
+            <div className="pgcrContainer">
+              <div className='pgcrTopContainer' id={ `pgcrTopContainer_${ PGCRs[currentActivity].activityDetails.instanceId }` } style={ this.adjustEntriesBoxSizing(PGCRs[currentActivity]) } >
+               <div className='pgcrPlayers' id={ `pgcrPlayers_${ PGCRs[currentActivity].activityDetails.instanceId }` }>
+                 <div className='pgcrPlayersTitle'>
+                   <div>Players</div>
+                   <div>Kills</div>
+                   <div>Assists</div>
+                   <div>Deaths</div>
+                 </div>
+                 { PGCRs[currentActivity].entries.map((playerData) => (
+                    <div className="pgcrPlayersBlob" id={`player_${ playerData.player.destinyUserInfo.membershipId }`}>
+                      <div><span className="pgcrPlayerName" id={ playerData.player.destinyUserInfo.membershipId }>{ playerData.player.destinyUserInfo.displayName }</span></div>
+                      <div><span>{ playerData.values.kills.basic.displayValue }</span></div>
+                      <div><span>{ playerData.values.assists.basic.displayValue }</span></div>
+                      <div><span>{ playerData.values.deaths.basic.displayValue }</span></div>
+                    </div>
+                 )) }
+               </div>
+               <div className="pgcrImage" style={{ backgroundImage: `url(https://bungie.net${ ManifestActivities[PGCRs[currentActivity].activityDetails.referenceId].pgcrImage })` }}></div>
+             </div>
+              <div className="pgcrInfo" id={ `pgcrInfo_${ PGCRs[currentActivity].activityDetails.instanceId }` }></div>
+              <input type="button" className="btn btn-secondary toggleRawInfoBtn" style={{ fontSize: '13px', margin: '5px' }} onClick={ (() => this.ToggleRawInfo(PGCRs[currentActivity].activityDetails.instanceId)) } value="Toggle Raw Data" />
+              <input type="button" className="btn btn-info copyToClipboardBtn" style={{ fontSize: '13px', margin: '5px' }} onClick={ (() => this.CopyToClipboard(`#pgcrRawInfo_${ PGCRs[currentActivity].activityDetails.instanceId }`)) } value="Copy to clipboard" />
+              <div className="pgcrRawInfo hidden" id={ `pgcrRawInfo_${ PGCRs[currentActivity].activityDetails.instanceId }` }>{ JSON.stringify(PGCRs[currentActivity]) }</div>
+            </div>
           </div>
         </div>
       );

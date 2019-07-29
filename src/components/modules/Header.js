@@ -104,6 +104,7 @@ export class Header extends React.Component {
                 </div>
               );
             }
+            else { return null; }
           }, this) }
         </div>
         <div className="menu-switch-icon" onClick={() => { toggleMenuSlider() }} >≡</div>

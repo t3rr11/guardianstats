@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Loader from '../../modules/Loader';
 import Error from '../../modules/Error';
 
-import * as checks from '../../scripts/Checks';
 import * as extendedItems from '../../scripts/Items';
 
 export class Items extends Component {

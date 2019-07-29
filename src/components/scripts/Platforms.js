@@ -1,5 +1,3 @@
-import * as auth from '../requests/BungieAuth';
-
 export async function getPlatform(accountInfo) {
   const selectedAccount = localStorage.getItem('SelectedAccount');
   var platforms = [];
