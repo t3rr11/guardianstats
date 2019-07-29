@@ -32,6 +32,5 @@ export async function getCollectibles() { return (await db.table('manifest').toC
 export async function getPresentationNodes() { return (await db.table('manifest').toCollection().first()).value.DestinyPresentationNodeDefinition; }
 export async function getActivityModes() { return (await db.table('manifest').toCollection().first()).value.DestinyActivityModeDefinition; }
 export async function getActivityDefinition() { return (await db.table('manifest').toCollection().first()).value.DestinyActivityDefinition; }
-export async function getSingleActivityDefinition(referenceId) { return (await db.table('manifest').toCollection().first()).value.DestinyActivityDefinition[referenceId]; }
 
 export default db;
