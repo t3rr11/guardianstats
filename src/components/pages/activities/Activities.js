@@ -50,7 +50,7 @@ export class Activities extends Component {
     for(var i in activities) {
       bungie.GetPGCR(activities[i].activityDetails.instanceId).then((pgcr) => { //eslint-disable-line no-loop-func
         count++;
-        PGCRs[activities[count-1].activityDetails.instanceId] = pgcr;
+        PGCRs[pgcr.activityDetails.instanceId] = pgcr;
         if(count === 15) { this.finishedGrabbingPGCRs(PGCRs); }
       }, this);
     }
