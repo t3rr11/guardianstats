@@ -92,12 +92,13 @@
 .pgcrPlayersTitle {
   display: grid;
   background-color: var(--LightNavyBlue);
-  grid-template-columns: 70% 10% 10% 10%;
+  grid-template-columns: minmax(130px, 100%) 50px 70px 70px;
 }
 .pgcrPlayersBlob {
   display: grid;
   background-color: var(--NavyBlue);
-  grid-template-columns: 70% 10% 10% 10%;
+  grid-template-columns: minmax(130px, 100%) 50px 70px 70px;
+  font-size: 14px;
 }
 .pgcrPlayerName {
   cursor: pointer;

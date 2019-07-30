@@ -1,6 +1,8 @@
-@media only screen and (max-width: 600px) {
-  #search-form { display: none !important; }
+@media only screen and (max-width: 800px) {
   #itemCategories { grid-template-columns: 100% !important; grid-template-rows: 150% !important; margin-bottom: 50px !important; text-align: center !important; display: block !important; }
+  #LoginBtn { display: none !important; }
+  #character_select { display: none !important; }
+  .settings-cog { display: none !important; }
   .menu-bar { display: none !important; }
   .collectibleItemContainer:hover .collectibleItemInfo { display: none !important; }
   .menu-item:hover { border-bottom: 0px !important; }
@@ -25,7 +27,6 @@
     font-size: 24;
     height: 37px !important;
   }
-
   .ActivitiesContent { grid-template-columns: 100% !important; }
   .container { overflow: hidden !important; }
   #info-box { margin-top: 0px !important; }
