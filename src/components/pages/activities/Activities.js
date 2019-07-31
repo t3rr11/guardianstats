@@ -17,10 +17,7 @@ export class Activities extends Component {
     PGCRs: null
   }
 
-  async componentDidMount() {
-    this.startUpChecks();
-  }
-
+  async componentDidMount() { this.startUpChecks(); }
   async startUpChecks() {
     this.setState({ status: { status: 'checking', statusText: 'Doing some checks...' } });
     const checks = await startUpPageChecks();
@@ -30,7 +27,6 @@ export class Activities extends Component {
     }
     else { this.setState({ status: { status: 'error', statusText: checks } }); }
   }
-
   async grabActivityData() {
     const basicMI = JSON.parse(localStorage.getItem('BasicMembershipInfo'));
     const selectedCharacter = localStorage.getItem('SelectedCharacter');
@@ -58,25 +54,23 @@ export class Activities extends Component {
   async finishedGrabbingPGCRs(PGCRs) { this.setState({ status: { status: 'ready', statusText: 'Finished loading...' }, PGCRs }); }
   async makeActiveDisplay(instanceId) { this.setState({ currentActivity: parseInt(instanceId) }); }
   addCompletedClass(activity) {
-    if(activity.values.standing) {
-      const completed = activity.values.standing.basic.value === 0 ? 'completed' : 'failed';
-      const isSelected = this.state.currentActivity === parseInt(activity.activityDetails.instanceId) ? 'activeDisplay' : "";
-      return `leftActivityContainer ${ completed } ${ isSelected }`;
-    }
-    else {
-      if(activity.values.completed) {
-        const completed = activity.values.completed.basic.value === 0 ? 'completed' : 'failed';
-        const isSelected = this.state.currentActivity === parseInt(activity.activityDetails.instanceId) ? 'activeDisplay' : "";
+    const isSelected = this.state.currentActivity === parseInt(activity.activityDetails.instanceId) ? 'activeDisplay' : "";
+    if(activity.activityDetails.mode !== 6) {
+      if(activity.values.standing) {
+        const completed = activity.values.standing.basic.value === 0 ? 'completed' : 'failed';
         return `leftActivityContainer ${ completed } ${ isSelected }`;
       }
       else {
-        const isSelected = this.state.currentActivity === parseInt(activity.activityDetails.instanceId) ? 'activeDisplay' : "";
-        return `leftActivityContainer neutral ${ isSelected }`;
+        if(activity.values.completed) {
+          const completed = activity.values.completed.basic.value === 1 ? 'completed' : 'failed';
+          return `leftActivityContainer ${ completed } ${ isSelected }`;
+        }
+        else { return `leftActivityContainer neutral ${ isSelected }`; }
       }
     }
+    else { return `leftActivityContainer completed ${ isSelected }`; }
   }
   adjustEntriesBoxSizing(activity) {
-    const instanceId = activity.activityDetails.instanceId;
     if(activity.entries.length > 6) { const heightOf = activity.entries.length * 28 + 28; return { height: heightOf }; }
     else { return { height: '196px' }; }
   }
@@ -119,7 +113,7 @@ export class Activities extends Component {
                    <div>Deaths</div>
                  </div>
                  { PGCRs[currentActivity].entries.map((playerData) => (
-                    <div className="pgcrPlayersBlob" id={`player_${ playerData.player.destinyUserInfo.membershipId }`}>
+                    <div key={ playerData.player.destinyUserInfo.membershipId } className="pgcrPlayersBlob" id={`player_${ playerData.player.destinyUserInfo.membershipId }`}>
                       <div><span className="pgcrPlayerName" id={ playerData.player.destinyUserInfo.membershipId }>{ playerData.player.destinyUserInfo.displayName }</span></div>
                       <div><span>{ playerData.values.kills.basic.displayValue }</span></div>
                       <div><span>{ playerData.values.assists.basic.displayValue }</span></div>
