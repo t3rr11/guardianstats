@@ -42,7 +42,13 @@ export class Search extends Component {
             users !== null ?
             (users.length !== 0 ?
               (users.platformName ?
-                users.map(user => ( <div> { user.platformName } </div> )) : users.map(user => ( <div> { user.userInfo.displayName } </div> ))
+                users.map(user => ( <div> { user.platformName } </div> )) : users.map(user => {
+                  return (
+                    <div> { user.userInfo.blizzardDisplayName } </div> &&
+                    <div> { user.userInfo.psnDisplayName } </div> &&
+                    <div> { user.userInfo.xboxDisplayName } </div>
+                  )
+                })
               ) : 'No users found with that name on this platform.'
             ) : null
           }
