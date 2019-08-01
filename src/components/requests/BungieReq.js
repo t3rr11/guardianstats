@@ -22,6 +22,7 @@ async function apiRequest(path, isStat, isAuthRequired) {
 
 export const GetProfile = async (membershipType, membershipId, components) => apiRequest(`/Platform/Destiny2/${membershipType}/Profile/${membershipId}/?components=${components}`, false, false);
 export const GetActivityHistory = async (membershipType, membershipId, characterId, count, mode, page = 0) => apiRequest(`/Platform/Destiny2/${membershipType}/Account/${membershipId}/Character/${characterId}/Stats/Activities/?count=${count}&mode=${mode}&page=${page}`, false, false);
-export const GetPGCR = async (instanceId) => apiRequest(`/Platform/Destiny2/Stats/PostGameCarnageReport/${instanceId}/`, true, false)
+export const GetPGCR = async (instanceId) => apiRequest(`/Platform/Destiny2/Stats/PostGameCarnageReport/${instanceId}/`, true, false);
 export const GetManifestVersion = async () => apiRequest(`/Platform/Destiny2/Manifest/`, false, false);
-export const GetManifest = async url => fetch(`https://www.bungie.net${ url }`).then(a => a.json());
+export const GetManifest = async url => fetch(`https://www.bungie.net${url}`).then(a => a.json());
+export const SearchUsers = async username => apiRequest(`/Platform/User/SearchUsers/?q=${username}`, false, false);

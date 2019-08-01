@@ -30,13 +30,13 @@ export class Header extends React.Component {
 
   async setPlatform () {
     var selectBox = document.getElementById('LoginBtn');
-    var plaform = selectBox.options[selectBox.selectedIndex].value;
-    localStorage.setItem('SelectedAccount', plaform);
-    if(plaform === 'BNET') { await auth.SetCurrentMembershipInfo(this.props.accountInfo.blizzardDisplayName.replace('#', '%23')); window.location.reload(); }
-    else if(plaform === 'PSN') { await auth.SetCurrentMembershipInfo(this.props.accountInfo.psnDisplayName); window.location.reload(); }
-    else if(plaform === 'XBL') { await auth.SetCurrentMembershipInfo(this.props.accountInfo.xboxDisplayName); window.location.reload(); }
-    else if(plaform === 'STADIA') { await auth.SetCurrentMembershipInfo(this.props.accountInfo.stadiaDisplayName); window.location.reload(); }
-    else if(plaform === 'STEAM') { await auth.SetCurrentMembershipInfo(this.props.accountInfo.steamDisplayName); window.location.reload(); }
+    var platform = selectBox.options[selectBox.selectedIndex].value;
+    localStorage.setItem('SelectedAccount', platform);
+    if(platform === 'BNET') { await auth.SetCurrentMembershipInfo(this.props.accountInfo.blizzardDisplayName.replace('#', '%23')); window.location.reload(); }
+    else if(platform === 'PSN') { await auth.SetCurrentMembershipInfo(this.props.accountInfo.psnDisplayName); window.location.reload(); }
+    else if(platform === 'XBL') { await auth.SetCurrentMembershipInfo(this.props.accountInfo.xboxDisplayName); window.location.reload(); }
+    else if(platform === 'STADIA') { await auth.SetCurrentMembershipInfo(this.props.accountInfo.stadiaDisplayName); window.location.reload(); }
+    else if(platform === 'STEAM') { await auth.SetCurrentMembershipInfo(this.props.accountInfo.steamDisplayName); window.location.reload(); }
   }
 
   async changeCharacter(characterId) { console.log(characterId); localStorage.setItem('SelectedCharacter', characterId); window.location.reload(); }
