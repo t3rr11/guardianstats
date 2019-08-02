@@ -32,8 +32,8 @@ export class Search extends Component {
             <option value="BNET">BNET</option>
             <option value="PSN">PSN</option>
             <option value="XBL">XBL</option>
-            <option value="Stadia">Stadia</option>
-            <option value="Steam">Steam</option>
+            <option value="STADIA">STADIA</option>
+            <option value="STEAM">STEAM</option>
           </select>
           <input id="username" type="text" className="form-control" placeholder="Username..." aria-label="Username..." data-lpignore="true" onKeyPress={ event => { if(event.key === 'Enter'){ this.searchForUser(event.target.value); } } } />
         </div>
@@ -45,9 +45,11 @@ export class Search extends Component {
                 users.map(user => ( <div> { user.platformName } </div> )) : users.map(user => {
                   return(
                     <React.Fragment>
-                      {user.userInfo.blizzardDisplayName ? <div>BNET: {user.userInfo.blizzardDisplayName}</div> : null}
-                      {user.userInfo.psnDisplayName ? <div>PSN: {user.userInfo.psnDisplayName}</div> : null}
-                      {user.userInfo.xboxDisplayName ? <div>XBL: {user.userInfo.xboxDisplayName}</div> : null}
+                      {user.userInfo.blizzardDisplayName ? <div className='searchResultContainer BNET'><div className='searchResultIcon BNET'>BNET: </div><div className='searchResultName'>{user.userInfo.blizzardDisplayName}</div></div> : null}
+                      {user.userInfo.psnDisplayName ? <div className='searchResultContainer PSN'><div className='searchResultIcon PSN'>PSN: </div><div className='searchResultName'>{user.userInfo.psnDisplayName}</div></div> : null}
+                      {user.userInfo.xboxDisplayName ? <div className='searchResultContainer XBL'><div className='searchResultIcon XBL'>XBL: </div><div className='searchResultName'>{user.userInfo.xboxDisplayName}</div></div> : null}
+                      {user.userInfo.stadiaDisplayName ? <div className='searchResultContainer STADIA'><div className='searchResultIcon STADIA'>STADIA: </div><div className='searchResultName'>{user.userInfo.stadiaDisplayName}</div></div> : null}
+                      {user.userInfo.steamDisplayName ? <div className='searchResultContainer STEAM'><div className='searchResultIcon STEAM'>STEAM: </div><div className='searchResultName'>{user.userInfo.steamDisplayName}</div></div> : null}
                     </React.Fragment>
                   )
                 })
