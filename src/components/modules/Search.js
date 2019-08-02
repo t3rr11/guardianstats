@@ -43,10 +43,12 @@ export class Search extends Component {
             (users.length !== 0 ?
               (users.platformName ?
                 users.map(user => ( <div> { user.platformName } </div> )) : users.map(user => {
-                  return (
-                    <div> { user.userInfo.blizzardDisplayName } </div> &&
-                    <div> { user.userInfo.psnDisplayName } </div> &&
-                    <div> { user.userInfo.xboxDisplayName } </div>
+                  return(
+                    <React.Fragment>
+                      {user.userInfo.blizzardDisplayName ? <div>BNET: {user.userInfo.blizzardDisplayName}</div> : null}
+                      {user.userInfo.psnDisplayName ? <div>PSN: {user.userInfo.psnDisplayName}</div> : null}
+                      {user.userInfo.xboxDisplayName ? <div>XBL: {user.userInfo.xboxDisplayName}</div> : null}
+                    </React.Fragment>
                   )
                 })
               ) : 'No users found with that name on this platform.'
