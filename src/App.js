@@ -10,6 +10,7 @@ import Error from './components/modules/Error';
 //Pages
 import Home from './components/pages/home/Home';
 import Profile from './components/pages/profile/Profile';
+import Snoop from './components/pages/snoop/Snoop';
 import Items from './components/pages/items/Items';
 import About from './components/pages/about/About';
 import Activities from './components/pages/activities/Activities';
@@ -97,7 +98,7 @@ class App extends React.Component {
   async forceManifestUpdate() { this.getManifest(); }
   async checkProfile() {
     if(await checks.checkLogin()) {
-      if(await checks.checkPlatform()){ this.setState({ status: { status: 'getProfile', statusText: 'Grabbing profile info...' } }) }
+      if(await checks.checkPlatform()){ this.setState({ status: { status: 'getProfile', statusText: 'Please wait...' } }) }
       else { this.setState({ status: { status: 'ready', statusText: 'Ready to go!' } }) }
     }
     else { this.setState({ status: { status: 'ready', statusText: 'Ready to go!' } }) }
@@ -135,6 +136,7 @@ class App extends React.Component {
                   <Route path="/activities" render={ props => (<Activities />) } />
                   <Route path="/items" render={ props => (<Items />) } />
                   <Route path="/profile" render={ props => (<Profile />) } />
+                  <Route path="/snoop" render={ props => (<Snoop membershipId={ props.location.pathname.replace('/snoop/', '') } />) } />
                   <Route path="*" component={ NotFound } />
                 </Switch>
               </div>

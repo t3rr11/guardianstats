@@ -6,7 +6,7 @@ export class Error extends Component {
     return(
       <div className="error-container">
         <div className="error-icon" style={{ backgroundImage: 'url("./images/icons/error.png")' }}></div>
-        <h5>{ this.props.error }</h5>
+        <p style={{ marginTop: '-35px' }}>{ this.props.error }</p>
       </div>
     );
   }

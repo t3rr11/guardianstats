@@ -4,7 +4,7 @@ import Error from '../../modules/Error';
 
 import { startUpPageChecks } from '../../scripts/Checks';
 
-export class Profile extends Component {
+export class Template extends Component {
 
   state = {
     status: { error: null, status: 'startUp', statusText: 'Loading text here...' },
@@ -31,7 +31,6 @@ export class Profile extends Component {
   render() {
     //Define Consts and Variables
     const { status, statusText } = this.state.status;
-    const { membershipId } = this.props;
 
     //Check for errors, show loader, or display content.
     if(status === 'error') { return <Error error={ statusText } /> }
@@ -49,4 +48,4 @@ export class Profile extends Component {
   }
 }
 
-export default Profile;
+export default Template;

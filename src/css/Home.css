@@ -43,24 +43,85 @@
   outline: none;
   box-shadow: 0px 0px 2px white;
 }
+.search-output { margin-top: 5px; }
 .searchResultContainer {
+  -webkit-touch-callout: none; -webkit-user-select: none; -khtml-user-select: none;
+  -moz-user-select: none; -ms-user-select: none; user-select: none;
   display: inline-block;
   background-color: var(--LightNavyBlue);
-  border: 1px var(--NavyBlue) solid;
   border-radius: 10px;
-  margin: 2px;
+  font-size: 14px;
+  margin: 3px;
+  padding: 2px;
+  cursor: pointer;
+}
+.searchResultIcon.BNET {
+  background-color: slateblue;
+  display: inline-block;
   padding: 3px;
-  color: #8c8c8;
+  border-radius: 10px 0px 0px 10px;
+  height: 27px;
+  background-image: url("/images/icons/platforms/bnet.png");
+  background-position: center;
+  background-size: 20px 20px;
+  background-repeat: no-repeat;
+  width: 25px;
 }
-.searchResultContainer.BNET { border: 1px yellow solid; background-color: darkkhaki; }
-.searchResultContainer.PSN { border: 1px cornflowerblue solid; background-color: royalblue; }
-.searchResultContainer.XBL { border: 1px limegreen solid; background-color: forestgreen; }
-.searchResultContainer.STEAM { border: 1px red solid; }
-.searchResultContainer.STADIA { border: 1px purple solid; }
-.searchResultIcon {
+.searchResultIcon.BNET:before { display: inline-block; content: ""; }
+.searchResultIcon.PSN {
+  background-color: steelblue;
   display: inline-block;
-  margin-right: 5px;
+  padding: 3px;
+  border-radius: 10px 0px 0px 10px;
+  height: 27px;
+  background-image: url("/images/icons/platforms/psn.png");
+  background-position: center;
+  background-size: 20px 20px;
+  background-repeat: no-repeat;
+  width: 25px;
 }
-.searchResultName {
+.searchResultIcon.PSN:before { display: inline-block; content: ""; }
+.searchResultIcon.XBL {
+  background-color: seagreen;
   display: inline-block;
+  padding: 3px;
+  border-radius: 10px 0px 0px 10px;
+  height: 27px;
+  background-image: url("/images/icons/platforms/xbl.png");
+  background-position: center;
+  background-size: 20px 20px;
+  background-repeat: no-repeat;
+  width: 25px;
 }
+.searchResultIcon.XBL:before { display: inline-block; content: ""; }
+.searchResultIcon.STADIA {
+  background-color: tomato;
+  display: inline-block;
+  padding: 3px;
+  border-radius: 10px 0px 0px 10px;
+  height: 27px;
+  background-image: url("/images/icons/platforms/stadia.png");
+  background-position: center;
+  background-size: 20px 20px;
+  background-repeat: no-repeat;
+  width: 25px;
+}
+.searchResultIcon.STADIA:before { display: inline-block; content: ""; }
+.searchResultIcon.STEAM {
+  background-color: tomato;
+  display: inline-block;
+  padding: 3px;
+  border-radius: 10px 0px 0px 10px;
+  height: 27px;
+  background-image: url("/images/icons/platforms/steam.png");
+  background-position: center;
+  background-size: 20px 20px;
+  background-repeat: no-repeat;
+  width: 25px;
+}
+.searchResultIcon.STEAM:before { display: inline-block; content: ""; }
+.searchResultName.BNET { background-color: darkslateblue; display: inline-block; padding: 3px; border-radius: 0px 10px 10px 0px; } .searchResultName.BNET:hover { background-color: #5548a2; }
+.searchResultName.PSN { background-color: #325d82; display: inline-block; padding: 3px; border-radius: 0px 10px 10px 0px; } .searchResultName.PSN:hover { background-color: #386890; }
+.searchResultName.XBL { background-color: #20613c; display: inline-block; padding: 3px; border-radius: 0px 10px 10px 0px; } .searchResultName.XBL:hover { background-color: #256f46; }
+.searchResultName.STADIA { background-color: tomato; display: inline-block; padding: 3px; border-radius: 0px 10px 10px 0px; }
+.searchResultName.STEAM { background-color: tomato; display: inline-block; padding: 3px; border-radius: 0px 10px 10px 0px; }
