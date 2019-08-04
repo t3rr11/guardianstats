@@ -26,3 +26,4 @@ export const GetPGCR = async (instanceId) => apiRequest(`/Platform/Destiny2/Stat
 export const GetManifestVersion = async () => apiRequest(`/Platform/Destiny2/Manifest/`, false, false);
 export const GetManifest = async url => fetch(`https://www.bungie.net${url}`).then(a => a.json());
 export const SearchUsers = async username => apiRequest(`/Platform/User/SearchUsers/?q=${username}`, false, false);
+export const GetMembershipId = async platformName => apiRequest(`/Platform/Destiny2/SearchDestinyPlayer/-1/${ platformName }/`, false, false);

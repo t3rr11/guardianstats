@@ -44,9 +44,12 @@ export class Header extends React.Component {
   render() {
     const { accountInfo } = this.props;
     const { platform, platforms } = this.state.platform;
-    const characters = JSON.parse(localStorage.getItem('ProfileInfo')).characters.data;
-    const characterIds = JSON.parse(localStorage.getItem('ProfileInfo')).profile.data.characterIds;
-    const selectedCharacter = localStorage.getItem('SelectedCharacter');
+    var characters, characterIds, selectedCharacter = null;
+    if(localStorage.getItem('ProfileInfo')) {
+      characters = JSON.parse(localStorage.getItem('ProfileInfo')).characters.data;
+      characterIds = JSON.parse(localStorage.getItem('ProfileInfo')).profile.data.characterIds;
+      selectedCharacter = localStorage.getItem('SelectedCharacter');
+    }
     const menuItems = (
       <React.Fragment>
         <li className="menu-item Home" id="Home"><Link to="/home">Home</Link></li>
@@ -121,7 +124,6 @@ export class Header extends React.Component {
         <div className="mobile-menu-bar disable-hl"> { menuItems } </div>
       </header>
     );
-
     if(accountInfo) {
       if(platforms !== null) {
         if(platform === null) { return( SelectPlatformHeader() ); }

@@ -10,7 +10,7 @@ import Error from './components/modules/Error';
 //Pages
 import Home from './components/pages/home/Home';
 import Profile from './components/pages/profile/Profile';
-import Snoop from './components/pages/snoop/Snoop';
+import Inspect from './components/pages/inspect/Inspect';
 import Items from './components/pages/items/Items';
 import About from './components/pages/about/About';
 import Activities from './components/pages/activities/Activities';
@@ -128,15 +128,15 @@ class App extends React.Component {
               <Header accountInfo={ JSON.parse(localStorage.getItem('BungieAccount')) } />
               <div className="page-content" id="page-content">
                 <Switch>
-                  <Route exact path="/" component={ Home }/>
+                  <Route exact path="/" render={ props => (<Home inspectPlayer={ this.inspectPlayer } />) } />
                   <Route path="/register" component={ Register }/>
                   <Route path="/failed" component={ Failed } />
-                  <Route path="/home" component={ Home } />
+                  <Route path="/home" render={ props => (<Home inspectPlayer={ this.inspectPlayer } />) } />
                   <Route path="/about" component={ About } />
                   <Route path="/activities" render={ props => (<Activities />) } />
                   <Route path="/items" render={ props => (<Items />) } />
                   <Route path="/profile" render={ props => (<Profile />) } />
-                  <Route path="/snoop" render={ props => (<Snoop membershipId={ props.location.pathname.replace('/snoop/', '') } />) } />
+                  <Route path="/inspect" render={ props => (<Inspect membershipInfo={ props.location.pathname.replace('/inspect/', '') } />) } />
                   <Route path="*" component={ NotFound } />
                 </Switch>
               </div>
@@ -151,11 +151,12 @@ class App extends React.Component {
               <Header />
               <div className="page-content" id="page-content">
                 <Switch>
-                  <Route exact path="/" component={ Home }/>
+                  <Route exact path="/" render={ props => (<Home inspectPlayer={ this.inspectPlayer } />) } />
                   <Route path="/register" component={ Register }/>
                   <Route path="/failed" component={ Failed } />
-                  <Route path="/home" component={ Home } />
+                  <Route path="/home" render={ props => (<Home inspectPlayer={ this.inspectPlayer } />) } />
                   <Route path="/about" component={ About } />
+                  <Route path="/inspect" render={ props => (<Inspect membershipInfo={ props.location.pathname.replace('/inspect/', '') } />) } />
                   <Route path="*" component={ Login } />
                 </Switch>
               </div>

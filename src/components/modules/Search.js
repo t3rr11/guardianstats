@@ -7,6 +7,10 @@ export class Search extends Component {
     users: null
   }
 
+  inspectPlayer = (player, platform) => {
+    this.props.inspectPlayer(player, platform);
+  }
+
   async searchForUser(input) {
     const searchPlatform = document.getElementById('membership-type').value;
     const returnedUsers = await bungie.SearchUsers(input);
@@ -45,11 +49,11 @@ export class Search extends Component {
                 users.map(user => ( <div> { user.platformName } </div> )) : users.map(user => {
                   return(
                     <React.Fragment>
-                      {user.userInfo.blizzardDisplayName ? <div className='searchResultContainer BNET'><div className='searchResultIcon BNET'></div><div className='searchResultName BNET'>{user.userInfo.blizzardDisplayName}</div></div> : null}
-                      {user.userInfo.psnDisplayName ? <div className='searchResultContainer PSN'><div className='searchResultIcon PSN'></div><div className='searchResultName PSN'>{user.userInfo.psnDisplayName}</div></div> : null}
-                      {user.userInfo.xboxDisplayName ? <div className='searchResultContainer XBL'><div className='searchResultIcon XBL'></div><div className='searchResultName XBL'>{user.userInfo.xboxDisplayName}</div></div> : null}
-                      {user.userInfo.stadiaDisplayName ? <div className='searchResultContainer STADIA'><div className='searchResultIcon STADIA'></div><div className='searchResultName STADIA'>{user.userInfo.stadiaDisplayName}</div></div> : null}
-                      {user.userInfo.steamDisplayName ? <div className='searchResultContainer STEAM'><div className='searchResultIcon STEAM'></div><div className='searchResultName STEAM'>{user.userInfo.steamDisplayName}</div></div> : null}
+                      {user.userInfo.blizzardDisplayName ? <div className='searchResultContainer BNET' onClick={ (() => this.inspectPlayer(user.userInfo.blizzardDisplayName, '4')) } ><div className='searchResultIcon BNET'></div><div className='searchResultName BNET'>{user.userInfo.blizzardDisplayName}</div></div> : null}
+                      {user.userInfo.psnDisplayName ? <div className='searchResultContainer PSN' onClick={ (() => this.inspectPlayer(user.userInfo.psnDisplayName, '2')) } ><div className='searchResultIcon PSN'></div><div className='searchResultName PSN'>{user.userInfo.psnDisplayName}</div></div> : null}
+                      {user.userInfo.xboxDisplayName ? <div className='searchResultContainer XBL' onClick={ (() => this.inspectPlayer(user.userInfo.xboxDisplayName, '1')) } ><div className='searchResultIcon XBL'></div><div className='searchResultName XBL'>{user.userInfo.xboxDisplayName}</div></div> : null}
+                      {user.userInfo.stadiaDisplayName ? <div className='searchResultContainer STADIA' onClick={ (() => this.inspectPlayer(user.userInfo.stadiaDisplayName, '5')) } ><div className='searchResultIcon STADIA'></div><div className='searchResultName STADIA'>{user.userInfo.stadiaDisplayName}</div></div> : null}
+                      {user.userInfo.steamDisplayName ? <div className='searchResultContainer STEAM' onClick={ (() => this.inspectPlayer(user.userInfo.steamDisplayName, '3')) } ><div className='searchResultIcon STEAM'></div><div className='searchResultName STEAM'>{user.userInfo.steamDisplayName}</div></div> : null}
                     </React.Fragment>
                   )
                 })
