@@ -11,7 +11,6 @@ export async function StopAllTimers() {
 }
 export async function StopTimer(timer) {
   if(timer == 'Auth') { try { clearInterval(AuthTimer); AuthTimer = null; console.log('Auth Timer Stopped'); } catch (err) { } }
-  if(timer == 'Activity') { try { clearInterval(ActivityWatcher); ActivityWatcher = null; console.log('Activity Watcher Stopped'); } catch (err) { } }
 }
 export async function StartAuthTimer() {
   var tokenExpiresIn;
@@ -30,9 +29,4 @@ export async function StartAuthTimer() {
       document.getElementById('DevBox').innerHTML = `Access Token expires in: ${ misc.formatTime(tokenExpiresIn) }`;
     }
   }, 1000);
-}
-export async function StartActivityTimer() {
-  try { if(ActivityWatcher != null){ StopTimer('Activity'); } } catch (err) {  }
-  console.log('Activity Watcher Started.');
-  ActivityWatcher = setInterval(activities.checkActivityUpdates, 30000);
 }

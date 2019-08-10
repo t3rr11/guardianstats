@@ -6,9 +6,11 @@ import { startUpPageChecks } from '../../scripts/Checks';
 import { modeTypes } from '../../scripts/ModeTypes';
 import * as bungie from '../../requests/BungieReq';
 import * as db from '../../requests/Database';
+import * as timers from '../../Timers';
+
+var ActivityWatcher = null;
 
 export class Activities extends Component {
-
   state = {
     status: { error: null, status: 'startUp', statusText: 'Loading recent activites...' },
     activities: null,
@@ -16,8 +18,8 @@ export class Activities extends Component {
     ManifestActivities: null,
     PGCRs: null
   }
-
-  async componentDidMount() { this.startUpChecks(); }
+  async componentDidMount() { this.startUpChecks(); this.startActivityTimer(); }
+  async componentWillUnmount() { this.stopActivityTimer('Activity'); }
   async startUpChecks() {
     this.setState({ status: { status: 'checking', statusText: 'Doing some checks...' } });
     const checks = await startUpPageChecks();
@@ -73,6 +75,12 @@ export class Activities extends Component {
   adjustEntriesBoxSizing(activity) {
     if(activity.entries.length > 6) { const heightOf = activity.entries.length * 28 + 28; return { height: heightOf }; }
     else { return { height: '196px' }; }
+  }
+
+  startActivityTimer() { ActivityWatcher = setInterval(this.checkActivityUpdates, 30000); console.log('Activity Watcher Started.'); }
+  stopActivityTimer() { clearInterval(ActivityWatcher); ActivityWatcher = null; console.log('Activity Watcher Stopped'); }
+  checkActivityUpdates() {
+    
   }
 
   render() {
@@ -134,10 +142,6 @@ export class Activities extends Component {
     }
     else { return <Loader statusText={ statusText } /> }
   }
-}
-
-export function checkActivityUpdates() {
-
 }
 
 export default Activities;
