@@ -6,17 +6,16 @@ import { startUpPageChecks } from '../../scripts/Checks';
 import { modeTypes } from '../../scripts/ModeTypes';
 import * as bungie from '../../requests/BungieReq';
 import * as db from '../../requests/Database';
-import * as timers from '../../Timers';
 
 var ActivityWatcher = null;
 
 export class Activities extends Component {
   state = {
     status: { error: null, status: 'startUp', statusText: 'Loading recent activites...' },
-    activities: null,
+    activities: { },
     currentActivity : null,
     ManifestActivities: null,
-    PGCRs: null
+    PGCRs: { }
   }
   async componentDidMount() { this.startUpChecks(); this.startActivityTimer(); }
   async componentWillUnmount() { this.stopActivityTimer('Activity'); }
@@ -40,20 +39,32 @@ export class Activities extends Component {
       currentActivity: parseInt(activityData.activities[0].activityDetails.instanceId),
       ManifestActivities
     });
-    this.grabPGCRs(activityData.activities);
+    this.grabPGCRs(activityData.activities, null);
   }
-  async grabPGCRs(activities) {
-    var PGCRs = {};
+  async grabPGCRs(activities, newActivitiesArray) {
+    var PGCRs = this.state.PGCRs;
     var count = 0;
     for(var i in activities) {
       bungie.GetPGCR(activities[i].activityDetails.instanceId).then((pgcr) => { //eslint-disable-line no-loop-func
         count++;
         PGCRs[pgcr.activityDetails.instanceId] = pgcr;
-        if(count === 15) { this.finishedGrabbingPGCRs(PGCRs); }
+        if(count === activities.length) { this.finishedGrabbingPGCRs(PGCRs, newActivitiesArray); }
       }, this);
     }
   }
-  async finishedGrabbingPGCRs(PGCRs) { this.setState({ status: { status: 'ready', statusText: 'Finished loading...' }, PGCRs }); }
+  finishedGrabbingPGCRs(PGCRs, newActivitiesArray) {
+    if(newActivitiesArray !== null) {
+      this.setState({
+        status: { status: 'ready', statusText: 'Finished loading...' },
+        activities: newActivitiesArray,
+        currentActivity: parseInt(newActivitiesArray[0].activityDetails.instanceId),
+        PGCRs
+      });
+    }
+    else {
+      this.setState({ status: { status: 'ready', statusText: 'Finished loading...' }, PGCRs });
+    }
+  }
   async makeActiveDisplay(instanceId) { this.setState({ currentActivity: parseInt(instanceId) }); }
   addCompletedClass(activity) {
     const isSelected = this.state.currentActivity === parseInt(activity.activityDetails.instanceId) ? 'activeDisplay' : "";
@@ -77,10 +88,28 @@ export class Activities extends Component {
     else { return { height: '196px' }; }
   }
 
+  //Timers
   startActivityTimer() { ActivityWatcher = setInterval(this.checkActivityUpdates, 30000); console.log('Activity Watcher Started.'); }
   stopActivityTimer() { clearInterval(ActivityWatcher); ActivityWatcher = null; console.log('Activity Watcher Stopped'); }
-  checkActivityUpdates() {
-    
+  checkActivityUpdates = async () => {
+    const basicMI = JSON.parse(localStorage.getItem('BasicMembershipInfo'));
+    const selectedCharacter = localStorage.getItem('SelectedCharacter');
+    const previousActivities = this.state.activities;
+    const recentActivityData = (await bungie.GetActivityHistory(basicMI.membershipType, basicMI.membershipId, selectedCharacter, 15, 0)).activities;
+    var newActivities = [];
+    var updatesFound = 0;
+    recentActivityData.map(function(activity) {
+      if(!previousActivities.find(ad => ad.period === activity.period)) {
+        newActivities.push(activity);
+        updatesFound++;
+      }
+    }, this);
+    if(updatesFound > 0) {
+      var newActivitiesArray = previousActivities;
+      for(var i in newActivities) { newActivitiesArray.unshift(newActivities[i]) }
+      console.log('Found: ' + updatesFound + " new activities.");
+      this.grabPGCRs(newActivities, newActivitiesArray);
+    }
   }
 
   render() {
@@ -95,7 +124,7 @@ export class Activities extends Component {
         <div className="ActivitiesContent">
           <div className="RecentActivitiesView activityScrollbar">
             { activities.slice(0, 15).map(function(activity) {
-              var icon = `https://bungie.net${ManifestActivities[activity.activityDetails.referenceId].displayProperties.icon}`
+              var icon = `https://bungie.net${ManifestActivities[activity.activityDetails.directorActivityHash].displayProperties.icon}`
               var classProp = this.addCompletedClass(activity);
               return (
                 <div key={ activity.activityDetails.instanceId } className={ classProp } id={ activity.activityDetails.instanceId } onClick={ (() => this.makeActiveDisplay(activity.activityDetails.instanceId)) }>
