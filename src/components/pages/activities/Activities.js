@@ -16,7 +16,7 @@ export class Activities extends Component {
     activities: { },
     currentActivity : null,
     ManifestActivities: null,
-    ManifestMedals: null,
+    ManifestItems: null,
     PGCRs: { }
   }
   async componentDidMount() { this.startUpChecks(); this.startActivityTimer(); }
@@ -36,11 +36,13 @@ export class Activities extends Component {
     const selectedCharacter = localStorage.getItem('SelectedCharacter');
     const activityData = await bungie.GetActivityHistory(basicMI.membershipType, basicMI.membershipId, selectedCharacter, 15, 0);
     const ManifestActivities = await db.getActivityDefinition();
+    const ManifestItems = await db.getInventoryItemDefinition();
     this.setState({
       status: { status: 'gettingPGCRs', 'statusText': 'Getting battle reports...' },
       activities: activityData.activities,
       currentActivity: parseInt(activityData.activities[0].activityDetails.instanceId),
-      ManifestActivities
+      ManifestActivities,
+      ManifestItems
     });
     this.grabPGCRs(activityData.activities, null);
   }
@@ -112,7 +114,7 @@ export class Activities extends Component {
   render() {
     //Define Consts and Variables
     const { status, statusText } = this.state.status;
-    const { activities, currentActivity, ManifestActivities, PGCRs } = this.state;
+    const { activities, currentActivity, ManifestActivities, ManifestItems, PGCRs } = this.state;
 
     //Check for errors, show loader, or display content.
     if(status === 'error') { return <Error error={ statusText } /> }
@@ -137,7 +139,7 @@ export class Activities extends Component {
             }, this)}
           </div>
           <div className="ActivityPGCR activityScrollbar" id="ActivityPGCR">
-            { PGCRGeneration.generate(ManifestActivities, PGCRs, currentActivity) }
+            { PGCRGeneration.generate(ManifestActivities, ManifestItems, PGCRs, currentActivity) }
           </div>
         </div>
       );

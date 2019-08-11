@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
 
-export function generate(ManifestActivities, PGCRs, currentActivity) {
+export function generate(ManifestActivities, ManifestItems, PGCRs, currentActivity) {
   if(ManifestActivities[PGCRs[currentActivity].activityDetails.referenceId].isPvP === true) {
     //If mode is PVP show PvP Display
     return (
       <div className="pgcrContainer">
         <div className="pgcrTopContainer" id={ `pgcrTopContainer_${ PGCRs[currentActivity].activityDetails.instanceId }` } style={ adjustEntriesBoxSizing(PGCRs[currentActivity]) } >
          <div className="pgcrPlayers" id={ `pgcrPlayers_${ PGCRs[currentActivity].activityDetails.instanceId }` }>
-           { generateTeamData(PGCRs, currentActivity, 'pvp', 'alpha') }
-           { generateTeamData(PGCRs, currentActivity, 'pvp', 'bravo') }
+           { generateTeamData(ManifestItems, PGCRs, currentActivity, 'pvp', 'alpha') }
+           { generateTeamData(ManifestItems, PGCRs, currentActivity, 'pvp', 'bravo') }
          </div>
          <div className="pgcrImage" style={{ backgroundImage: `url(https://bungie.net${ ManifestActivities[PGCRs[currentActivity].activityDetails.referenceId].pgcrImage })` }}></div>
        </div>
-       { generateExtendedData(PGCRs, currentActivity, 'pvp') }
+       { generateExtendedData(ManifestItems, PGCRs, currentActivity, 'pvp') }
     </div>
     )
   }
@@ -22,8 +22,8 @@ export function generate(ManifestActivities, PGCRs, currentActivity) {
       <div className="pgcrContainer">
         <div className="pgcrTopContainer" id={ `pgcrTopContainer_${ PGCRs[currentActivity].activityDetails.instanceId }` } style={ adjustEntriesBoxSizing(PGCRs[currentActivity]) } >
          <div className="pgcrPlayers" id={ `pgcrPlayers_${ PGCRs[currentActivity].activityDetails.instanceId }` }>
-           { generateTeamData(PGCRs, currentActivity, 'other', null) }
-           { generatePlayerData(PGCRs, currentActivity, 'other', null) }
+           { generateTeamData(ManifestItems, PGCRs, currentActivity, 'other', null) }
+           { generatePlayerData(ManifestItems, PGCRs, currentActivity, 'other', null) }
          </div>
          <div className="pgcrImage" style={{ backgroundImage: `url(https://bungie.net${ ManifestActivities[PGCRs[currentActivity].activityDetails.referenceId].pgcrImage })` }}></div>
        </div>
@@ -32,7 +32,7 @@ export function generate(ManifestActivities, PGCRs, currentActivity) {
   }
 }
 
-const generateTeamData = (PGCRs, currentActivity, modeType, team) => {
+const generateTeamData = (ManifestItems, PGCRs, currentActivity, modeType, team) => {
   if(team === null) {
     return <div className="pgcrPlayersTitle">
       <div>Players</div>
@@ -51,7 +51,7 @@ const generateTeamData = (PGCRs, currentActivity, modeType, team) => {
         <div title="K/D Ratio">K/D</div>
         <div title="Efficiency - K+A/D">EFF</div>
       </div>
-      { generatePlayerData(PGCRs, currentActivity, 'pvp', 'alpha') }
+      { generatePlayerData(ManifestItems, PGCRs, currentActivity, 'pvp', 'alpha') }
     </div>
   }
   else if(team === 'bravo') {
@@ -64,11 +64,11 @@ const generateTeamData = (PGCRs, currentActivity, modeType, team) => {
         <div title="K/D Ratio">K/D</div>
         <div title="Efficiency - K+A/D">EFF</div>
       </div>
-      { generatePlayerData(PGCRs, currentActivity, 'pvp', 'bravo') }
+      { generatePlayerData(ManifestItems, PGCRs, currentActivity, 'pvp', 'bravo') }
     </div>
   }
 }
-const generatePlayerData = (PGCRs, currentActivity, modeType, team) => {
+const generatePlayerData = (ManifestItems, PGCRs, currentActivity, modeType, team) => {
   if(team === null) {
     return PGCRs[currentActivity].entries.map((playerData) => (
       <div key={ playerData.player.destinyUserInfo.membershipId } className={ checkPlayer(playerData.player.destinyUserInfo.displayName, team) } id={`player_${ playerData.player.destinyUserInfo.membershipId }`}>
@@ -112,20 +112,22 @@ const generatePlayerData = (PGCRs, currentActivity, modeType, team) => {
     })
   }
 }
-const generateExtendedData = (PGCRs, currentActivity, modeType) => {
+const generateExtendedData = (ManifestItems, PGCRs, currentActivity, modeType) => {
   const allPlayers = PGCRs[currentActivity].entries.sort(function(a, b){return a.score - b.score});
     return allPlayers.map((playerData) => (
-    <div className="pgcrExtendedInfo">
+    <div key={ playerData.player.destinyUserInfo.membershipId } className="pgcrExtendedInfo">
       <div className="pgcrExtendedInfoStats">
-        <span className="pgcrPlayerName">{ playerData.player.destinyUserInfo.displayName }</span>
-        <span>{ playerData.values.kills.basic.displayValue }</span>
-        <span>{ playerData.values.assists.basic.displayValue }</span>
-        <span>{ playerData.values.deaths.basic.displayValue }</span>
+        <span className="pgcrPlayerName">Name: { playerData.player.destinyUserInfo.displayName }</span>
+        <span>Kills: { playerData.values.kills.basic.displayValue }</span>
+        <span>Assists: { playerData.values.assists.basic.displayValue }</span>
+        <span>Deaths: { playerData.values.deaths.basic.displayValue }</span>
       </div>
       <div className="pgcrExtendedInfoWeaponKills">
         {
           playerData.extended.weapons.map((weapon) => (
-            <div>{ weapon.referenceId }: { weapon.values.uniqueWeaponKills.basic.displayValue }</div>
+            <div key={ weapon.referenceId }>
+              <img src={ 'https://bungie.net' + ManifestItems[weapon.referenceId].displayProperties.icon } className="pgcrItemIcon" title={ ManifestItems[weapon.referenceId].displayProperties.name } />x{ weapon.values.uniqueWeaponKills.basic.displayValue }
+            </div>
           ))
         }
       </div>
@@ -137,14 +139,17 @@ const generateExtendedData = (PGCRs, currentActivity, modeType) => {
       <div className="pgcrExtendedInfoMedalsEarned">
         {
           Object.keys(playerData.extended.values).map(function(medal) {
-            if(medal.includes('medal')) { return <div id={ medal }>{ medal }</div> }
+            if(medal.includes('medal')) {
+              return (
+                <img key={ medal } id={ medal } className="pgcrMedalIcon" src={'./images/icons/medals/' + medal + '.png'} title={ medal } />
+              )
+            }
           })
         }
       </div>
     </div>
   ))
 }
-
 const checkPlayer = (displayName, team) => {
   if(team === null) { return 'pgcrPlayersBlob' }
   else { return JSON.parse(localStorage.getItem('BasicMembershipInfo')).displayName.includes(displayName) ? 'pgcrCurrPlayersBlob' : 'pgcrPvpPlayersBlob' }
