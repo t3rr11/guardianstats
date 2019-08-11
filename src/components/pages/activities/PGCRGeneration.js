@@ -27,6 +27,7 @@ export function generate(ManifestActivities, ManifestItems, PGCRs, currentActivi
          </div>
          <div className="pgcrImage" style={{ backgroundImage: `url(https://bungie.net${ ManifestActivities[PGCRs[currentActivity].activityDetails.referenceId].pgcrImage })` }}></div>
        </div>
+       { generateExtendedData(ManifestItems, PGCRs, currentActivity, 'other') }
     </div>
     )
   }
@@ -124,11 +125,13 @@ const generateExtendedData = (ManifestItems, PGCRs, currentActivity, modeType) =
       </div>
       <div className="pgcrExtendedInfoWeaponKills">
         {
-          playerData.extended.weapons.map((weapon) => (
-            <div key={ weapon.referenceId }>
-              <img src={ 'https://bungie.net' + ManifestItems[weapon.referenceId].displayProperties.icon } className="pgcrItemIcon" title={ ManifestItems[weapon.referenceId].displayProperties.name } />x{ weapon.values.uniqueWeaponKills.basic.displayValue }
-            </div>
-          ))
+          playerData.extended.weapons ?
+            playerData.extended.weapons.map((weapon) => (
+              <div key={ weapon.referenceId }>
+                <img src={ 'https://bungie.net' + ManifestItems[weapon.referenceId].displayProperties.icon } className="pgcrItemIcon" title={ ManifestItems[weapon.referenceId].displayProperties.name } />x{ weapon.values.uniqueWeaponKills.basic.displayValue }
+              </div>
+            )) :
+          <div>No Weapon Data</div>
         }
       </div>
       <div className="pgcrExtendedInfoAbilityKills">
@@ -136,17 +139,20 @@ const generateExtendedData = (ManifestItems, PGCRs, currentActivity, modeType) =
         <div>weaponKillsMelee: { playerData.extended.values.weaponKillsMelee.basic.displayValue }</div>
         <div>weaponKillsSuper: { playerData.extended.values.weaponKillsSuper.basic.displayValue }</div>
       </div>
-      <div className="pgcrExtendedInfoMedalsEarned">
-        {
-          Object.keys(playerData.extended.values).map(function(medal) {
-            if(medal.includes('medal')) {
-              return (
-                <img key={ medal } id={ medal } className="pgcrMedalIcon" src={'./images/icons/medals/' + medal + '.png'} title={ medal } />
-              )
-            }
-          })
-        }
-      </div>
+      { modeType === 'pvp' ?
+        <div className="pgcrExtendedInfoMedalsEarned">
+          {
+            Object.keys(playerData.extended.values).map(function(medal) {
+              if(medal.includes('medal')) {
+                return (
+                  <img key={ medal } id={ medal } className="pgcrMedalIcon" src={'./images/icons/medals/' + medal + '.png'} title={ medal } />
+                )
+              }
+            })
+          }
+        </div>
+      : <div className="pgcrNoMedals">No Medals</div>
+    }
     </div>
   ))
 }
