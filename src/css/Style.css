@@ -149,8 +149,10 @@ body {
 }
 .menu-item { display: inline-block; margin: 0px 10px; height: 28px; }
 .menu-item-disabled { display: inline-block; margin: 0px 10px; height: 28px; }
-.menu-item > a, span { color: white; text-decoration: none; }
-.menu-item-disabled > a, span { color: darkgray; cursor: default; text-decoration: none; }
+.menu-item > a { color: white; text-decoration: none; }
+.menu-item > span { color: white; text-decoration: none; }
+.menu-item-disabled > a { color: darkgray; cursor: default; text-decoration: none; }
+.menu-item-disabled > span { color: darkgray; cursor: default; text-decoration: none; }
 .menu-ul {
   border-bottom: 1px lightblue solid;
   width: 100%;

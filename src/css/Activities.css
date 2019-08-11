@@ -91,20 +91,35 @@
 }
 .pgcrPlayersTitle {
   display: grid;
-  background-color: var(--LightNavyBlue);
-  grid-template-columns: minmax(130px, 100%) 50px 70px 70px;
+  background-color: #3e5f9a;
+  grid-template-columns: minmax(130px, 100%) 50px 50px 50px;
+  text-align: center;
+  height: 24px;
+  line-height: 24px;
+  font-size: 14px;
 }
 .pgcrPlayersBlob {
   display: grid;
   background-color: var(--NavyBlue);
-  grid-template-columns: minmax(130px, 100%) 50px 70px 70px;
+  grid-template-columns: minmax(130px, 100%) 50px 50px 50px;
+  font-size: 14px;
+}
+.pgcrCurrPlayersBlob {
+  display: grid;
+  background-color: var(--NavyBlue);
+  grid-template-columns: minmax(130px, 100%) 50px 50px 50px 50px 50px;
+  font-size: 14px;
+  color: burlywood;
+}
+.pgcrPvpPlayersBlob {
+  display: grid;
+  background-color: var(--NavyBlue);
+  grid-template-columns: minmax(130px, 100%) 50px 50px 50px 50px 50px;
   font-size: 14px;
 }
 .pgcrPlayerName {
   cursor: pointer;
 }
-.pgcrPlayersBlob div { display: inline-block; margin: 2px 2px 2px 5px; }
-.pgcrPlayersTitle div { display: inline-block; margin: 2px 2px 2px 5px; }
 .hidden { display: none; }
 .completed {
   -webkit-box-shadow: inset 2px 0px 0px 0px #259A58;
@@ -121,3 +136,39 @@
   -moz-box-shadow: inset 2px 0px 0px 0px gray;
   box-shadow: inset 2px 0px 0px 0px gray;
 }
+.pgcrAlphaTeamTitle {
+  background-color: #0d75b5;
+  text-align: center;
+  font-size: small;
+  height: 24px;
+  line-height: 24px;
+  grid-template-columns: minmax(130px, 100%) 50px 50px 50px 50px 50px;
+  display: grid;
+}
+.pgcrAlphaTeamTitle > div { cursor: default; }
+.pgcrBravoTeamTitle {
+  background-color: #8c3828;
+  text-align: center;
+  font-size: small;
+  height: 24px;
+  line-height: 24px;
+  grid-template-columns: minmax(130px, 100%) 50px 50px 50px 50px 50px;
+  display: grid;
+}
+.pgcrBravoTeamTitle > div { cursor: default; }
+.pgcrPlayersBlob div { display: inline-block; padding: 2px; text-align: center; border-right: 1px var(--LightNavyBlue) double; }
+.pgcrCurrPlayersBlob div { display: inline-block; padding: 2px; text-align: center; border-right: 1px var(--LightNavyBlue) double; }
+.pgcrPvpPlayersBlob div { display: inline-block; padding: 2px; text-align: center; border-right: 1px var(--LightNavyBlue) double; }
+.pgcrExtendedInfo {
+  width: 100%;
+  height: 100px;
+  display: grid;
+  background-color: var(--LightNavyBlue);
+  border-bottom: 1px solid var(--DarkNavyBlue);
+  grid-template-columns: 25% 25% 25% 25%;
+}
+.pgcrExtendedInfoStats > span { display: block; }
+.pgcrExtendedInfoWeaponKills { }
+.pgcrExtendedInfoWeaponKills > div { display: inline-block; }
+.pgcrExtendedInfoAbilityKills { }
+.pgcrExtendedInfoMedalsEarned { }
