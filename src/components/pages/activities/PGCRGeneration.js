@@ -50,7 +50,7 @@ const generateTeamData = (ManifestItems, PGCRs, currentActivity, modeType, team)
         <div title="Kills">K</div>
         <div title="Deaths">D</div>
         <div title="K/D Ratio">K/D</div>
-        <div title="Efficiency - K+A/D">EFF</div>
+        <div title="Efficiency - K+A/D">KA/D</div>
       </div>
       { generatePlayerData(ManifestItems, PGCRs, currentActivity, 'pvp', 'alpha') }
     </div>
@@ -63,7 +63,7 @@ const generateTeamData = (ManifestItems, PGCRs, currentActivity, modeType, team)
         <div title="Kills">K</div>
         <div title="Deaths">D</div>
         <div title="K/D Ratio">K/D</div>
-        <div title="Efficiency - K+A/D">EFF</div>
+        <div title="Efficiency - K+A/D">KA/D</div>
       </div>
       { generatePlayerData(ManifestItems, PGCRs, currentActivity, 'pvp', 'bravo') }
     </div>
