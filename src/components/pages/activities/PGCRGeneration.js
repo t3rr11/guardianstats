@@ -12,7 +12,9 @@ export function generate(ManifestActivities, ManifestItems, PGCRs, currentActivi
          </div>
          <div className="pgcrImage" style={{ backgroundImage: `url(https://bungie.net${ ManifestActivities[PGCRs[currentActivity].activityDetails.referenceId].pgcrImage })` }}></div>
        </div>
-       { generateExtendedData(ManifestItems, PGCRs, currentActivity, 'pvp') }
+       <div className="pgcrBottomContainer">
+         { generateExtendedData(ManifestItems, PGCRs, currentActivity, 'pvp') }
+       </div>
     </div>
     )
   }
@@ -27,7 +29,9 @@ export function generate(ManifestActivities, ManifestItems, PGCRs, currentActivi
          </div>
          <div className="pgcrImage" style={{ backgroundImage: `url(https://bungie.net${ ManifestActivities[PGCRs[currentActivity].activityDetails.referenceId].pgcrImage })` }}></div>
        </div>
-       { generateExtendedData(ManifestItems, PGCRs, currentActivity, 'other') }
+       <div className="pgcrBottomContainer">
+         { generateExtendedData(ManifestItems, PGCRs, currentActivity, 'other') }
+       </div>
     </div>
     )
   }
@@ -118,7 +122,10 @@ const generateExtendedData = (ManifestItems, PGCRs, currentActivity, modeType) =
     return allPlayers.map((playerData) => (
     <div key={ playerData.player.destinyUserInfo.membershipId } className="pgcrExtendedInfo">
       <div className="pgcrExtendedInfoStats">
-        <span className="pgcrPlayerName">Name: { playerData.player.destinyUserInfo.displayName }</span>
+        <div className="innerDiv" style={{ backgroundImage: `url("https://bungie.net${ ManifestItems[playerData.player.emblemHash].secondaryIcon }"` }}>
+          <div className="pgcrExtendedPlayerName">{ playerData.player.destinyUserInfo.displayName }</div>
+        </div>
+        <span>Class: { playerData.player.characterClass }</span>
         <span>Kills: { playerData.values.kills.basic.displayValue }</span>
         <span>Assists: { playerData.values.assists.basic.displayValue }</span>
         <span>Deaths: { playerData.values.deaths.basic.displayValue }</span>
@@ -133,25 +140,39 @@ const generateExtendedData = (ManifestItems, PGCRs, currentActivity, modeType) =
             )) :
           <div>No Weapon Data</div>
         }
-      </div>
-      <div className="pgcrExtendedInfoAbilityKills">
-        <div>weaponKillsGrenade: { playerData.extended.values.weaponKillsGrenade.basic.displayValue }</div>
-        <div>weaponKillsMelee: { playerData.extended.values.weaponKillsMelee.basic.displayValue }</div>
-        <div>weaponKillsSuper: { playerData.extended.values.weaponKillsSuper.basic.displayValue }</div>
+        {
+          playerData.extended.values.weaponKillsGrenade.basic.displayValue !== '0' ?
+          <div key="grenadeKills">
+            <img src="./images/icons/Grenade.png" className="pgcrItemIcon" title="Grenade Kills" />x{ playerData.extended.values.weaponKillsGrenade.basic.displayValue }
+          </div> : null
+        }
+        {
+          playerData.extended.values.weaponKillsMelee.basic.displayValue !== '0' ?
+          <div key="meleeKills">
+            <img src="./images/icons/Melee.png" className="pgcrItemIcon" title="Melee Kills" />x{ playerData.extended.values.weaponKillsMelee.basic.displayValue }
+          </div> : null
+        }
+        {
+          playerData.extended.values.weaponKillsSuper.basic.displayValue !== '0' ?
+          <div key="superKills">
+            <img src="./images/icons/Super.png" className="pgcrItemIcon" title="Super Kills" />x{ playerData.extended.values.weaponKillsSuper.basic.displayValue }
+          </div> : null
+        }
       </div>
       { modeType === 'pvp' ?
         <div className="pgcrExtendedInfoMedalsEarned">
           {
             Object.keys(playerData.extended.values).map(function(medal) {
+              //const medalData = playerData.extended.values[medal];
               if(medal.includes('medal')) {
                 return (
-                  <img key={ medal } id={ medal } className="pgcrMedalIcon" src={'./images/icons/medals/' + medal + '.png'} title={ medal } />
+                  <img id={ medal } className="pgcrMedalIcon" src={'./images/icons/medals/' + medal + '.png'} title={ medal } />
                 )
               }
             })
           }
         </div>
-      : <div className="pgcrNoMedals">No Medals</div>
+      : null
     }
     </div>
   ))

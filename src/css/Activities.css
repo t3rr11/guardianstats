@@ -86,6 +86,10 @@
   width: 50%;
   height: 100%;
 }
+.pgcrContainer {
+  display: grid;
+  height: 100%;
+}
 .pgcrTopContainer {
   border-bottom: 1px var(--NavyBlue) solid;
 }
@@ -164,9 +168,11 @@
   display: grid;
   background-color: var(--LightNavyBlue);
   border-bottom: 1px solid var(--DarkNavyBlue);
-  grid-template-columns: 25% 25% 25% 25%;
+  border-right: 1px solid var(--NavyBlue);
+  grid-template-columns: 20% 40% 40%;
   padding: 5px;
   font-size: 14px;
+  min-height: 127px;
 }
 .pgcrExtendedInfoStats > span { display: block; }
 .pgcrExtendedInfoWeaponKills { }
@@ -198,4 +204,15 @@
   display: inline-block;
   padding: 5px;
   margin: 2px;
+}
+.pgcrEmblemIcon {
+  height: 25px;
+  width: 25px;
+}
+.pgcrExtendedPlayerName {
+  cursor: pointer;
+  font-size: 19px;
+  text-align: center;
+  width: 195px;
+  line-height: 33px;
 }
