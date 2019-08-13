@@ -87,7 +87,6 @@
   height: 100%;
 }
 .pgcrContainer {
-  display: grid;
   height: 100%;
 }
 .pgcrTopContainer {
@@ -173,9 +172,8 @@
   padding: 5px;
   font-size: 14px;
   min-height: 127px;
+  position: relative;
 }
-.pgcrExtendedInfoStats > span { display: block; }
-.pgcrExtendedInfoWeaponKills { }
 .pgcrExtendedInfoWeaponKills > div {
   display: inline-block;
   background-color: var(--NavyBlue);
@@ -183,8 +181,26 @@
   padding: 6px;
   margin: 3px;
 }
-.pgcrExtendedInfoAbilityKills { }
-.pgcrExtendedInfoMedalsEarned { }
+.pgcrExtendedInfoStats { z-index: 2; }
+.pgcrExtendedInfoStats > span { display: block; }
+.pgcrExtendedInfoWeaponKills { z-index: 2; }
+.pgcrExtendedInfoMedalsEarned { z-index: 2; }
+.pgcrExtendedInfoBG {
+  position: absolute;
+  overflow: hidden;
+  height: 135px;
+  width: 100%;
+  z-index: 1;
+}
+.pgcrExtendedInfoBGImage {
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  filter: blur(20px);
+  opacity: 0.6;
+}
 .pgcrMedalIcon {
   display: inline-block;
   height: 40px;

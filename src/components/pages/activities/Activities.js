@@ -52,6 +52,7 @@ export class Activities extends Component {
     for(var i in activities) {
       bungie.GetPGCR(activities[i].activityDetails.instanceId).then((pgcr) => { //eslint-disable-line no-loop-func
         count++;
+        this.setState({ status: { status: 'gettingPGCRs', 'statusText': `Getting battle reports ${ count } / ${ activities.length }` } });
         PGCRs[pgcr.activityDetails.instanceId] = pgcr;
         if(count === activities.length) { this.finishedGrabbingPGCRs(PGCRs, newActivitiesArray); }
       }, this);
