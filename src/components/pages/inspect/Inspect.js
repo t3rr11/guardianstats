@@ -13,7 +13,7 @@ export class Inspect extends Component {
   async componentDidMount() {
     const { membershipInfo } = this.props;
     this.setState({ status: { status: 'lookingForAccount', statusText: 'Looking for account...' } });
-    if(!membershipInfo) { this.setState({ status: { status: 'error', statusText: 'Nobody to inspect... Try going back home and using searching for someone.' } }); }
+    if(!membershipInfo) { this.setState({ status: { status: 'error', statusText: 'Nobody to inspect... Try going back home and search for someone.' } }); }
     else {
       var membershipType = membershipInfo.split('/')[0];
       var membershipId = membershipInfo.split('/')[1];
