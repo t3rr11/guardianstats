@@ -1,4 +1,5 @@
 .scrollbar { overflow-y: scroll; overflow-x: hidden; scrollbar-color: var(--DarkNavyBlue) var(--LightNavyBlue); }
+.hideOverflow { overflow-y: auto; }
 .scrollbar::-webkit-scrollbar { width: 15px; }
 .scrollbar::-webkit-scrollbar-track { background: var(--LightNavyBlue); border: 1px var(--NavyBlue) solid; border-bottom: 0px; }
 .scrollbar::-webkit-scrollbar-thumb { background: var(--DarkNavyBlue); }

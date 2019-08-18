@@ -3,6 +3,7 @@
 @import url('Vendors.css');
 @import url('Characterdata.css');
 @import url('Profile.css');
+@import url('Inspect.css');
 @import url('Activities.css');
 @import url('Piechart.css');
 @import url('Loader.css');
@@ -15,6 +16,7 @@
 :root {
   --DarkNavyBlue: #1A1D22;
   --NavyBlue: #21242A;
+  --InbetweenerNavyBlue: #25282F;
   --LightNavyBlue: #292C33;
   --LighterNavyBlue: #353841;
 }

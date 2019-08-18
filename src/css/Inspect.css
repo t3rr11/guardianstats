@@ -1,0 +1,98 @@
+.inspectContainer {
+  height: 100%;
+}
+.inspectTitlebar {
+  height: 60px;
+  width: 100%;
+  background-color: var(--InbetweenerNavyBlue);
+}
+.inspectContent {
+  width: 100%;
+  height: calc(100% - 60px);
+  display: grid;
+  grid-template-columns: 25% 25% 25% 25%;
+}
+.inspectBox {
+  height: 100%;
+  width: 100%;
+  background-color: var(--DarkNavyBlue);
+  box-sizing: border-box;
+  display: inline-block;
+  vertical-align: top;
+  text-align: center;
+  border-top: 1px solid var(--DarkNavyBlue);
+  border-left: 1px solid var(--NavyBlue);
+  border-right: 1px solid var(--NavyBlue);
+}
+.inspectBoxTitle {
+  width: 100%;
+  padding: 5px;
+  background-color: var(--NavyBlue);
+  border-bottom: 1px solid var(--DarkNavyBlue);
+}
+.inspectBoxRanks { padding:10px; font-size: 14px }
+.inspectBoxRanksTitle { display:block; font-weight:bold; }
+.inspectBoxRanksScore { display:block; }
+.inspectBoxRanksImage {
+  width:100px;
+  height:50px;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.inspectBoxRanksValor { display: inline-block; }
+.inspectBoxRanksGlory { display: inline-block; }
+.inspectBoxRanksInfamy { display: inline-block; }
+.inspectProfileName {
+  float: left;
+  font-size: 38px;
+  margin-left: 10px;
+  margin-right: 10px;
+  height: 60px;
+  line-height: 60px;
+}
+.inspectUserDetails {
+  float: left;
+  font-size: 11px;
+  height: 55px;
+  line-height: 16px;
+  margin-top: 5px;
+  color: #ccc;
+}
+.inspectLastPlayed { display: block; }
+.inspectVersion { display: block; }
+.inspectTimePlayed { display: block; }
+.inspectTitles {
+  float: right;
+  margin-top: 10px;
+}
+.inspectTitleObtained {
+  float: left;
+  height: 40px;
+  width: 40px;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+.inspectTitleNotObtained {
+  float: left;
+  height: 40px;
+  width: 40px;
+  background-repeat: no-repeat;
+  background-size: contain;
+  opacity: 0.5;
+}
+.inspectActivityContainer {
+  width: 100%;
+  border-bottom: 1px var(--NavyBlue) solid;
+  border-top: 0px;
+  height: 50px;
+  padding: 5px;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 15% 65% 20%;
+  font-size: 13px;
+}
+.inspectActivityContainer:hover {
+  cursor: default;
+  background-color: var(--NavyBlue);
+}

@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Header from './components/modules/Header';
 import Loader from './components/modules/Loader';
 import Error from './components/modules/Error';
+import Manifest from './manifest.json';
 
 //Pages
 import Home from './components/pages/home/Home';
@@ -98,7 +99,7 @@ class App extends React.Component {
   async forceManifestUpdate() { this.getManifest(); }
   async checkProfile() {
     if(await checks.checkLogin()) {
-      if(await checks.checkPlatform()){ this.setState({ status: { status: 'getProfile', statusText: 'Please wait...' } }) }
+      if(await checks.checkPlatform()){ this.setState({ status: { status: 'getProfile', statusText: `Guardianstats ${ Manifest.version }` } }) }
       else { this.setState({ status: { status: 'ready', statusText: 'Ready to go!' } }) }
     }
     else { this.setState({ status: { status: 'ready', statusText: 'Ready to go!' } }) }
