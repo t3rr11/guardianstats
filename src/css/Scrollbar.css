@@ -9,6 +9,11 @@
 .activityScrollbar::-webkit-scrollbar-track { background: var(--DarkNavyBlue); border: 1px var(--NavyBlue) solid; border-bottom: 0px; }
 .activityScrollbar::-webkit-scrollbar-thumb { background: var(--LightNavyBlue); }
 .activityScrollbar::-webkit-scrollbar-thumb:hover { background: var(--LightNavyBlue); }
+.inspectBoxScrollbar { overflow-y: scroll; overflow-x: hidden; scrollbar-color: var(--LightNavyBlue) var(--DarkNavyBlue); }
+.inspectBoxScrollbar::-webkit-scrollbar { width: 8px; }
+.inspectBoxScrollbar::-webkit-scrollbar-track { background: var(--NavyBlue); border: 1px var(--NavyBlue) solid; border-bottom: 0px; }
+.inspectBoxScrollbar::-webkit-scrollbar-thumb { background: var(--LightNavyBlue); }
+.inspectBoxScrollbar::-webkit-scrollbar-thumb:hover { background: var(--LightNavyBlue); }
 .scroller {
   overflow-y: scroll;
   overflow-x: hidden;

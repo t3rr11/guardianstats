@@ -11,6 +11,7 @@
   height: calc(100% - 60px);
   display: grid;
   grid-template-columns: 25% 25% 25% 25%;
+  overflow: hidden;
 }
 .inspectBox {
   height: 100%;
@@ -30,12 +31,19 @@
   background-color: var(--NavyBlue);
   border-bottom: 1px solid var(--DarkNavyBlue);
 }
-.inspectBoxRanks { padding:10px; font-size: 14px }
+.inspectBoxRanks {
+  float: left;
+  font-size: 11px;
+  height: 55px;
+  line-height: 16px;
+  color: #ccc;
+  text-align: center;
+}
 .inspectBoxRanksTitle { display:block; font-weight:bold; }
 .inspectBoxRanksScore { display:block; }
 .inspectBoxRanksImage {
-  width:100px;
-  height:50px;
+  width: 50px;
+  height: 35px;
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
@@ -54,13 +62,22 @@
 .inspectUserDetails {
   float: left;
   font-size: 11px;
-  height: 55px;
-  line-height: 16px;
-  margin-top: 5px;
+  height: 40px;
+  line-height: 15px;
+  margin-top: 15px;
   color: #ccc;
 }
 .inspectLastPlayed { display: block; }
-.inspectVersion { display: block; }
+.inspectVersion {
+  display: inline-block;
+  height: 45px;
+  width: 45px;
+  float: left;
+  margin-left: 10px;
+  margin-top: 5px;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
 .inspectTimePlayed { display: block; }
 .inspectTitles {
   float: right;
@@ -85,7 +102,7 @@
   width: 100%;
   border-bottom: 1px var(--NavyBlue) solid;
   border-top: 0px;
-  height: 50px;
+  height: 49.5px;
   padding: 5px;
   overflow: hidden;
   display: grid;
@@ -95,4 +112,29 @@
 .inspectActivityContainer:hover {
   cursor: default;
   background-color: var(--NavyBlue);
+}
+.inspectBoxPVPIcon {
+  float: left;
+  width: 25%;
+}
+.inspectBoxStatPVP {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+  background: var(--NavyBlue);
+}
+.inspectBoxPVPStats {
+  float: right;
+  width: 75%;
+  display: grid;
+  grid-template-columns: 30% 35% 35%;
+  font-size: 13px;
+  height: 80px;
+  align-items: center;
+}
+.inspectBoxPVPStatsDiv {
+  height: 75px;
+  display: grid;
+  align-items: center;
 }

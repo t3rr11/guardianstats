@@ -6,11 +6,11 @@ import { Titles } from './Titles';
 export function generate(profileInfo) {
   return (
     <React.Fragment>
+      <div className="inspectVersion" style={{ backgroundImage: `url("./images/icons/versions/${ getVersionImage(getVersion(profileInfo.profile.data.versionsOwned)) }")` }}></div>
       <div className="inspectProfileName"> { profileInfo.profile.data.userInfo.displayName } </div>
       <div className="inspectUserDetails">
         <div className="inspectTimePlayed">Time Played: { Math.round(totalTime(profileInfo.profile.data.characterIds, profileInfo.characters.data) / 60) } Hours</div>
         <div className="inspectLastPlayed">Last Played: { Misc.convertTimeToDate(profileInfo.profile.data.dateLastPlayed) } </div>
-        <div className="inspectVersion">Version: { getVersion(profileInfo.profile.data.versionsOwned) } </div>
       </div>
       <div className="inspectTitles"> { getTitles(profileInfo) } </div>
     </React.Fragment>
@@ -49,7 +49,14 @@ const getVersion = (versionsOwned) => {
     ): null
   );
 }
-
+const getVersionImage = (version) => {
+  if(version === "Y2 Annual Pass") { return ("annualpass.png"); }
+  else if(version === "Forsaken") { return ("forsaken.png"); }
+  else if(version === "Warmind") { return ("warmind.png"); }
+  else if(version === "Curse of Osiris") { return ("curseofosiris.png"); }
+  else if(version === "Base Destiny 2") { return ("destiny.png"); }
+  else { return "destiny.png"; }
+}
 const getTitles = (profileInfo) => {
   var titles = Titles(profileInfo);
   return (

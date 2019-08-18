@@ -30,8 +30,9 @@ export class Inspect extends Component {
             try {
               const ManifestActivities = await this.getManifestData();
               const profileInfo = await bungie.GetProfile(membershipType, membershipId, '100,200,202,600,800,900');
+              const historicStats = await bungie.GetHistoricStatsForAccount(membershipType, membershipId);
               const activities = await this.getActities(profileInfo, membershipType, membershipId);
-              this.setState({ status: { status: 'ready', statusText: 'Finished the inspection!' }, data: { profileInfo, ManifestActivities, activities } });
+              this.setState({ status: { status: 'ready', statusText: 'Finished the inspection!' }, data: { profileInfo, ManifestActivities, activities, historicStats } });
             }
             catch(err) { this.setState({ status: { status: 'error', statusText: 'Couldn\'t find manifest.' } }); }
           }
@@ -48,7 +49,7 @@ export class Inspect extends Component {
     const characterIds = profileInfo.profile.data.characterIds;
     var lastPlayedTimes = new Date(profileInfo.characters.data[characterIds[0]].dateLastPlayed).getTime();
     var lastPlayedCharacter = characterIds[0]; for(var i in characterIds) { if(new Date(profileInfo.characters.data[characterIds[i]].dateLastPlayed).getTime() > lastPlayedTimes) { lastPlayedCharacter = characterIds[i]; } }
-    return await bungie.GetActivityHistory(membershipType, membershipId, lastPlayedCharacter, 15, 0);
+    return await bungie.GetActivityHistory(membershipType, membershipId, lastPlayedCharacter, 16, 0);
   }
 
   render() {
@@ -59,13 +60,16 @@ export class Inspect extends Component {
     //Check for errors, show loader, or display content.
     if(status === 'error') { return <Error error={ statusText } /> }
     else if(status === 'ready') {
-      const { profileInfo, ManifestActivities, activities } = this.state.data;
+      const { profileInfo, ManifestActivities, activities, historicStats } = this.state.data;
       return (
-        <div className="inspectContainer scrollbar hideOverflow">
-          <div className="inspectTitlebar">{ UserDetails.generate(profileInfo) }</div>
+        <div className="inspectContainer">
+          <div className="inspectTitlebar">
+            { UserDetails.generate(profileInfo) }
+            { UserStatistics.generateRanks(profileInfo) }
+          </div>
           <div className="inspectContent">
             { UserActivities.generate(profileInfo, membershipInfo, ManifestActivities, activities) }
-            { UserStatistics.generate(profileInfo) }
+            { UserStatistics.generate(profileInfo, historicStats) }
             { UserTriumphs.generate(profileInfo) }
             { UserEvents.generate(profileInfo) }
           </div>
