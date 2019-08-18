@@ -47,29 +47,38 @@ class App extends React.Component {
     }
     else { this.setState({ status: { status: 'getManifest', statusText: 'Checking the Manifest...' } }) }
   }
-  async getManifest() {
+  async getManifest(retry) {
     //Checking Manifest
-    const databaseExists = await database.checkManifestExists();
+    var databaseExists = null;
+    if(retry) { databaseExists = false; }
+    else { databaseExists = await database.checkManifestExists(); }
     if(databaseExists) {
       //If database exists, then proceed to check to see if it is the latest version.
       const storedVersion = await db.table('manifest').toCollection().first();
       const currentVersion = await bungie.GetManifestVersion();
-
-      try {
-        if(storedVersion.version !== currentVersion.version) {
-          //If the database is old, proceed to update it.
-          this.setState({ error: null, status: { status: 'updatingManifest', statusText: 'Updating Manifest...' } });
-          const update = await database.updateManifest();
-          if(!update) { this.setState({ status: { error: update, status: 'error', statusText: update } }); }
-          else { this.manifestLoaded(); this.setLastManifestCheck(); }
+      if(storedVersion) {
+        try {
+          if(storedVersion.version !== currentVersion.version) {
+            //If the database is old, proceed to update it.
+            this.setState({ error: null, status: { status: 'updatingManifest', statusText: 'Updating Manifest...' } });
+            const update = await database.updateManifest();
+            if(!update) { this.setState({ status: { error: update, status: 'error', statusText: update } }); }
+            else { this.manifestLoaded(); this.setLastManifestCheck(); }
+          }
+          else {
+            //If the database versions match, then it is the most recent, procced to loading.
+            this.manifestLoaded();
+            this.setLastManifestCheck();
+          }
         }
-        else {
-          //If the database versions match, then it is the most recent, procced to loading.
-          this.manifestLoaded();
-          this.setLastManifestCheck();
+        catch (err) {
+          this.setState({ status: { error: err, status: 'error', statusText: err } });
         }
       }
-      catch (err) { this.setState({ status: { error: err, status: 'error', statusText: err } }); }
+      else {
+        console.log('Manifest not stored.');
+        this.getManifest(true);
+      }
     }
     else if(!databaseExists) {
       //If database does not exist. Then it will download it now.
@@ -79,12 +88,28 @@ class App extends React.Component {
         const newManifest = await bungie.GetManifest(currentVersion.jsonWorldContentPaths['en']);
         try {
           //Adding the manifest to the database now.
-          db.table('manifest').add({ version: currentVersion.version, value: newManifest });
-          console.log('Manifest Added Successfully!');
-          this.manifestLoaded();
-          this.setLastManifestCheck();
+          db.table('manifest').add({ version: currentVersion.version, value: newManifest }).then(() => {
+            console.log('Manifest Added Successfully!');
+            this.manifestLoaded();
+            this.setLastManifestCheck();
+          }).catch(error => {
+            if((error.name === 'QuotaExceededError') || (error.inner && error.inner.name === 'QuotaExceededError')) {
+              console.log('If you see this message, then error handling works as expected.', error);
+              this.setState({ status: { error: error.message, status: 'error', statusText: 'Failed to save manifest: QuotaExceededError (Possible reasons: Are you using Incognito mode?)' } });
+            }
+            else {
+              console.log('Here is something wrong:', error);
+              console.log('error.message', error.message);
+              console.log('error.name', error.name);
+              console.log('error', error);
+              this.setState({ status: { error: error.message, status: 'error', statusText: `Failed to save manifest: ${ error.name }` } });
+            }
+          });
         }
-        catch (err) { console.log(err); this.setState({ status: { error: err.message, status: 'error', statusText: err.message } }); }
+        catch (err) {
+          console.log(err);
+          this.setState({ status: { error: err.message, status: 'error', statusText: err.message } });
+        }
       }
       catch (err) {
         if(err.message === 'Failed to fetch') { this.setState({ status: { error: err.message, status: 'error', statusText: 'Failed to fetch: Manifest' } }); }

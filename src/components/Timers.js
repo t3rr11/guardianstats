@@ -26,7 +26,6 @@ export async function StartAuthTimer() {
     }
     else {
       tokenExpiresIn--;
-      document.getElementById('DevBox').innerHTML = `Access Token expires in: ${ misc.formatTime(tokenExpiresIn) }`;
     }
   }, 1000);
 }

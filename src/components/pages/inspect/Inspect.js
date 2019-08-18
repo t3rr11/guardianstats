@@ -27,10 +27,13 @@ export class Inspect extends Component {
         if(!isNaN(membershipType) && (membershipType === '1' || membershipType === '2' || membershipType === '3' || membershipType === '4' || membershipType === '5' || membershipType === '10' || membershipType === '254')) {
           if(!isNaN(membershipId) && membershipId.length >= 19) {
             this.setState({ status: { status: 'grabbingAccountInfo', statusText: 'Inspecting their account...' } });
-            const ManifestActivities = await this.getManifestData();
-            const profileInfo = await bungie.GetProfile(membershipType, membershipId, '100,200,202,600,800,900');
-            const activities = await this.getActities(profileInfo, membershipType, membershipId);
-            this.setState({ status: { status: 'ready', statusText: 'Finished the inspection!' }, data: { profileInfo, ManifestActivities, activities } });
+            try {
+              const ManifestActivities = await this.getManifestData();
+              const profileInfo = await bungie.GetProfile(membershipType, membershipId, '100,200,202,600,800,900');
+              const activities = await this.getActities(profileInfo, membershipType, membershipId);
+              this.setState({ status: { status: 'ready', statusText: 'Finished the inspection!' }, data: { profileInfo, ManifestActivities, activities } });
+            }
+            catch(err) { this.setState({ status: { status: 'error', statusText: 'Couldn\'t find manifest.' } }); }
           }
           else { this.setState({ status: { status: 'error', statusText: 'The membershipId entered was not a valid length.' } }); }
         }

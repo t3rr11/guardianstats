@@ -20,11 +20,15 @@ export class Home extends Component {
 
   render() {
     return(
-      <div className="home-container">
-        <h1 className="home-title">Welcome to Guardianstats</h1>
-        <p className="home-text">Try out our features by connecting with bungie to see your own personal stats or by searching for a player below!</p>
-        <Search inspectPlayer={ this.inspectPlayer } />
-      </div>
+      <React.Fragment>
+        <div className="home-container">
+          <div className="home-content">
+            <h1 className="home-title">Welcome to Guardianstats</h1>
+            <p className="home-text">Try out our features by connecting with bungie to see your own personal stats or by searching for a player below!</p>
+            <Search inspectPlayer={ this.inspectPlayer } />
+          </div>
+        </div>
+      </React.Fragment>
     );
   }
 }
