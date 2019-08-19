@@ -137,4 +137,5 @@
   height: 75px;
   display: grid;
   align-items: center;
+  text-align: left;
 }

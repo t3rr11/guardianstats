@@ -26,20 +26,19 @@ export const generatePvPStats = (profileInfo, historicStats) => {
       </div>
       <div className="inspectBoxPVPStats">
         <div className="inspectBoxPVPStatsDiv">
-          <span>KD: <span style={{ color: '#ccc' }}>{ allPvP.killsDeathsRatio.basic.displayValue }</span></span>
-          <span>KDA: <span style={{ color: '#ccc' }}>{ allPvP.killsDeathsAssists.basic.displayValue }</span></span>
-          <span>KA/D: <span style={{ color: '#ccc' }}>{ allPvP.efficiency.basic.displayValue }</span></span>
+          <span>KD: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ allPvP.killsDeathsRatio.basic.displayValue }</span></span>
+          <span>KDA: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ allPvP.killsDeathsAssists.basic.displayValue }</span></span>
+          <span>KA/D: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ allPvP.efficiency.basic.displayValue }</span></span>
         </div>
         <div className="inspectBoxPVPStatsDiv">
-          <span>Kills: <span style={{ color: '#ccc' }}>{ allPvP.kills.basic.displayValue }</span></span>
-          <span>Assists: <span style={{ color: '#ccc' }}>{ allPvP.assists.basic.displayValue }</span></span>
-          <span>Deaths: <span style={{ color: '#ccc' }}>{ allPvP.deaths.basic.displayValue }</span></span>
+          <span>Kills: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ allPvP.kills.basic.displayValue }</span></span>
+          <span>Assists: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ allPvP.assists.basic.displayValue }</span></span>
+          <span>Deaths: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ allPvP.deaths.basic.displayValue }</span></span>
         </div>
         <div className="inspectBoxPVPStatsDiv">
-          <span>Matches: <span style={{ color: '#ccc' }}>{ activitiesEntered }</span></span>
-          <span>Won: <span style={{ color: '#ccc' }}>{ activitiesWon }</span></span>
-          <span>Lost: <span style={{ color: '#ccc' }}>{ activitiesLost }</span></span>
-          <span>Win Rate: <span style={{ color: '#ccc' }}>{ Math.round((activitiesWon / activitiesEntered) * 100) }%</span></span>
+          <span>Matches: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ activitiesEntered }</span></span>
+          <span>Wins: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ activitiesWon }</span></span>
+          <span>Win Rate: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Math.round((activitiesWon / activitiesEntered) * 100) }%</span></span>
         </div>
       </div>
     </div>
