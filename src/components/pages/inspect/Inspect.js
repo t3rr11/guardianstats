@@ -6,8 +6,7 @@ import * as bungie from '../../requests/BungieReq';
 import * as UserDetails from './GenerateUserDetails';
 import * as UserStatistics from './GenerateUserStatistics';
 import * as UserActivities from './GenerateUserActivities';
-import * as UserTriumphs from './GenerateUserTriumphs';
-import * as UserEvents from './GenerateUserEvents';
+import * as UserProfile from './GenerateUserProfile';
 
 export class Inspect extends Component {
 
@@ -68,10 +67,8 @@ export class Inspect extends Component {
             { UserStatistics.generateRanks(profileInfo) }
           </div>
           <div className="inspectContent">
-            { UserActivities.generate(profileInfo, membershipInfo, ManifestActivities, activities) }
             { UserStatistics.generate(profileInfo, historicStats) }
-            { UserTriumphs.generate(profileInfo) }
-            { UserEvents.generate(profileInfo) }
+            { UserActivities.generate(profileInfo, membershipInfo, ManifestActivities, activities) }
           </div>
         </div>
       );

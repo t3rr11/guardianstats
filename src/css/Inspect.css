@@ -10,7 +10,7 @@
   width: 100%;
   height: calc(100% - 60px);
   display: grid;
-  grid-template-columns: 25% 25% 25% 25%;
+  grid-template-columns: minmax(250px, 1fr) 300px;
   overflow: hidden;
 }
 .inspectBox {
@@ -22,13 +22,17 @@
   vertical-align: top;
   text-align: center;
   border-top: 1px solid var(--DarkNavyBlue);
-  border-left: 1px solid var(--NavyBlue);
-  border-right: 1px solid var(--NavyBlue);
 }
 .inspectBoxTitle {
   width: 100%;
   padding: 5px;
-  background-color: var(--NavyBlue);
+  background-color: var(--LightNavyBlue);
+  border-bottom: 1px solid var(--DarkNavyBlue);
+}
+.inspectBoxPvPTitle {
+  width: 500px;
+  padding: 5px;
+  background-color: var(--LightNavyBlue);
   border-bottom: 1px solid var(--DarkNavyBlue);
 }
 .inspectBoxRanks {
@@ -96,18 +100,19 @@
   width: 40px;
   background-repeat: no-repeat;
   background-size: contain;
-  opacity: 0.5;
+  opacity: 0.3;
 }
 .inspectActivityContainer {
   width: 100%;
-  border-bottom: 1px var(--NavyBlue) solid;
+  border-bottom: 1px var(--LightNavyBlue) solid;
   border-top: 0px;
   height: 49.5px;
   padding: 5px;
   overflow: hidden;
   display: grid;
-  grid-template-columns: 15% 65% 20%;
+  grid-template-columns: 17% 83%;
   font-size: 13px;
+  background-color: var(--NavyBlue);
 }
 .inspectActivityContainer:hover {
   cursor: default;
@@ -115,18 +120,19 @@
 }
 .inspectBoxPVPIcon {
   float: left;
-  width: 25%;
+  width: 17%;
 }
 .inspectBoxStatPVP {
+  background: var(--NavyBlue);
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100px;
-  background: var(--NavyBlue);
+  width: 500px;
 }
 .inspectBoxPVPStats {
   float: right;
-  width: 75%;
+  width: 83%;
   display: grid;
   grid-template-columns: 30% 35% 35%;
   font-size: 13px;

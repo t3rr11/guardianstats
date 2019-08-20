@@ -5,7 +5,10 @@ import * as Misc from '../../Misc';
 export function generate(profileInfo) {
   return (
     <div className="inspectBox">
-      <div className="inspectBoxTitle"> Events </div>
+      <div className="inspectBoxTitle"> Profile </div>
+      <div className="inspectBoxContent">
+
+      </div>
     </div>
   );
 }

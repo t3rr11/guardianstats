@@ -5,8 +5,8 @@ import * as Misc from '../../Misc';
 export function generate(profileInfo, historicStats) {
   return (
     <div className="inspectBox">
-      <div className="inspectBoxTitle"> Statistics </div>
       <div className="inspectBoxContent">
+        <div className="inspectBoxPvPTitle"> Crucible Statistics </div>
         { generatePvPStats(profileInfo, historicStats) }
       </div>
     </div>
@@ -21,7 +21,6 @@ export const generatePvPStats = (profileInfo, historicStats) => {
   return (
     <div className="inspectBoxStatPVP">
       <div className="inspectBoxPVPIcon">
-        <span style={{ fontSize: '16px', display: 'block' }}>Crucible</span>
         <img src="./images/icons/crucible_default.png" style={{ width: '55px' }} />
       </div>
       <div className="inspectBoxPVPStats">
