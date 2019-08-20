@@ -2,4 +2,8 @@
     .menu-item-disabled { display: none !important; }
     .pgcrPlayers { width: 60% !important; }
     .pgcrImage { width: 40% !important; }
+    .inspectContent { grid-template-columns: minmax(250px, 1fr) 300px; }
+    #InspectBoxCharacterViewer { display: none; }
+    .inspectBoxPvPTitle { width: 100%; }
+    .inspectBoxStatPVP { width: 100%; }
 }

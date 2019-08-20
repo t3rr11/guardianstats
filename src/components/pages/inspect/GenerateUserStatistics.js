@@ -4,7 +4,7 @@ import * as Misc from '../../Misc';
 
 export function generate(profileInfo, historicStats) {
   return (
-    <div className="inspectBox">
+    <div className="inspectBox" id="InspectBoxUserStatistics">
       <div className="inspectBoxContent">
         <div className="inspectBoxPvPTitle"> Crucible Statistics </div>
         { generatePvPStats(profileInfo, historicStats) }

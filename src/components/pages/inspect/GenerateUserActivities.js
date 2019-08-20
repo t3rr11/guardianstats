@@ -5,7 +5,7 @@ import { modeTypes } from '../../scripts/ModeTypes';
 
 export function generate(profileInfo, membershipInfo, ManifestActivities, activities) {
   return (
-    <div className="inspectBox">
+    <div className="inspectBox" id="InspectBoxRecentActivities">
       <div className="inspectBoxTitle"> Recent Activities </div>
         { activities.activities.map(function(activity) {
           var icon = `https://bungie.net${ManifestActivities[activity.activityDetails.directorActivityHash].displayProperties.icon}`
