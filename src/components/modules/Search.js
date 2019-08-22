@@ -5,11 +5,27 @@ import uuid from  'uuid';
 export class Search extends Component {
 
   state = {
-    users: null
+    users: null,
+    error: null
   }
 
-  inspectPlayer = (userId, player, platform) => {
-    this.props.inspectPlayer(userId, player, platform);
+  inspectPlayer = async (userId, player, platform) => {
+    const membershipInfo = await bungie.GetMembershipsById(userId, platform);
+    if(membershipInfo.destinyMemberships.length > 0) {
+      var found = false;
+      for(var i in membershipInfo.destinyMemberships) {
+        if(membershipInfo.destinyMemberships[i].membershipType == platform) {
+          found = true;
+          if(await bungie.GetProfile(platform, membershipInfo.destinyMemberships[i].membershipId, "100")) {
+            window.history.pushState("", "", `/inspect/${ platform }/${ membershipInfo.destinyMemberships[i].membershipId }`);
+            window.location.reload();
+          }
+          else { this.setState({ error: "This account does not own Destiny 2 but has linked to bungie." }); }
+        }
+      }
+      if(found === false) { this.setState({ error: "Account not found. (Possibly in transfer at the moment, try again later)" }); }
+    }
+    else { this.setState({ error: "This error should never appear, but it's best to catch it just incase. Tweet at me if you see this though @Guardianstats" }); }
   }
 
   async searchForUser(input) {
@@ -94,7 +110,7 @@ export class Search extends Component {
   }
 
   render() {
-    const { users } = this.state;
+    const { users, error } = this.state;
     return(
       <div className="search-container">
         <div className="search-input">
@@ -115,6 +131,7 @@ export class Search extends Component {
             ) : null
           }
         </div>
+        <div style={{ fontSize: '14px', color: 'tomato' }}> { error !== null ? error : null } </div>
       </div>
     );
   }
