@@ -33,7 +33,7 @@ export class Inspect extends Component {
               const activities = await this.getActities(profileInfo, membershipType, membershipId);
               this.setState({ status: { status: 'ready', statusText: 'Finished the inspection!' }, data: { profileInfo, ManifestActivities, activities, historicStats } });
             }
-            catch(err) { this.setState({ status: { status: 'error', statusText: 'Couldn\'t find manifest.' } }); }
+            catch(err) { this.setState({ status: { status: 'error', statusText: 'Failed to load Destiny 2 account. Does this person have a Destiny 2 account?' } }); }
           }
           else { this.setState({ status: { status: 'error', statusText: 'The membershipId entered was not a valid length.' } }); }
         }

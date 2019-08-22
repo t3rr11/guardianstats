@@ -5,13 +5,15 @@ import Inspect from '../../pages/inspect/Inspect';
 
 export class Home extends Component {
 
-  inspectPlayer = async (player, platform) => {
-    const membershipInfo = await bungie.GetMembershipId(encodeURIComponent(player));
-    if(membershipInfo.length > 0) {
-      console.log(player);
-      console.log(membershipInfo[0].membershipId);
-      window.history.pushState("", "", `/inspect/${ platform }/${ membershipInfo[0].membershipId }`);
-      window.location.reload();
+  inspectPlayer = async (userId, player, platform) => {
+    const membershipInfo = await bungie.GetMembershipsById(userId, platform);
+    if(membershipInfo.destinyMemberships.length > 0) {
+      for(var i in membershipInfo.destinyMemberships) {
+        if(membershipInfo.destinyMemberships[i].membershipType == platform) {
+          window.history.pushState("", "", `/inspect/${ platform }/${ membershipInfo.destinyMemberships[i].membershipId }`);
+          window.location.reload();
+        }
+      }
     }
     else {
       console.log('User private or not found.');

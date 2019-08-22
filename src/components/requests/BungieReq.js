@@ -28,3 +28,5 @@ export const GetManifestVersion = async () => apiRequest(`/Platform/Destiny2/Man
 export const GetManifest = async url => fetch(`https://www.bungie.net${url}`).then(a => a.json());
 export const SearchUsers = async username => apiRequest(`/Platform/User/SearchUsers/?q=${username}`, false, false);
 export const GetMembershipId = async platformName => apiRequest(`/Platform/Destiny2/SearchDestinyPlayer/-1/${ platformName }/`, false, false);
+export const GetMembershipsForCurrentUser = async () => apiRequest(`/Platform/User/GetMembershipsForCurrentUser/`, false, true);
+export const GetMembershipsById = async (userId, platform) => apiRequest(`/Platform/User/GetMembershipsById/${userId}/${platform}/`, false, false);
