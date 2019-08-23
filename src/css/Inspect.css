@@ -150,6 +150,7 @@
 .inspectBoxCharacterSelect {
   background-color: var(--NavyBlue);
   height:100px;
+  display: grid;
 }
 .inspectBoxCharacterView {
   background-color: var(--NavyBlue);
@@ -157,4 +158,40 @@
   position: absolute;
   width: 100%;
   height: 100%;
+}
+.inspectBoxCharacterBanner {
+  cursor: pointer;
+  font-size: 13px;
+  width: 90%;
+  float: right;
+  color: white;
+  z-index: 100;
+  margin: auto
+}
+.inspectBoxCharacterBanner > #backgroundDiv {
+  background-position: center left;
+  background-size: auto;
+  background-repeat: no-repeat;
+  background-color: black;
+  position: relative;
+  margin: auto;
+  height: 80px;
+}
+#backgroundDiv > #left_span {
+  margin-left: 90px;
+  line-height: 75px;
+  font-size: 30px;
+  position: absolute;
+  cursor: pointer;
+  left: 0px;
+  color: white;
+}
+#backgroundDiv > #right_span {
+  margin-right: 10px;
+  line-height: 75px;
+  font-size: 25px;
+  position: absolute;
+  cursor: pointer;
+  right: 0px;
+  color: white;
 }

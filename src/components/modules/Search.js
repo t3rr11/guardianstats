@@ -132,19 +132,21 @@ export class Search extends Component {
       const pgcr = await bungie.GetPGCR(recentActivities.activities[i].activityDetails.instanceId);
       for(var j in pgcr.entries) {
         if(pgcr.entries[j].player.bungieNetUserInfo.displayName !== ProfileInfo.profile.data.userInfo.displayName) {
-          var platform = null;
-          if(pgcr.entries[j].player.destinyUserInfo.membershipType == 1) { platform = "XBL" }
-          else if(pgcr.entries[j].player.destinyUserInfo.membershipType == 2) { platform = "PSN" }
-          else if(pgcr.entries[j].player.destinyUserInfo.membershipType == 3) { platform = "STEAM" }
-          else if(pgcr.entries[j].player.destinyUserInfo.membershipType == 4) { platform = "BNET" }
-          else if(pgcr.entries[j].player.destinyUserInfo.membershipType == 5) { platform = "STADIA" }
+          var platform, crossSave = null;
+          if(pgcr.entries[j].player.destinyUserInfo.membershipType === 1) { platform = "XBL" }
+          else if(pgcr.entries[j].player.destinyUserInfo.membershipType === 2) { platform = "PSN" }
+          else if(pgcr.entries[j].player.destinyUserInfo.membershipType === 3) { platform = "STEAM" }
+          else if(pgcr.entries[j].player.destinyUserInfo.membershipType === 4) { platform = "BNET" }
+          else if(pgcr.entries[j].player.destinyUserInfo.membershipType === 5) { platform = "STADIA" }
+          if(pgcr.entries[j].player.destinyUserInfo.crossSaveOverride !== 0){ crossSave = true } else { crossSave = false }
           if(recentPlayers.length < 15) {
             recentPlayers.push({
               userId: pgcr.entries[j].player.bungieNetUserInfo.membershipId,
               searchPlatform: "CUSTOM",
               displayName: pgcr.entries[j].player.bungieNetUserInfo.displayName,
               membershipType: platform,
-              membershipTypeValue: pgcr.entries[j].player.destinyUserInfo.membershipType
+              membershipTypeValue: pgcr.entries[j].player.destinyUserInfo.membershipType,
+              isCrossSave: crossSave
             });
           }
         }
@@ -171,7 +173,12 @@ export class Search extends Component {
         <div className="search-output">
           {
             users !== null ?
-            (users.length !== 0 ? this.returnSearchPlatformUsers(users) : "No users found with that name on this platform."
+            (users.length !== 0 ?
+              (
+                <div className="search-output">
+                  <div className="search-content"> { this.returnSearchPlatformUsers(users) } </div>
+                </div>
+              ) : "No users found with that name on this platform."
             ) : null
           }
         </div>
