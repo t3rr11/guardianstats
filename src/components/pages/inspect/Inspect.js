@@ -31,7 +31,7 @@ export class Inspect extends Component {
               const profileInfo = await bungie.GetProfile(membershipType, membershipId, '100,200,202,600,800,900');
               const historicStats = await bungie.GetHistoricStatsForAccount(membershipType, membershipId);
               const activities = await this.getActities(profileInfo, membershipType, membershipId);
-              this.setState({ status: { status: 'ready', statusText: 'Finished the inspection!' }, data: { profileInfo, ManifestActivities, activities, historicStats, selectedCharacter: '0' } });
+              this.setState({ status: { status: 'ready', statusText: 'Finished the inspection!' }, data: { profileInfo, ManifestActivities, activities, historicStats } });
             }
             catch(err) { this.setState({ status: { status: 'error', statusText: 'Failed to load Destiny 2 account. Does this person have a Destiny 2 account?' } }); }
           }
@@ -50,9 +50,7 @@ export class Inspect extends Component {
     var lastPlayedCharacter = characterIds[0]; for(var i in characterIds) { if(new Date(profileInfo.characters.data[characterIds[i]].dateLastPlayed).getTime() > lastPlayedTimes) { lastPlayedCharacter = characterIds[i]; } }
     return await bungie.GetActivityHistory(membershipType, membershipId, lastPlayedCharacter, 16, 0);
   }
-  loadNewCharacter(characterData) {
-    this.setState({ data: { selectedCharacter: characterData.index } });
-  }
+
   render() {
     //Define Consts and Variables
     const { status, statusText } = this.state.status;
@@ -61,7 +59,7 @@ export class Inspect extends Component {
     //Check for errors, show loader, or display content.
     if(status === 'error') { return <Error error={ statusText } /> }
     else if(status === 'ready') {
-      const { profileInfo, ManifestActivities, activities, historicStats, selectedCharacter } = this.state.data;
+      const { profileInfo, ManifestActivities, activities, historicStats } = this.state.data;
       return (
         <div className="inspectContainer">
           <div className="inspectTitlebar">
@@ -69,7 +67,7 @@ export class Inspect extends Component {
             { UserStatistics.generateRanks(profileInfo) }
           </div>
           <div className="inspectContent">
-            { CharacterViewer.generate(profileInfo, selectedCharacter) }
+            { CharacterViewer.generate(profileInfo) }
             { UserStatistics.generate(profileInfo, historicStats) }
             { UserActivities.generate(profileInfo, membershipInfo, ManifestActivities, activities) }
           </div>

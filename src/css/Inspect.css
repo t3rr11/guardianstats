@@ -162,11 +162,20 @@
 .inspectBoxCharacterBanner {
   cursor: pointer;
   font-size: 13px;
-  width: 90%;
+  width: 100%;
   float: right;
   color: white;
   z-index: 100;
-  margin: auto
+  margin: auto;
+  display: none;
+  grid-template-columns: 40px 1fr 40px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.inspectBoxCharacterBanner.active {
+  display: grid;
 }
 .inspectBoxCharacterBanner > #backgroundDiv {
   background-position: center left;
@@ -176,6 +185,7 @@
   position: relative;
   margin: auto;
   height: 80px;
+  width: 100%;
 }
 #backgroundDiv > #left_span {
   margin-left: 90px;
@@ -194,4 +204,27 @@
   cursor: pointer;
   right: 0px;
   color: white;
+}
+.inspectBoxCharacterBanner > .switchLeft {
+  background-image: url("/images/icons/arrow.png");
+  background-position: center left;
+  background-size: contain;
+  background-repeat: no-repeat;
+  position: relative;
+  margin: auto;
+  height: 80px;
+  width: 100%;
+  cursor: pointer;
+}
+.inspectBoxCharacterBanner > .switchRight {
+  background-image: url("/images/icons/arrow.png");
+  background-position: center left;
+  background-size: contain;
+  background-repeat: no-repeat;
+  position: relative;
+  margin: auto;
+  height: 80px;
+  width: 100%;
+  transform: rotate(180deg);
+  cursor: pointer;
 }
