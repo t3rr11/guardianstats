@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Error from '../../modules/Error';
+import Loader from '../../modules/Loader';
 import * as Misc from '../../Misc';
 import * as profileHelper from '../../scripts/ProfileHelper';
 
@@ -52,7 +53,7 @@ export function generate(profileInfo) {
         </div>
         <div className="inspectBoxCharacterView">
           {
-            //Insert ALOTTA CODE
+            <Loader statusText={ "Character Viewer Loading..." }  />
           }
         </div>
       </div>

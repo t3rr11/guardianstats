@@ -131,23 +131,27 @@ export class Search extends Component {
     for(var i in recentActivities.activities) {
       const pgcr = await bungie.GetPGCR(recentActivities.activities[i].activityDetails.instanceId);
       for(var j in pgcr.entries) {
-        if(pgcr.entries[j].player.bungieNetUserInfo.displayName !== ProfileInfo.profile.data.userInfo.displayName) {
-          var platform, crossSave = null;
-          if(pgcr.entries[j].player.destinyUserInfo.membershipType === 1) { platform = "XBL" }
-          else if(pgcr.entries[j].player.destinyUserInfo.membershipType === 2) { platform = "PSN" }
-          else if(pgcr.entries[j].player.destinyUserInfo.membershipType === 3) { platform = "STEAM" }
-          else if(pgcr.entries[j].player.destinyUserInfo.membershipType === 4) { platform = "BNET" }
-          else if(pgcr.entries[j].player.destinyUserInfo.membershipType === 5) { platform = "STADIA" }
-          if(pgcr.entries[j].player.destinyUserInfo.crossSaveOverride !== 0){ crossSave = true } else { crossSave = false }
-          if(recentPlayers.length < 15) {
-            recentPlayers.push({
-              userId: pgcr.entries[j].player.bungieNetUserInfo.membershipId,
-              searchPlatform: "CUSTOM",
-              displayName: pgcr.entries[j].player.bungieNetUserInfo.displayName,
-              membershipType: platform,
-              membershipTypeValue: pgcr.entries[j].player.destinyUserInfo.membershipType,
-              isCrossSave: crossSave
-            });
+        if(pgcr.entries[j].player.bungieNetUserInfo) {
+          if(pgcr.entries[j].player.bungieNetUserInfo.displayName !== ProfileInfo.profile.data.userInfo.displayName) {
+            if(!recentPlayers.find(player => player.userId === pgcr.entries[j].player.bungieNetUserInfo.membershipId)) {
+              var platform, crossSave = null;
+              if(pgcr.entries[j].player.destinyUserInfo.membershipType === 1) { platform = "XBL" }
+              else if(pgcr.entries[j].player.destinyUserInfo.membershipType === 2) { platform = "PSN" }
+              else if(pgcr.entries[j].player.destinyUserInfo.membershipType === 3) { platform = "STEAM" }
+              else if(pgcr.entries[j].player.destinyUserInfo.membershipType === 4) { platform = "BNET" }
+              else if(pgcr.entries[j].player.destinyUserInfo.membershipType === 5) { platform = "STADIA" }
+              if(pgcr.entries[j].player.destinyUserInfo.crossSaveOverride !== 0){ crossSave = true } else { crossSave = false }
+              if(recentPlayers.length < 15) {
+                recentPlayers.push({
+                  userId: pgcr.entries[j].player.bungieNetUserInfo.membershipId,
+                  searchPlatform: "CUSTOM",
+                  displayName: pgcr.entries[j].player.bungieNetUserInfo.displayName,
+                  membershipType: platform,
+                  membershipTypeValue: pgcr.entries[j].player.destinyUserInfo.membershipType,
+                  isCrossSave: crossSave
+                });
+              }  
+            }
           }
         }
       }

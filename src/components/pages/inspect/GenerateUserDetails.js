@@ -59,15 +59,21 @@ const getVersionImage = (version) => {
 }
 const getTitles = (profileInfo) => {
   var titles = Titles(profileInfo);
-  return (
-    titles.map(function (title) {
-      if(!title.hidden) {
-        if(title.isObtained) { return (<div key={ title.title } className="inspectTitleObtained" style={{ backgroundImage: `url("${ title.icon }")` }}></div>)}
-        else { return (<div key={ title.title } className="inspectTitleNotObtained" style={{ backgroundImage: `url("${ title.icon }")` }}></div>)}
-      }
-      else {
-        if(title.isObtained) { return (<div key={ title.title } className="inspectTitleObtained" style={{ backgroundImage: `url("${ title.icon }")` }}></div>)}
-      }
-    })
-  );
+  if(titles.find(title => title.isObtained === true)) {
+    return (
+      titles.map(function (title) {
+        if(!title.hidden) {
+          if(title.isObtained) { return (<div key={ title.title } className="inspectTitleObtained" style={{ backgroundImage: `url("${ title.icon }")` }}></div>)}
+          else {
+            //Disabled due to working on it later...
+            //return (<div key={ title.title } className="inspectTitleNotObtained" style={{ backgroundImage: `url("${ title.icon }")` }}></div>)
+          }
+        }
+        else {
+          if(title.isObtained) { return (<div key={ title.title } className="inspectTitleObtained" style={{ backgroundImage: `url("${ title.icon }")` }}></div>)}
+        }
+      })
+    );
+  }
+  else { return (<div className="inspectNoTitlesObtained">No Titles Obtained</div>) }
 }

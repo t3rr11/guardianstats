@@ -49,4 +49,8 @@
   .inspectBoxPvPTitle { width: 100%; }
   .inspectBoxStatPVP { width: 100%; }
   .imgCredit { display: none; }
+  .inspectBoxContentStats {
+    grid-template-columns: 25% 35% 40%;
+    font-size: 12px;
+  }
 }

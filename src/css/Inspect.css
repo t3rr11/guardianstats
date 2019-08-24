@@ -22,7 +22,6 @@
   vertical-align: top;
   text-align: center;
   border-top: 1px solid var(--DarkNavyBlue);
-  border-left: 1px solid var(--DarkNavyBlue);
   position: relative;
 }
 .inspectBoxTitle {
@@ -30,12 +29,7 @@
   padding: 5px;
   background-color: var(--LightNavyBlue);
   border-bottom: 1px solid var(--DarkNavyBlue);
-}
-.inspectBoxPvPTitle {
-  width: 500px;
-  padding: 5px;
-  background-color: var(--LightNavyBlue);
-  border-bottom: 1px solid var(--DarkNavyBlue);
+  border-right: 1px solid var(--DarkNavyBlue);
 }
 .inspectBoxRanks {
   float: left;
@@ -104,6 +98,14 @@
   background-size: contain;
   opacity: 0.3;
 }
+.inspectNoTitlesObtained {
+  display: inline-block;
+  background-color: var(--NavyBlue);
+  border-radius: 10px;
+  padding: 6px;
+  border: 1px solid var(--LightNavyBlue);
+  margin-right: 15px;
+}
 .inspectActivityContainer {
   width: 100%;
   border-bottom: 1px var(--LightNavyBlue) solid;
@@ -120,19 +122,39 @@
   cursor: default;
   background-color: var(--NavyBlue);
 }
+.inspectBoxContainer {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 50% 50%;
+}
+@media only screen and (max-width: 1600px) {
+  .inspectBoxContainer {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 100%;
+  }
+}
 .inspectBoxPVPIcon {
   float: left;
   width: 17%;
 }
-.inspectBoxStatPVP {
+.inspectBoxContentTitle {
+  width: 100%;
+  padding: 5px;
+  background-color: var(--LightNavyBlue);
+  border-bottom: 1px solid var(--DarkNavyBlue);
+  border-right: 1px solid var(--DarkNavyBlue);
+}
+.inspectBoxStatContent {
   background: var(--NavyBlue);
+  border-right: 1px solid var(--DarkNavyBlue);
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100px;
-  width: 500px;
+  width: 100%;
 }
-.inspectBoxPVPStats {
+.inspectBoxContentStats {
   float: right;
   width: 83%;
   display: grid;
@@ -141,7 +163,10 @@
   height: 80px;
   align-items: center;
 }
-.inspectBoxPVPStatsDiv {
+.inspectBoxContentIcon {
+  padding-right: 10px;
+}
+.inspectBoxContentStatsDiv {
   height: 75px;
   display: grid;
   align-items: center;
@@ -149,12 +174,14 @@
 }
 .inspectBoxCharacterSelect {
   background-color: var(--NavyBlue);
+  border-right: 1px solid var(--DarkNavyBlue);
   height:100px;
   display: grid;
 }
 .inspectBoxCharacterView {
   background-color: var(--NavyBlue);
   border-top: 1px solid var(--DarkNavyBlue);
+  border-right: 1px solid var(--DarkNavyBlue);
   position: absolute;
   width: 100%;
   height: 100%;

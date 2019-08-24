@@ -173,6 +173,10 @@
   font-size: 14px;
   min-height: 127px;
   position: relative;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 .pgcrExtendedInfoWeaponKills > div {
   display: inline-block;
