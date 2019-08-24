@@ -24,12 +24,12 @@ export function generate(profileInfo) {
     }
     return (
       <div key={ "inspectBoxChar_" + characterData.characterId } className={ ReturnClassName(characterData.characterId, SelectedCharacter.characterId) } id={ "inspectBoxChar_" + characterData.characterId }>
-        <div class="switchLeft" onClick={ (() => { SwapCharacter(CharactersInfo, previousCharacter) }) }></div>
+        <div className="switchLeft" onClick={ (() => { SwapCharacter(CharactersInfo, previousCharacter) }) }></div>
         <div id="backgroundDiv" style={{ backgroundImage: `url("https://bungie.net${characterData.emblemBackgroundPath}")` }}>
           <span id='left_span'>{ profileHelper.getClassName(characterData.classType) }</span>
           <span id='right_span'>✦ { characterData.light }</span>
         </div>
-        <div class="switchRight" onClick={ (() => { SwapCharacter(CharactersInfo, nextCharacter) }) }></div>
+        <div className="switchRight" onClick={ (() => { SwapCharacter(CharactersInfo, nextCharacter) }) }></div>
       </div>
     );
   }

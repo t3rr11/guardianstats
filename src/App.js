@@ -119,7 +119,9 @@ class App extends React.Component {
     }
     else { this.setState({ status: { error: databaseExists, status: 'error', statusText: databaseExists } }); }
   }
-  async manifestLoaded() { this.setState({ status: { status: 'checkProfile', statusText: 'Checking if needs to obtain profile information' } }); }
+  async manifestLoaded() {
+    this.setState({ status: { status: 'checkProfile', statusText: 'Checking if needs to obtain profile information' } });
+  }
   async setLastManifestCheck() { localStorage.setItem('lastManifestCheck', new Date().getTime()) }
   async forceManifestUpdate() { this.getManifest(); }
   async checkProfile() {

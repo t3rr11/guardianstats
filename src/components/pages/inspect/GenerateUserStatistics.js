@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Error from '../../modules/Error';
 import * as Misc from '../../Misc';
 
-export function generate(profileInfo, historicStats) {
+export function generate(profileInfo, Manifest, historicStats) {
   return (
     <div className="inspectBox" id="InspectBoxUserStatistics">
       <div className="inspectBoxContainer">
@@ -14,12 +14,17 @@ export function generate(profileInfo, historicStats) {
           <div className="inspectBoxContentTitle"> Overall PvE Statistics </div>
           { generatePvEStats(profileInfo, historicStats) }
         </div>
+        <div className="inspectBoxContent">
+          <div className="inspectBoxContentTitle"> Specific Strike Completions </div>
+          { generateIndividualPvPStats(profileInfo, Manifest.DestinyPresentationNodeDefinition, Manifest.DestinyRecordDefinition) }
+          <div className="inspectBoxContentMessage"> (Only tracked since forsaken) </div>
+        </div>
       </div>
     </div>
   );
 }
 
-export const generatePvPStats = (profileInfo, historicStats) => {
+const generatePvPStats = (profileInfo, historicStats) => {
   const allPvP = historicStats.mergedAllCharacters.results.allPvP.allTime;
   const activitiesEntered = allPvP.activitiesEntered.basic.displayValue;
   const activitiesWon = allPvP.activitiesWon.basic.displayValue;
@@ -49,7 +54,7 @@ export const generatePvPStats = (profileInfo, historicStats) => {
     </div>
   );
 }
-export const generatePvEStats = (profileInfo, historicStats) => {
+const generatePvEStats = (profileInfo, historicStats) => {
   const allPvE = historicStats.mergedAllCharacters.results.allPvE.allTime;
   return (
     <div className="inspectBoxStatContent">
@@ -75,6 +80,50 @@ export const generatePvEStats = (profileInfo, historicStats) => {
       </div>
     </div>
   );
+}
+const generateIndividualPvPStats = (profileInfo, PresentationNodes, Records) => {
+  const strikesPlayed = profileInfo.profileRecords.data.records["2367932631"].objectives[0].progress;
+  var strikeInfo = [];
+  const disabledRecords = [
+    1438813765,2229373471,1827105928,2647057001,907161188,1628091546,4276872224,3608507543,2367932631,4237873551,2929326295,
+    4066667911,4156350130,1911649721,896769581,602316980,602316983,2502625450,1214241085,1841174948
+  ];
+  for(var i in PresentationNodes[1256609117].children.records) {
+    if(!disabledRecords.find(recordHash => recordHash === PresentationNodes[1256609117].children.records[i].recordHash)) {
+      strikeInfo.push(Records[PresentationNodes[1256609117].children.records[i].recordHash]);
+    }
+  }
+  var strikeInfoLeft = strikeInfo.slice(Math.floor(strikeInfo.length / 2), strikeInfo.length);
+  var strikeInfoRight = strikeInfo.slice(0, Math.floor(strikeInfo.length / 2));
+  return (
+    <div className="inspectBoxStatContent strikes">
+      <div className="inspectBoxContentIcon strikes">
+        <img src="./images/icons/vanguard.png" style={{ width: '55px' }} />
+      </div>
+      <div className="inspectBoxContentStats strikes">
+        <div className="inspectBoxContentStatsDiv">
+          { buildStrikes(strikeInfoLeft, profileInfo) }
+        </div>
+        <div className="inspectBoxContentStatsDiv">
+          { buildStrikes(strikeInfoRight, profileInfo) }
+        </div>
+      </div>
+    </div>
+  );
+}
+
+const buildStrikes = (strikeInfo, profileInfo) => {
+  return strikeInfo.map(function(strike) {
+    return (
+      profileInfo.profileRecords.data.records[strike.hash] ? (
+        <span key={ strike.hash }>{ strike.displayProperties.name }
+          <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>
+            { profileInfo.profileRecords.data.records[strike.hash].objectives[0].progress }
+          </span>
+        </span>
+      ) : null
+    )
+  })
 }
 
 export const generateRanks = (profileInfo) => {

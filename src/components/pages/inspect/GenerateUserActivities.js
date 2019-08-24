@@ -3,7 +3,8 @@ import Error from '../../modules/Error';
 import * as Misc from '../../Misc';
 import { modeTypes } from '../../scripts/ModeTypes';
 
-export function generate(profileInfo, membershipInfo, ManifestActivities, activities) {
+export function generate(profileInfo, membershipInfo, Manifest, activities) {
+  const ManifestActivities = Manifest.DestinyActivityDefinition;
   return (
     <div className="inspectBox" id="InspectBoxRecentActivities">
       <div className="inspectBoxTitle"> Recent Activities </div>

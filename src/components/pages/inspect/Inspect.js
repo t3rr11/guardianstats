@@ -27,11 +27,22 @@ export class Inspect extends Component {
           if(!isNaN(membershipId) && membershipId.length >= 19) {
             this.setState({ status: { status: 'grabbingAccountInfo', statusText: 'Inspecting their account...' } });
             try {
-              const ManifestActivities = await this.getManifestData();
-              const profileInfo = await bungie.GetProfile(membershipType, membershipId, '100,200,202,600,800,900');
-              const historicStats = await bungie.GetHistoricStatsForAccount(membershipType, membershipId);
-              const activities = await this.getActities(profileInfo, membershipType, membershipId);
-              this.setState({ status: { status: 'ready', statusText: 'Finished the inspection!' }, data: { profileInfo, ManifestActivities, activities, historicStats } });
+              var Manifest, profileInfo, historicStats;
+              await Promise.all([
+                db.getManifest(),
+                bungie.GetProfile(membershipType, membershipId, '100,200,202,600,800,900'),
+                bungie.GetHistoricStatsForAccount(membershipType, membershipId)
+              ]).then(async function(values) {
+                Manifest = values[0];
+                profileInfo = values[1];
+                historicStats = values[2];
+              });
+              var activities = await this.getActivities(profileInfo, membershipType, membershipId);
+              this.setState({
+                status: {
+                  status: 'ready', statusText: 'Finished the inspection!' },
+                  data: { Manifest, profileInfo, historicStats, activities }
+              });
             }
             catch(err) { this.setState({ status: { status: 'error', statusText: 'Failed to load Destiny 2 account. Does this person have a Destiny 2 account?' } }); }
           }
@@ -43,8 +54,7 @@ export class Inspect extends Component {
     }
   }
 
-  async getManifestData() { return db.getActivityDefinition(); }
-  async getActities(profileInfo, membershipType, membershipId) {
+  async getActivities(profileInfo, membershipType, membershipId) {
     const characterIds = profileInfo.profile.data.characterIds;
     var lastPlayedTimes = new Date(profileInfo.characters.data[characterIds[0]].dateLastPlayed).getTime();
     var lastPlayedCharacter = characterIds[0]; for(var i in characterIds) { if(new Date(profileInfo.characters.data[characterIds[i]].dateLastPlayed).getTime() > lastPlayedTimes) { lastPlayedCharacter = characterIds[i]; } }
@@ -59,7 +69,7 @@ export class Inspect extends Component {
     //Check for errors, show loader, or display content.
     if(status === 'error') { return <Error error={ statusText } /> }
     else if(status === 'ready') {
-      const { profileInfo, ManifestActivities, activities, historicStats } = this.state.data;
+      const { Manifest, profileInfo, historicStats, activities } = this.state.data;
       return (
         <div className="inspectContainer">
           <div className="inspectTitlebar">
@@ -68,8 +78,8 @@ export class Inspect extends Component {
           </div>
           <div className="inspectContent">
             { CharacterViewer.generate(profileInfo) }
-            { UserStatistics.generate(profileInfo, historicStats) }
-            { UserActivities.generate(profileInfo, membershipInfo, ManifestActivities, activities) }
+            { UserStatistics.generate(profileInfo, Manifest, historicStats) }
+            { UserActivities.generate(profileInfo, membershipInfo, Manifest, activities) }
           </div>
         </div>
       );
