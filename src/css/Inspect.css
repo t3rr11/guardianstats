@@ -13,6 +13,7 @@
   height: 100%;
   display: grid;
   grid-template-columns: 400px minmax(250px, 1fr) 300px;
+  overflow: hidden;
 }
 .inspectBox {
   height: 100%;
@@ -63,7 +64,7 @@
 .inspectProfileName {
   float: left;
   font-size: 38px;
-  margin-left: 10px;
+  margin-left: 5px;
   margin-right: 10px;
   height: 60px;
   line-height: 60px;
@@ -82,7 +83,18 @@
   height: 45px;
   width: 45px;
   float: left;
-  margin-left: 10px;
+  margin-left: 5px;
+  margin-top: 5px;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+.inspectDonated {
+  background-image: url("/images/icons/destiny/ghost.png");
+  display: inline-block;
+  height: 45px;
+  width: 45px;
+  float: left;
+  margin-left: 5px;
   margin-top: 5px;
   background-size: contain;
   background-repeat: no-repeat;

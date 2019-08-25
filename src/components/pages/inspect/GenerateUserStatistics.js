@@ -15,8 +15,21 @@ export function generate(profileInfo, Manifest, historicStats) {
           { generatePvEStats(profileInfo, historicStats) }
         </div>
         <div className="inspectBoxContent">
+          <div className="inspectBoxContentTitle"> Overall Gambit Statistics </div>
+          { generateGambitStats(profileInfo, historicStats) }
+        </div>
+        <div className="inspectBoxContent">
+          <div className="inspectBoxContentTitle"> Overall Raid Statistics </div>
+          { generateRaidsStats(profileInfo, historicStats) }
+        </div>
+        <div className="inspectBoxContent">
           <div className="inspectBoxContentTitle"> Specific Strike Completions </div>
-          { generateIndividualPvPStats(profileInfo, Manifest.DestinyPresentationNodeDefinition, Manifest.DestinyRecordDefinition) }
+          { generateIndividualStrikesCompleted(profileInfo, Manifest.DestinyPresentationNodeDefinition, Manifest.DestinyRecordDefinition) }
+          <div className="inspectBoxContentMessage"> (Only tracked since forsaken) </div>
+        </div>
+        <div className="inspectBoxContent">
+          <div className="inspectBoxContentTitle"> Specific Raid Completions </div>
+          { generateIndividualStrikesCompleted(profileInfo, Manifest.DestinyPresentationNodeDefinition, Manifest.DestinyRecordDefinition) }
           <div className="inspectBoxContentMessage"> (Only tracked since forsaken) </div>
         </div>
       </div>
@@ -32,7 +45,7 @@ const generatePvPStats = (profileInfo, historicStats) => {
   return (
     <div className="inspectBoxStatContent">
       <div className="inspectBoxContentIcon">
-        <img src="./images/icons/crucible.png" style={{ width: '55px' }} />
+        <img src="./images/icons/destiny/crucible.png" style={{ width: '55px' }} />
       </div>
       <div className="inspectBoxContentStats">
         <div className="inspectBoxContentStatsDiv">
@@ -59,7 +72,7 @@ const generatePvEStats = (profileInfo, historicStats) => {
   return (
     <div className="inspectBoxStatContent">
       <div className="inspectBoxContentIcon">
-        <img src="./images/icons/vanguard.png" style={{ width: '55px' }} />
+        <img src="./images/icons/destiny/pve.png" style={{ width: '55px' }} />
       </div>
       <div className="inspectBoxContentStats">
         <div className="inspectBoxContentStatsDiv">
@@ -81,7 +94,64 @@ const generatePvEStats = (profileInfo, historicStats) => {
     </div>
   );
 }
-const generateIndividualPvPStats = (profileInfo, PresentationNodes, Records) => {
+const generateGambitStats = (profileInfo, historicStats) => {
+  const allPvP = historicStats.mergedAllCharacters.results.allPvP.allTime;
+  const activitiesEntered = allPvP.activitiesEntered.basic.displayValue;
+  const activitiesWon = allPvP.activitiesWon.basic.displayValue;
+  const activitiesLost = parseInt(activitiesEntered) - parseInt(activitiesWon);
+  return (
+    <div className="inspectBoxStatContent">
+      <div className="inspectBoxContentIcon">
+        <img src="./images/icons/destiny/crucible.png" style={{ width: '55px' }} />
+      </div>
+      <div className="inspectBoxContentStats">
+        <div className="inspectBoxContentStatsDiv">
+          <span>KD: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ allPvP.killsDeathsRatio.basic.displayValue }</span></span>
+          <span>KDA: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ allPvP.killsDeathsAssists.basic.displayValue }</span></span>
+          <span>KA/D: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ allPvP.efficiency.basic.displayValue }</span></span>
+        </div>
+        <div className="inspectBoxContentStatsDiv">
+          <span>Kills: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Misc.numberWithCommas(allPvP.kills.basic.displayValue) }</span></span>
+          <span>Assists: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Misc.numberWithCommas(allPvP.assists.basic.displayValue) }</span></span>
+          <span>Deaths: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Misc.numberWithCommas(allPvP.deaths.basic.displayValue) }</span></span>
+        </div>
+        <div className="inspectBoxContentStatsDiv">
+          <span>Matches: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Misc.numberWithCommas(activitiesEntered) }</span></span>
+          <span>Wins: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Misc.numberWithCommas(activitiesWon) }</span></span>
+          <span>Win Rate: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Math.round((activitiesWon / activitiesEntered) * 100) }%</span></span>
+        </div>
+      </div>
+    </div>
+  );
+}
+const generateRaidsStats = (profileInfo, historicStats) => {
+  const allPvE = historicStats.mergedAllCharacters.results.allPvE.allTime;
+  return (
+    <div className="inspectBoxStatContent">
+      <div className="inspectBoxContentIcon">
+        <img src="./images/icons/destiny/vanguard.png" style={{ width: '55px' }} />
+      </div>
+      <div className="inspectBoxContentStats">
+        <div className="inspectBoxContentStatsDiv">
+          <span>KD: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ allPvE.killsDeathsRatio.basic.displayValue }</span></span>
+          <span>KDA: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ allPvE.killsDeathsAssists.basic.displayValue }</span></span>
+          <span>KA/D: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ allPvE.efficiency.basic.displayValue }</span></span>
+        </div>
+        <div className="inspectBoxContentStatsDiv">
+          <span>Kills: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Misc.numberWithCommas(allPvE.kills.basic.displayValue) }</span></span>
+          <span>Assists: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Misc.numberWithCommas(allPvE.assists.basic.displayValue) }</span></span>
+          <span>Deaths: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Misc.numberWithCommas(allPvE.deaths.basic.displayValue) }</span></span>
+        </div>
+        <div className="inspectBoxContentStatsDiv">
+          <span>Activities: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Misc.numberWithCommas(allPvE.activitiesEntered.basic.displayValue) }</span></span>
+          <span>Misadventures: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Misc.numberWithCommas(allPvE.suicides.basic.displayValue) }</span></span>
+          <span>Time Spent: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ allPvE.secondsPlayed.basic.displayValue }</span></span>
+        </div>
+      </div>
+    </div>
+  );
+}
+const generateIndividualStrikesCompleted = (profileInfo, PresentationNodes, Records) => {
   const strikesPlayed = profileInfo.profileRecords.data.records["2367932631"].objectives[0].progress;
   var strikeInfo = [];
   const disabledRecords = [
@@ -98,7 +168,7 @@ const generateIndividualPvPStats = (profileInfo, PresentationNodes, Records) => 
   return (
     <div className="inspectBoxStatContent strikes">
       <div className="inspectBoxContentIcon strikes">
-        <img src="./images/icons/vanguard.png" style={{ width: '55px' }} />
+        <img src="./images/icons/destiny/vanguard.png" style={{ width: '55px' }} />
       </div>
       <div className="inspectBoxContentStats strikes">
         <div className="inspectBoxContentStatsDiv">

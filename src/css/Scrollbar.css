@@ -12,7 +12,7 @@
 .inspectBoxScrollbar { overflow-y: scroll; overflow-x: hidden; scrollbar-color: var(--LightNavyBlue) var(--DarkNavyBlue); }
 .inspectBoxScrollbar::-webkit-scrollbar { width: 15px; }
 .inspectBoxScrollbar::-webkit-scrollbar-track { background: var(--LightNavyBlue); border: 1px var(--DarkNavyBlue) solid; border-bottom: 0px; border-left: 0px; }
-.inspectBoxScrollbar::-webkit-scrollbar-thumb { background: var(--LightNavyBlue); }
+.inspectBoxScrollbar::-webkit-scrollbar-thumb { background: var(--LighterNavyBlue); border: 1px var(--DarkNavyBlue) solid; border-bottom: 0px; border-left: 0px; }
 .inspectBoxScrollbar::-webkit-scrollbar-thumb:hover { background: var(--LightNavyBlue); }
 .scroller {
   overflow-y: scroll;

@@ -7,6 +7,7 @@ export function generate(profileInfo) {
   return (
     <React.Fragment>
       <div className="inspectVersion" style={{ backgroundImage: `url("./images/icons/versions/${ getVersionImage(getVersion(profileInfo.profile.data.versionsOwned)) }")` }}></div>
+      <div className="inspectDonated"></div>
       <div className="inspectProfileName"> { profileInfo.profile.data.userInfo.displayName } </div>
       <div className="inspectUserDetails">
         <div className="inspectTimePlayed">Time Played: { Math.round(totalTime(profileInfo.profile.data.characterIds, profileInfo.characters.data) / 60) } Hours</div>
