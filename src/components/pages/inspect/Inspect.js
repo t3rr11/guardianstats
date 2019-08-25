@@ -30,7 +30,7 @@ export class Inspect extends Component {
               var Manifest, profileInfo, historicStats;
               await Promise.all([
                 db.getManifest(),
-                bungie.GetProfile(membershipType, membershipId, '100,200,202,600,800,900'),
+                bungie.GetProfile(membershipType, membershipId, '100,200,202,205,306,600,800,900'),
                 bungie.GetHistoricStatsForAccount(membershipType, membershipId)
               ]).then(async function(values) {
                 Manifest = values[0];
@@ -58,7 +58,7 @@ export class Inspect extends Component {
     const characterIds = profileInfo.profile.data.characterIds;
     var lastPlayedTimes = new Date(profileInfo.characters.data[characterIds[0]].dateLastPlayed).getTime();
     var lastPlayedCharacter = characterIds[0]; for(var i in characterIds) { if(new Date(profileInfo.characters.data[characterIds[i]].dateLastPlayed).getTime() > lastPlayedTimes) { lastPlayedCharacter = characterIds[i]; } }
-    return await bungie.GetActivityHistory(membershipType, membershipId, lastPlayedCharacter, 16, 0);
+    return await bungie.GetActivityHistory(membershipType, membershipId, lastPlayedCharacter, 14, 0);
   }
 
   render() {
@@ -77,7 +77,7 @@ export class Inspect extends Component {
             { UserStatistics.generateRanks(profileInfo) }
           </div>
           <div className="inspectContent">
-            { CharacterViewer.generate(profileInfo) }
+            { CharacterViewer.generate(profileInfo, Manifest) }
             { UserStatistics.generate(profileInfo, Manifest, historicStats) }
             { UserActivities.generate(profileInfo, membershipInfo, Manifest, activities) }
           </div>

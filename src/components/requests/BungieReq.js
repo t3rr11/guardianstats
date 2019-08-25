@@ -30,3 +30,4 @@ export const SearchUsers = async username => apiRequest(`/Platform/User/SearchUs
 export const GetMembershipId = async platformName => apiRequest(`/Platform/Destiny2/SearchDestinyPlayer/-1/${ platformName }/`, false, false);
 export const GetMembershipsForCurrentUser = async () => apiRequest(`/Platform/User/GetMembershipsForCurrentUser/`, false, true);
 export const GetMembershipsById = async (userId, platform) => apiRequest(`/Platform/User/GetMembershipsById/${userId}/${platform}/`, false, false);
+export const GetInstancedItem = async (membershipId, instancedItemId, components) => apiRequest(`/Platform/Destiny2/4/Profile/${membershipId}/Item/${instancedItemId}/?components=${components}`, false, false);

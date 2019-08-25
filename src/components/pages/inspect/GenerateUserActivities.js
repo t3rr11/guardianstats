@@ -8,23 +8,21 @@ export function generate(profileInfo, membershipInfo, Manifest, activities) {
   return (
     <div className="inspectBox" id="InspectBoxRecentActivities">
       <div className="inspectBoxTitle"> Recent Activities </div>
-        { activities.activities.map(function(activity) {
-          var icon = `https://bungie.net${ManifestActivities[activity.activityDetails.directorActivityHash].displayProperties.icon}`
-          var classProp = addCompletedClass(activity);
-          return (
-            <div key={ activity.activityDetails.instanceId } className={ classProp } id={ activity.activityDetails.instanceId }>
-              <img src={icon} alt="Icon" style={{ height: '30px', width: '30px', marginTop: '4px', marginLeft: '7px' }} />
-              <p className='activityTitle'>
-                <span style={{ display: 'block' }}> { modeTypes(activity.activityDetails.mode) }: { ManifestActivities[activity.activityDetails.referenceId].displayProperties.name } </span>
-                <span style={{ display: 'block', color: '#bbb', fontSize: '11px' }}> { getLastPlayed(activity) } ago </span>
-              </p>
-              <div>
-                <p style={{ margin: '0px', textAlign: 'right', marginRight: '10px' }}>Kills: <span style={{ color: '#bbb' }}>{ activity.values.kills.basic.displayValue }</span></p>
-                <p style={{ margin: '0px', textAlign: 'right', marginRight: '10px' }}>Deaths: <span style={{ color: '#bbb' }}>{ activity.values.deaths.basic.displayValue }</span></p>
+        <div className="inspectBoxActivities">
+          { activities.activities.map(function(activity) {
+            var icon = `https://bungie.net${ManifestActivities[activity.activityDetails.directorActivityHash].displayProperties.icon}`
+            var classProp = addCompletedClass(activity);
+            return (
+              <div key={ activity.activityDetails.instanceId } className={ classProp } id={ activity.activityDetails.instanceId }>
+                <img src={icon} alt="Icon" style={{ height: '30px', width: '30px', marginTop: '4px', marginLeft: '7px' }} />
+                <p className='inspectActivityTitle'>
+                  <span style={{ display: 'block' }}> { modeTypes(activity.activityDetails.mode) }: { ManifestActivities[activity.activityDetails.referenceId].displayProperties.name } </span>
+                  <span style={{ display: 'block', color: '#bbb', fontSize: '11px' }}> { getLastPlayed(activity) } ago </span>
+                </p>
               </div>
-            </div>
-          )
-        }, this)}
+            )
+          }, this)}
+        </div>
     </div>
   );
 }

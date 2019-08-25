@@ -1,5 +1,7 @@
 .inspectContainer {
   height: 100%;
+  display: grid;
+  grid-template-rows: 60px auto;
 }
 .inspectTitlebar {
   height: 60px;
@@ -8,10 +10,9 @@
 }
 .inspectContent {
   width: 100%;
-  height: calc(100% - 60px);
+  height: 100%;
   display: grid;
-  grid-template-columns: 500px minmax(250px, 1fr) 300px;
-  overflow: hidden;
+  grid-template-columns: 400px minmax(250px, 1fr) 300px;
 }
 .inspectBox {
   height: 100%;
@@ -22,6 +23,14 @@
   vertical-align: top;
   text-align: center;
   position: relative;
+}
+#InspectBoxRecentActivities {
+  display: grid;
+  grid-template-rows: 36px auto;
+}
+#InspectBoxCharacterViewer {
+  display: grid;
+  grid-template-rows: 36px auto;
 }
 .inspectBoxTitle {
   width: 100%;
@@ -106,21 +115,28 @@
   border: 1px solid var(--LightNavyBlue);
   margin-right: 15px;
 }
+.inspectBoxActivities {
+  display: grid;
+  grid-auto-rows: auto;
+}
 .inspectActivityContainer {
   width: 100%;
   border-bottom: 1px var(--LightNavyBlue) solid;
-  border-top: 0px;
-  height: 49.5px;
   padding: 5px;
   overflow: hidden;
   display: grid;
   grid-template-columns: 17% 83%;
   font-size: 13px;
   background-color: var(--NavyBlue);
+  justify-content: center;
+  align-items: center;
 }
 .inspectActivityContainer:hover {
   cursor: default;
   background-color: var(--NavyBlue);
+}
+.inspectActivityTitle {
+  margin: 0px;
 }
 .inspectBoxContainer {
   width: 100%;
@@ -185,6 +201,11 @@
   align-items: center;
   text-align: left;
 }
+.inspectBoxCharacters {
+  height: 100%;
+  display: grid;
+  grid-template-rows: 100px 420px;
+}
 .inspectBoxCharacterSelect {
   background-color: var(--NavyBlue);
   border-right: 1px solid var(--DarkNavyBlue);
@@ -195,9 +216,7 @@
   background-color: var(--NavyBlue);
   border-top: 1px solid var(--DarkNavyBlue);
   border-right: 1px solid var(--DarkNavyBlue);
-  position: absolute;
   width: 100%;
-  height: 100%;
 }
 .inspectBoxCharacterBanner {
   cursor: pointer;
@@ -219,18 +238,18 @@
 }
 .inspectBoxCharacterBanner > #backgroundDiv {
   background-position: center left;
-  background-size: auto;
+  background-size: auto 65px;
   background-repeat: no-repeat;
   background-color: black;
   position: relative;
   margin: auto;
-  height: 80px;
+  height: 60px;
   width: 100%;
 }
 #backgroundDiv > #left_span {
-  margin-left: 90px;
-  line-height: 75px;
-  font-size: 30px;
+  margin-left: 60px;
+  line-height: 60px;
+  font-size: 24px;
   position: absolute;
   cursor: pointer;
   left: 0px;
@@ -238,8 +257,8 @@
 }
 #backgroundDiv > #right_span {
   margin-right: 10px;
-  line-height: 75px;
-  font-size: 25px;
+  line-height: 60px;
+  font-size: 24px;
   position: absolute;
   cursor: pointer;
   right: 0px;
@@ -274,4 +293,43 @@
   margin-top: -10px;
   padding-bottom: 5px;
   color: #ccc;
+}
+.inspectBoxCharacterDetails {
+  display: none;
+}
+.inspectBoxCharacterDetails.active {
+  display: block;
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 419px;
+  background-position: bottom;
+}
+.inspectBoxCharacterDetailsItems {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  position: relative;
+  height: 100%;
+}
+.inspectBoxCharacterDetailsItemsLeft {
+  width: 80px;
+  position: absolute;
+  left: 0;
+}
+.inspectBoxCharacterDetailsItemsRight {
+  width: 80px;
+  position: absolute;
+  right: 0;
+}
+.inspectBoxCharacterExtended {
+  background-color: var(--NavyBlue);
+  border-right: 1px solid var(--DarkNavyBlue);
+}
+.inspectBoxCharacterExtendedDetails {
+  font-size: 14px;
+  display: none;
+}
+.inspectBoxCharacterExtendedDetails.active {
+  font-size: 14px;
+  display: block;
 }
