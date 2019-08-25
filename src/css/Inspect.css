@@ -65,7 +65,7 @@
   float: left;
   font-size: 38px;
   margin-left: 5px;
-  margin-right: 10px;
+  margin-right: 5px;
   height: 60px;
   line-height: 60px;
 }
@@ -91,18 +91,19 @@
 .inspectDonated {
   background-image: url("/images/icons/destiny/ghost.png");
   display: inline-block;
-  height: 45px;
-  width: 45px;
+  height: 30px;
+  width: 30px;
   float: left;
-  margin-left: 5px;
-  margin-top: 5px;
+  margin-right: 5px;
   background-size: contain;
   background-repeat: no-repeat;
 }
 .inspectTimePlayed { display: block; }
 .inspectTitles {
   float: right;
-  margin-top: 10px;
+  background: var(--InbetweenerNavyBlue);
+  padding: 10px;
+  padding-left: 20px
 }
 .inspectTitleObtained {
   float: left;

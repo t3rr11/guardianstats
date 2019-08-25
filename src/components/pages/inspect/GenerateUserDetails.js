@@ -2,13 +2,17 @@ import React, { Component } from 'react';
 import Error from '../../modules/Error';
 import * as Misc from '../../Misc';
 import { Titles } from './Titles';
+import Donators from '../../../donators.json';
 
 export function generate(profileInfo) {
   return (
     <React.Fragment>
       <div className="inspectVersion" style={{ backgroundImage: `url("./images/icons/versions/${ getVersionImage(getVersion(profileInfo.profile.data.versionsOwned)) }")` }}></div>
-      <div className="inspectDonated"></div>
-      <div className="inspectProfileName"> { profileInfo.profile.data.userInfo.displayName } </div>
+      {
+        checkDonated(profileInfo.profile.data.userInfo.membershipId) ?
+        ( <React.Fragment><div className="inspectProfileName"> { profileInfo.profile.data.userInfo.displayName } </div><div className="inspectDonated"></div></React.Fragment> ) :
+        ( <div className="inspectProfileName"> { profileInfo.profile.data.userInfo.displayName } </div> )
+      }
       <div className="inspectUserDetails">
         <div className="inspectTimePlayed">Time Played: { Math.round(totalTime(profileInfo.profile.data.characterIds, profileInfo.characters.data) / 60) } Hours</div>
         <div className="inspectLastPlayed">Last Played: { Misc.convertTimeToDate(profileInfo.profile.data.dateLastPlayed) } </div>
@@ -77,4 +81,8 @@ const getTitles = (profileInfo) => {
     );
   }
   else { return (<div className="inspectNoTitlesObtained">No Titles Obtained</div>) }
+}
+const checkDonated = (membershipId) => {
+  for(var i in Donators) { if(Donators[i].membershipId === membershipId) { return true; } }
+  return false;
 }
