@@ -31,3 +31,4 @@ export const GetMembershipId = async platformName => apiRequest(`/Platform/Desti
 export const GetMembershipsForCurrentUser = async () => apiRequest(`/Platform/User/GetMembershipsForCurrentUser/`, false, true);
 export const GetMembershipsById = async (userId, platform) => apiRequest(`/Platform/User/GetMembershipsById/${userId}/${platform}/`, false, false);
 export const GetInstancedItem = async (membershipId, instancedItemId, components) => apiRequest(`/Platform/Destiny2/4/Profile/${membershipId}/Item/${instancedItemId}/?components=${components}`, false, false);
+export const GetSpecificModeStats = async (membershipId, characterId, modes) => apiRequest(`/Platform/Destiny2/4/Account/${membershipId}/Character/${characterId}/Stats/?groups=101&modes=${modes}&periodType=2`, false, false)

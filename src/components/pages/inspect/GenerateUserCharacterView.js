@@ -39,7 +39,7 @@ export function generate(profileInfo, Manifest) {
     const currentTalentGridHash = profileInfo.characterEquipment.data[characterData.characterId].items.find(item => item.bucketHash === 3284755031).itemInstanceId;
     const talentGrid = Manifest.DestinyTalentGridDefinition[profileInfo.itemComponents.talentGrids.data[currentTalentGridHash].talentGridHash];
     return (
-      <div className={ GetActiveCharacterDetails(characterData.characterId, SelectedCharacter.characterId) } id={ `inspectBoxCharDetails_${ characterData.characterId }` } style={{ backgroundImage: `url("${ SubclassFinder.SetSubclass(profileInfo.itemComponents.talentGrids.data[currentTalentGridHash], talentGrid) }")` }} >
+      <div key={ `charDetails_${ characterData.characterId }` } className={ GetActiveCharacterDetails(characterData.characterId, SelectedCharacter.characterId) } id={ `inspectBoxCharDetails_${ characterData.characterId }` } style={{ backgroundImage: `url("${ SubclassFinder.SetSubclass(profileInfo.itemComponents.talentGrids.data[currentTalentGridHash], talentGrid) }")` }} >
         <div className="inspectBoxCharacterDetailsItems">
           <div className="inspectBoxCharacterDetailsItemsLeft">
             {
@@ -47,9 +47,9 @@ export function generate(profileInfo, Manifest) {
                 const Items = [1498876634, 2465295065, 953998645, 4023194814, 2025709351, 284967655];
                 if(Items.find(bucket => bucket === item.bucketHash)) {
                   return (
-                    <div id={ item.itemHash } class="collectibleItemContainer">
-                      <img alt={ Manifest.DestinyInventoryItemDefinition[item.itemHash].displayProperties.name } src={ `https://bungie.net${ Manifest.DestinyInventoryItemDefinition[item.itemHash].displayProperties.icon }` } class="collectibleItemImage" />
-                      <div class="collectibleItemInfo">{ Manifest.DestinyInventoryItemDefinition[item.itemHash].displayProperties.name }</div>
+                    <div key={ item.itemHash } id={ item.itemHash } className="collectibleItemContainer">
+                      <img alt={ Manifest.DestinyInventoryItemDefinition[item.itemHash].displayProperties.name } src={ `https://bungie.net${ Manifest.DestinyInventoryItemDefinition[item.itemHash].displayProperties.icon }` } className="collectibleItemImage" />
+                      <div className="collectibleItemInfo">{ Manifest.DestinyInventoryItemDefinition[item.itemHash].displayProperties.name }</div>
                     </div>
                   )
                 }
@@ -62,9 +62,9 @@ export function generate(profileInfo, Manifest) {
                 const Items = [3448274439, 3551918588, 14239492, 20886954, 1585787867];
                 if(Items.find(bucket => bucket === item.bucketHash)) {
                   return (
-                    <div id={ item.itemHash } class="collectibleItemContainer">
-                      <img alt={ Manifest.DestinyInventoryItemDefinition[item.itemHash].displayProperties.name } src={ `https://bungie.net${ Manifest.DestinyInventoryItemDefinition[item.itemHash].displayProperties.icon }` } class="collectibleItemImage" />
-                      <div class="collectibleItemInfo">{ Manifest.DestinyInventoryItemDefinition[item.itemHash].displayProperties.name }</div>
+                    <div key={ item.itemHash } id={ item.itemHash } className="collectibleItemContainer">
+                      <img alt={ Manifest.DestinyInventoryItemDefinition[item.itemHash].displayProperties.name } src={ `https://bungie.net${ Manifest.DestinyInventoryItemDefinition[item.itemHash].displayProperties.icon }` } className="collectibleItemImage" />
+                      <div className="collectibleItemInfo">{ Manifest.DestinyInventoryItemDefinition[item.itemHash].displayProperties.name }</div>
                     </div>
                   )
                 }
@@ -77,7 +77,7 @@ export function generate(profileInfo, Manifest) {
   }
   function GetCharacterExtendedDetails(profileInfo, Manifest, CharactersInfo, characterData, characterIndex) {
     return (
-      <div className={ GetActiveCharacterExtendedDetails(characterData.characterId, SelectedCharacter.characterId) } id={ `inspectBoxCharExtendedDetails_${ characterData.characterId }` }>
+      <div  key={ `charDetailsExt_${ characterData.characterId }` } className={ GetActiveCharacterExtendedDetails(characterData.characterId, SelectedCharacter.characterId) } id={ `inspectBoxCharExtendedDetails_${ characterData.characterId }` }>
         <div style={{ float: 'left', paddingLeft: '10px' }}>Character Time Played: </div>
         <div style={{ float: 'right', paddingRight: '10px', color: '#ccc' }}>{ Math.round((profileInfo.characters.data[characterData.characterId].minutesPlayedTotal / 60) / 24) } Days</div>
       </div>

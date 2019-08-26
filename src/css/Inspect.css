@@ -184,7 +184,13 @@
   height: 100px;
   width: 100%;
 }
-.inspectBoxStatContent.strikes {
+.inspectBoxStatContent.twoColumn {
+  justify-content: center;
+  align-items: start;
+  height: 175px;
+  padding: 8px;
+}
+.inspectBoxStatContent.twoColumn {
   justify-content: center;
   align-items: start;
   height: 175px;
@@ -199,13 +205,14 @@
   height: 80px;
   align-items: center;
 }
-.inspectBoxContentStats.strikes {
+.inspectBoxContentStats.twoColumn {
   grid-template-columns: 50% 50%;
+  align-items: start;
 }
 .inspectBoxContentIcon {
   padding-right: 10px;
 }
-.inspectBoxContentIcon.strikes {
+.inspectBoxContentIcon.twoColumn {
   padding-right: 20px;
 }
 .inspectBoxContentStatsDiv {
@@ -213,6 +220,10 @@
   display: grid;
   align-items: center;
   text-align: left;
+}
+.inspectBoxContentStatsDiv.twoColumn {
+  grid-template-rows: auto;
+  height: 150px;
 }
 .inspectBoxCharacters {
   height: 100%;
@@ -302,6 +313,7 @@
 }
 .inspectBoxContentMessage {
   background-color: var(--NavyBlue);
+  border-right: 1px solid var(--DarkNavyBlue);
   font-size: 12px;
   margin-top: -10px;
   padding-bottom: 5px;
