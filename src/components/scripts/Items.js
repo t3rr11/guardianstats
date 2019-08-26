@@ -4,15 +4,11 @@ import * as bungie from '../requests/BungieReq';
 //Consts
 const flagEnum = (state, value) => !!(state & value);
 
-export async function getProfile() {
-  const { membershipId, membershipType } = JSON.parse(localStorage.getItem('BasicMembershipInfo'));
-  return await bungie.GetProfile(membershipType, membershipId, '200,202,600,800');
-}
-
 export async function getItemData() {
   //Get required infomation from the manifest and bungie account records.
-  var ManifestCollectibles, ProfileData, PresentationNodes = null;
-  await Promise.all([db.getCollectibles(), db.getPresentationNodes(), this.getProfile()]).then(results => {
+  const { membershipId, membershipType } = JSON.parse(localStorage.getItem('BasicMembershipInfo'));
+  var ManifestCollectibles, ProfileData, PresentationNodes;
+  await Promise.all([db.getCollectibles(), db.getPresentationNodes(), bungie.GetProfile(membershipType, membershipId, '200,202,600,800')]).then(results => {
     ManifestCollectibles = results[0];
     PresentationNodes = results[1];
     ProfileData = results[2];

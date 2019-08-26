@@ -11,12 +11,17 @@ export class Items extends Component {
     data: null
   }
 
+  componentDidMount() {
+    this.getItems();
+  }
+
   async getItems() {
     try {
       const data = await extendedItems.getItemData();
       this.setState({ status: { error: null, status: 'completed', statusText: 'Finished loading item data.' }, data });
     }
     catch (err) {
+      console.log(err);
       this.setState({ status: { error: 'NotSelectedPlatform', status: 'error', statusText: 'You have not selected your platform yet.' } });
     }
   }
@@ -57,7 +62,6 @@ export class Items extends Component {
       );
     }
     else {
-      if(status === 'startUp') { this.getItems(); }
       return <Loader statusText={ statusText } />
     }
   }
