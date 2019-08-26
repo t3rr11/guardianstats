@@ -48,30 +48,24 @@ export async function SetCurrentBungieNetUser() {
 }
 
 export async function SetCurrentMembershipInfo(membershipId, membershipType) {
-  await fetch(`https://bungie.net/Platform/User/GetMembershipsById/${ membershipId }/${ membershipType }/`, {
-    method: 'GET',
-    headers: { "Content-Type": "application/x-www-form-urlencoded", "X-API-Key": "fc1f06b666154eeaa8f89d91f32c23e7" }
-  })
-  .then(async (response) =>  {
-    response = JSON.parse(await response.text());
-    for(var i in response.Response.destinyMemberships){
-      if(response.Response.destinyMemberships[i].membershipType == membershipType) {
-        const basicInfo = {
-          "displayName": response.Response.destinyMemberships[i].displayName,
-          "membershipId": response.Response.destinyMemberships[i].membershipId,
-          "membershipType": response.Response.destinyMemberships[i].membershipType
+  return await bungie.GetMembershipsById(membershipId, membershipType).then(response => {
+    if(response) {
+      const membershipInfo = response;
+      for(var i in membershipInfo.destinyMemberships) {
+        if(membershipInfo.destinyMemberships[i].membershipType == membershipType) {
+          const basicInfo = {
+            "displayName": membershipInfo.destinyMemberships[i].displayName,
+            "membershipId": membershipInfo.destinyMemberships[i].membershipId,
+            "membershipType": membershipInfo.destinyMemberships[i].membershipType
+          }
+          localStorage.setItem('BasicMembershipInfo', JSON.stringify(basicInfo));
+          return basicInfo;
         }
-        localStorage.setItem('BasicMembershipInfo', JSON.stringify(basicInfo));
-        const profileInfo = await bungie.GetProfile(basicInfo.membershipType, basicInfo.membershipId, '100,200');
-        const characters = profileInfo.characters.data;
-        var lastOnlineCharacter = 0;
-        for(var i in characters) { if(new Date(characters[i].dateLastPlayed) > lastOnlineCharacter) { lastOnlineCharacter = characters[i]; } }
-        if(localStorage.getItem('SelectedCharacter') === null) { localStorage.setItem('SelectedCharacter', lastOnlineCharacter.characterId); }
-        localStorage.setItem('ProfileInfo', JSON.stringify(profileInfo));
       }
+      return "No membershipId for platform";
     }
-  })
-  .catch((error) => { console.error(error); });
+  });
+  return "Failed due to error in params";
 }
 
 export async function CheckAuth() {

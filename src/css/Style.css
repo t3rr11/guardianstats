@@ -217,6 +217,22 @@ select.custom::-ms-expand {
   height: 300px;
   margin: auto;
 }
+.warning-container {
+  position: absolute;
+  top: 50px;
+  right: 0px;
+  width: 180px;
+  height: 135px;
+  text-align: center;
+  font-size: 12px;
+  background: var(--LightNavyBlue);
+}
+.warning-icon {
+  background-size: cover;
+  width: 100px;
+  height: 100px;
+  margin: auto;
+}
 .transition {
   -webkit-transition: -webkit-transform .5s linear;
 }

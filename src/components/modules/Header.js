@@ -32,13 +32,13 @@ export class Header extends React.Component {
     var selectBox = document.getElementById('LoginBtn');
     var platform = selectBox.options[selectBox.selectedIndex].value;
     localStorage.setItem('SelectedAccount', platform);
-    if(platform === 'BNET') { await auth.SetCurrentMembershipInfo(this.props.accountInfo.membershipId, "4"); }
-    else if(platform === 'PSN') { await auth.SetCurrentMembershipInfo(this.props.accountInfo.membershipId, "2"); }
-    else if(platform === 'XBL') { await auth.SetCurrentMembershipInfo(this.props.accountInfo.membershipId, "1"); }
-    else if(platform === 'STADIA') { await auth.SetCurrentMembershipInfo(this.props.accountInfo.membershipId, "5"); }
-    else if(platform === 'STEAM') { await auth.SetCurrentMembershipInfo(this.props.accountInfo.membershipId, "3");}
+    if(platform === 'BNET') { this.getPlatformReponse("4"); }
+    else if(platform === 'PSN') { this.getPlatformReponse("2"); }
+    else if(platform === 'XBL') { this.getPlatformReponse("1"); }
+    else if(platform === 'STADIA') { this.getPlatformReponse("5"); }
+    else if(platform === 'STEAM') { this.getPlatformReponse("3"); }
   }
-
+  async getPlatformReponse(membershipType) { await auth.SetCurrentMembershipInfo(this.props.accountInfo.membershipId, membershipType).then(response => { window.location.reload(); }) }
   async changeCharacter(characterId) { console.log(characterId); localStorage.setItem('SelectedCharacter', characterId); window.location.reload(); }
 
   render() {
@@ -128,7 +128,7 @@ export class Header extends React.Component {
       if(platforms !== null) {
         if(platform === null) { return( SelectPlatformHeader() ); }
         else {
-          if(localStorage.getItem("BasicMembershipInfo")) {
+          if(localStorage.getItem("ProfileInfo")) {
             return( HeaderWithPlatform() );
           }
           else {

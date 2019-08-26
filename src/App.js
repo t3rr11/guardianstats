@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Header from './components/modules/Header';
 import Loader from './components/modules/Loader';
 import Error from './components/modules/Error';
+import Warning from './components/modules/Warning';
 import Manifest from './manifest.json';
 
 //Pages
@@ -36,7 +37,8 @@ class App extends React.Component {
     status: {
       status: 'startUp',
       statusText: 'Starting up...',
-      error: null
+      error: null,
+      warning: null
     }
   }
 
@@ -134,13 +136,22 @@ class App extends React.Component {
   async getProfile() {
     if(localStorage.getItem('BasicMembershipInfo')) {
       const basicMembershipInfo = JSON.parse(localStorage.getItem('BasicMembershipInfo'));
-      const profileInfo = await bungie.GetProfile(basicMembershipInfo.membershipType, basicMembershipInfo.membershipId, '100,200');
-      const characters = profileInfo.characters.data;
-      var lastOnlineCharacter = 0;
-      for(var i in characters) { if(new Date(characters[i].dateLastPlayed) > lastOnlineCharacter) { lastOnlineCharacter = characters[i]; } }
-      if(localStorage.getItem('SelectedCharacter') === null) { localStorage.setItem('SelectedCharacter', lastOnlineCharacter.characterId); }
-      localStorage.setItem('ProfileInfo', JSON.stringify(profileInfo));
-      this.profileLoaded();
+      await bungie.GetProfile(basicMembershipInfo.membershipType, basicMembershipInfo.membershipId, '100,200').then(response => {
+        if(response) {
+          const profileInfo = response;
+          const characters = response.characters.data;
+          var lastOnlineCharacter = 0;
+          for(var i in characters) { if(new Date(characters[i].dateLastPlayed) > lastOnlineCharacter) { lastOnlineCharacter = characters[i]; } }
+          if(localStorage.getItem('SelectedCharacter') === null) { localStorage.setItem('SelectedCharacter', lastOnlineCharacter.characterId); }
+          localStorage.setItem('ProfileInfo', JSON.stringify(response));
+          this.profileLoaded();
+        }
+        else {
+          localStorage.setItem('ProfileInfo', "");
+          localStorage.setItem('SelectedAccount', "Please Select Platform");
+          this.setState({ status: { status: 'ready', warning: 'Couldn\'t find Destiny 2 account on that platform.' } });
+        }
+      });
     }
     else {
       this.profileLoaded();
@@ -149,8 +160,17 @@ class App extends React.Component {
   async profileLoaded() { this.setState({ status: { status: 'ready', statusText: 'Ready to go!' } }); }
 
   render() {
-    const { status, statusText } = this.state.status;
-    if(status === 'error') { return <Error error={ statusText } /> }
+    const { status, statusText, warning } = this.state.status;
+    if(status === 'error') {
+      return (
+        <Router>
+          <div className="App">
+            <Header accountInfo={ JSON.parse(localStorage.getItem('BungieAccount')) } />
+            <Error error={ statusText } />
+          </div>
+        </Router>
+      );
+    }
     else if(status === 'ready') {
       if(localStorage.getItem('Authorization')) {
         auth.CheckAuth();
@@ -172,6 +192,7 @@ class App extends React.Component {
                   <Route path="/inspect" render={ props => (<Inspect membershipInfo={ props.location.pathname.replace('/inspect/', '') } />) } />
                   <Route path="*" component={ NotFound } />
                 </Switch>
+                { warning != null ? (<Warning warning={ warning } />) : null }
               </div>
             </div>
           </Router>
