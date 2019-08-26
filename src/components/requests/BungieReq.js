@@ -1,8 +1,8 @@
 async function apiRequest(path, isStat, isAuthRequired) {
   //Headers for requests
   var headers, authHeaders = null;
-  try { headers = { headers: { "X-API-Key": "1b83a7bc78324068bb068ca8197ca3bf", "Content-Type": "application/json" } } } catch (err) { headers = {  }; }
-  try { authHeaders = { headers: { "X-API-Key": "1b83a7bc78324068bb068ca8197ca3bf", "Content-Type": "application/json", "Authorization": `Bearer ${ JSON.parse(localStorage.getItem('Authorization')).access_token }` } } } catch (err) { authHeaders = { }; }
+  try { headers = { headers: { "X-API-Key": "fc1f06b666154eeaa8f89d91f32c23e7", "Content-Type": "application/json" } } } catch (err) { headers = {  }; }
+  try { authHeaders = { headers: { "X-API-Key": "fc1f06b666154eeaa8f89d91f32c23e7", "Content-Type": "application/json", "Authorization": `Bearer ${ JSON.parse(localStorage.getItem('Authorization')).access_token }` } } } catch (err) { authHeaders = { }; }
 
   const request = await fetch(`https://${isStat ? 'stats' : 'www'}.bungie.net${path}`, isAuthRequired ? authHeaders : headers);
   const response = await request.json();
@@ -30,5 +30,5 @@ export const SearchUsers = async username => apiRequest(`/Platform/User/SearchUs
 export const GetMembershipId = async platformName => apiRequest(`/Platform/Destiny2/SearchDestinyPlayer/-1/${ platformName }/`, false, false);
 export const GetMembershipsForCurrentUser = async () => apiRequest(`/Platform/User/GetMembershipsForCurrentUser/`, false, true);
 export const GetMembershipsById = async (userId, platform) => apiRequest(`/Platform/User/GetMembershipsById/${userId}/${platform}/`, false, false);
-export const GetInstancedItem = async (membershipId, instancedItemId, components) => apiRequest(`/Platform/Destiny2/4/Profile/${membershipId}/Item/${instancedItemId}/?components=${components}`, false, false);
-export const GetSpecificModeStats = async (membershipId, characterId, modes) => apiRequest(`/Platform/Destiny2/4/Account/${membershipId}/Character/${characterId}/Stats/?groups=101&modes=${modes}&periodType=2`, false, false)
+export const GetInstancedItem = async (membershipId, membershipType, instancedItemId, components) => apiRequest(`/Platform/Destiny2/${membershipType}/Profile/${membershipId}/Item/${instancedItemId}/?components=${components}`, false, false);
+export const GetSpecificModeStats = async (membershipId, membershipType, characterId, modes) => apiRequest(`/Platform/Destiny2/${membershipType}/Account/${membershipId}/Character/${characterId}/Stats/?groups=101&modes=${modes}&periodType=2`, false, false)

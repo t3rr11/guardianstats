@@ -97,14 +97,14 @@ const generatePvEStats = (profileInfo, historicStats) => {
 const generateGambitStats = (profileInfo, gambitStats) => {
   var kd = 0, kda = 0, kad = 0, kills = 0, deaths = 0, assists = 0, matches = 0, wins = 0;
   for (var i in gambitStats) {
-    kd = kd + gambitStats[i].allPvECompetitive.allTime.killsDeathsRatio.basic.value;
-    kda = kda + gambitStats[i].allPvECompetitive.allTime.killsDeathsAssists.basic.value;
-    kad = kad + gambitStats[i].allPvECompetitive.allTime.efficiency.basic.value;
-    kills = kills + gambitStats[i].allPvECompetitive.allTime.kills.basic.value;
-    deaths = deaths + gambitStats[i].allPvECompetitive.allTime.deaths.basic.value;
-    assists = assists + gambitStats[i].allPvECompetitive.allTime.assists.basic.value;
-    matches = matches + gambitStats[i].allPvECompetitive.allTime.activitiesEntered.basic.value;
-    wins = wins + gambitStats[i].allPvECompetitive.allTime.activitiesWon.basic.value;
+    try { kd = kd + gambitStats[i].allPvECompetitive.allTime.killsDeathsRatio.basic.value; } catch (err) {  }
+    try { kda = kda + gambitStats[i].allPvECompetitive.allTime.killsDeathsAssists.basic.value; } catch (err) {  }
+    try { kad = kad + gambitStats[i].allPvECompetitive.allTime.efficiency.basic.value; } catch (err) {  }
+    try { kills = kills + gambitStats[i].allPvECompetitive.allTime.kills.basic.value; } catch (err) {  }
+    try { deaths = deaths + gambitStats[i].allPvECompetitive.allTime.deaths.basic.value; } catch (err) {  }
+    try { assists = assists + gambitStats[i].allPvECompetitive.allTime.assists.basic.value; } catch (err) {  }
+    try { matches = matches + gambitStats[i].allPvECompetitive.allTime.activitiesEntered.basic.value; } catch (err) {  }
+    try { wins = wins + gambitStats[i].allPvECompetitive.allTime.activitiesWon.basic.value; } catch (err) {  }
   }
   kd = Math.round((kd / gambitStats.length) * 100) / 100;
   kda = Math.round((kda / gambitStats.length) * 100) / 100;
@@ -137,15 +137,15 @@ const generateGambitStats = (profileInfo, gambitStats) => {
 const generateRaidsStats = (profileInfo, raidStats) => {
   var kd = 0, kda = 0, kad = 0, kills = 0, deaths = 0, assists = 0, activities = 0,  misadventures = 0, timeSpent = 0;
   for (var i in raidStats) {
-    kd = kd + raidStats[i].raid.allTime.killsDeathsRatio.basic.value;
-    kda = kda + raidStats[i].raid.allTime.killsDeathsAssists.basic.value;
-    kad = kad + raidStats[i].raid.allTime.efficiency.basic.value;
-    kills = kills + raidStats[i].raid.allTime.kills.basic.value;
-    deaths = deaths + raidStats[i].raid.allTime.deaths.basic.value;
-    assists = assists + raidStats[i].raid.allTime.assists.basic.value;
-    activities = activities + raidStats[i].raid.allTime.activitiesEntered.basic.value;
-    misadventures = misadventures + raidStats[i].raid.allTime.suicides.basic.value;
-    timeSpent = timeSpent + raidStats[i].raid.allTime.secondsPlayed.basic.value;
+    try { kd = kd + raidStats[i].raid.allTime.killsDeathsRatio.basic.value; } catch (err) {  }
+    try { kda = kda + raidStats[i].raid.allTime.killsDeathsAssists.basic.value; } catch (err) {  }
+    try { kad = kad + raidStats[i].raid.allTime.efficiency.basic.value; } catch (err) {  }
+    try { kills = kills + raidStats[i].raid.allTime.kills.basic.value; } catch (err) {  }
+    try { deaths = deaths + raidStats[i].raid.allTime.deaths.basic.value; } catch (err) {  }
+    try { assists = assists + raidStats[i].raid.allTime.assists.basic.value; } catch (err) {  }
+    try { activities = activities + raidStats[i].raid.allTime.activitiesEntered.basic.value; } catch (err) {  }
+    try { misadventures = misadventures + raidStats[i].raid.allTime.suicides.basic.value; } catch (err) {  }
+    try { timeSpent = timeSpent + raidStats[i].raid.allTime.secondsPlayed.basic.value; } catch (err) {  }
   }
   kd = Math.round((kd / raidStats.length) * 100) / 100;
   kda = Math.round((kda / raidStats.length) * 100) / 100;

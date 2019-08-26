@@ -7,7 +7,7 @@ export async function GetAuthentication(code) {
     method: 'POST',
     headers: new Headers({
       'Content-Type': 'application/x-www-form-urlencoded',
-      'X-API-Key': '1b83a7bc78324068bb068ca8197ca3bf',
+      'X-API-Key': 'fc1f06b666154eeaa8f89d91f32c23e7',
       'Authorization': encodedAuth
     }),
     body: `grant_type=authorization_code&code=${code}`
@@ -27,7 +27,7 @@ export async function GetAuthentication(code) {
 export const BearerHeaders = (access_token) => {
   return {
     "Content-Type": "application/x-www-form-urlencoded",
-    "X-API-Key": "1b83a7bc78324068bb068ca8197ca3bf",
+    "X-API-Key": "fc1f06b666154eeaa8f89d91f32c23e7",
     "Authorization": `Bearer ${ access_token }`
   };
 }
@@ -78,7 +78,7 @@ export async function RenewToken(refresh_token) {
     method: 'POST',
     headers: new Headers({
       'Content-Type': 'application/x-www-form-urlencoded',
-      'X-API-Key': '1b83a7bc78324068bb068ca8197ca3bf',
+      'X-API-Key': 'fc1f06b666154eeaa8f89d91f32c23e7',
       'Authorization': encodedAuth
     }),
     body: `grant_type=refresh_token&refresh_token=${ refresh_token }`

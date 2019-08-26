@@ -75,18 +75,18 @@ export class Inspect extends Component {
     const characterIds = profileInfo.profile.data.characterIds;
     var gambitData = [];
     if(characterIds.length === 1) {
-      await Promise.all([ bungie.GetSpecificModeStats(membershipId, characterIds[0], "64") ]).then(async function(values) {
+      await Promise.all([ bungie.GetSpecificModeStats(membershipId, membershipType, characterIds[0], "64") ]).then(async function(values) {
         gambitData.push(values[0]);
       });
     }
     if(characterIds.length === 2) {
-      await Promise.all([ bungie.GetSpecificModeStats(membershipId, characterIds[0], "64"), bungie.GetSpecificModeStats(membershipId, characterIds[1], "64") ]).then(async function(values) {
+      await Promise.all([ bungie.GetSpecificModeStats(membershipId, membershipType, characterIds[0], "64"), bungie.GetSpecificModeStats(membershipId, membershipType, characterIds[1], "64") ]).then(async function(values) {
         gambitData.push(values[0]);
         gambitData.push(values[1]);
       });
     }
     if(characterIds.length === 3) {
-      await Promise.all([ bungie.GetSpecificModeStats(membershipId, characterIds[0], "64"), bungie.GetSpecificModeStats(membershipId, characterIds[1], "64"), bungie.GetSpecificModeStats(membershipId, characterIds[2], "64") ]).then(async function(values) {
+      await Promise.all([ bungie.GetSpecificModeStats(membershipId, membershipType, characterIds[0], "64"), bungie.GetSpecificModeStats(membershipId, membershipType, characterIds[1], "64"), bungie.GetSpecificModeStats(membershipId, membershipType, characterIds[2], "64") ]).then(async function(values) {
         gambitData.push(values[0]);
         gambitData.push(values[1]);
         gambitData.push(values[2]);
@@ -98,18 +98,18 @@ export class Inspect extends Component {
     const characterIds = profileInfo.profile.data.characterIds;
     var raidData = [];
     if(characterIds.length === 1) {
-      await Promise.all([ bungie.GetSpecificModeStats(membershipId, characterIds[0], "4") ]).then(async function(values) {
+      await Promise.all([ bungie.GetSpecificModeStats(membershipId, membershipType, characterIds[0], "4") ]).then(async function(values) {
         raidData.push(values[0]);
       });
     }
     if(characterIds.length === 2) {
-      await Promise.all([ bungie.GetSpecificModeStats(membershipId, characterIds[0], "4"), bungie.GetSpecificModeStats(membershipId, characterIds[1], "4") ]).then(async function(values) {
+      await Promise.all([ bungie.GetSpecificModeStats(membershipId, membershipType, characterIds[0], "4"), bungie.GetSpecificModeStats(membershipId, membershipType, characterIds[1], "4") ]).then(async function(values) {
         raidData.push(values[0]);
         raidData.push(values[1]);
       });
     }
     if(characterIds.length === 3) {
-      await Promise.all([ bungie.GetSpecificModeStats(membershipId, characterIds[0], "4"), bungie.GetSpecificModeStats(membershipId, characterIds[1], "4"), bungie.GetSpecificModeStats(membershipId, characterIds[2], "4") ]).then(async function(values) {
+      await Promise.all([ bungie.GetSpecificModeStats(membershipId, membershipType, characterIds[0], "4"), bungie.GetSpecificModeStats(membershipId, membershipType, characterIds[1], "4"), bungie.GetSpecificModeStats(membershipId, membershipType, characterIds[2], "4") ]).then(async function(values) {
         raidData.push(values[0]);
         raidData.push(values[1]);
         raidData.push(values[2]);
