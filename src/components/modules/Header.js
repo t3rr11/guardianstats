@@ -6,7 +6,7 @@ import * as checks from '../scripts/Checks';
 import * as profileHelper from '../scripts/ProfileHelper';
 
 function toggleMenuSlider() { console.log('Toggled'); }
-function GotoAuth() { window.location.href = 'https://www.bungie.net/en/oauth/authorize?client_id=24048&response_type=code&state=1'; }
+function GotoAuth() { window.location.href = 'https://www.bungie.net/en/oauth/authorize?client_id=24178&response_type=code&state=1'; }
 
 export class Header extends React.Component {
 
@@ -32,11 +32,11 @@ export class Header extends React.Component {
     var selectBox = document.getElementById('LoginBtn');
     var platform = selectBox.options[selectBox.selectedIndex].value;
     localStorage.setItem('SelectedAccount', platform);
-    if(platform === 'BNET') { await auth.SetCurrentMembershipInfo(this.props.accountInfo.blizzardDisplayName.replace('#', '%23')); window.location.reload(); }
-    else if(platform === 'PSN') { await auth.SetCurrentMembershipInfo(this.props.accountInfo.psnDisplayName); window.location.reload(); }
-    else if(platform === 'XBL') { await auth.SetCurrentMembershipInfo(this.props.accountInfo.xboxDisplayName); window.location.reload(); }
-    else if(platform === 'STADIA') { await auth.SetCurrentMembershipInfo(this.props.accountInfo.stadiaDisplayName); window.location.reload(); }
-    else if(platform === 'STEAM') { await auth.SetCurrentMembershipInfo(this.props.accountInfo.steamDisplayName); window.location.reload(); }
+    if(platform === 'BNET') { await auth.SetCurrentMembershipInfo(this.props.accountInfo.membershipId, "4"); }
+    else if(platform === 'PSN') { await auth.SetCurrentMembershipInfo(this.props.accountInfo.membershipId, "2"); }
+    else if(platform === 'XBL') { await auth.SetCurrentMembershipInfo(this.props.accountInfo.membershipId, "1"); }
+    else if(platform === 'STADIA') { await auth.SetCurrentMembershipInfo(this.props.accountInfo.membershipId, "5"); }
+    else if(platform === 'STEAM') { await auth.SetCurrentMembershipInfo(this.props.accountInfo.membershipId, "3");}
   }
 
   async changeCharacter(characterId) { console.log(characterId); localStorage.setItem('SelectedCharacter', characterId); window.location.reload(); }
@@ -127,7 +127,14 @@ export class Header extends React.Component {
     if(accountInfo) {
       if(platforms !== null) {
         if(platform === null) { return( SelectPlatformHeader() ); }
-        else { return( HeaderWithPlatform() ); }
+        else {
+          if(localStorage.getItem("BasicMembershipInfo")) {
+            return( HeaderWithPlatform() );
+          }
+          else {
+            return( SelectPlatformHeader() );
+          }
+        }
       }
       else { return( DefaultHeader() ); }
     }

@@ -1,6 +1,7 @@
 import * as timers from '../Timers';
+import * as bungie from './BungieReq';
 
-const encodedAuth = 'Basic ' + new Buffer('24048:oSj5RgkwtiqxdsDUaEH4H0bmIj-vggwGMmzc9XnAs0A').toString('base64');
+const encodedAuth = 'Basic ' + new Buffer('24178:KneOjNrkLFQj0RfeeSJjZnQbEa6oqOnfhCw2E7gZl8E').toString('base64');
 
 export async function GetAuthentication(code) {
   fetch(`https://www.bungie.net/platform/app/oauth/token/`, {
@@ -14,7 +15,7 @@ export async function GetAuthentication(code) {
   })
   .then(async (response) => {
     response = JSON.parse(await response.text());
-    if(response.error) { window.location.href = '/failed'; }
+    if(response.error) { console.log(response); window.location.href = '/failed'; }
     else {
       localStorage.setItem('Authorization', JSON.stringify(response));
       localStorage.setItem("NextCheck", new Date().getTime() + 3600000);
@@ -46,14 +47,29 @@ export async function SetCurrentBungieNetUser() {
   .catch((error) => { console.error(error); });
 }
 
-export async function SetCurrentMembershipInfo(username) {
-  await fetch(`https://www.bungie.net/Platform/Destiny2/SearchDestinyPlayer/-1/ ${ username } /`, {
+export async function SetCurrentMembershipInfo(membershipId, membershipType) {
+  await fetch(`https://bungie.net/Platform/User/GetMembershipsById/${ membershipId }/${ membershipType }/`, {
     method: 'GET',
-    headers: BearerHeaders(JSON.parse(localStorage.getItem('Authorization')).access_token)
+    headers: { "Content-Type": "application/x-www-form-urlencoded", "X-API-Key": "fc1f06b666154eeaa8f89d91f32c23e7" }
   })
   .then(async (response) =>  {
     response = JSON.parse(await response.text());
-    localStorage.setItem('BasicMembershipInfo', JSON.stringify(response.Response[0]));
+    for(var i in response.Response.destinyMemberships){
+      if(response.Response.destinyMemberships[i].membershipType == membershipType) {
+        const basicInfo = {
+          "displayName": response.Response.destinyMemberships[i].displayName,
+          "membershipId": response.Response.destinyMemberships[i].membershipId,
+          "membershipType": response.Response.destinyMemberships[i].membershipType
+        }
+        localStorage.setItem('BasicMembershipInfo', JSON.stringify(basicInfo));
+        const profileInfo = await bungie.GetProfile(basicInfo.membershipType, basicInfo.membershipId, '100,200');
+        const characters = profileInfo.characters.data;
+        var lastOnlineCharacter = 0;
+        for(var i in characters) { if(new Date(characters[i].dateLastPlayed) > lastOnlineCharacter) { lastOnlineCharacter = characters[i]; } }
+        if(localStorage.getItem('SelectedCharacter') === null) { localStorage.setItem('SelectedCharacter', lastOnlineCharacter.characterId); }
+        localStorage.setItem('ProfileInfo', JSON.stringify(profileInfo));
+      }
+    }
   })
   .catch((error) => { console.error(error); });
 }

@@ -132,14 +132,19 @@ class App extends React.Component {
     else { this.setState({ status: { status: 'ready', statusText: 'Ready to go!' } }) }
   }
   async getProfile() {
-    const basicMembershipInfo = JSON.parse(localStorage.getItem('BasicMembershipInfo'));
-    const profileInfo = await bungie.GetProfile(basicMembershipInfo.membershipType, basicMembershipInfo.membershipId, '100,200');
-    const characters = profileInfo.characters.data;
-    var lastOnlineCharacter = 0;
-    for(var i in characters) { if(new Date(characters[i].dateLastPlayed) > lastOnlineCharacter) { lastOnlineCharacter = characters[i]; } }
-    if(localStorage.getItem('SelectedCharacter') === null) { localStorage.setItem('SelectedCharacter', lastOnlineCharacter.characterId); }
-    localStorage.setItem('ProfileInfo', JSON.stringify(profileInfo));
-    this.profileLoaded();
+    if(localStorage.getItem('BasicMembershipInfo')) {
+      const basicMembershipInfo = JSON.parse(localStorage.getItem('BasicMembershipInfo'));
+      const profileInfo = await bungie.GetProfile(basicMembershipInfo.membershipType, basicMembershipInfo.membershipId, '100,200');
+      const characters = profileInfo.characters.data;
+      var lastOnlineCharacter = 0;
+      for(var i in characters) { if(new Date(characters[i].dateLastPlayed) > lastOnlineCharacter) { lastOnlineCharacter = characters[i]; } }
+      if(localStorage.getItem('SelectedCharacter') === null) { localStorage.setItem('SelectedCharacter', lastOnlineCharacter.characterId); }
+      localStorage.setItem('ProfileInfo', JSON.stringify(profileInfo));
+      this.profileLoaded();
+    }
+    else {
+      this.profileLoaded();
+    }
   }
   async profileLoaded() { this.setState({ status: { status: 'ready', statusText: 'Ready to go!' } }); }
 

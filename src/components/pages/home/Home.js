@@ -16,7 +16,7 @@ export class Home extends Component {
     else { this.setState({ isConnected: false }); }
   }
 
-  GotoAuth() { window.location.href = 'https://www.bungie.net/en/oauth/authorize?client_id=24048&response_type=code&state=1'; }
+  GotoAuth() { window.location.href = 'https://www.bungie.net/en/oauth/authorize?client_id=24178&response_type=code&state=1'; }
   defaultConnectWindow() {
     return(
       <div className="home-content" style={{ width: '300px' }}>
