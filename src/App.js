@@ -42,6 +42,10 @@ class App extends React.Component {
     }
   }
 
+  componentDidMount() {
+    if(!localStorage.getItem("FirstLoad")) { localStorage.clear(); localStorage.setItem("FirstLoad", "false"); window.location.reload(); }
+  }
+
   async checkManifest() {
     if(await checks.checkManifest()){
       if(await checks.updateManifest()){ this.manifestLoaded(); }
