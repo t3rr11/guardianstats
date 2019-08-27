@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Error from '../../modules/Error';
 
 export function generate(ManifestActivities, ManifestItems, PGCRs, currentActivity) {
@@ -51,6 +51,7 @@ const generateTeamData = (ManifestItems, PGCRs, currentActivity, modeType, team)
     </div>
   }
   else if(team === 'alpha') {
+    // eslint-disable-next-line
     var teamData = PGCRs[currentActivity].teams.find(team => team.teamId === 17);
     return <div className="pgcrAlphaTeam">
       <div className="pgcrAlphaTeamTitle">{ teamData.standing.basic.displayValue }: Alpha Team - { teamData.score.basic.value }
@@ -64,6 +65,7 @@ const generateTeamData = (ManifestItems, PGCRs, currentActivity, modeType, team)
     </div>
   }
   else if(team === 'bravo') {
+    // eslint-disable-next-line
     var teamData = PGCRs[currentActivity].teams.find(team => team.teamId === 18);
     return <div className="pgcrBravoTeam">
       <div className="pgcrBravoTeamTitle">{ teamData.standing.basic.displayValue }: Bravo Team - { teamData.score.basic.value }
@@ -89,6 +91,7 @@ const generatePlayerData = (ManifestItems, PGCRs, currentActivity, modeType, tea
     ))
   }
   else if(team === 'alpha') {
+    // eslint-disable-next-line
     return PGCRs[currentActivity].entries.map(function (playerData) {
       if(playerData.values.team.basic.value === 17.0) {
         return (
@@ -105,6 +108,7 @@ const generatePlayerData = (ManifestItems, PGCRs, currentActivity, modeType, tea
     })
   }
   else if(team === 'bravo') {
+    // eslint-disable-next-line
     return PGCRs[currentActivity].entries.map(function (playerData) {
       if(playerData.values.team.basic.value === 18.0) {
         return (
@@ -166,6 +170,7 @@ const generateExtendedData = (ManifestItems, PGCRs, currentActivity, modeType) =
       { modeType === 'pvp' ?
         <div className="pgcrExtendedInfoMedalsEarned">
           {
+            // eslint-disable-next-line
             Object.keys(playerData.extended.values).map(function(medal) {
               //const medalData = playerData.extended.values[medal];
               if(medal.includes('medal')) {

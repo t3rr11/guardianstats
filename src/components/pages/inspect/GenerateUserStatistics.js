@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-import Error from '../../modules/Error';
+import React from 'react';
 import * as Misc from '../../Misc';
 
 export function generate(profileInfo, Manifest, historicStats, gambitStats, raidStats) {
@@ -41,11 +40,10 @@ const generatePvPStats = (profileInfo, historicStats) => {
   const allPvP = historicStats.mergedAllCharacters.results.allPvP.allTime;
   const activitiesEntered = allPvP.activitiesEntered.basic.displayValue;
   const activitiesWon = allPvP.activitiesWon.basic.displayValue;
-  const activitiesLost = parseInt(activitiesEntered) - parseInt(activitiesWon);
   return (
     <div className="inspectBoxStatContent">
       <div className="inspectBoxContentIcon">
-        <img src="./images/icons/destiny/crucible.png" style={{ width: '55px' }} />
+        <img alt="crucibleIcon" src="./images/icons/destiny/crucible.png" style={{ width: '55px' }} />
       </div>
       <div className="inspectBoxContentStats">
         <div className="inspectBoxContentStatsDiv">
@@ -72,7 +70,7 @@ const generatePvEStats = (profileInfo, historicStats) => {
   return (
     <div className="inspectBoxStatContent">
       <div className="inspectBoxContentIcon">
-        <img src="./images/icons/destiny/pve.png" style={{ width: '55px' }} />
+        <img alt="pveIcon" src="./images/icons/destiny/pve.png" style={{ width: '55px' }} />
       </div>
       <div className="inspectBoxContentStats">
         <div className="inspectBoxContentStatsDiv">
@@ -112,7 +110,7 @@ const generateGambitStats = (profileInfo, gambitStats) => {
   return (
     <div className="inspectBoxStatContent">
       <div className="inspectBoxContentIcon">
-        <img src="./images/icons/destiny/gambit.png" style={{ width: '55px' }} />
+        <img alt="gambitIcon" src="./images/icons/destiny/gambit.png" style={{ width: '55px' }} />
       </div>
       <div className="inspectBoxContentStats">
         <div className="inspectBoxContentStatsDiv">
@@ -154,7 +152,7 @@ const generateRaidsStats = (profileInfo, raidStats) => {
   return (
     <div className="inspectBoxStatContent">
       <div className="inspectBoxContentIcon">
-        <img src="./images/icons/destiny/raid.png" style={{ width: '55px' }} />
+        <img alt="raidIcon" src="./images/icons/destiny/raid.png" style={{ width: '55px' }} />
       </div>
       <div className="inspectBoxContentStats">
         <div className="inspectBoxContentStatsDiv">
@@ -177,13 +175,13 @@ const generateRaidsStats = (profileInfo, raidStats) => {
   );
 }
 const generateIndividualStrikesCompleted = (profileInfo, PresentationNodes, Records) => {
-  const strikesPlayed = profileInfo.profileRecords.data.records["2367932631"].objectives[0].progress;
   var strikeInfo = [];
   const disabledRecords = [
     1438813765,2229373471,1827105928,2647057001,907161188,1628091546,4276872224,3608507543,2367932631,4237873551,2929326295,
     4066667911,4156350130,1911649721,896769581,602316980,602316983,2502625450,1214241085,1841174948
   ];
   for(var i in PresentationNodes[1256609117].children.records) {
+    // eslint-disable-next-line
     if(!disabledRecords.find(recordHash => recordHash === PresentationNodes[1256609117].children.records[i].recordHash)) {
       strikeInfo.push(Records[PresentationNodes[1256609117].children.records[i].recordHash]);
     }
@@ -193,7 +191,7 @@ const generateIndividualStrikesCompleted = (profileInfo, PresentationNodes, Reco
   return (
     <div className="inspectBoxStatContent twoColumn">
       <div className="inspectBoxContentIcon twoColumn">
-        <img src="./images/icons/destiny/vanguard.png" style={{ width: '55px' }} />
+        <img alt="vanguardIcon" src="./images/icons/destiny/vanguard.png" style={{ width: '55px' }} />
       </div>
       <div className="inspectBoxContentStats twoColumn">
         <div className="inspectBoxContentStatsDiv">
@@ -207,7 +205,6 @@ const generateIndividualStrikesCompleted = (profileInfo, PresentationNodes, Reco
   );
 }
 const generateIndividualRaidsCompleted = (profileInfo, PresentationNodes, Records) => {
-  const raidsPlayed = profileInfo.profileRecords.data.records["2367932631"].objectives[0].progress;
   var raidInfoLeft = [
     { name: "Leviathan: Normal", info: Records[3420353827] },
     { name: "Leviathan: Prestige", info: Records[940998165] },
@@ -224,7 +221,7 @@ const generateIndividualRaidsCompleted = (profileInfo, PresentationNodes, Record
   return (
     <div className="inspectBoxStatContent twoColumn">
       <div className="inspectBoxContentIcon twoColumn">
-        <img src="./images/icons/destiny/raid.png" style={{ width: '55px' }} />
+        <img alt="raidIcon" src="./images/icons/destiny/raid.png" style={{ width: '55px' }} />
       </div>
       <div className="inspectBoxContentStats twoColumn">
         <div className="inspectBoxContentStatsDiv twoColumn">

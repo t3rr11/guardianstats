@@ -103,6 +103,7 @@ export class Activities extends Component {
         newActivities.push(activity);
         updatesFound++;
       }
+      return true;
     }, this);
     if(updatesFound > 0) {
       var newActivitiesArray = previousActivities;

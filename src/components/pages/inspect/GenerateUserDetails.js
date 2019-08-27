@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-import Error from '../../modules/Error';
+import React from 'react';
 import * as Misc from '../../Misc';
 import { Titles } from './Titles';
 import Donators from '../../../donators.json';
@@ -66,6 +65,7 @@ const getTitles = (profileInfo) => {
   var titles = Titles(profileInfo);
   if(titles.find(title => title.isObtained === true)) {
     return (
+      // eslint-disable-next-line
       titles.map(function (title) {
         if(!title.hidden) {
           if(title.isObtained) { return (<div key={ title.title } className="inspectTitleObtained" style={{ backgroundImage: `url("${ title.icon }")` }}></div>)}

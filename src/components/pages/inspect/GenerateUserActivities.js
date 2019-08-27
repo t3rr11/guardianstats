@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-import Error from '../../modules/Error';
+import React from 'react';
 import * as Misc from '../../Misc';
 import { modeTypes } from '../../scripts/ModeTypes';
 

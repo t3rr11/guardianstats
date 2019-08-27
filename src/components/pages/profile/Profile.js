@@ -31,7 +31,7 @@ export class Profile extends Component {
   render() {
     //Define Consts and Variables
     const { status, statusText } = this.state.status;
-    const { membershipId } = this.props;
+    //const { membershipId } = this.props;
 
     //Check for errors, show loader, or display content.
     if(status === 'error') { return <Error error={ statusText } /> }

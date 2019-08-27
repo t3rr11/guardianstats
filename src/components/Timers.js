@@ -1,10 +1,8 @@
 /*eslint-disable eqeqeq*/
 import * as misc from './Misc';
 import * as auth from './requests/BungieAuth';
-import * as activities from './pages/activities/Activities';
 
 var AuthTimer = null;
-var ActivityWatcher = null;
 
 export async function StopAllTimers() {
   StopTimer('Activity');

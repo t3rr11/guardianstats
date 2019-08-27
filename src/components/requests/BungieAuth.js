@@ -52,6 +52,7 @@ export async function SetCurrentMembershipInfo(membershipId, membershipType) {
     if(response) {
       const membershipInfo = response;
       for(var i in membershipInfo.destinyMemberships) {
+        // eslint-disable-next-line
         if(membershipInfo.destinyMemberships[i].membershipType == membershipType) {
           const basicInfo = {
             "displayName": membershipInfo.destinyMemberships[i].displayName,
@@ -65,6 +66,7 @@ export async function SetCurrentMembershipInfo(membershipId, membershipType) {
       return "No membershipId for platform";
     }
   });
+  // eslint-disable-next-line
   return "Failed due to error in params";
 }
 

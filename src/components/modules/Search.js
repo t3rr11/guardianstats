@@ -38,6 +38,7 @@ export class Search extends Component {
     this.setState({ users });
   }
   returnSearchPlatformUsers = (users) => {
+    // eslint-disable-next-line
     return users.map((user, index) => {
       if(user.searchPlatform === "ALL") {
         return (
@@ -105,6 +106,7 @@ export class Search extends Component {
     if(membershipInfo.destinyMemberships.length > 0) {
       var found = false;
       for(var i in membershipInfo.destinyMemberships) {
+        // eslint-disable-next-line
         if(membershipInfo.destinyMemberships[i].membershipType == platform) {
           found = true;
           if(await bungie.GetProfile(platform, membershipInfo.destinyMemberships[i].membershipId, "100")) {
@@ -134,6 +136,7 @@ export class Search extends Component {
         for(var j in pgcr.entries) {
           if(pgcr.entries[j].player.bungieNetUserInfo) {
             if(pgcr.entries[j].player.bungieNetUserInfo.displayName !== ProfileInfo.profile.data.userInfo.displayName) {
+              // eslint-disable-next-line
               if(!recentPlayers.find(player => player.userId === pgcr.entries[j].player.bungieNetUserInfo.membershipId)) {
                 var platform, crossSave = null;
                 if(pgcr.entries[j].player.destinyUserInfo.membershipType === 1) { platform = "XBL" }

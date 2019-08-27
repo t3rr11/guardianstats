@@ -142,7 +142,6 @@ class App extends React.Component {
       const basicMembershipInfo = JSON.parse(localStorage.getItem('BasicMembershipInfo'));
       await bungie.GetProfile(basicMembershipInfo.membershipType, basicMembershipInfo.membershipId, '100,200').then(response => {
         if(response) {
-          const profileInfo = response;
           const characters = response.characters.data;
           var lastOnlineCharacter = 0;
           for(var i in characters) { if(new Date(characters[i].dateLastPlayed) > lastOnlineCharacter) { lastOnlineCharacter = characters[i]; } }

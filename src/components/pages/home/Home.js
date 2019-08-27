@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import Search from '../../modules/Search';
-import * as bungie from '../../requests/BungieReq';
-import Inspect from '../../pages/inspect/Inspect';
 import Loader from '../../modules/Loader';
 import * as Checks from '../../scripts/Checks';
 
@@ -36,7 +34,7 @@ export class Home extends Component {
               <p>Feel free to search for a player below.</p>
               <Search />
             </div>
-            { this.state.isConnected == false ? this.defaultConnectWindow() : null }
+            { this.state.isConnected === false ? this.defaultConnectWindow() : null }
             <div className="imgCredit">© Bungie, Inc. All rights reserved. Destiny, the Destiny Logo, Bungie and the Bungie logo are among the trademarks of Bungie, Inc.</div>
           </div>
         </React.Fragment>

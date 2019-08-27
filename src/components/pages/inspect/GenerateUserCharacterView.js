@@ -1,8 +1,4 @@
-import React, { Component } from 'react';
-import Error from '../../modules/Error';
-import Loader from '../../modules/Loader';
-import * as Misc from '../../Misc';
-import * as bungie from '../../requests/BungieReq';
+import React from 'react';
 import * as profileHelper from '../../scripts/ProfileHelper';
 import * as SubclassFinder from '../../scripts/SubclassFinder';
 
@@ -43,6 +39,7 @@ export function generate(profileInfo, Manifest) {
         <div className="inspectBoxCharacterDetailsItems">
           <div className="inspectBoxCharacterDetailsItemsLeft">
             {
+              // eslint-disable-next-line
               profileInfo.characterEquipment.data[characterData.characterId].items.map(item => {
                 const Items = [1498876634, 2465295065, 953998645, 4023194814, 2025709351, 284967655];
                 if(Items.find(bucket => bucket === item.bucketHash)) {
@@ -58,6 +55,7 @@ export function generate(profileInfo, Manifest) {
           </div>
           <div className="inspectBoxCharacterDetailsItemsRight">
             {
+              // eslint-disable-next-line
               profileInfo.characterEquipment.data[characterData.characterId].items.map(item => {
                 const Items = [3448274439, 3551918588, 14239492, 20886954, 1585787867];
                 if(Items.find(bucket => bucket === item.bucketHash)) {
