@@ -176,18 +176,10 @@ const generateExtendedData = (ManifestItems, PGCRs, currentActivity, modeType) =
                 const goldIronBannerMedals = ["Medals_pvp_medal_ib_control_3a", "Medals_pvp_medal_ib_control_3b", "Medals_pvp_medal_ib_multi_entire_team", "Medals_pvp_medal_ib_multi_7x", "Medals_pvp_medal_ib_streak_huge", "Medals_pvp_medal_ib_streak_lg", "Medals_pvp_medal_ib_streak_no_damage", "Medals_pvp_medal_ib_streak_shutdown_large", "Medals_pvp_medal_ib_match_undefeated"];
                 const silverIronBannerMedals = ["Medals_pvp_medal_ib_control_2a", "Medals_pvp_medal_ib_control_2b", "Medals_pvp_medal_ib_control_2c", "Medals_pvp_medal_ib_control_2d", "Medals_pvp_medal_ib_multi_6x", "Medals_pvp_medal_ib_multi_5x", "Medals_pvp_medal_ib_multi_4x", "Medals_pvp_medal_ib_streak_med", "Medals_pvp_medal_ib_streak_team", "Medals_pvp_medal_ib_match_blowout", "Medals_pvp_medal_ib_match_most_damage", "Medals_pvp_medal_ib_match_comeback", "Medals_pvp_medal_ib_match_never_trailed", "Medals_pvp_medal_ib_match_overtime", "Medals_pvp_medal_ib_cycle"];
                 const bronzeIronBannerMedals = ["Medals_pvp_medal_ib_control_1a", "Medals_pvp_medal_ib_control_1b", "Medals_pvp_medal_ib_control_1c", "Medals_pvp_medal_ib_control_1d", "Medals_pvp_medal_ib_multi_3x", "Medals_pvp_medal_ib_multi_2x", "Medals_pvp_medal_ib_payback", "Medals_pvp_medal_ib_avenger", "Medals_pvp_medal_ib_defender", "Medals_pvp_medal_ib_streak_sm", "Medals_pvp_medal_ib_streak_comeback", "Medals_pvp_medal_ib_streak_shutdown", "Medals_pvp_medal_ib_streak_combined", "Medals_pvp_medal_ib_first_strike", "Medals_pvp_medal_ib_super_shutdown"];
-                if(goldIronBannerMedals.find(e => e === medal)) {
-                  return ( <img key={ medal } id={ medal } alt={ medal } className="pgcrMedalIcon" src={'./images/icons/medals/ib_gold.png'} title={ medal } /> )
-                }
-                else if(silverIronBannerMedals.find(e => e === medal)) {
-                  return ( <img key={ medal } id={ medal } alt={ medal } className="pgcrMedalIcon" src={'./images/icons/medals/ib_silver.png'} title={ medal } /> )
-                }
-                else if(bronzeIronBannerMedals.find(e => e === medal)) {
-                  return ( <img key={ medal } id={ medal } alt={ medal } className="pgcrMedalIcon" src={'./images/icons/medals/ib_bronze.png'} title={ medal } /> )
-                }
-                else {
-                  return ( <img key={ medal } id={ medal } alt={ medal } className="pgcrMedalIcon" src={'./images/icons/medals/' + medal + '.png'} title={ medal } /> )
-                }
+                if(goldIronBannerMedals.find(e => e === medal)) { return ( <img key={ medal } id={ medal } alt={ medal } className="pgcrMedalIcon" src={'./images/icons/medals/ib_gold.png'} title={ medal } /> ) }
+                else if(silverIronBannerMedals.find(e => e === medal)) { return ( <img key={ medal } id={ medal } alt={ medal } className="pgcrMedalIcon" src={'./images/icons/medals/ib_silver.png'} title={ medal } /> ) }
+                else if(bronzeIronBannerMedals.find(e => e === medal)) { return ( <img key={ medal } id={ medal } alt={ medal } className="pgcrMedalIcon" src={'./images/icons/medals/ib_bronze.png'} title={ medal } /> ) }
+                else { return ( <img key={ medal } id={ medal } alt={ medal } className="pgcrMedalIcon" src={'./images/icons/medals/' + medal + '.png'} title={ medal } /> ) }
               }
             })
           }

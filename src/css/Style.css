@@ -55,6 +55,8 @@ body {
   height: 50px;
   position: fixed;
   z-index: 5;
+  display: grid;
+  grid-template-columns: 170px auto;
 }
 .logo {
   width: 30px;
@@ -141,15 +143,14 @@ body {
   margin-top: -1px;
 }
 .menu-bar {
-  height:35px;
-  line-height: 35px;
+  height: 50px;
+  line-height: 50px;
   text-align: center;
   position: relative;
   display: inline-block;
-  margin-left: 20px;
 }
-.menu-item { display: inline-block; margin: 0px 10px; height: 28px; }
-.menu-item-disabled { display: inline-block; margin: 0px 10px; height: 28px; }
+.menu-item { display: inline-block; margin: 0px 10px; height: 35px; }
+.menu-item-disabled { display: inline-block; margin: 0px 10px; height: 35px; }
 .menu-item > a { color: white; text-decoration: none; }
 .menu-item > span { color: white; text-decoration: none; }
 .menu-item-disabled > a { color: darkgray; cursor: default; text-decoration: none; }

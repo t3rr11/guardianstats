@@ -16,6 +16,9 @@
   vertical-align: top;
   min-height: 175px;
 }
+.home-title {
+  font-size: 32px;
+}
 .home-text {
   width: 500px;
   padding-bottom: 15px;

@@ -1,19 +1,51 @@
 @media only screen and (max-width: 800px) {
+  .home-content {
+    width: unset !important;
+  }
   #itemCategories { grid-template-columns: 100% !important; grid-template-rows: 150% !important; margin-bottom: 50px !important; text-align: center !important; display: block !important; }
-  #LoginBtn { display: none !important; }
-  #character_select { display: none !important; }
   .settings-cog { display: none !important; }
-  .menu-bar { display: none !important; }
-  .collectibleItemContainer:hover .collectibleItemInfo { display: none !important; }
+  #LoginBtn {
+    display: block !important;
+    float: unset !important;
+    margin: 5px auto;
+    grid-row: 1;
+  }
+  #character_select {
+    display: block !important;
+    float: unset !important;
+    margin: 5px auto;
+    grid-row: 3;
+  }
+  .menu-container {
+    display: none !important;
+  }
+  .menu-bar {
+    display: block !important;
+    height: unset !important;
+    line-height: unset !important;
+    grid-row: 2;
+  }
+  #menu.show {
+    display: grid !important;
+    background-color: var(--DarkNavyBlue);
+    grid-template-rows: 50px 250px 50px;
+  }
+  .title-bar.show {
+    grid-template-columns: unset !important;
+    grid-template-rows: 50px auto !important;
+    height: 100% !important;
+  }
   .menu-item:hover { border-bottom: 0px !important; }
   .menu-ul { display: none; }
   .menu-switch-icon {
     display: block !important;
-    float: right;
     font-size: 42px;
     margin-right: 10px;
     margin-top: -5px;
     margin-bottom: -10px;
+    position: absolute;
+    right: 0;
+    top: 0;
   }
   .menu-item {
     display: block !important;
@@ -43,6 +75,7 @@
     height: 190px !important;
     width: 100% !important;
   }
+  .collectibleItemContainer:hover .collectibleItemInfo { display: none !important; }
   .inspectContent { grid-template-columns: minmax(250px, 1fr); }
   #InspectBoxCharacterViewer { display: none; }
   #InspectBoxRecentActivities { display: none; }
