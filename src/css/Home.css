@@ -15,6 +15,7 @@
   display: inline-block;
   vertical-align: top;
   min-height: 175px;
+  border-radius: 30px;
 }
 .home-title {
   font-size: 32px;
