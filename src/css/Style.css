@@ -71,6 +71,9 @@ body {
   line-height: 50px;
   font-size: 18px;
 }
+.logo-container {
+  cursor: pointer;
+}
 #search-form {
   position: absolute;
   right: 5px;

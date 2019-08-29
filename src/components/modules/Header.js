@@ -39,7 +39,11 @@ export class Header extends React.Component {
   }
   async getPlatformReponse(membershipType) { await auth.SetCurrentMembershipInfo(this.props.accountInfo.membershipId, membershipType).then(response => { window.location.reload(); }) }
   async changeCharacter(characterId) { console.log(characterId); localStorage.setItem('SelectedCharacter', characterId); window.location.reload(); }
-  toggleMenuSlider() { document.getElementById("menu").classList.toggle("show"); document.getElementById("title-bar").classList.toggle("show"); }
+  toggleMenuSlider(ignore) {
+    if(window.screen.width < 800 && !ignore) {
+      document.getElementById("menu").classList.toggle("show"); document.getElementById("title-bar").classList.toggle("show");
+    }
+  }
 
   render() {
     const { accountInfo } = this.props;
@@ -63,7 +67,9 @@ export class Header extends React.Component {
     );
     const SelectPlatformHeader = () => (
       <header className="title-bar" id="title-bar">
-        <div className="logo-container"><img className="logo" alt='Logo' src='./images/logo.png' /><span id="logo_title" href="#">Guardianstats</span></div>
+        <Link to="/home" onClick={ (() => this.toggleMenuSlider(true)) } style={{ textDecoration: "none" }}>
+          <div className="logo-container"><img className="logo" alt='Logo' src='./images/logo.png' /><span id="logo_title" href="#">Guardianstats</span></div>
+        </Link>
         <div className="menu-container" id="menu">
           <div className="settings-cog" style={{ backgroundImage: 'url("./images/icons/cog.png")' }} onClick={ (() => this.toggleSettings()) }></div>
           <div className="settings-container" style={{ display: `${ this.state.showSettings ? 'block' : 'none'}` }}>
@@ -81,7 +87,9 @@ export class Header extends React.Component {
     );
     const HeaderWithPlatform = () => (
       <header className="title-bar" id="title-bar">
-        <div className="logo-container"><img className="logo" alt='Logo' src='./images/logo.png' /><span id="logo_title" href="#">Guardianstats</span></div>
+        <Link to="/home" onClick={ (() => this.toggleMenuSlider(true)) } style={{ textDecoration: "none" }}>
+          <div className="logo-container"><img className="logo" alt='Logo' src='./images/logo.png' /><span id="logo_title" href="#">Guardianstats</span></div>
+        </Link>
         <div className="menu-container" id="menu">
           <div className="settings-cog" style={{ backgroundImage: 'url("./images/icons/cog.png")' }} onClick={ (() => this.toggleSettings()) }></div>
           <div className="settings-container" style={{ display: `${ this.state.showSettings ? 'block' : 'none'}` }}>
@@ -119,7 +127,9 @@ export class Header extends React.Component {
     );
     const DefaultHeader = () => (
       <header className="title-bar" id="title-bar">
-        <div className="logo-container"><img className="logo" alt='Logo' src='./images/logo.png' /><span id="logo_title" href="#">Guardianstats</span></div>
+        <Link to="/home" onClick={ (() => this.toggleMenuSlider(true)) } style={{ textDecoration: "none" }}>
+          <div className="logo-container"><img className="logo" alt='Logo' src='./images/logo.png' /><span id="logo_title" href="#">Guardianstats</span></div>
+        </Link>
         <div className="menu-container" id="menu">
           <button type="button" className="btn btn-info" id="LoginBtn" onClick={() => { GotoAuth() }} style={{ marginRight: '5px' }}>Connect with Bungie.net</button>
           <div className="menu-bar disable-hl"> { menuItems } </div>

@@ -10,7 +10,7 @@
   background-color: var(--NavyBlue);
   opacity: 0.9;
   margin: 3px;
-  border: 6px solid var(--DarkNavyBlue);
+  border: 3px solid var(--DarkNavyBlue);
   padding: 8px;
   display: inline-block;
   vertical-align: top;
