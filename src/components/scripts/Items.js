@@ -1,5 +1,6 @@
 import * as db from '../requests/Database';
 import * as bungie from '../requests/BungieReq';
+import * as globals from '../scripts/Globals';
 
 //Consts
 const flagEnum = (state, value) => !!(state & value);
@@ -7,14 +8,9 @@ const flagEnum = (state, value) => !!(state & value);
 export async function getItemData() {
   //Get required infomation from the manifest and bungie account records.
   const { membershipId, membershipType } = JSON.parse(localStorage.getItem('BasicMembershipInfo'));
-  var ManifestCollectibles, ProfileData, PresentationNodes;
-  await Promise.all([db.getCollectibles(), db.getPresentationNodes(), bungie.GetProfile(membershipType, membershipId, '200,202,600,800')]).then(results => {
-    ManifestCollectibles = results[0];
-    PresentationNodes = results[1];
-    ProfileData = results[2];
-  });
-
-  //Set consts.
+  const ManifestCollectibles = globals.MANIFEST.DestinyCollectibleDefinition;
+  const PresentationNodes = globals.MANIFEST.DestinyPresentationNodeDefinition;
+  const ProfileData = await bungie.GetProfile(membershipType, membershipId, '200,202,600,800');
   const ProfileCollectibles = ProfileData.profileCollectibles.data.collectibles;
   const CharacterCollectibles = ProfileData.characterCollectibles.data;
   const ExoticNode = PresentationNodes[1068557105];

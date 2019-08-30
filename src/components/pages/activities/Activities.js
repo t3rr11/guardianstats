@@ -4,6 +4,7 @@ import Error from '../../modules/Error';
 
 import { startUpPageChecks } from '../../scripts/Checks';
 import { modeTypes } from '../../scripts/ModeTypes';
+import * as globals from '../../scripts/Globals';
 import * as bungie from '../../requests/BungieReq';
 import * as db from '../../requests/Database';
 import * as PGCRGeneration from './PGCRGeneration';
@@ -35,8 +36,9 @@ export class Activities extends Component {
     const basicMI = JSON.parse(localStorage.getItem('BasicMembershipInfo'));
     const selectedCharacter = localStorage.getItem('SelectedCharacter');
     const activityData = await bungie.GetActivityHistory(basicMI.membershipType, basicMI.membershipId, selectedCharacter, 15, 0);
-    const ManifestActivities = await db.getActivityDefinition();
-    const ManifestItems = await db.getInventoryItemDefinition();
+    const Manifest = globals.MANIFEST;
+    const ManifestActivities = Manifest.DestinyActivityDefinition;
+    const ManifestItems = Manifest.DestinyInventoryItemDefinition;
     this.setState({
       status: { status: 'gettingPGCRs', 'statusText': 'Getting battle reports...' },
       activities: activityData.activities,

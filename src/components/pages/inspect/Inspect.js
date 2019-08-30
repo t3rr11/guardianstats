@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Loader from '../../modules/Loader';
 import Error from '../../modules/Error';
 import * as db from '../../requests/Database';
+import * as globals from '../../scripts/Globals';
 import * as bungie from '../../requests/BungieReq';
 import * as UserDetails from './GenerateUserDetails';
 import * as UserStatistics from './GenerateUserStatistics';
@@ -29,25 +30,23 @@ export class Inspect extends Component {
             this.setState({ status: { status: 'grabbingAccountInfo', statusText: 'Inspecting their account...' } });
             try {
               //Define variables to send to inspect components
-              var Manifest, profileInfo, historicStats;
+              var Manifest = globals.MANIFEST;
+              var profileInfo, historicStats;
+
               //Get the manifest and the profile information since they take the longest to get, do them together. First.
               this.setState({ status: { status: 'grabbingManifestInfo', statusText: 'Inspecting their account (1/5)' } });
-              await Promise.all([
-                db.getManifest(),
-                bungie.GetProfile(membershipType, membershipId, '100,200,202,205,306,600,800,900'),
-                bungie.GetHistoricStatsForAccount(membershipType, membershipId)
-              ]).then(async function(values) {
-                Manifest = values[0];
-                profileInfo = values[1];
-                historicStats = values[2];
-              });
+              await Promise.all([ bungie.GetProfile(membershipType, membershipId, '100,200,202,205,306,600,800,900'), bungie.GetHistoricStatsForAccount(membershipType, membershipId) ]).then(async function(values) { profileInfo = values[0]; historicStats = values[1]; });
+
               //With the profile data, proceed to get the other data using the profile information.
               this.setState({ status: { status: 'grabbingActivityInfo', statusText: 'Getting recent activities (2/5)' } });
               const activities = await this.getActivities(profileInfo, membershipType, membershipId);
+
               this.setState({ status: { status: 'grabbingGambitInfo', statusText: 'Getting gambit statistics (3/5)' } });
               const gambitStats = await this.getGambitStats(profileInfo, membershipType, membershipId);
+
               this.setState({ status: { status: 'grabbingRaidInfo', statusText: 'Getting raid information (4/5)' } });
               const raidStats = await this.getRaidStats(profileInfo, membershipType, membershipId);
+
               //Set the state which will load the page with the data. (Make sure to parse the data though)
               this.setState({
                 status: {
