@@ -11,7 +11,7 @@ export async function checkCharacter() { if(localStorage.getItem('SelectedCharac
 export async function checkLogin() { if(localStorage.getItem('Authorization') === null) { return false; } else { return true; } }
 
 export async function checkManifestExists() {
-  if(database.checkManifestExists()) { return true; }
+  if(await database.checkManifestExists()) { return true; }
   else { return false; }
 }
 

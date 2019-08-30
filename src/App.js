@@ -48,9 +48,9 @@ class App extends React.Component {
   }
 
   async loadManifest() {
-    if(checks.checkManifestExists()) {
+    if(await checks.checkManifestExists()) {
       //Manifest exists.
-      if(checks.checkManifestValid()) {
+      if(await checks.checkManifestValid()) {
         //Manifest is less than an hour old. Set manifest to global variable: MANIFEST;
         globals.SetManifest((await db.table('manifest').toCollection().first()).value);
         this.manifestLoaded();
@@ -63,7 +63,7 @@ class App extends React.Component {
         //Grab versions
         await Promise.all([ await db.table('manifest').toCollection().first(), await bungie.GetManifestVersion() ]).then(async function(values) { storedVersion = values[0]; currentVersion = values[1]; });
         //Check versions
-        if(checks.checkManifestVersion(storedVersion, currentVersion)) {
+        if(await checks.checkManifestVersion(storedVersion, currentVersion)) {
           //Manifest version is the same. Set manifest to global variable: MANIFEST and finish loading page.
           globals.SetManifest(storedVersion.value);
           this.manifestLoaded();
@@ -81,7 +81,12 @@ class App extends React.Component {
     }
     else {
       //No manifest found
-      this.setState({ status: { status: 'noManifest', statusText: 'Downloading Bungie Manifest...' } });
+      this.setState({ status: { status: 'noManifest', statusText: 'Downloading Bungie Manifest... (This depends on how long your net takes to download 4.8mb)' } });
+      const newManifest = await this.getManifest(await bungie.GetManifestVersion());
+      //Update only if no errors returned.
+      if(newManifest !== "Failed") { globals.SetManifest(newManifest); }
+      this.manifestLoaded();
+      this.setLastManifestCheck();
     }
   }
   async getManifest(currentVersion) {
