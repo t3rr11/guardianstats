@@ -1,4 +1,3 @@
-import * as db from '../requests/Database';
 import * as bungie from '../requests/BungieReq';
 import * as globals from '../scripts/Globals';
 

@@ -25,7 +25,6 @@ import NotFound from './components/pages/others/PageNotFound';
 import db from './components/requests/Database';
 import * as auth from './components/requests/BungieAuth';
 import * as bungie from './components/requests/BungieReq';
-import * as database from './components/requests/Database';
 import * as timers from './components/Timers';
 import * as checks from './components/scripts/Checks';
 import * as globals from './components/scripts/Globals';

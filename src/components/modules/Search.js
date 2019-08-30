@@ -53,7 +53,7 @@ export class Search extends Component {
       }
       else if(user.searchPlatform === "BNET") {
         return (
-          <div className="searchResultContainer BNET" onClick={ (() => this.inspectPlayer(user.userId, user.blizzardDisplayName, "4")) } >
+          <div key={ `search_${user.userId}` } className="searchResultContainer BNET" onClick={ (() => this.inspectPlayer(user.userId, user.blizzardDisplayName, "4")) } >
             <div className='searchResultIcon BNET'></div>
             <div className='searchResultName BNET'>{ user.blizzardDisplayName }</div>
           </div>
@@ -61,7 +61,7 @@ export class Search extends Component {
       }
       else if(user.searchPlatform === "PSN") {
         return (
-          <div className="searchResultContainer PSN" onClick={ (() => this.inspectPlayer(user.userId, user.psnDisplayName, "2")) } >
+          <div key={ `search_${user.userId}` } className="searchResultContainer PSN" onClick={ (() => this.inspectPlayer(user.userId, user.psnDisplayName, "2")) } >
             <div className='searchResultIcon PSN'></div>
             <div className='searchResultName PSN'>{ user.psnDisplayName }</div>
           </div>
@@ -69,7 +69,7 @@ export class Search extends Component {
       }
       else if(user.searchPlatform === "XBL") {
         return (
-          <div className="searchResultContainer XBL" onClick={ (() => this.inspectPlayer(user.userId, user.xblDisplayName, "1")) } >
+          <div key={ `search_${user.userId}` } className="searchResultContainer XBL" onClick={ (() => this.inspectPlayer(user.userId, user.xblDisplayName, "1")) } >
             <div className='searchResultIcon XBL'></div>
             <div className='searchResultName XBL'>{ user.xblDisplayName }</div>
           </div>
@@ -77,7 +77,7 @@ export class Search extends Component {
       }
       else if(user.searchPlatform === "STADIA") {
         return (
-          <div className="searchResultContainer STADIA" onClick={ (() => this.inspectPlayer(user.userId, user.stadiaDisplayName, "5")) } >
+          <div key={ `search_${user.userId}` } className="searchResultContainer STADIA" onClick={ (() => this.inspectPlayer(user.userId, user.stadiaDisplayName, "5")) } >
             <div className='searchResultIcon STADIA'></div>
             <div className='searchResultName STADIA'>{ user.stadiaDisplayName }</div>
           </div>
@@ -85,7 +85,7 @@ export class Search extends Component {
       }
       else if(user.searchPlatform === "STEAM") {
         return (
-          <div className="searchResultContainer STEAM" onClick={ (() => this.inspectPlayer(user.userId, user.steamDisplayName, "3")) } >
+          <div key={ `search_${user.userId}` } className="searchResultContainer STEAM" onClick={ (() => this.inspectPlayer(user.userId, user.steamDisplayName, "3")) } >
             <div className='searchResultIcon STEAM'></div>
             <div className='searchResultName STEAM'>{ user.steamDisplayName }</div>
           </div>
@@ -93,7 +93,7 @@ export class Search extends Component {
       }
       else if(user.searchPlatform === "CUSTOM") {
         return (
-          <div className={`searchResultContainer ${ user.membershipType }`} onClick={ (() => this.inspectPlayer(user.userId, user.displayName, user.membershipTypeValue)) } >
+          <div key={ `search_${user.userId}` } className={`searchResultContainer ${ user.membershipType }`} onClick={ (() => this.inspectPlayer(user.userId, user.displayName, user.membershipTypeValue)) } >
             <div className={`searchResultIcon ${ user.membershipType }`}></div>
             <div className={`searchResultName ${ user.membershipType }`}>{ user.displayName }</div>
           </div>

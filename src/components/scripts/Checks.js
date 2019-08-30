@@ -1,5 +1,4 @@
 import * as database from '../requests/Database';
-import * as bungie from '../requests/BungieReq';
 
 export async function startUpPageChecks() {
   if(! await checkPlatform()){ return "You have not yet selected your platform." }

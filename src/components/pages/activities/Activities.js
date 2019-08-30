@@ -6,7 +6,6 @@ import { startUpPageChecks } from '../../scripts/Checks';
 import { modeTypes } from '../../scripts/ModeTypes';
 import * as globals from '../../scripts/Globals';
 import * as bungie from '../../requests/BungieReq';
-import * as db from '../../requests/Database';
 import * as PGCRGeneration from './PGCRGeneration';
 
 var ActivityWatcher = null;

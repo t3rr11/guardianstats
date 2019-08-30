@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Loader from '../../modules/Loader';
 import Error from '../../modules/Error';
-import * as db from '../../requests/Database';
 import * as globals from '../../scripts/Globals';
 import * as bungie from '../../requests/BungieReq';
 import * as UserDetails from './GenerateUserDetails';
