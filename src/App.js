@@ -210,10 +210,10 @@ class App extends React.Component {
               <Header />
               <div className="page-content" id="page-content">
                 <Switch>
-                  <Route exact path="/" render={ props => (<Home inspectPlayer={ this.inspectPlayer } />) } />
+                  <Route exact path="/" render={ props => (<Home inspectPlayer={ this.inspectPlayer } foundUser={ ((platform, mbmID) => props.history.push(`/inspect/${ platform }/${ mbmID }`)) } />) } />
                   <Route path="/register" component={ Register }/>
                   <Route path="/failed" component={ Failed } />
-                  <Route path="/home" render={ props => (<Home inspectPlayer={ this.inspectPlayer } />) } />
+                  <Route path="/home" render={ props => (<Home inspectPlayer={ this.inspectPlayer } foundUser={ ((platform, mbmID) => props.history.push(`/inspect/${ platform }/${ mbmID }`)) } />) } />
                   <Route path="/about" component={ About } />
                   <Route path="/inspect" render={ props => (<Inspect membershipInfo={ props.location.pathname.replace('/inspect/', '') } />) } />
                   <Route path="*" component={ Login } />
