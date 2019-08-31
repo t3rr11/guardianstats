@@ -193,7 +193,7 @@ class App extends React.Component {
                   <Route path="/about" component={ About } />
                   <Route path="/activities" render={ props => (<Activities />) } />
                   <Route path="/items" render={ props => (<Items />) } />
-                  <Route path="/profile" render={ props => (<Profile />) } />
+                  <Route path="/profile" render={ props => (<Inspect />) } />
                   <Route path="/inspect" render={ props => (<Inspect membershipInfo={ props.location.pathname.replace('/inspect/', '') } />) } />
                   <Route path="*" component={ NotFound } />
                 </Switch>

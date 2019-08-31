@@ -16,51 +16,49 @@ export class Inspect extends Component {
   }
 
   async componentDidMount() {
-    const { membershipInfo } = this.props;
+    var { membershipInfo } = this.props;
+    var isProfile = false;
     this.setState({ status: { status: 'lookingForAccount', statusText: 'Looking for account...' } });
-    if(!membershipInfo) { this.setState({ status: { status: 'error', statusText: 'Nobody to inspect... Try going back home and search for someone.' } }); }
-    else {
-      //Grab the membershipType and MembershipId from the url bar.
-      var membershipType = membershipInfo.split('/')[0];
-      var membershipId = membershipInfo.split('/')[1];
-      if(membershipType && membershipId) {
-        if(!isNaN(membershipType) && (membershipType === '1' || membershipType === '2' || membershipType === '3' || membershipType === '4' || membershipType === '5' || membershipType === '10' || membershipType === '254')) {
-          if(!isNaN(membershipId) && membershipId.length >= 19) {
-            this.setState({ status: { status: 'grabbingAccountInfo', statusText: 'Inspecting their account...' } });
-            try {
-              //Define variables to send to inspect components
-              var Manifest = globals.MANIFEST;
-              var profileInfo, historicStats;
+    if(!membershipInfo) { membershipInfo = `${JSON.parse(localStorage.getItem("BasicMembershipInfo")).membershipType}/${JSON.parse(localStorage.getItem("BasicMembershipInfo")).membershipId}`; isProfile = true; }
+    var membershipType = membershipInfo.split('/')[0];
+    var membershipId = membershipInfo.split('/')[1];
+    if(membershipType && membershipId) {
+      if(!isNaN(membershipType) && (membershipType === '1' || membershipType === '2' || membershipType === '3' || membershipType === '4' || membershipType === '5' || membershipType === '10' || membershipType === '254')) {
+        if(!isNaN(membershipId) && membershipId.length >= 19) {
+          this.setState({ status: { status: 'grabbingAccountInfo', statusText: isProfile ? 'Inspecting your account...' : 'Inspecting their account...' } });
+          try {
+            //Define variables to send to inspect components
+            var Manifest = globals.MANIFEST;
+            var profileInfo, historicStats;
 
-              //Get the manifest and the profile information since they take the longest to get, do them together. First.
-              this.setState({ status: { status: 'grabbingManifestInfo', statusText: 'Inspecting their account (1/5)' } });
-              await Promise.all([ bungie.GetProfile(membershipType, membershipId, '100,200,202,205,306,600,800,900'), bungie.GetHistoricStatsForAccount(membershipType, membershipId) ]).then(async function(values) { profileInfo = values[0]; historicStats = values[1]; });
+            //Get the manifest and the profile information since they take the longest to get, do them together. First.
+            this.setState({ status: { status: 'grabbingManifestInfo', statusText: isProfile ? 'Inspecting your account (1/5)' : 'Inspecting their account (1/5)' } });
+            await Promise.all([ bungie.GetProfile(membershipType, membershipId, '100,200,202,205,306,600,800,900'), bungie.GetHistoricStatsForAccount(membershipType, membershipId) ]).then(async function(values) { profileInfo = values[0]; historicStats = values[1]; });
 
-              //With the profile data, proceed to get the other data using the profile information.
-              this.setState({ status: { status: 'grabbingActivityInfo', statusText: 'Getting recent activities (2/5)' } });
-              const activities = await this.getActivities(profileInfo, membershipType, membershipId);
+            //With the profile data, proceed to get the other data using the profile information.
+            this.setState({ status: { status: 'grabbingActivityInfo', statusText: isProfile ? 'Inspecting your account (2/5)' : 'Inspecting their account (2/5)' } });
+            const activities = await this.getActivities(profileInfo, membershipType, membershipId);
 
-              this.setState({ status: { status: 'grabbingGambitInfo', statusText: 'Getting gambit statistics (3/5)' } });
-              const gambitStats = await this.getGambitStats(profileInfo, membershipType, membershipId);
+            this.setState({ status: { status: 'grabbingGambitInfo', statusText: isProfile ? 'Inspecting your account (3/5)' : 'Inspecting their account (3/5)' } });
+            const gambitStats = await this.getGambitStats(profileInfo, membershipType, membershipId);
 
-              this.setState({ status: { status: 'grabbingRaidInfo', statusText: 'Getting raid information (4/5)' } });
-              const raidStats = await this.getRaidStats(profileInfo, membershipType, membershipId);
+            this.setState({ status: { status: 'grabbingRaidInfo', statusText: isProfile ? 'Inspecting your account (4/5)' : 'Inspecting their account (4/5)' } });
+            const raidStats = await this.getRaidStats(profileInfo, membershipType, membershipId);
 
-              //Set the state which will load the page with the data. (Make sure to parse the data though)
-              this.setState({
-                status: {
-                  status: 'ready', statusText: 'Finished the inspection! (You shouldn\'t see this unless something went wrong)' },
-                  data: { Manifest, profileInfo, historicStats, activities, gambitStats, raidStats }
-              });
-            }
-            catch(err) { console.log(err); this.setState({ status: { status: 'error', statusText: 'Failed to load Destiny 2 account. Does this person have a Destiny 2 account?' } }); }
+            //Set the state which will load the page with the data. (Make sure to parse the data though)
+            this.setState({
+              status: {
+                status: 'ready', statusText: 'Finished the inspection! (You shouldn\'t see this unless something went wrong)' },
+                data: { Manifest, profileInfo, historicStats, activities, gambitStats, raidStats }
+            });
           }
-          else { this.setState({ status: { status: 'error', statusText: 'The membershipId entered was not a valid length.' } }); }
+          catch(err) { console.log(err); this.setState({ status: { status: 'error', statusText: 'Failed to load Destiny 2 account. Does this person have a Destiny 2 account?' } }); }
         }
-        else { this.setState({ status: { status: 'error', statusText: 'Not a valid membershipType. Must be either: 1,2,3,4,5,10,254' } }); }
+        else { this.setState({ status: { status: 'error', statusText: 'The membershipId entered was not a valid length.' } }); }
       }
-      else { this.setState({ status: { status: 'error', statusText: 'Something is wrong with the URL. Must contain: /{MembershipType}/{MembershipId}' } }); }
+      else { this.setState({ status: { status: 'error', statusText: 'Not a valid membershipType. Must be either: 1,2,3,4,5,10,254' } }); }
     }
+    else { this.setState({ status: { status: 'error', statusText: 'Something went wrong... Sorry about that.' } }); }
   }
 
   async getActivities(profileInfo, membershipType, membershipId) {
