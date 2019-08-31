@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Link } from 'react';
 import * as bungie from '../requests/BungieReq';
 import * as Checks from '../scripts/Checks';
 import uuid from  'uuid';
@@ -12,6 +12,9 @@ export class Search extends Component {
   }
   async componentDidMount() {
     if(await Checks.checkLogin()) { this.prefillSearch() }
+  }
+  async foundUser(platform, mbmID) {
+    this.props.foundUser(platform, mbmID);
   }
   async searchForUser(input) {
     const searchPlatform = document.getElementById('membership-type').value;
@@ -101,6 +104,7 @@ export class Search extends Component {
       }
     });
   }
+
   inspectPlayer = async (userId, player, platform) => {
     const membershipInfo = await bungie.GetMembershipsById(userId, platform);
     if(membershipInfo.destinyMemberships.length > 0) {
@@ -110,16 +114,20 @@ export class Search extends Component {
         if(membershipInfo.destinyMemberships[i].membershipType == platform) {
           found = true;
           if(await bungie.GetProfile(platform, membershipInfo.destinyMemberships[i].membershipId, "100")) {
-            window.history.pushState("", "", `/inspect/${ platform }/${ membershipInfo.destinyMemberships[i].membershipId }`);
-            window.location.reload();
+            //window.history.pushState("", "", `/inspect/${ platform }/${ membershipInfo.destinyMemberships[i].membershipId }`);
+            this.foundUser(platform, membershipInfo.destinyMemberships[i].membershipId);
           }
           else { this.setState({ error: "This account does not own Destiny 2 but has linked to bungie." }); }
         }
       }
       if(found === false) { this.setState({ error: "Account not found. (Possibly in transfer at the moment, try again later)" }); }
+      else {
+
+      }
     }
     else { this.setState({ error: "This error should never appear, but it's best to catch it just incase. Tweet at me if you see this though @Guardianstats" }); }
   }
+
   prefillSearch = async () => {
     if(localStorage.getItem("ProfileInfo")) {
       const ProfileInfo = JSON.parse(localStorage.getItem("ProfileInfo"));

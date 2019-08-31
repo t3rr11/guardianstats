@@ -24,6 +24,10 @@ export class Home extends Component {
     );
   }
 
+  foundUser = (platform, mbmID) => {
+    this.props.foundUser(platform, mbmID);
+  }
+
   render() {
     if(this.state.isConnected !== null) {
       return(
@@ -32,7 +36,7 @@ export class Home extends Component {
             <div className="home-content" style={{ width: '550px' }}>
               <h1 className="home-title">Welcome to Guardianstats</h1>
               <p>Feel free to search for a player below.</p>
-              <Search />
+              <Search foundUser={ this.foundUser } />
             </div>
             { this.state.isConnected === false ? this.defaultConnectWindow() : null }
             <div className="imgCredit">© Bungie, Inc. All rights reserved. Destiny, the Destiny Logo, Bungie and the Bungie logo are among the trademarks of Bungie, Inc.</div>

@@ -1,6 +1,6 @@
 //Required Libraries
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
 
 //Modules
 import Header from './components/modules/Header';
@@ -186,10 +186,10 @@ class App extends React.Component {
               <Header accountInfo={ JSON.parse(localStorage.getItem('BungieAccount')) } />
               <div className="page-content" id="page-content">
                 <Switch>
-                  <Route exact path="/" render={ props => (<Home inspectPlayer={ this.inspectPlayer } />) } />
+                  <Route exact path="/" render={ props => (<Home inspectPlayer={ this.inspectPlayer } foundUser={ ((platform, mbmID) => props.history.push(`/inspect/${ platform }/${ mbmID }`)) } />) } />
                   <Route path="/register" component={ Register }/>
                   <Route path="/failed" component={ Failed } />
-                  <Route path="/home" render={ props => (<Home inspectPlayer={ this.inspectPlayer } />) } />
+                  <Route path="/home" render={ props => (<Home inspectPlayer={ this.inspectPlayer } foundUser={ ((platform, mbmID) => props.history.push(`/inspect/${ platform }/${ mbmID }`)) } />) } />
                   <Route path="/about" component={ About } />
                   <Route path="/activities" render={ props => (<Activities />) } />
                   <Route path="/items" render={ props => (<Items />) } />
