@@ -1,4 +1,4 @@
-import React, { Component, Link } from 'react';
+import React, { Component } from 'react';
 import * as bungie from '../requests/BungieReq';
 import * as Checks from '../scripts/Checks';
 import uuid from  'uuid';
