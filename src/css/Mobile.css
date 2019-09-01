@@ -82,9 +82,20 @@
   .inspectBoxPvPTitle { width: 100%; }
   .inspectBoxStatPVP { width: 100%; }
   .imgCredit { display: none; }
+  .inspectBoxStatContent {
+    height: unset !important;
+  }
   .inspectBoxContentStats {
     grid-template-columns: 25% 35% 40%;
     font-size: 12px;
+  }
+  .inspectBoxContentStatsDiv {
+    height: unset !important;
+  }
+  .inspectBoxContentStats.twoColumn {
+    display: block;
+    height: unset !important;
+    padding-bottom: 5px;
   }
   .vendors {
     grid-template-columns: 100%;
