@@ -7,4 +7,7 @@
     .inspectBoxPvPTitle { width: 100%; }
     .inspectBoxStatPVP { width: 100%; }
     .imgCredit { display: none; }
+    .vendors {
+      grid-template-columns: 50% 50%;
+    }
 }

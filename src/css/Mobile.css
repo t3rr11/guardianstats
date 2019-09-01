@@ -86,4 +86,7 @@
     grid-template-columns: 25% 35% 40%;
     font-size: 12px;
   }
+  .vendors {
+    grid-template-columns: 100%;
+  }
 }
