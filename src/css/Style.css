@@ -152,8 +152,18 @@ body {
   position: relative;
   display: inline-block;
 }
-.menu-item { display: inline-block; margin: 0px 10px; height: 35px; }
-.menu-item-disabled { display: inline-block; margin: 0px 10px; height: 35px; }
+.menu-item {
+  display: inline-block;
+  margin: 0px 5px;
+  height: 35px;
+  font-size: 15px;
+}
+.menu-item-disabled {
+  display: inline-block;
+  margin: 0px 5px;
+  height: 35px;
+  font-size: 15px;
+}
 .menu-item > a { color: white; text-decoration: none; }
 .menu-item > span { color: white; text-decoration: none; }
 .menu-item-disabled > a { color: darkgray; cursor: default; text-decoration: none; }

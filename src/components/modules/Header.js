@@ -54,6 +54,15 @@ export class Header extends React.Component {
       characterIds = JSON.parse(localStorage.getItem('ProfileInfo')).profile.data.characterIds;
       selectedCharacter = localStorage.getItem('SelectedCharacter');
     }
+    const defaultMenuItems = (
+      <React.Fragment>
+        <li className="menu-item Home" id="Home"><Link to="/home" onClick={ (() => this.toggleMenuSlider()) }>Home</Link></li>
+        <li className="menu-item" id="Profile"><Link to="/profile" onClick={ (() => this.toggleMenuSlider()) }>Profile</Link></li>
+        <li className="menu-item" id="Activities"><Link to="/activities" onClick={ (() => this.toggleMenuSlider()) }>Activities</Link></li>
+        <li className="menu-item" id="Items"><Link to="/items" onClick={ (() => this.toggleMenuSlider()) }>Items</Link></li>
+        <li className="menu-item" id="Vendors"><Link to="/vendors" onClick={ (() => this.toggleMenuSlider()) }>Vendors</Link></li>
+      </React.Fragment>
+    );
     const menuItems = (
       <React.Fragment>
         <li className="menu-item Home" id="Home"><Link to="/home" onClick={ (() => this.toggleMenuSlider()) }>Home</Link></li>
@@ -62,7 +71,6 @@ export class Header extends React.Component {
         <li className="menu-item" id="Items"><Link to="/items" onClick={ (() => this.toggleMenuSlider()) }>Items</Link></li>
         <li className="menu-item-disabled" id="Triumphs"><span>Triumphs</span></li>
         <li className="menu-item" id="Vendors"><Link to="/vendors" onClick={ (() => this.toggleMenuSlider()) }>Vendors</Link></li>
-        <li className="menu-item-disabled" id="Tools"><span>Tools</span></li>
       </React.Fragment>
     );
     const SelectPlatformHeader = () => (
@@ -132,7 +140,7 @@ export class Header extends React.Component {
         </Link>
         <div className="menu-container" id="menu">
           <button type="button" className="btn btn-info" id="LoginBtn" onClick={() => { GotoAuth() }} style={{ marginRight: '5px' }}>Connect with Bungie.net</button>
-          <div className="menu-bar disable-hl"> { menuItems } </div>
+          <div className="menu-bar disable-hl"> { defaultMenuItems } </div>
         </div>
         <div className="menu-switch-icon" onClick={() => { this.toggleMenuSlider() }} >≡</div>
       </header>

@@ -13,7 +13,6 @@ import Manifest from './manifest.json';
 import Home from './components/pages/home/Home';
 import Inspect from './components/pages/inspect/Inspect';
 import Items from './components/pages/items/Items';
-import About from './components/pages/about/About';
 import Activities from './components/pages/activities/Activities';
 import Vendors from './components/pages/vendors/Vendors';
 import Register from './components/pages/others/Register';
@@ -192,7 +191,6 @@ class App extends React.Component {
                 <Switch>
                   <Route exact path="/" render={ props => (<Home inspectPlayer={ this.inspectPlayer } foundUser={ ((platform, mbmID) => props.history.push(`/inspect/${ platform }/${ mbmID }`)) } />) } />
                   <Route path="/home" render={ props => (<Home inspectPlayer={ this.inspectPlayer } foundUser={ ((platform, mbmID) => props.history.push(`/inspect/${ platform }/${ mbmID }`)) } />) } />
-                  <Route path="/about" component={ About } />
                   <Route path="/activities" render={ props => (<Activities />) } />
                   <Route path="/items" render={ props => (<Items />) } />
                   <Route path="/vendors" render={ props => (<Vendors />) } />
@@ -217,7 +215,6 @@ class App extends React.Component {
                   <Route path="/register" render={ props => (<Register {...props} />) } />
                   <Route path="/failed" component={ Failed } />
                   <Route path="/home" render={ props => (<Home inspectPlayer={ this.inspectPlayer } foundUser={ ((platform, mbmID) => props.history.push(`/inspect/${ platform }/${ mbmID }`)) } />) } />
-                  <Route path="/about" component={ About } />
                   <Route path="/inspect" render={ props => (<Inspect membershipInfo={ props.location.pathname.replace('/inspect/', '') } />) } />
                   <Route path="*" component={ Login } />
                 </Switch>
