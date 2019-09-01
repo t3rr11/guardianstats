@@ -15,6 +15,7 @@ import Inspect from './components/pages/inspect/Inspect';
 import Items from './components/pages/items/Items';
 import About from './components/pages/about/About';
 import Activities from './components/pages/activities/Activities';
+import Vendors from './components/pages/vendors/Vendors';
 import Register from './components/pages/others/Register';
 import Failed from './components/pages/others/Failed';
 import Login from './components/pages/others/Login';
@@ -194,6 +195,7 @@ class App extends React.Component {
                   <Route path="/about" component={ About } />
                   <Route path="/activities" render={ props => (<Activities />) } />
                   <Route path="/items" render={ props => (<Items />) } />
+                  <Route path="/vendors" render={ props => (<Vendors />) } />
                   <Route path="/profile" render={ props => (<Inspect />) } />
                   <Route path="/inspect" render={ props => (<Inspect membershipInfo={ props.location.pathname.replace('/inspect/', '') } />) } />
                   <Route path="*" component={ NotFound } />

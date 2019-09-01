@@ -42,7 +42,7 @@
   top: 45px;
   width: 250px;
   padding: 5px;
-  z-index: 100;
+  z-index: -1;
 }
 .collectibleItemImage {
   height: 60px;
