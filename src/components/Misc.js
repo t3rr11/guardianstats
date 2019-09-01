@@ -74,3 +74,29 @@ export async function ClearLoadingScreen() {
     //$("#loaderBG").remove();
   //});
 }
+export async function timed(name, promise) {
+  if(process.env.NODE_ENV === 'development') {
+    console.log(`Loading: ${name}`);
+    const before = Date.now();
+    const result = await promise;
+    const after = Date.now();
+    console.log(`Loaded ${name}: ${(after - before) / 1000}s`);
+    return result;
+  }
+  else {
+    const result = await promise;
+    return result;
+  }
+}
+export function getURLVars() {
+  var vars = {};
+  window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi,
+  function(m, key, value) {
+    vars[key] = value;
+  });
+  return vars;
+}
+export function noManifest() {
+  const urls = ["register"];
+  if(urls.find(e => e === window.location.href.split("/")[3])) { return true; }
+}

@@ -11,7 +11,6 @@ import Manifest from './manifest.json';
 
 //Pages
 import Home from './components/pages/home/Home';
-import Profile from './components/pages/profile/Profile';
 import Inspect from './components/pages/inspect/Inspect';
 import Items from './components/pages/items/Items';
 import About from './components/pages/about/About';
@@ -28,6 +27,7 @@ import * as bungie from './components/requests/BungieReq';
 import * as timers from './components/Timers';
 import * as checks from './components/scripts/Checks';
 import * as globals from './components/scripts/Globals';
+import * as Misc from './components/Misc';
 
 //CSS
 import './css/Style.css';
@@ -44,7 +44,10 @@ class App extends React.Component {
 
   componentDidMount() {
     if(!localStorage.getItem("FirstLoad")) { localStorage.clear(); localStorage.setItem("FirstLoad", "false"); window.location.reload(); }
-    else { this.loadManifest(); }
+    else {
+      if(Misc.noManifest()) { this.manifestLoaded(); }
+      else { Misc.timed('Whole Page', this.loadManifest()); }
+    }
   }
 
   async loadManifest() {
@@ -187,8 +190,6 @@ class App extends React.Component {
               <div className="page-content" id="page-content">
                 <Switch>
                   <Route exact path="/" render={ props => (<Home inspectPlayer={ this.inspectPlayer } foundUser={ ((platform, mbmID) => props.history.push(`/inspect/${ platform }/${ mbmID }`)) } />) } />
-                  <Route path="/register" component={ Register }/>
-                  <Route path="/failed" component={ Failed } />
                   <Route path="/home" render={ props => (<Home inspectPlayer={ this.inspectPlayer } foundUser={ ((platform, mbmID) => props.history.push(`/inspect/${ platform }/${ mbmID }`)) } />) } />
                   <Route path="/about" component={ About } />
                   <Route path="/activities" render={ props => (<Activities />) } />
@@ -211,7 +212,7 @@ class App extends React.Component {
               <div className="page-content" id="page-content">
                 <Switch>
                   <Route exact path="/" render={ props => (<Home inspectPlayer={ this.inspectPlayer } foundUser={ ((platform, mbmID) => props.history.push(`/inspect/${ platform }/${ mbmID }`)) } />) } />
-                  <Route path="/register" component={ Register }/>
+                  <Route path="/register" render={ props => (<Register {...props} />) } />
                   <Route path="/failed" component={ Failed } />
                   <Route path="/home" render={ props => (<Home inspectPlayer={ this.inspectPlayer } foundUser={ ((platform, mbmID) => props.history.push(`/inspect/${ platform }/${ mbmID }`)) } />) } />
                   <Route path="/about" component={ About } />

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Loader from '../../modules/Loader';
 import qs from 'query-string';
 
 import * as auth from '../../requests/BungieAuth';
@@ -22,7 +23,7 @@ export class Register extends Component {
   render() {
     return(
       <React.Fragment>
-        <p>Registering you now! Welcome to the Guardianstats family!</p>
+        <Loader statusText="Registering you now! Welcome to the Guardianstats family!" />
       </React.Fragment>
     );
   }

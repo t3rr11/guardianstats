@@ -15,7 +15,10 @@ export async function GetAuthentication(code) {
   })
   .then(async (response) => {
     response = JSON.parse(await response.text());
-    if(response.error) { console.log(response); window.location.href = '/failed'; }
+    if(response.error) {
+      console.log(response);
+      window.location.href = '/failed';
+    }
     else {
       localStorage.setItem('Authorization', JSON.stringify(response));
       localStorage.setItem("NextCheck", new Date().getTime() + 3600000);
