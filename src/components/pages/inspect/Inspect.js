@@ -90,7 +90,12 @@ export class Inspect extends Component {
                 data: { Manifest, profileInfo, historicStats, activities, gambitStats, raidStats }
             });
           }
-          catch(err) { console.log(err); this.setState({ status: { status: 'error', statusText: 'Failed to load Destiny 2 account. Does this person have a Destiny 2 account?' } }); }
+          catch(err) {
+            console.log(err);
+            if(err.includes("Failed to fetch")) { this.setState({ status: { status: 'error', statusText: 'Failed to load Destiny 2 account. Failed to Fetch, Try again in 5 minutes.' } }); }
+            else if(err.includes("maintenance")) { this.setState({ status: { status: 'error', statusText: 'The Destiny 2 API is down for Maintenance' } }); }
+            else { this.setState({ status: { status: 'error', statusText: 'Something went wrong... Error: ' + err } }); }
+          }
         }
         else { this.setState({ status: { status: 'error', statusText: 'The membershipId entered was not a valid length.' } }); }
       }
