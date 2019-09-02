@@ -252,7 +252,7 @@ const buildRaids = (raidInfo, profileInfo) => {
   return raidInfo.map(function(raid) {
     return (
       profileInfo.profileRecords.data.records[raid.info.hash] ? (
-        <span key={ raid.hash }>{ raid.name }
+        <span key={ raid.info.hash }>{ raid.name }
           <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>
             { profileInfo.profileRecords.data.records[raid.info.hash].objectives[0].progress }
           </span>
