@@ -51,7 +51,7 @@ export class Vendors extends Component {
                             if(itemData.displayProperties.icon !== "/img/misc/missing_icon_d2.png" && itemData.displayProperties.name !== "") {
                               return (
                                 <div key={ itemData.hash } className="vendorIconBox">
-                                  <img src={ `https://bungie.net${ itemData.displayProperties.icon }` } className="vendorIcon" />
+                                  <img alt={ itemData.displayProperties.name } src={ `https://bungie.net${ itemData.displayProperties.icon }` } className="vendorIcon" />
                                   <div className="vendorItemInfo">
                                     <div className="title">{ itemData.displayProperties.name !== "" ? itemData.displayProperties.name : "No Title" }</div>
                                     <div className="description">{ itemData.displayProperties.description !== "" ? itemData.displayProperties.description : "No Description" }</div>
@@ -63,7 +63,7 @@ export class Vendors extends Component {
                                               var costData = manifest.DestinyInventoryItemDefinition[cost.itemHash];
                                               return (
                                                 <div key={ cost.itemHash } className="costContainer">
-                                                  <img src={ `https://bungie.net${ costData.displayProperties.icon }` } className="costIcon" />
+                                                  <img alt={ costData.displayProperties.name } src={ `https://bungie.net${ costData.displayProperties.icon }` } className="costIcon" />
                                                   <div className="costName">{ costData.displayProperties.name }</div>
                                                   <div className="costAmount">{ cost.quantity }</div>
                                                 </div>
@@ -77,6 +77,7 @@ export class Vendors extends Component {
                                 </div>
                               )
                             }
+                            return null;
                           })
                         }
                       </div>
@@ -84,6 +85,7 @@ export class Vendors extends Component {
                   )
                 }
               }
+              return null;
             })
           }
           <div></div>
