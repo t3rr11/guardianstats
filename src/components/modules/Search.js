@@ -204,8 +204,8 @@ export class Search extends Component {
           (suggestedUsers.length !== 0 ?
             (
               <div className="suggested-search-output">
-                <div className="suggested-search-title"> Suggested Players (based on previous activities): </div>
                 <div className="suggested-search-content"> { this.returnSearchPlatformUsers(suggestedUsers) } </div>
+                <div className="suggested-search-title">Players above are from recent activities</div>
               </div>
             ) : null
           ) : null

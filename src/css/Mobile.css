@@ -100,4 +100,7 @@
   .vendors {
     grid-template-columns: 100%;
   }
+  .loaderText {
+    top: 55% !important;
+  }
 }

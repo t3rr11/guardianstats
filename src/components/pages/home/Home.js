@@ -33,9 +33,8 @@ export class Home extends Component {
       return(
         <React.Fragment>
           <div className="home-container">
-            <div className="home-content" style={{ width: '550px' }}>
+            <div className="home-content">
               <h1 className="home-title">Welcome to Guardianstats</h1>
-              <p>Feel free to search for a player below.</p>
               <Search foundUser={ this.foundUser } />
             </div>
             { this.state.isConnected === false ? this.defaultConnectWindow() : null }
