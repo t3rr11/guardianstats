@@ -35,9 +35,18 @@ export class Home extends Component {
           <div className="home-container">
             <div className="home-content">
               <h1 className="home-title">Welcome to Guardianstats</h1>
+              {
+                this.state.isConnected === false ? (
+                  <p style={{ fontSize: "14px" }}>Feel free to search below or consider connecting with bungie to get the full experience from Guardianstats!</p>
+                ): null
+              }
               <Search foundUser={ this.foundUser } />
+              {
+                this.state.isConnected === false ? (
+                  <button type="button" className="btn btn-info" id="ConnectWithBungieBTN" onClick={() => { this.GotoAuth() }} style={{ float: 'none', padding: '10px' }}>Connect with Bungie.net</button>
+                ): null
+              }
             </div>
-            { this.state.isConnected === false ? this.defaultConnectWindow() : null }
             <div className="imgCredit">© Bungie, Inc. All rights reserved. Destiny, the Destiny Logo, Bungie and the Bungie logo are among the trademarks of Bungie, Inc.</div>
           </div>
         </React.Fragment>
