@@ -4,7 +4,7 @@ import Error from '../../modules/Error';
 export function generate(ManifestActivities, ManifestItems, PGCRs, currentActivity) {
   if(ManifestActivities[PGCRs[currentActivity].activityDetails.referenceId].isPvP === true) {
     //If mode is PVP show PvP Display
-    if(PGCRs[currentActivity].teams.length !== 0){
+    if(PGCRs[currentActivity].teams.length !== 0) {
       return (
         <div className="pgcrContainer">
           <div className="pgcrTopContainer" id={ `pgcrTopContainer_${ PGCRs[currentActivity].activityDetails.instanceId }` } style={ adjustEntriesBoxSizing(PGCRs[currentActivity]) } >
@@ -26,13 +26,9 @@ export function generate(ManifestActivities, ManifestItems, PGCRs, currentActivi
     //If mode is not pvp, then display default display
     return (
       <div className="pgcrContainer">
-        <div className="pgcrTopContainer" id={ `pgcrTopContainer_${ PGCRs[currentActivity].activityDetails.instanceId }` } style={ adjustEntriesBoxSizing(PGCRs[currentActivity]) } >
-         <div className="pgcrPlayers" id={ `pgcrPlayers_${ PGCRs[currentActivity].activityDetails.instanceId }` }>
-           { generateTeamData(ManifestItems, PGCRs, currentActivity, 'other', null) }
-           { generatePlayerData(ManifestItems, PGCRs, currentActivity, 'other', null) }
-         </div>
-         <div className="pgcrImage" style={{ backgroundImage: `url(https://bungie.net${ ManifestActivities[PGCRs[currentActivity].activityDetails.referenceId].pgcrImage })` }}></div>
-       </div>
+        <div className="pgcrTopContainer" id={ `pgcrTopContainer_${ PGCRs[currentActivity].activityDetails.instanceId }` } style={{ height: "400px" }} >
+          <div className="pgcrBigImage" style={{ backgroundImage: `url(https://bungie.net${ ManifestActivities[PGCRs[currentActivity].activityDetails.referenceId].pgcrImage })` }}></div>
+        </div>
        <div className="pgcrBottomContainer">
          { generateExtendedData(ManifestItems, PGCRs, currentActivity, 'other') }
        </div>
@@ -42,15 +38,7 @@ export function generate(ManifestActivities, ManifestItems, PGCRs, currentActivi
 }
 
 const generateTeamData = (ManifestItems, PGCRs, currentActivity, modeType, team) => {
-  if(team === null) {
-    return <div className="pgcrPlayersTitle">
-      <div>Players</div>
-      <div>K</div>
-      <div>A</div>
-      <div>D</div>
-    </div>
-  }
-  else if(team === 'alpha') {
+  if(team === 'alpha') {
     // eslint-disable-next-line
     var teamData = PGCRs[currentActivity].teams.find(team => team.teamId === 17);
     return <div className="pgcrAlphaTeam">
@@ -80,17 +68,7 @@ const generateTeamData = (ManifestItems, PGCRs, currentActivity, modeType, team)
   }
 }
 const generatePlayerData = (ManifestItems, PGCRs, currentActivity, modeType, team) => {
-  if(team === null) {
-    return PGCRs[currentActivity].entries.map((playerData) => (
-      <div key={ playerData.player.destinyUserInfo.membershipId } className={ checkPlayer(playerData.player.destinyUserInfo.displayName, team) } id={`player_${ playerData.player.destinyUserInfo.membershipId }`}>
-        <div style={{ textAlign: 'left' }}><span className="pgcrPlayerName" id={ playerData.player.destinyUserInfo.membershipId }>{ playerData.player.destinyUserInfo.displayName }</span></div>
-        <div><span>{ playerData.values.kills.basic.displayValue }</span></div>
-        <div><span>{ playerData.values.assists.basic.displayValue }</span></div>
-        <div><span>{ playerData.values.deaths.basic.displayValue }</span></div>
-      </div>
-    ))
-  }
-  else if(team === 'alpha') {
+  if(team === 'alpha') {
     // eslint-disable-next-line
     return PGCRs[currentActivity].entries.map(function (playerData) {
       if(playerData.values.team.basic.value === 17.0) {
@@ -127,7 +105,7 @@ const generatePlayerData = (ManifestItems, PGCRs, currentActivity, modeType, tea
 }
 const generateExtendedData = (ManifestItems, PGCRs, currentActivity, modeType) => {
   const allPlayers = PGCRs[currentActivity].entries.sort(function(a, b){return a.score - b.score});
-    return allPlayers.map((playerData) => (
+  return allPlayers.map((playerData) => (
     <div key={ playerData.player.destinyUserInfo.membershipId } className="pgcrExtendedInfo">
       <div className="pgcrExtendedInfoStats">
         <div className="innerDiv" style={{ backgroundImage: `url("https://bungie.net${ ManifestItems[playerData.player.emblemHash].secondaryIcon }"` }}>
@@ -150,21 +128,15 @@ const generateExtendedData = (ManifestItems, PGCRs, currentActivity, modeType) =
         }
         {
           playerData.extended.values.weaponKillsGrenade.basic.displayValue !== '0' ?
-          <div key="grenadeKills">
-            <img alt="grenade" src="./images/icons/Grenade.png" className="pgcrItemIcon" title="Grenade Kills" />x{ playerData.extended.values.weaponKillsGrenade.basic.displayValue }
-          </div> : null
+          <div key="grenadeKills"><img alt="grenade" src="./images/icons/Grenade.png" className="pgcrItemIcon" title="Grenade Kills" />x{ playerData.extended.values.weaponKillsGrenade.basic.displayValue }</div> : null
         }
         {
           playerData.extended.values.weaponKillsMelee.basic.displayValue !== '0' ?
-          <div key="meleeKills">
-            <img alt="melee" src="./images/icons/Melee.png" className="pgcrItemIcon" title="Melee Kills" />x{ playerData.extended.values.weaponKillsMelee.basic.displayValue }
-          </div> : null
+          <div key="meleeKills"><img alt="melee" src="./images/icons/Melee.png" className="pgcrItemIcon" title="Melee Kills" />x{ playerData.extended.values.weaponKillsMelee.basic.displayValue }</div> : null
         }
         {
           playerData.extended.values.weaponKillsSuper.basic.displayValue !== '0' ?
-          <div key="superKills">
-            <img alt="super" src="./images/icons/Super.png" className="pgcrItemIcon" title="Super Kills" />x{ playerData.extended.values.weaponKillsSuper.basic.displayValue }
-          </div> : null
+          <div key="superKills"><img alt="super" src="./images/icons/Super.png" className="pgcrItemIcon" title="Super Kills" />x{ playerData.extended.values.weaponKillsSuper.basic.displayValue }</div> : null
         }
       </div>
       { modeType === 'pvp' ?
@@ -186,9 +158,7 @@ const generateExtendedData = (ManifestItems, PGCRs, currentActivity, modeType) =
         </div>
       : null
       }
-      <div className="pgcrExtendedInfoBG">
-        <img alt="pgcrBGicon" className="pgcrExtendedInfoBGImage" style={{ backgroundImage: `url("https://bungie.net${ ManifestItems[playerData.player.emblemHash].secondarySpecial }")` }} />
-      </div>
+      <div className="pgcrExtendedInfoBG"><img alt="pgcrBGicon" className="pgcrExtendedInfoBGImage" style={{ backgroundImage: `url("https://bungie.net${ ManifestItems[playerData.player.emblemHash].secondarySpecial }")` }} /></div>
     </div>
   ))
 }

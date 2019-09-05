@@ -7,7 +7,7 @@
   #LoginBtn {
     display: block !important;
     float: unset !important;
-    margin: 5px auto;
+    margin: 5px auto !important;
     grid-row: 1;
   }
   #character_select {

@@ -132,7 +132,7 @@ export class Activities extends Component {
                 <div key={ activity.activityDetails.instanceId } className={ classProp } id={ activity.activityDetails.instanceId } onClick={ (() => this.makeActiveDisplay(activity.activityDetails.instanceId)) }>
                   <img src={icon} alt="Icon" style={{ height: '50px', width: '50px', marginTop: '7px', marginLeft: '7px' }} />
                   <p className='activityTitle'>
-                    <span style={{ display: 'block' }}> { modeTypes(activity.activityDetails.mode) }: { ManifestActivities[activity.activityDetails.referenceId].displayProperties.name } </span>
+                    <span style={{ display: 'block' }}> { modeTypes(activity.activityDetails.mode) !== "" ? modeTypes(activity.activityDetails.mode) : null } { ManifestActivities[activity.activityDetails.referenceId].displayProperties.name } </span>
                     <span style={{ display: 'block' }}> Time Played: { activity.values.timePlayedSeconds.basic.displayValue } </span>
                   </p>
                   <p> Kills: { activity.values.kills.basic.displayValue } </p>

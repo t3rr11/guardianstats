@@ -15,7 +15,7 @@ export function generate(profileInfo, membershipInfo, Manifest, activities) {
               <div key={ activity.activityDetails.instanceId } className={ classProp } id={ activity.activityDetails.instanceId }>
                 <img src={icon} alt="Icon" style={{ height: '30px', width: '30px', marginTop: '4px', marginLeft: '7px' }} />
                 <p className='inspectActivityTitle'>
-                  <span style={{ display: 'block' }}> { modeTypes(activity.activityDetails.mode) }: { ManifestActivities[activity.activityDetails.referenceId].displayProperties.name } </span>
+                  <span style={{ display: 'block' }}> { modeTypes(activity.activityDetails.mode) !== "" ? modeTypes(activity.activityDetails.mode) : null } { ManifestActivities[activity.activityDetails.referenceId].displayProperties.name } </span>
                   <span style={{ display: 'block', color: '#bbb', fontSize: '11px' }}> { getLastPlayed(activity) } ago </span>
                 </p>
               </div>
