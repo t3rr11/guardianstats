@@ -5,8 +5,7 @@
   background-size: cover;
 }
 .home-content {
-  background-color: var(--NavyBlue);
-  opacity: 0.7;
+  background-color: rgba(33, 36, 42, .7);
   padding: 40px;
   display: inline-block;
   vertical-align: top;
