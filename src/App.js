@@ -12,6 +12,7 @@ import Manifest from './manifest.json';
 //Pages
 import Home from './components/pages/home/Home';
 import Inspect from './components/pages/inspect/Inspect';
+import Profile from './components/pages/profile/Profile';
 import Items from './components/pages/items/Items';
 import Activities from './components/pages/activities/Activities';
 import Vendors from './components/pages/vendors/Vendors';
@@ -73,6 +74,7 @@ class App extends React.Component {
           this.setLastManifestCheck();
         }
         else {
+          this.setState({ status: { status: 'updatingManifest', statusText: 'Updating Manifest... (can take a few minutes)' } });
           //New Manifest Found. Store manifest and set manifest to global variable: MANIFEST;
           const newManifest = await this.getManifest(currentVersion);
           //Update only if no errors returned.
@@ -84,7 +86,7 @@ class App extends React.Component {
     }
     else {
       //No manifest found
-      this.setState({ status: { status: 'noManifest', statusText: 'Downloading Bungie Manifest... (This depends on how long your net takes to download 4.8mb)' } });
+      this.setState({ status: { status: 'noManifest', statusText: 'Downloading Bungie Manifest... (can take a few minutes)' } });
       const newManifest = await this.getManifest(await bungie.GetManifestVersion());
       //Update only if no errors returned.
       if(newManifest !== "Failed") { globals.SetManifest(newManifest); }
@@ -196,6 +198,7 @@ class App extends React.Component {
                   <Route path="/vendors" render={ props => (<Vendors />) } />
                   <Route path="/profile" render={ props => (<Inspect />) } />
                   <Route path="/inspect" render={ props => (<Inspect membershipInfo={ props.location.pathname.replace('/inspect/', '') } />) } />
+                  <Route path="/loader" render={ props => (<Loader statusText="Text example" />) } />
                   <Route path="*" component={ NotFound } />
                 </Switch>
                 { warning != null ? (<Warning warning={ warning } />) : null }

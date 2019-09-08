@@ -20,7 +20,7 @@ async function apiRequest(path, isStat, isAuthRequired) {
   }
 }
 
-export const GetProfile = async (membershipType, membershipId, components) => apiRequest(`/Platform/Destiny2/${membershipType}/Profile/${membershipId}/?components=${components}`, false, false);
+export const GetProfile = async (membershipType, membershipId, components, auth = false) => apiRequest(`/Platform/Destiny2/${membershipType}/Profile/${membershipId}/?components=${components}`, false, auth);
 export const GetActivityHistory = async (membershipType, membershipId, characterId, count, mode, page = 0) => apiRequest(`/Platform/Destiny2/${membershipType}/Account/${membershipId}/Character/${characterId}/Stats/Activities/?count=${count}&mode=${mode}&page=${page}`, false, false);
 export const GetHistoricStatsForAccount = async (membershipType, membershipId) => apiRequest(`/Platform/Destiny2/${membershipType}/Account/${membershipId}/Stats/?groups=101`, false, false);
 export const GetPGCR = async (instanceId) => apiRequest(`/Platform/Destiny2/Stats/PostGameCarnageReport/${instanceId}/`, true, false);

@@ -4,6 +4,7 @@ import * as auth from '../requests/BungieAuth';
 import * as pf from '../scripts/Platforms';
 import * as checks from '../scripts/Checks';
 import * as profileHelper from '../scripts/ProfileHelper';
+import * as Misc from '../Misc';
 
 function GotoAuth() { window.location.href = 'https://www.bungie.net/en/oauth/authorize?client_id=24178&response_type=code&state=1'; }
 
@@ -80,9 +81,10 @@ export class Header extends React.Component {
         </Link>
         <div className="menu-container" id="menu">
           <div className="settings-cog" style={{ backgroundImage: 'url("./images/icons/cog.png")' }} onClick={ (() => this.toggleSettings()) }></div>
-          <div className="settings-container" style={{ display: `${ this.state.showSettings ? 'block' : 'none'}` }}>
-            <p style={{ textAlign: 'center' }}>Settings</p>
-            <p style={{ textAlign: 'center' }}>Logout</p>
+          <div className="settings-container" style={{ display: `${ this.state.showSettings ? 'grid' : 'none'}` }}>
+            <p>Add another account</p>
+            <p>Settings</p>
+            <p onClick={ (() => Misc.logout()) }>Logout</p>
           </div>
           <select name="LoginBtn" type="dropdown" className='btn btn-warning custom' id="LoginBtn" defaultValue="Please Select Platform" onChange={() => { this.setPlatform(); this.setState(this.state); }} style={{ backgroundImage: 'url("../images/icons/blackcaret.png")' }}>
             <option value="Please Select Platform">Please Select Platform</option>
@@ -100,9 +102,10 @@ export class Header extends React.Component {
         </Link>
         <div className="menu-container" id="menu">
           <div className="settings-cog" style={{ backgroundImage: 'url("./images/icons/cog.png")' }} onClick={ (() => this.toggleSettings()) }></div>
-          <div className="settings-container" style={{ display: `${ this.state.showSettings ? 'block' : 'none'}` }}>
-            <p style={{ textAlign: 'center' }}>Settings</p>
-            <p style={{ textAlign: 'center' }}>Logout</p>
+          <div className="settings-container" style={{ display: `${ this.state.showSettings ? 'grid' : 'none'}` }}>
+            <p>Add another account</p>
+            <p>Settings</p>
+            <p onClick={ (() => Misc.logout()) }>Logout</p>
           </div>
           <select name="LoginBtn" type="dropdown" className='btn btn-info custom' id="LoginBtn" defaultValue={ localStorage.getItem('SelectedAccount') } onChange={() => { this.setPlatform(); this.setState(this.state); }} style={{ backgroundImage: 'url("../images/icons/caret.png")' }}>
             { platforms.map(plat => ( <option value={ plat.platform } key={ plat.platform }> { plat.platform + ': ' + plat.name } </option> )) }

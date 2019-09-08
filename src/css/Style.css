@@ -136,14 +136,24 @@ body {
   transform: rotate(100deg);
 }
 .settings-container {
-  width: 200px;
-  min-height: 200px;
   position: absolute;
   right: 0px;
-  border: 1px var(--NavyBlue)solid;
-  border-top: 0px;
-  background: var(--LightNavyBlue);
-  margin-top: -1px;
+  width: 170px;
+  margin-top: 50px;
+  padding: 5px;
+  font-size: 14px;
+  background: var(--DarkNavyBlue);
+  display: grid;
+  grid-template-rows: auto;
+}
+.settings-container > p {
+  padding: 5px;
+  margin: 0px;
+  cursor: pointer;
+  text-align: right;
+}
+.settings-container > p:hover {
+  color: #91cdff;
 }
 .menu-bar {
   height: 50px;

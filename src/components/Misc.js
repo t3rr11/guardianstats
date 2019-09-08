@@ -100,3 +100,7 @@ export function noManifest() {
   const urls = ["register"];
   if(urls.find(e => e === window.location.href.split("/")[3])) { return true; }
 }
+export function logout() {
+  localStorage.clear();
+  window.location.reload();
+}
