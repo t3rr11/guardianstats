@@ -2,7 +2,7 @@
   .home-content {
     width: unset !important;
   }
-  #itemCategories { grid-template-columns: 100% !important; grid-template-rows: 150% !important; margin-bottom: 50px !important; text-align: center !important; display: block !important; }
+  #itemCategories { grid-template-columns: 100% !important; grid-template-rows: 150% !important; text-align: center !important; display: block !important; }
   .settings-cog { display: none !important; }
   #LoginBtn {
     display: block !important;
