@@ -44,6 +44,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
+    this.setState({ status: { status: 'startingUp', statusText: `Guardianstats ${ Manifest.version }` } });
     if(!localStorage.getItem("FirstLoad")) { localStorage.clear(); localStorage.setItem("FirstLoad", "false"); window.location.reload(); }
     else {
       if(Misc.noManifest()) { this.manifestLoaded(); }
@@ -131,7 +132,6 @@ class App extends React.Component {
       //Successfully Logged in.
       if(await checks.checkPlatform()) {
         //Account and platform found, Get Profile!
-        this.setState({ status: { status: 'getProfile', statusText: `Guardianstats ${ Manifest.version }` } });
         this.getProfile();
       }
       else {
@@ -227,7 +227,7 @@ class App extends React.Component {
         );
       }
     }
-    else { return <Loader statusText={ statusText } />; }
+    else { return <Loader statusText={ statusText } paused={ true } />; }
   }
 }
 

@@ -8,15 +8,11 @@ const classLoaderOptions = { loop: true, autoplay: true, animationData: classLoa
 
 export class Loader extends Component {
 
-  state = {
-    newLoader: true
-  }
-
   render() {
-    if(this.state.newLoader) {
+    if(this.props.paused) {
       return (
         <div className="loaderBG">
-          <Lottie options={ classLoaderOptions } height={400} width={400} isStopped={false} isPaused={false} />
+          <img style={{ margin: "auto" }} src="./images/loader.png" />
           <div className="loaderText">
             <p> { this.props.statusText } </p>
           </div>
@@ -24,14 +20,9 @@ export class Loader extends Component {
       );
     }
     else {
-      return(
-        <div className="loaderContainer">
-          <div className='loader'>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-          </div>
+      return (
+        <div className="loaderBG">
+          <Lottie options={ classLoaderOptions } height={250} width={250} isStopped={false} isPaused={false} />
           <div className="loaderText">
             <p> { this.props.statusText } </p>
           </div>
