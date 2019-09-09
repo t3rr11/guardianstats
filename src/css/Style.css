@@ -100,6 +100,20 @@ body {
   border: 0px;
   border-radius: 0px;
 }
+#UsernameBtn {
+  font-size: 16px;
+  float: right;
+  border: 0px;
+  border-radius: 0px;
+  background-color: var(--NavyBlue);
+  border-color: var(--NavyBlue);
+  color: white;
+  height: 35px;
+  margin-top: 6px;
+}
+#UsernameBtn:focus {
+  box-shadow: 0 0 0 0.2rem rgba(0,0,0,.10);
+}
 .loginBox {
   width:500px;
   height:150px;
@@ -136,6 +150,7 @@ body {
   transform: rotate(100deg);
 }
 .settings-container {
+  display: grid;
   position: absolute;
   right: 0px;
   width: 170px;
@@ -143,8 +158,8 @@ body {
   padding: 5px;
   font-size: 14px;
   background: var(--DarkNavyBlue);
-  display: grid;
   grid-template-rows: auto;
+  border-bottom-left-radius: 20px;
 }
 .settings-container > p {
   padding: 5px;

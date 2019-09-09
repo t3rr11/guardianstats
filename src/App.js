@@ -98,6 +98,7 @@ class App extends React.Component {
   async getManifest(currentVersion) {
     await bungie.GetManifest(currentVersion.jsonWorldContentPaths['en']).then((newManifest) => {
       try { db.table('manifest').clear(); } catch (err) { console.log("No manifest to clear. Ignore this."); }
+      this.setState({ status: { status: 'storingManifest' } });
       db.table('manifest').add({ version: currentVersion.version, value: newManifest }).then(() => {
         console.log('Manifest Added Successfully!');
         return newManifest;
@@ -228,7 +229,7 @@ class App extends React.Component {
         );
       }
     }
-    else { return <Loader statusText={ statusText } paused={ true } />; }
+    else { return <Loader statusText={ statusText } paused={ false } />; }
   }
 }
 

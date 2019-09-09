@@ -73,18 +73,23 @@ export class Header extends React.Component {
         <li className="menu-item" id="Vendors"><Link to="/vendors" onClick={ (() => this.toggleMenuSlider()) }>Vendors</Link></li>
       </React.Fragment>
     );
+    const settings = (
+      <React.Fragment>
+        <div className="settings-cog" style={{ backgroundImage: 'url("./images/icons/cog.png")' }} onClick={ (() => this.toggleSettings()) }></div>
+        <div className="settings-container" style={{ display: `${ this.state.showSettings ? 'grid' : 'none'}` }}>
+          <p style={{ color: "#aaa" }}>Add another account</p>
+          <p style={{ color: "#aaa" }}>Settings</p>
+          <p onClick={ (() => Misc.logout()) }>Logout</p>
+        </div>
+      </React.Fragment>
+    );
     const SelectPlatformHeader = () => (
       <header className="title-bar" id="title-bar">
         <Link to="/home" onClick={ (() => this.toggleMenuSlider(true)) } style={{ textDecoration: "none" }}>
           <div className="logo-container"><img className="logo" alt='Logo' src='./images/logo.png' /><span id="logo_title" href="#">Guardianstats</span></div>
         </Link>
         <div className="menu-container" id="menu">
-          <div className="settings-cog" style={{ backgroundImage: 'url("./images/icons/cog.png")' }} onClick={ (() => this.toggleSettings()) }></div>
-          <div className="settings-container" style={{ display: `${ this.state.showSettings ? 'grid' : 'none'}` }}>
-            <p>Add another account</p>
-            <p>Settings</p>
-            <p onClick={ (() => Misc.logout()) }>Logout</p>
-          </div>
+          { settings }
           <select name="LoginBtn" type="dropdown" className='btn btn-warning custom' id="LoginBtn" defaultValue="Please Select Platform" onChange={() => { this.setPlatform(); this.setState(this.state); }} style={{ backgroundImage: 'url("../images/icons/blackcaret.png")' }}>
             <option value="Please Select Platform">Please Select Platform</option>
             { platforms.map(plat => ( <option key={ plat.platform } value={ plat.platform }> { plat.platform + ': ' + plat.name } </option> )) }
@@ -100,13 +105,8 @@ export class Header extends React.Component {
           <div className="logo-container"><img className="logo" alt='Logo' src='./images/logo.png' /><span id="logo_title" href="#">Guardianstats</span></div>
         </Link>
         <div className="menu-container" id="menu">
-          <div className="settings-cog" style={{ backgroundImage: 'url("./images/icons/cog.png")' }} onClick={ (() => this.toggleSettings()) }></div>
-          <div className="settings-container" style={{ display: `${ this.state.showSettings ? 'grid' : 'none'}` }}>
-            <p>Add another account</p>
-            <p>Settings</p>
-            <p onClick={ (() => Misc.logout()) }>Logout</p>
-          </div>
-          <select name="LoginBtn" type="dropdown" className='btn btn-info custom' id="LoginBtn" defaultValue={ localStorage.getItem('SelectedAccount') } onChange={() => { this.setPlatform(); this.setState(this.state); }} style={{ backgroundImage: 'url("../images/icons/caret.png")' }}>
+          { settings }
+          <select name="LoginBtn" type="dropdown" className='btn custom' id="UsernameBtn" defaultValue={ localStorage.getItem('SelectedAccount') } onChange={() => { this.setPlatform(); this.setState(this.state); }} style={{ backgroundImage: 'url("../images/icons/caret.png")' }}>
             { platforms.map(plat => ( <option value={ plat.platform } key={ plat.platform }> { plat.platform + ': ' + plat.name } </option> )) }
           </select>
           <div id="character_select">
