@@ -124,7 +124,7 @@ class App extends React.Component {
   }
   setLastManifestCheck() { localStorage.setItem('lastManifestCheck', new Date().getTime()) }
   manifestLoaded() {
-    this.setState({ status: { status: 'checkProfile', statusText: 'Checking if logged in...' } });
+    //this.setState({ status: { status: 'checkProfile', statusText: 'Checking if logged in...' } });
     this.checkProfile();
   }
   async checkProfile() {
@@ -132,6 +132,7 @@ class App extends React.Component {
       //Successfully Logged in.
       if(await checks.checkPlatform()) {
         //Account and platform found, Get Profile!
+        //this.setState({ status: { status: 'getProfile', statusText: 'Getting profile data...' } });
         this.getProfile();
       }
       else {
