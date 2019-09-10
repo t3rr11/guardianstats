@@ -104,3 +104,8 @@ export function logout() {
   localStorage.clear();
   window.location.reload();
 }
+export function fadeElement(idName, fadeOutTime) { setTimeout(function(){ fadeOut(idName) }, (fadeOutTime*1000)); }
+function fadeOut(idName) {
+  try { document.getElementById(idName).style.opacity = '0'; }
+  catch (err) { console.log("Failed to fade: " + idName + " due to: " + err); }
+}

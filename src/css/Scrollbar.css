@@ -4,6 +4,11 @@
 .scrollbar::-webkit-scrollbar-track { background: var(--LightNavyBlue); border: 1px var(--NavyBlue) solid; border-bottom: 0px; }
 .scrollbar::-webkit-scrollbar-thumb { background: var(--DarkNavyBlue); }
 .scrollbar::-webkit-scrollbar-thumb:hover { background: var(--DarkNavyBlue); }
+.homeScrollbar { overflow-y: auto; overflow-x: hidden; scrollbar-color: var(--DarkNavyBlue) var(--LightNavyBlue); }
+.homeScrollbar::-webkit-scrollbar { width: 15px; }
+.homeScrollbar::-webkit-scrollbar-track { background: var(--LightNavyBlue); border: 1px var(--NavyBlue) solid; border-bottom: 0px; }
+.homeScrollbar::-webkit-scrollbar-thumb { background: var(--DarkNavyBlue); }
+.homeScrollbar::-webkit-scrollbar-thumb:hover { background: var(--DarkNavyBlue); }
 .activityScrollbar { overflow-y: scroll; overflow-x: hidden; scrollbar-color: var(--LightNavyBlue) var(--DarkNavyBlue); }
 .activityScrollbar::-webkit-scrollbar { width: 15px; }
 .activityScrollbar::-webkit-scrollbar-track { background: var(--DarkNavyBlue); border: 1px var(--NavyBlue) solid; border-bottom: 0px; }

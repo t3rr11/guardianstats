@@ -33,3 +33,4 @@ export const GetMembershipsById = async (userId, platform) => apiRequest(`/Platf
 export const GetInstancedItem = async (membershipId, membershipType, instancedItemId, components) => apiRequest(`/Platform/Destiny2/${membershipType}/Profile/${membershipId}/Item/${instancedItemId}/?components=${components}`, false, false);
 export const GetSpecificModeStats = async (membershipId, membershipType, characterId, modes) => apiRequest(`/Platform/Destiny2/${membershipType}/Account/${membershipId}/Character/${characterId}/Stats/?groups=101&modes=${modes}&periodType=2`, false, false)
 export const GetVendors = async (membershipType, membershipId, characterId) => apiRequest(`/Platform/Destiny2/${membershipType}/Profile/${membershipId}/Character/${characterId}/Vendors/?components=400,402`, false, true);
+export const GetTWABs = async () => apiRequest(`/Platform/Trending/Categories/`, false, false);
