@@ -5,6 +5,7 @@ import * as pf from '../scripts/Platforms';
 import * as checks from '../scripts/Checks';
 import * as profileHelper from '../scripts/ProfileHelper';
 import * as Misc from '../Misc';
+import Settings from './Settings';
 
 function GotoAuth() { window.location.href = 'https://www.bungie.net/en/oauth/authorize?client_id=24178&response_type=code&state=1'; }
 
@@ -12,10 +13,13 @@ export class Header extends React.Component {
 
   state = {
     platform: { platform: null, platforms: null },
-    showSettings: false
+    showSettings: false,
+    showSettingsModal: false
   }
 
-  toggleSettings = () => { this.setState({ showSettings: !this.state.showSettings }); }
+  toggleSettingsBtn = () => { this.setState({ showSettings: !this.state.showSettings }); }
+  toggleSettingsModal = () => { this.setState({ showSettings: !this.state.showSettings, showSettingsModal: !this.state.showSettingsModal }); }
+  hideSettingsModal = () => { this.setState({ showSettingsModal: false }); }
 
   async componentDidMount() {
     this.startUpChecks();
@@ -75,10 +79,10 @@ export class Header extends React.Component {
     );
     const settings = (
       <React.Fragment>
-        <div className="settings-cog" style={{ backgroundImage: 'url("./images/icons/cog.png")' }} onClick={ (() => this.toggleSettings()) }></div>
+        <div className="settings-cog" style={{ backgroundImage: 'url("./images/icons/cog.png")' }} onClick={ (() => this.toggleSettingsBtn()) }></div>
         <div className="settings-container" style={{ display: `${ this.state.showSettings ? 'grid' : 'none'}` }}>
           <p style={{ color: "#aaa" }}>Add another account</p>
-          <p style={{ color: "#aaa" }}>Settings</p>
+          <p onClick={ (() => this.toggleSettingsModal()) }>Settings</p>
           <p onClick={ (() => Misc.logout()) }>Logout</p>
         </div>
       </React.Fragment>
@@ -97,6 +101,7 @@ export class Header extends React.Component {
           <div className="menu-bar disable-hl"> { menuItems } </div>
         </div>
         <div className="menu-switch-icon" onClick={() => { this.toggleMenuSlider() }} >≡</div>
+        { this.state.showSettingsModal ? (<Settings hideSettings={ this.hideSettingsModal } />) : null }
       </header>
     );
     const HeaderWithPlatform = () => (
@@ -133,6 +138,7 @@ export class Header extends React.Component {
           <div className="menu-bar disable-hl"> { menuItems } </div>
         </div>
         <div className="menu-switch-icon" onClick={() => { this.toggleMenuSlider() }} >≡</div>
+        { this.state.showSettingsModal ? (<Settings hideSettings={ this.hideSettingsModal } />) : null }
       </header>
     );
     const DefaultHeader = () => (
@@ -145,6 +151,7 @@ export class Header extends React.Component {
           <div className="menu-bar disable-hl"> { defaultMenuItems } </div>
         </div>
         <div className="menu-switch-icon" onClick={() => { this.toggleMenuSlider() }} >≡</div>
+        { this.state.showSettingsModal ? (<Settings hideSettings={ this.hideSettingsModal } />) : null }
       </header>
     );
     if(accountInfo) {

@@ -65,7 +65,6 @@ export class Items extends Component {
                           <div key={ collectible.collectibleHash } id={ collectible.collectibleHash } className="collectibleItemContainer">
                             <img alt='Icon' src={ 'https://bungie.net' + data.ManifestCollectibles[collectible.collectibleHash].displayProperties.icon } className={ data.ManifestCollectibles[collectible.collectibleHash].obtained ? 'collectibleItemImage' : 'collectibleItemImage notAcquired' } />
                             <div className="collectibleItemInfo">
-                              { console.log(data.ManifestCollectibles[collectible.collectibleHash]) }
                               { this.getItemInfo(collectible.collectibleHash, "name") }
                               { this.getItemInfo(collectible.collectibleHash, "description") }
                               { this.getItemInfo(collectible.collectibleHash, "requirements") }

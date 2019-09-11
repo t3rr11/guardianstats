@@ -9,25 +9,38 @@ const classLoaderOptions = { loop: true, autoplay: true, animationData: classLoa
 export class Loader extends Component {
 
   render() {
-    if(this.props.paused) {
-      return (
-        <div className="loaderBG">
-          <img style={{ margin: "auto" }} src="./images/loader.png" />
-          <div className="loaderText">
-            <p> { this.props.statusText } </p>
-          </div>
-        </div>
-      );
+    //Check if first loader
+    if(!localStorage.getItem("loader")) { localStorage.setItem("loader", "class"); }
+
+    //Set variables
+    var loader = localStorage.getItem("loader");
+
+    if(this.props.custom) {
+      loader = this.props.custom.loader;
+      if(loader == "class") { return (<Lottie options={ classLoaderOptions } height={this.props.custom.height} width={this.props.custom.width} isStopped={false} isPaused={false} />) }
+      else if(loader == "ability") { return (<Lottie options={ abilityLoaderOptions } height={this.props.custom.height} width={this.props.custom.width} isStopped={false} isPaused={false} />) }
     }
     else {
-      return (
-        <div className="loaderBG">
-          <Lottie options={ classLoaderOptions } height={250} width={250} isStopped={false} isPaused={false} />
-          <div className="loaderText">
-            <p> { this.props.statusText } </p>
+      if(loader == "class") {
+        return (
+          <div className="loaderBG">
+            <Lottie options={ classLoaderOptions } height={250} width={250} isStopped={false} isPaused={false} />
+            <div className="loaderText">
+              <p> { this.props.statusText } </p>
+            </div>
           </div>
-        </div>
-      );
+        );
+      }
+      else if(loader == "ability") {
+        return (
+          <div className="loaderBG">
+            <Lottie options={ abilityLoaderOptions } height={250} width={250} isStopped={false} isPaused={false} />
+            <div className="loaderText">
+              <p> { this.props.statusText } </p>
+            </div>
+          </div>
+        );
+      }
     }
   }
 }

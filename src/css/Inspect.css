@@ -254,7 +254,7 @@
   width: 100%;
   float: right;
   color: white;
-  z-index: 100;
+  z-index: 2;
   margin: auto;
   display: none;
   grid-template-columns: 40px 1fr 40px;

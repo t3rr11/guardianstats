@@ -40,7 +40,7 @@ class App extends React.Component {
       status: 'startUp',
       statusText: 'Getting ready!',
       error: null,
-      warning: null
+      warning: null,
     }
   }
 
@@ -174,6 +174,7 @@ class App extends React.Component {
 
   render() {
     const { status, statusText, warning } = this.state.status;
+    const { settings } = this.state;
     if(status === 'error') {
       return (
         <Router>

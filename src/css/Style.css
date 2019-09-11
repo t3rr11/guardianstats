@@ -14,7 +14,9 @@
 @import url('Smallscreen.css');
 @import url('Mobile.css');
 :root {
+  --DarkerNavyBlue: #181a1f;
   --DarkNavyBlue: #1A1D22;
+  --MedNavyBlue: #1f2227;
   --NavyBlue: #21242A;
   --InbetweenerNavyBlue: #25282F;
   --LightNavyBlue: #292C33;
@@ -170,6 +172,68 @@ body {
 .settings-container > p:hover {
   color: #91cdff;
 }
+.settings-bg {
+  background-color: rgba(33, 36, 42, .75);
+  text-align: center;
+  padding: 30px;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+}
+.settings-modal {
+  background-color: var(--DarkerNavyBlue);
+  border: 1px solid var(--LightNavyBlue);
+  width: 80%;
+  height: 100%;
+  border-radius: 10px;
+  margin: auto;
+  position: relative;
+}
+.settings-closeBtn {
+  background-color: var(--LightNavyBlue);
+  color: red;
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  padding: 5px;
+  border-radius: 10px;
+  width: 30px;
+  height: 30px;
+  line-height: 22px;
+  cursor: pointer;
+  font-weight: bold;
+}
+.settings-title {
+  padding: 8px;
+  font-weight: bold;
+  cursor: default;
+  background-color: var(--MedNavyBlue);
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  border-bottom: 1px solid var(--LightNavyBlue);
+}
+.select-custom-loader {
+  background-color: var(--MedNavyBlue);
+  border-radius: 10px;
+  width: 300px;
+  padding: 10px;
+  margin-left: 30px;
+}
+.settings-loader-options {
+  display: grid;
+  grid-template-columns: auto auto;
+}
+.settings-loader-option {
+  margin: 15px;
+  background-color: var(--InbetweenerNavyBlue);
+  border: 2px solid var(--InbetweenerNavyBlue);
+}
+.settings-loader-option:hover {
+  background-color: var(--NavyBlue);
+  cursor: pointer;
+}
+.settings-loader-option.selected { border: 2px solid #ccc; }
 .menu-bar {
   height: 50px;
   line-height: 50px;

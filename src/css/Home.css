@@ -264,14 +264,13 @@
   margin: auto;
 }
 .donate-links {
-  height: 40px;
   margin: auto;
-  align-items: start;
-  align-content: start;
   position: fixed;
-  bottom: 5px;
+  bottom: 50px;
   right: 10px;
-  display: flex;
+  display: grid;
+  grid-template-rows: auto auto;
+  justify-items: end;
 }
 .donate-links > a > .patreonBtn {
   width: 150px;
@@ -288,8 +287,7 @@
   padding: 5px;
 }
 .paypalDiv {
-  margin-left: 5px;
-  margin-right: 10px;
+  margin-bottom: 5px;
 }
 .donar {
   font-size: 14px;
@@ -298,15 +296,17 @@
   height: 35px;
   width: 150px;
   position: absolute;
-  bottom: 55px;
+  bottom: 10px;
   right: 10px;
   cursor: pointer;
+  font-size: 15px;
+}
+.changelogBtn:hover {
+  background-color: var(--LightNavyBlue) !important;
 }
 
 @media only screen and (max-width: 1500px) {
   .home-container { grid-template-columns: auto; }
-  .changelogBtn { display: none !important; }
-  .changelog { display: none !important; }
   .bungie-content { display: none; }
 }
 @keyframes fadeInOpacity {
