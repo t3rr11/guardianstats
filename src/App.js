@@ -19,6 +19,7 @@ import Vendors from './components/pages/vendors/Vendors';
 import Register from './components/pages/others/Register';
 import Failed from './components/pages/others/Failed';
 import Login from './components/pages/others/Login';
+import Thanks from './components/pages/others/Thanks';
 import NotFound from './components/pages/others/PageNotFound';
 
 //Functions
@@ -201,6 +202,7 @@ class App extends React.Component {
                   <Route path="/profile" render={ props => (<Inspect />) } />
                   <Route path="/inspect" render={ props => (<Inspect membershipInfo={ props.location.pathname.replace('/inspect/', '') } />) } />
                   <Route path="/loader" render={ props => (<Loader statusText="Text example" />) } />
+                  <Route path="/thanks" render={ props => (<Thanks />) } />
                   <Route path="*" component={ NotFound } />
                 </Switch>
                 { warning != null ? (<Warning warning={ warning } />) : null }
@@ -221,6 +223,7 @@ class App extends React.Component {
                   <Route path="/failed" component={ Failed } />
                   <Route path="/home" render={ props => (<Home inspectPlayer={ this.inspectPlayer } foundUser={ ((platform, mbmID) => props.history.push(`/inspect/${ platform }/${ mbmID }`)) } />) } />
                   <Route path="/inspect" render={ props => (<Inspect membershipInfo={ props.location.pathname.replace('/inspect/', '') } />) } />
+                  <Route path="/thanks" render={ props => (<Thanks />) } />
                   <Route path="*" component={ Login } />
                 </Switch>
               </div>

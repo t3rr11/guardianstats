@@ -13,4 +13,5 @@
     .vendors { grid-template-columns: 50% 50%; }
     .changelogBtn { display: none !important; }
     .changelog { display: none !important; }
+    .supporters-content { display: none !important; }
 }

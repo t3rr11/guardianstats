@@ -12,12 +12,18 @@ export class Home extends Component {
   state = {
     isConnected: null,
     changelogVisible: false,
-    supportersVisible: true,
+    TWABs: null,
   }
 
   async componentDidMount() {
-    if(await Checks.checkLogin()) { this.setState({ isConnected: true }); }
-    else { this.setState({ isConnected: false }); }
+    if(await Checks.checkLogin()) {
+      const TWABs = (await bungie.GetTWABs()).categories[0].entries.results;
+      this.setState({ isConnected: true, TWABs });
+    }
+    else {
+      const TWABs = (await bungie.GetTWABs()).categories[0].entries.results;
+      this.setState({ isConnected: false, TWABs });
+    }
   }
 
   GotoAuth() { window.location.href = 'https://www.bungie.net/en/oauth/authorize?client_id=24178&response_type=code&state=1'; }
@@ -33,7 +39,10 @@ export class Home extends Component {
     if(this.state.changelogVisible) { this.setState({ changelogVisible: false }); }
     else { this.setState({ changelogVisible: true }); }
   }
-  foundUser = (platform, mbmID) => { this.props.foundUser(platform, mbmID); }
+
+  foundUser = (platform, mbmID) => {
+    this.props.foundUser(platform, mbmID);
+  }
 
   render() {
 
@@ -46,7 +55,7 @@ export class Home extends Component {
     const homeContent = () => {
       return(
         <div className="home-content">
-          <h1 className="home-title">Welcome Guardian</h1>
+          <h1 className="home-title">Welcome to Guardianstats</h1>
           {
             this.state.isConnected === false ? (
               <p style={{ fontSize: "14px" }}>Feel free to search below or consider connecting with bungie to get the full experience from Guardianstats!</p>
@@ -61,21 +70,45 @@ export class Home extends Component {
         </div>
       );
     }
-    const supportersContent = () => {
+    const devContent = () => {
       return (
-        <div className="supporters-content">
-          <div className="donators"><h4>Donators</h4><div className="inspectDonated"></div></div>
-          { Donators.map(function(donator) { if(donator.name !== "Terrii") { return ( <div className="donar">{ donator.name }</div> ); } }) }
-          <p>Thank you guys so much!</p>
-          <div className="donate-links">
-            <div className="paypalDiv">
+        <div className="dev-content">
+          <div className="supporters-content">
+            <h4>Supporters</h4>
+            { Donators.map(function(donator) { if(donator.name !== "Terrii") { return ( <div className="donar">{ donator.name }</div> ); } }) }
+            <p>You guys are actually the best. You help keep the website ad free and keep the lights on. I love all of you!</p>
+            <div className="donate-links">
               <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank" class="donateBtn">
                 <input type="hidden" name="cmd" value="_s-xclick" />
                 <input type="hidden" name="hosted_button_id" value="PJXJYXDR2DGJE" />
                 <input type="image" class="paypalBtn" src="/images/donate.png" border="0" name="submit" width="90px" alt="PayPal – The safer, easier way to pay online!" />
               </form>
+              <a href="https://www.patreon.com/Terrii" target="_blank"><img className="patreonBtn" src="/images/patreon.png" /></a>
             </div>
-            <a href="https://www.patreon.com/Terrii" target="_blank"><img className="patreonBtn" src="/images/patreon.png" /></a>
+          </div>
+        </div>
+      );
+    }
+    const bungieContent = () => {
+      return (
+        <div className="bungie-content">
+          <h4>Recent Bungie News</h4>
+          <div className="bungie-articles">
+            {
+              this.state.TWABs.slice(0, 10).map(function(article) {
+                return (
+                  <div className="bungie-article">
+                    <div className="article-image"><a href={`https://bungie.net${article.link}`} target="_blank"><img src={`https://bungie.net${ article.image }`} /></a></div>
+                    <div className="article-name-date">
+                      <a href={`https://bungie.net${article.link}`} target="_blank">
+                        <div className="article-name">{ article.displayName.includes("This Week At Bungie") ? "This Week At Bungie" : article.displayName }</div>
+                        <div className="article-date">{ Misc.convertTimeToDate(article.creationDate) }</div>
+                      </a>
+                    </div>
+                  </div>
+                );
+              })
+            }
           </div>
         </div>
       );
@@ -113,9 +146,10 @@ export class Home extends Component {
     if(this.state.isConnected !== null) {
       return(
         <React.Fragment>
-          <div className="home-container">
+          <div className="home-container homeScrollbar">
+            { devContent() }
             { homeContent() }
-            { this.state.supportersVisible ? supportersContent() : null }
+            { bungieContent() }
             { this.state.changelogVisible ? changelogContent() : null }
             <div className="btn btn-dark changelogBtn" onClick={() => { this.toggleChangeLog() }}>View Changelog</div>
             <div className="imgCredit">© Bungie, Inc. All rights reserved. Destiny, the Destiny Logo, Bungie and the Bungie logo are among the trademarks of Bungie, Inc.</div>

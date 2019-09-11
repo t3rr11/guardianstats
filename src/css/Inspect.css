@@ -153,13 +153,20 @@
 .inspectBoxContainer {
   width: 100%;
   display: grid;
-  grid-template-columns: 50% 50%;
+  grid-template-columns: auto auto;
 }
 @media only screen and (max-width: 1600px) {
   .inspectBoxContainer {
     width: 100%;
     display: grid;
     grid-template-columns: 100%;
+  }
+}
+@media only screen and (min-width: 2100px) {
+  .inspectBoxContainer {
+    width: 100%;
+    display: grid;
+    grid-template-columns: auto auto auto;
   }
 }
 .inspectBoxPVPIcon {

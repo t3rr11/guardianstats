@@ -1,5 +1,12 @@
 [
   {
+    "1.3.4": [
+      "= Change up the homepage again.",
+      "- Removed bungie news",
+      "= Moved donation buttons"
+    ]
+  },
+  {
     "1.3.3": [
       "= Changed settings to be a seperate component.",
       "= Login button style changes.",
