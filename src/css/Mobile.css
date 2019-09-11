@@ -103,4 +103,17 @@
   .loaderText {
     top: 55% !important;
   }
+  .settings-content {
+    display: grid;
+    grid-template-columns: auto;
+  }
+  .select-custom-loader {
+    width: 90%;
+    margin: auto;
+  }
+  .select-custom-background {
+    width: 90%;
+    margin: auto;
+    margin-top: 10px;
+  }
 }

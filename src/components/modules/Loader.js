@@ -17,11 +17,11 @@ export class Loader extends Component {
 
     if(this.props.custom) {
       loader = this.props.custom.loader;
-      if(loader == "class") { return (<Lottie options={ classLoaderOptions } height={this.props.custom.height} width={this.props.custom.width} isStopped={false} isPaused={false} />) }
-      else if(loader == "ability") { return (<Lottie options={ abilityLoaderOptions } height={this.props.custom.height} width={this.props.custom.width} isStopped={false} isPaused={false} />) }
+      if(loader === "class") { return (<Lottie options={ classLoaderOptions } height={this.props.custom.height} width={this.props.custom.width} isStopped={false} isPaused={false} />) }
+      else if(loader === "ability") { return (<Lottie options={ abilityLoaderOptions } height={this.props.custom.height} width={this.props.custom.width} isStopped={false} isPaused={false} />) }
     }
     else {
-      if(loader == "class") {
+      if(loader === "class") {
         return (
           <div className="loaderBG">
             <Lottie options={ classLoaderOptions } height={250} width={250} isStopped={false} isPaused={false} />
@@ -31,7 +31,7 @@ export class Loader extends Component {
           </div>
         );
       }
-      else if(loader == "ability") {
+      else if(loader === "ability") {
         return (
           <div className="loaderBG">
             <Lottie options={ abilityLoaderOptions } height={250} width={250} isStopped={false} isPaused={false} />

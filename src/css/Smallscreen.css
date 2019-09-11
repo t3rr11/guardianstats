@@ -14,4 +14,9 @@
     .changelogBtn { display: none !important; }
     .changelog { display: none !important; }
     .supporters-content { display: none !important; }
+    .settings-modal { width: 90%; }
+    .settings-content { display: inline-flex; margin: auto; }
+    .select-custom-background { width: 300px; }
+    .settings-background-options { grid-template-columns: auto; }
+    .settings-background-image { width: 250px; height: 150px; }
 }

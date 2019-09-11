@@ -46,7 +46,15 @@ class App extends React.Component {
 
   componentDidMount() {
     this.setState({ status: { status: 'startingUp', statusText: `Guardianstats ${ Manifest.version }` } });
-    if(!localStorage.getItem("FirstLoad")) { localStorage.clear(); localStorage.setItem("FirstLoad", "false"); window.location.reload(); }
+    if(!localStorage.getItem("FirstLoad")) {
+      localStorage.clear();
+      localStorage.setItem("FirstLoad", "false");
+      localStorage.setItem("Settings", `{
+        "loader": "class",
+        "background": "shadowkeep"
+      }`);
+      window.location.reload();
+    }
     else {
       if(Misc.noManifest()) { this.manifestLoaded(); }
       else { Misc.timed('Whole Page', this.loadManifest()); }
