@@ -1,5 +1,13 @@
 [
   {
+    "1.3.5": [
+      "+ Added settings, There isn't much in the way of customization yet, but it's the first step.",
+      "+ Added loader options to settings",
+      "+ Added background options to settings",
+      "= Tons of background code work"
+    ]
+  },
+  {
     "1.3.4": [
       "= Change up the homepage again.",
       "- Removed bungie news",
