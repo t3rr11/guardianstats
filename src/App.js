@@ -46,9 +46,9 @@ class App extends React.Component {
 
   componentDidMount() {
     this.setState({ status: { status: 'startingUp', statusText: `Guardianstats ${ Manifest.version }` } });
-    if(!localStorage.getItem("FirstLoad")) {
+    if(!localStorage.getItem("First Load")) {
       localStorage.clear();
-      localStorage.setItem("FirstLoad", "false");
+      localStorage.setItem("First Load", "false");
       localStorage.setItem("Settings", `{
         "loader": "class",
         "background": "shadowkeep"

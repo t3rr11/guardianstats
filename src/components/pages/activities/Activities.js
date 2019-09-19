@@ -142,7 +142,7 @@ export class Activities extends Component {
             }, this)}
           </div>
           <div className="ActivityPGCR activityScrollbar" id="ActivityPGCR">
-            { PGCRGeneration.generate(ManifestActivities, ManifestItems, PGCRs, currentActivity) }
+            { PGCRGeneration.generate(ManifestActivities, ManifestItems, PGCRs, activities, currentActivity) }
           </div>
         </div>
       );

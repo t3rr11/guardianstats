@@ -169,13 +169,29 @@
 .pgcrPlayersBlob div { display: inline-block; padding: 2px; text-align: center; border-right: 1px var(--LightNavyBlue) double; }
 .pgcrCurrPlayersBlob div { display: inline-block; padding: 2px; text-align: center; border-right: 1px var(--LightNavyBlue) double; }
 .pgcrPvpPlayersBlob div { display: inline-block; padding: 2px; text-align: center; border-right: 1px var(--LightNavyBlue) double; }
-.pgcrExtendedInfo {
+.pgcrExtendedInfo.pvp {
   width: 100%;
   display: grid;
   background-color: var(--LightNavyBlue);
   border-bottom: 1px solid var(--DarkNavyBlue);
   border-right: 1px solid var(--NavyBlue);
   grid-template-columns: 20% 40% 40%;
+  padding: 5px;
+  font-size: 14px;
+  min-height: 127px;
+  position: relative;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.pgcrExtendedInfo.other {
+  width: 100%;
+  display: grid;
+  background-color: var(--LightNavyBlue);
+  border-bottom: 1px solid var(--DarkNavyBlue);
+  border-right: 1px solid var(--NavyBlue);
+  grid-template-columns: 50% 50%;
   padding: 5px;
   font-size: 14px;
   min-height: 127px;
@@ -242,4 +258,21 @@
   text-align: center;
   width: 195px;
   line-height: 33px;
+}
+.pgcrDetails {
+  float: left;
+  width: 50%;
+  height: 100%;
+}
+.pgcrDetailsTitle {
+  background-color: #0d75b5;
+  text-align: center;
+  font-size: small;
+  height: 26px;
+  line-height: 26px;
+  display: grid;
+}
+.pgcrDetailsMedal {
+  color: #ccc;
+  font-size: 12px;
 }

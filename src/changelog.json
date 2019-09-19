@@ -1,5 +1,11 @@
 [
   {
+    "1.3.6": [
+      "+ Changes to raid activities on the Activities page. (Not completed)",
+      "= Fixed a bug with some accounts not loading on inspect due to them not ever having played pvp."
+    ]
+  },
+  {
     "1.3.5": [
       "+ Added settings, There isn't much in the way of customization yet, but it's the first step.",
       "+ Added loader options to settings",

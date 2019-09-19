@@ -37,7 +37,18 @@ export function generate(profileInfo, Manifest, historicStats, gambitStats, raid
 }
 
 const generatePvPStats = (profileInfo, historicStats) => {
-  const allPvP = historicStats.mergedAllCharacters.results.allPvP.allTime;
+  const allPvP = historicStats.mergedAllCharacters.results.allPvP.allTime ? historicStats.mergedAllCharacters.results.allPvP.allTime : (
+    {
+      activitiesEntered: { basic: { displayValue: 0 } },
+      activitiesWon: { basic: { displayValue: 0 } },
+      killsDeathsRatio: { basic: { displayValue: 0 } },
+      killsDeathsAssists: { basic: { displayValue: 0 } },
+      efficiency: { basic: { displayValue: 0 } },
+      kills: { basic: { displayValue: 0 } },
+      assists: { basic: { displayValue: 0 } },
+      deaths: { basic: { displayValue: 0 } }
+    }
+  );
   const activitiesEntered = allPvP.activitiesEntered.basic.displayValue;
   const activitiesWon = allPvP.activitiesWon.basic.displayValue;
   return (

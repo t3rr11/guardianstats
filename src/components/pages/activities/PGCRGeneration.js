@@ -1,7 +1,7 @@
 import React from 'react';
 import Error from '../../modules/Error';
 
-export function generate(ManifestActivities, ManifestItems, PGCRs, currentActivity) {
+export function generate(ManifestActivities, ManifestItems, PGCRs, activities, currentActivity) {
   if(ManifestActivities[PGCRs[currentActivity].activityDetails.referenceId].isPvP === true) {
     //If mode is PVP show PvP Display
     if(PGCRs[currentActivity].teams.length !== 0) {
@@ -23,18 +23,54 @@ export function generate(ManifestActivities, ManifestItems, PGCRs, currentActivi
     else { return (<Error error="Failed to load PGCR, This data is most likely corrupted. Possible causes: 'Beet' error-code." />) }
   }
   else {
-    //If mode is not pvp, then display default display
-    return (
-      <div className="pgcrContainer">
-        <div className="pgcrTopContainer" id={ `pgcrTopContainer_${ PGCRs[currentActivity].activityDetails.instanceId }` } style={{ height: "400px" }} >
-          <div className="pgcrBigImage" style={{ backgroundImage: `url(https://bungie.net${ ManifestActivities[PGCRs[currentActivity].activityDetails.referenceId].pgcrImage })` }}></div>
-        </div>
-       <div className="pgcrBottomContainer">
-         { generateExtendedData(ManifestItems, PGCRs, currentActivity, 'other') }
-       </div>
-    </div>
-    )
+    //If mode is not pvp, then get display:
+    if(PGCRs[currentActivity].activityDetails.mode === 4) { return raidPGCR(ManifestActivities, ManifestItems, PGCRs, activities, currentActivity) }
+    else { return defaultPGCR(ManifestActivities, ManifestItems, PGCRs, activities, currentActivity) }
   }
+}
+
+const defaultPGCR = (ManifestActivities, ManifestItems, PGCRs, activities, currentActivity) => {
+  return (
+    <div className="pgcrContainer">
+      <div className="pgcrTopContainer" id={ `pgcrTopContainer_${ PGCRs[currentActivity].activityDetails.instanceId }` } style={{ height: "400px" }} >
+        <div className="pgcrBigImage" style={{ backgroundImage: `url(https://bungie.net${ ManifestActivities[PGCRs[currentActivity].activityDetails.referenceId].pgcrImage })` }}></div>
+      </div>
+      <div className="pgcrBottomContainer">
+        { generateExtendedData(ManifestItems, PGCRs, currentActivity, 'other') }
+      </div>
+    </div>
+  )
+}
+const raidPGCR = (ManifestActivities, ManifestItems, PGCRs, activities, currentActivity) => {
+  const activity = PGCRs[currentActivity];
+  const activityData = activities.find(e => e.activityDetails.instanceId === activity.activityDetails.instanceId); console.log(activityData);
+  const manifestActivityData = ManifestActivities[activity.activityDetails.referenceId];
+  var mostKills = { "name": activity.entries[0].player.bungieNetUserInfo.displayName, "value": activity.entries[0].values.kills.basic.value };
+  var mostDeaths = { "name": activity.entries[0].player.bungieNetUserInfo.displayName, "value": activity.entries[0].values.deaths.basic.value };
+  for(var i in activity.entries) {
+    //Get Most Kills
+    if(activity.entries[i].values.kills.basic.value > mostKills.value){ mostKills = { "name": activity.entries[i].player.bungieNetUserInfo.displayName, "value": activity.entries[i].values.kills.basic.value } }
+    //Get Most Deaths
+    if(activity.entries[i].values.deaths.basic.value > mostDeaths.value){ mostDeaths = { "name": activity.entries[i].player.bungieNetUserInfo.displayName, "value": activity.entries[i].values.deaths.basic.value } }
+  }
+  console.log(activity);
+  return (
+    <div className="pgcrContainer">
+      <div className="pgcrTopContainer" id={ `pgcrTopContainer_${ activity.activityDetails.instanceId }` } style={{ height: "400px" }} >
+        <div className="pgcrDetails">
+          <div className="pgcrDetailsTitle"> { manifestActivityData.displayProperties.name } </div>
+          <div className="pgcrDetailsTimePlayed">Time: { activityData.values.activityDurationSeconds.basic.displayValue } </div>
+          <div className="pgcrDetailsCompleted">Completed: { activityData.values.completed.basic.displayValue } </div>
+          <div className="pgcrDetailsMedal kills">Most Kills: { mostKills.name } ({ mostKills.value }) </div>
+          <div className="pgcrDetailsMedal deaths">Most Deaths: { mostDeaths.name } ({ mostDeaths.value }) </div>
+        </div>
+        <div className="pgcrImage" style={{ backgroundImage: `url(https://bungie.net${ ManifestActivities[activity.activityDetails.referenceId].pgcrImage })` }}></div>
+      </div>
+      <div className="pgcrBottomContainer">
+        { generateExtendedData(ManifestItems, PGCRs, currentActivity, 'other') }
+      </div>
+    </div>
+  )
 }
 
 const generateTeamData = (ManifestItems, PGCRs, currentActivity, modeType, team) => {
@@ -106,7 +142,7 @@ const generatePlayerData = (ManifestItems, PGCRs, currentActivity, modeType, tea
 const generateExtendedData = (ManifestItems, PGCRs, currentActivity, modeType) => {
   const allPlayers = PGCRs[currentActivity].entries.sort(function(a, b){return a.score - b.score});
   return allPlayers.map((playerData) => (
-    <div key={ playerData.player.destinyUserInfo.membershipId } className="pgcrExtendedInfo">
+    <div key={ playerData.player.destinyUserInfo.membershipId } className={ modeType === "pvp" ? "pgcrExtendedInfo pvp" : "pgcrExtendedInfo other" }>
       <div className="pgcrExtendedInfoStats">
         <div className="innerDiv" style={{ backgroundImage: `url("https://bungie.net${ ManifestItems[playerData.player.emblemHash].secondaryIcon }"` }}>
           <div className="pgcrExtendedPlayerName">{ playerData.player.destinyUserInfo.displayName }</div>
