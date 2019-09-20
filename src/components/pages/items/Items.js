@@ -3,6 +3,7 @@ import Loader from '../../modules/Loader';
 import Error from '../../modules/Error';
 
 import * as extendedItems from '../../scripts/Items';
+import * as checks from '../../scripts/Checks';
 
 export class Items extends Component {
 
@@ -12,18 +13,27 @@ export class Items extends Component {
   }
 
   componentDidMount() {
-    this.getItems();
+    this.startUpChecks();
+  }
+
+  async startUpChecks() {
+    this.setState({ status: { status: 'checkingManifest', statusText: 'Checking Manifest...' } });
+    if(checks.checkManifestMounted()) {
+      const check = await checks.startUpPageChecks();
+      if(check === "Checks OK") {
+        this.setState({ status: { status: 'getActivities', statusText: 'Loading Items...' } });
+        this.getItems();
+      }
+      else {
+        this.setState({ status: { status: 'error', statusText: checks } });
+      }
+    }
+    else { setTimeout(() => { this.startUpChecks(); }, 1000); }
   }
 
   async getItems() {
-    try {
-      const data = await extendedItems.getItemData();
-      this.setState({ status: { error: null, status: 'completed', statusText: 'Finished loading item data.' }, data });
-    }
-    catch (err) {
-      console.log(err);
-      this.setState({ status: { error: 'NotSelectedPlatform', status: 'error', statusText: 'You have not selected your platform yet.' } });
-    }
+    const data = await extendedItems.getItemData();
+    this.setState({ status: { error: null, status: 'completed', statusText: 'Finished loading item data.' }, data });
   }
 
   getItemInfo(hash, request) {

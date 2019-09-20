@@ -1,4 +1,5 @@
 import * as database from '../requests/Database';
+import * as globals from './Globals';
 
 export async function startUpPageChecks() {
   if(! await checkPlatform()){ return "You have not yet selected your platform." }
@@ -21,6 +22,16 @@ export async function checkManifestValid() {
 }
 
 export async function checkManifestVersion(storedVersion, currentVersion) {
-  if(storedVersion.version !== currentVersion.version) { return false; }
-  else { return true; }
+  try {
+    if(storedVersion.version !== currentVersion.version) { return false; }
+    else { return true; }
+  }
+  catch (err) {
+    return false;
+  }
+}
+
+export function checkManifestMounted() {
+  if(globals.MANIFEST !== null) { return true; }
+  else { return false; }
 }

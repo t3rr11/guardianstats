@@ -4,6 +4,7 @@ import Error from '../../modules/Error';
 
 import * as globals from '../../scripts/Globals';
 import * as bungie from '../../requests/BungieReq';
+import * as checks from '../../scripts/Checks';
 
 export class Vendors extends Component {
 
@@ -14,7 +15,22 @@ export class Vendors extends Component {
   }
 
   async componentDidMount() {
-    this.getVendors();
+    this.startUpChecks();
+  }
+
+  async startUpChecks() {
+    this.setState({ status: { status: 'checkingManifest', statusText: 'Checking Manifest...' } });
+    if(checks.checkManifestMounted()) {
+      const check = await checks.startUpPageChecks();
+      if(check === "Checks OK") {
+        this.setState({ status: { status: 'getActivities', statusText: 'Loading Vendors...' } });
+        this.getVendors();
+      }
+      else {
+        this.setState({ status: { status: 'error', statusText: checks } });
+      }
+    }
+    else { setTimeout(() => { this.startUpChecks(); }, 1000); }
   }
 
   async getVendors() {

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Search from '../../modules/Search';
 import Loader from '../../modules/Loader';
 import Changelog from '../../../changelog.json';
-import Donators from '../../../donators.json';
 import * as Checks from '../../scripts/Checks';
 import * as bungie from '../../requests/BungieReq';
 import * as Misc from '../../Misc';
@@ -13,11 +12,13 @@ export class Home extends Component {
     isConnected: null,
     changelogVisible: false,
     supportersVisible: true,
-    background: null
+    background: null,
+    donators: null
   }
 
   async componentDidMount() {
     this.setBackground();
+    await this.getDonators();
     if(await Checks.checkLogin()) { this.setState({ isConnected: true }); }
     else { this.setState({ isConnected: false }); }
   }
@@ -25,6 +26,17 @@ export class Home extends Component {
   setBackground() {
     const Settings = JSON.parse(localStorage.getItem("Settings"));
     this.setState({ background: Settings.background });
+  }
+
+  async getDonators() {
+    if(process.env.NODE_ENV === 'development') {
+      const donators = await fetch(`https://cors-anywhere.herokuapp.com/https://guardianstats.com/donators.json`).then(a => a.json());
+      this.setState({ donators });
+    }
+    else {
+      const donators = await fetch(`https://guardianstats.com/donators.json`).then(a => a.json());
+      this.setState({ donators });
+    }
   }
 
   GotoAuth() { window.location.href = 'https://www.bungie.net/en/oauth/authorize?client_id=24178&response_type=code&state=1'; }
@@ -56,36 +68,34 @@ export class Home extends Component {
           <h1 className="home-title">Welcome Guardian</h1>
           {
             this.state.isConnected === false ? (
-              <p style={{ fontSize: "14px" }}>Feel free to search below or consider connecting with bungie to get the full experience from Guardianstats!</p>
+              <p style={{ fontSize: "14px", margin: "auto", maxWidth: "500px" }}>Feel free to search below or consider connecting with bungie to get the full experience from Guardianstats! Press Enter to Search.</p>
             ): null
           }
           <Search foundUser={ this.foundUser } />
-          {
-            this.state.isConnected === false ? (
-              <button type="button" className="btn btn-info" id="ConnectWithBungieBTN" onClick={() => { this.GotoAuth() }} style={{ float: 'none', padding: '10px' }}>Connect with Bungie.net</button>
-            ): null
-          }
         </div>
       );
     }
     const supportersContent = () => {
-      return (
-        <div className="supporters-content">
-          <div className="donators"><h4>Donators</h4><div className="inspectDonated"></div></div>
-          { Donators.map(function(donator) { if(donator.name !== "Terrii") { return ( <div className="donar">{ donator.name }</div> ); } }) }
-          <p>Thank you guys so much!</p>
-          <div className="donate-links">
-            <div className="paypalDiv">
-              <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank" className="donateBtn">
-                <input type="hidden" name="cmd" value="_s-xclick" />
-                <input type="hidden" name="hosted_button_id" value="PJXJYXDR2DGJE" />
-                <input type="image" className="paypalBtn" src="/images/donate.png" border="0" name="submit" width="90px" alt="PayPal – The safer, easier way to pay online!" />
-              </form>
+      const Donators = this.state.donators;
+      if(Donators !== null) {
+        return (
+          <div className="supporters-content">
+            <div className="donators"><h4>Donators</h4><div className="inspectDonated"></div></div>
+            { Donators.map(function(donator) { if(donator.name !== "Terrii") { return ( <div className="donar">{ donator.name }</div> ); } }) }
+            <p>Thank you guys so much!</p>
+            <div className="donate-links">
+              <div className="paypalDiv">
+                <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank" className="donateBtn">
+                  <input type="hidden" name="cmd" value="_s-xclick" />
+                  <input type="hidden" name="hosted_button_id" value="PJXJYXDR2DGJE" />
+                  <input type="image" className="paypalBtn" src="/images/donate.png" border="0" name="submit" width="90px" alt="PayPal – The safer, easier way to pay online!" />
+                </form>
+              </div>
+              <a href="https://www.patreon.com/Terrii" target="_blank"><img className="patreonBtn" src="/images/patreon.png" /></a>
             </div>
-            <a href="https://www.patreon.com/Terrii" target="_blank"><img className="patreonBtn" src="/images/patreon.png" /></a>
           </div>
-        </div>
-      );
+        );
+      }
     }
     const changelogContent = () => {
       return (

@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 //Modules
 import Header from './components/modules/Header';
 import Loader from './components/modules/Loader';
+import SmallLoader from './components/modules/SmallLoader';
 import Error from './components/modules/Error';
 import Warning from './components/modules/Warning';
 import Manifest from './manifest.json';
@@ -41,11 +42,12 @@ class App extends React.Component {
       statusText: 'Getting ready!',
       error: null,
       warning: null,
+      loading: true
     }
   }
 
   componentDidMount() {
-    this.setState({ status: { status: 'startingUp', statusText: `Guardianstats ${ Manifest.version }` } });
+    this.setState({ status: { status: 'startingUp', statusText: `Loading Guardianstats ${ Manifest.version }`, loading: true } });
     if(!localStorage.getItem("First Load")) {
       localStorage.clear();
       localStorage.setItem("First Load", "false");
@@ -57,7 +59,7 @@ class App extends React.Component {
     }
     else {
       if(Misc.noManifest()) { this.manifestLoaded(); }
-      else { Misc.timed('Whole Page', this.loadManifest()); }
+      else { Misc.timed('Manifest', this.loadManifest()); }
     }
   }
 
@@ -66,12 +68,13 @@ class App extends React.Component {
       //Manifest exists.
       if(await checks.checkManifestValid()) {
         //Manifest is less than an hour old. Set manifest to global variable: MANIFEST;
+        this.setState({ status: { status: 'grabbingManifest', statusText: 'Unpacking Manifest...', loading: true } });
         globals.SetManifest((await db.table('manifest').toCollection().first()).value);
         this.manifestLoaded();
       }
       else {
         //Manifest has expired
-        this.setState({ status: { status: 'expiredManifest', statusText: 'Checking Bungie Manifest...' } });
+        this.setState({ status: { status: 'expiredManifest', statusText: 'Checking Bungie Manifest...', loading: true } });
         //Define variables
         var storedVersion, currentVersion;
         //Grab versions
@@ -84,7 +87,7 @@ class App extends React.Component {
           this.setLastManifestCheck();
         }
         else {
-          this.setState({ status: { status: 'updatingManifest', statusText: 'Updating Manifest... (can take a few minutes)' } });
+          this.setState({ status: { status: 'updatingManifest', statusText: 'Updating Manifest...', loading: true } });
           //New Manifest Found. Store manifest and set manifest to global variable: MANIFEST;
           const newManifest = await this.getManifest(currentVersion);
           //Update only if no errors returned.
@@ -96,7 +99,7 @@ class App extends React.Component {
     }
     else {
       //No manifest found
-      this.setState({ status: { status: 'noManifest', statusText: 'Downloading Bungie Manifest... (can take a few minutes)' } });
+      this.setState({ status: { status: 'noManifest', statusText: 'Downloading Bungie Manifest...', loading: true } });
       const newManifest = await this.getManifest(await bungie.GetManifestVersion());
       //Update only if no errors returned.
       if(newManifest !== "Failed") { globals.SetManifest(newManifest); }
@@ -107,52 +110,49 @@ class App extends React.Component {
   async getManifest(currentVersion) {
     await bungie.GetManifest(currentVersion.jsonWorldContentPaths['en']).then((newManifest) => {
       try { db.table('manifest').clear(); } catch (err) { console.log("No manifest to clear. Ignore this."); }
-      this.setState({ status: { status: 'storingManifest' } });
+      this.setState({ status: { status: 'storingManifest', statusText: "Storing Manfiest...", loading: true } });
       db.table('manifest').add({ version: currentVersion.version, value: newManifest }).then(() => {
         console.log('Manifest Added Successfully!');
         return newManifest;
       }).catch(error => {
         if((error.name === 'QuotaExceededError') || (error.inner && error.inner.name === 'QuotaExceededError')) {
           console.log('If you see this message, then error handling works as expected.', error);
-          this.setState({ status: { error: error.message, status: 'error', statusText: 'Failed to save manifest: QuotaExceededError (Possible reasons: Are you using Incognito mode?)' } });
+          this.setState({ status: { error: error.message, status: 'error', statusText: 'Failed to save manifest: QuotaExceededError (Possible reasons: Are you using Incognito mode?)', loading: false } });
         }
         else {
           console.log('Here is something wrong:', error);
           console.log('error.message', error.message);
           console.log('error.name', error.name);
           console.log('error', error);
-          this.setState({ status: { error: error.message, status: 'error', statusText: `Failed to save manifest: ${ error.name }` } });
+          this.setState({ status: { error: error.message, status: 'error', statusText: `Failed to save manifest: ${ error.name }`, loading: false } });
         }
         return "Failed";
       });
     }).catch(function(err) {
-      if(err.message === 'Failed to fetch') { this.setState({ status: { error: err.message, status: 'error', statusText: 'Failed to fetch: Manifest' } }); }
-      else if(err.message === 'maintenance') { this.setState({ status: { error: err.message, status: 'error', statusText: 'Bungie API is down for maintenance.' } }); }
-      else { console.log(err); this.setState({ status: { error: err.message, status: 'error', statusText: err.message } }); }
+      if(err.message === 'Failed to fetch') { this.setState({ status: { error: err.message, status: 'error', statusText: 'Failed to fetch: Manifest', loading: false } }); }
+      else if(err.message === 'maintenance') { this.setState({ status: { error: err.message, status: 'error', statusText: 'Bungie API is down for maintenance.', loading: false } }); }
+      else { console.log(err); this.setState({ status: { error: err.message, status: 'error', statusText: err.message, loading: false } }); }
       return "Failed";
     });
   }
   setLastManifestCheck() { localStorage.setItem('lastManifestCheck', new Date().getTime()) }
-  manifestLoaded() {
-    //this.setState({ status: { status: 'checkProfile', statusText: 'Checking if logged in...' } });
-    this.checkProfile();
-  }
+  manifestLoaded() { this.checkProfile(); }
   async checkProfile() {
     if(await checks.checkLogin()) {
       //Successfully Logged in.
       if(await checks.checkPlatform()) {
         //Account and platform found, Get Profile!
-        //this.setState({ status: { status: 'getProfile', statusText: 'Getting profile data...' } });
+        this.setState({ status: { status: 'getProfile', statusText: 'Getting profile data...', loading: true } });
         this.getProfile();
       }
       else {
         //No platform selected. Do nothing really.
-        this.setState({ status: { status: 'ready', statusText: 'Ready to go!' } });
+        this.setState({ status: { status: 'ready', statusText: 'Ready to go!', loading: false } });
       }
     }
     else {
       //Not logged in.
-      this.setState({ status: { status: 'ready', statusText: 'Ready to go!' } });
+      this.setState({ status: { status: 'ready', statusText: 'Ready to go!', loading: false } });
     }
   }
   async getProfile() {
@@ -170,7 +170,7 @@ class App extends React.Component {
         else {
           localStorage.setItem('ProfileInfo', "");
           localStorage.setItem('SelectedAccount', "Please Select Platform");
-          this.setState({ status: { status: 'ready', warning: 'Couldn\'t find Destiny 2 account on that platform.' } });
+          this.setState({ status: { status: 'ready', warning: 'Couldn\'t find Destiny 2 account on that platform.', loading: false } });
         }
       });
     }
@@ -178,12 +178,11 @@ class App extends React.Component {
       this.profileLoaded();
     }
   }
-  async profileLoaded() { this.setState({ status: { status: 'ready', statusText: 'Ready to go!' } }); }
+  async profileLoaded() { this.setState({ status: { status: 'ready', statusText: 'Ready to go!', loading: false } }); }
 
   render() {
-    const { status, statusText, warning } = this.state.status;
-    const { settings } = this.state;
-    if(status === 'error') {
+    const { status, statusText, warning, loading } = this.state.status;
+    if(status === "error") {
       return (
         <Router>
           <div className="App">
@@ -193,10 +192,9 @@ class App extends React.Component {
         </Router>
       );
     }
-    else if(status === 'ready') {
+    else {
       if(localStorage.getItem('Authorization')) {
-        auth.CheckAuth();
-        timers.StartAuthTimer();
+        if(status === 'ready') { auth.CheckAuth(); timers.StartAuthTimer(); }
         return (
           <Router>
             <div className="App">
@@ -210,11 +208,12 @@ class App extends React.Component {
                   <Route path="/vendors" render={ props => (<Vendors />) } />
                   <Route path="/profile" render={ props => (<Inspect />) } />
                   <Route path="/inspect" render={ props => (<Inspect membershipInfo={ props.location.pathname.replace('/inspect/', '') } />) } />
-                  <Route path="/loader" render={ props => (<Loader statusText="Text example" />) } />
+                  <Route path="/loader" render={ props => (<SmallLoader statusText="Text example" />) } />
                   <Route path="/thanks" render={ props => (<Thanks />) } />
                   <Route path="*" component={ NotFound } />
                 </Switch>
                 { warning != null ? (<Warning warning={ warning } />) : null }
+                { loading == true ? (<SmallLoader statusText={ statusText } />) : null }
               </div>
             </div>
           </Router>
@@ -235,13 +234,13 @@ class App extends React.Component {
                   <Route path="/thanks" render={ props => (<Thanks />) } />
                   <Route path="*" component={ Login } />
                 </Switch>
+                { loading == true ? (<SmallLoader statusText={ statusText } />) : null }
               </div>
             </div>
           </Router>
         );
       }
     }
-    else { return <Loader statusText={ statusText } paused={ false } />; }
   }
 }
 

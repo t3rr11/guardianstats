@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import Loader from '../../modules/Loader';
 import Error from '../../modules/Error';
 
-import { startUpPageChecks } from '../../scripts/Checks';
 import { modeTypes } from '../../scripts/ModeTypes';
+import * as checks from '../../scripts/Checks';
 import * as globals from '../../scripts/Globals';
 import * as bungie from '../../requests/BungieReq';
 import * as PGCRGeneration from './PGCRGeneration';
@@ -19,18 +19,26 @@ export class Activities extends Component {
     ManifestItems: null,
     PGCRs: { }
   }
+
   async componentDidMount() { this.startUpChecks(); this.startActivityTimer(); }
   async componentWillUnmount() { this.stopActivityTimer('Activity'); }
-  async makeActiveDisplay(instanceId) { this.setState({ currentActivity: parseInt(instanceId) }); }
+
   async startUpChecks() {
-    this.setState({ status: { status: 'checking', statusText: 'Doing some checks...' } });
-    const checks = await startUpPageChecks();
-    if(checks === "Checks OK") {
-      this.setState({ status: { status: 'getActivities', statusText: 'Grabbing activity history...' } });
-      this.grabActivityData();
+    this.setState({ status: { status: 'checkingManifest', statusText: 'Checking Manifest...' } });
+    if(checks.checkManifestMounted()) {
+      const check = await checks.startUpPageChecks();
+      if(check === "Checks OK") {
+        this.setState({ status: { status: 'getActivities', statusText: 'Grabbing activity history...' } });
+        this.grabActivityData();
+      }
+      else {
+        this.setState({ status: { status: 'error', statusText: checks } });
+      }
     }
-    else { this.setState({ status: { status: 'error', statusText: checks } }); }
+    else { setTimeout(() => { this.startUpChecks(); }, 1000); }
   }
+
+  async makeActiveDisplay(instanceId) { this.setState({ currentActivity: parseInt(instanceId) }); }
   async grabActivityData() {
     const basicMI = JSON.parse(localStorage.getItem('BasicMembershipInfo'));
     const selectedCharacter = localStorage.getItem('SelectedCharacter');

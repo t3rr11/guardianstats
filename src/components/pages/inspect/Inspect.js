@@ -7,15 +7,35 @@ import * as UserDetails from './GenerateUserDetails';
 import * as UserStatistics from './GenerateUserStatistics';
 import * as UserActivities from './GenerateUserActivities';
 import * as CharacterViewer from './GenerateUserCharacterView';
+import * as checks from '../../scripts/Checks';
 
 export class Inspect extends Component {
 
   state = {
-    status: { error: null, status: 'startUp', statusText: 'Loading text here...' },
+    status: { error: null, status: 'startUp', statusText: 'Looking for account...' },
     data: null
   }
 
   async componentDidMount() {
+    this.startUpChecks();
+  }
+
+  async startUpChecks() {
+    this.setState({ status: { status: 'checkingManifest', statusText: 'Checking Manifest...' } });
+    if(checks.checkManifestMounted()) {
+      const check = await checks.startUpPageChecks();
+      if(check === "Checks OK") {
+        this.setState({ status: { status: 'getActivities', statusText: 'Looking for account...' } });
+        this.loadProfile();
+      }
+      else {
+        this.setState({ status: { status: 'error', statusText: checks } });
+      }
+    }
+    else { setTimeout(() => { this.startUpChecks(); }, 1000); }
+  }
+
+  async loadProfile() {
     var { membershipInfo } = this.props;
     var isProfile = false;
     this.setState({ status: { status: 'lookingForAccount', statusText: 'Looking for account...' } });
@@ -91,10 +111,7 @@ export class Inspect extends Component {
             });
           }
           catch(err) {
-            console.log(err);
-            if(err.includes("Failed to fetch")) { this.setState({ status: { status: 'error', statusText: 'Failed to load Destiny 2 account. Failed to Fetch, Try again in 5 minutes.' } }); }
-            else if(err.includes("maintenance")) { this.setState({ status: { status: 'error', statusText: 'The Destiny 2 API is down for Maintenance' } }); }
-            else { this.setState({ status: { status: 'error', statusText: 'Something went wrong... Error: ' + err } }); }
+            this.setState({ status: { status: 'error', statusText: 'Something went wrong... Error: ' + err } });
           }
         }
         else { this.setState({ status: { status: 'error', statusText: 'The membershipId entered was not a valid length.' } }); }

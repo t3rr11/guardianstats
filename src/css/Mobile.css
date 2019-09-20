@@ -116,4 +116,10 @@
     margin: auto;
     margin-top: 10px;
   }
+  .smallLoaderBG {
+    bottom: 10px;
+    left: 10px;
+    right: 10px;
+    top: unset;
+  }
 }
