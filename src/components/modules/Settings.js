@@ -5,7 +5,8 @@ export class Error extends Component {
 
   state = {
     loader: null,
-    background: null
+    background: null,
+    hiddenSeals: null
   }
 
   hideSettingsModal = () => { this.props.hideSettings(); }
@@ -17,19 +18,42 @@ export class Error extends Component {
     await this.setState({ background });
     this.setAllSettings();
   }
+  setHiddenSeals = async (hiddenSeals) => {
+    await this.setState({ hiddenSeals });
+    document.getElementById("refresh-update-text").style.display = "block";
+    this.setAllSettings();
+  }
   setAllSettings() {
     localStorage.setItem("Settings", `{
       "loader": "${ this.state.loader }",
-      "background": "${ this.state.background }"
+      "background": "${ this.state.background }",
+      "hiddenSeals": "${ this.state.hiddenSeals }"
     }`);
   }
 
   componentDidMount() {
+    if(!localStorage.getItem("Settings")) {
+      localStorage.setItem("Settings", `{
+        "loader": "class",
+        "background": "shadowkeep",
+        "hiddenSeals": "Hidden"
+      }`);
+    }
     const Settings = JSON.parse(localStorage.getItem("Settings"));
-    console.log(Settings);
+    const SettingsKeys = Object.keys(Settings);
+    const StateKeys = Object.keys(this.state);
+    const UnsetSettings = StateKeys.filter((setting) => !SettingsKeys.includes(setting));
+    if(UnsetSettings !== "") {
+      for(var i in UnsetSettings) {
+        if(UnsetSettings[i] === "loader") { this.setLoader("class"); }
+        else if(UnsetSettings[i] === "background") { this.setLoader("shadowkeep"); }
+        else if(UnsetSettings[i] === "hiddenSeals") { this.setLoader("Hidden"); }
+      }
+    }
     this.setState({
       loader: Settings.loader,
-      background: Settings.background
+      background: Settings.background,
+      hiddenSeals: Settings.hiddenSeals
     });
   }
 
@@ -58,6 +82,11 @@ export class Error extends Component {
                 </div>
               </div>
             </div>
+            <div className="toggle-hidden-seals">
+              <p>Toggle Hidden Seals</p>
+              <button className="btn btn-info" onClick={ this.state.hiddenSeals === "Hidden" ? (() => this.setHiddenSeals("Shown")) : (() => this.setHiddenSeals("Hidden")) }>{ this.state.hiddenSeals }</button>
+            </div>
+            <div id="refresh-update-text">Refresh to update</div>
           </div>
         </div>
       </div>

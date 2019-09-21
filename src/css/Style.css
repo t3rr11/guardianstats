@@ -263,6 +263,22 @@ body {
   height: 100px;
 }
 .settings-background-option.selected { border: 2px solid #ccc; }
+.toggle-hidden-seals {
+  background-color: var(--MedNavyBlue);
+  border-radius: 10px;
+  padding: 10px;
+  margin-left: 30px;
+  margin-top: 20px;
+}
+#refresh-update-text {
+  display: none;
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  bottom: 0;
+  color: tomato;
+  padding: 5px;
+}
 .menu-bar {
   height: 50px;
   line-height: 50px;

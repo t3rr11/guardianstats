@@ -105,7 +105,7 @@ export class Home extends Component {
     }
     const changelogContent = () => {
       return (
-        <div className="changelog-content" id="changelog">
+        <div className="changelog-content scrollbar" id="changelog">
           <h4>Changelog</h4>
           {
             Object.keys(Changelog).map(function(log) {

@@ -223,7 +223,7 @@
   padding: 10px;
   position: fixed;
   width: 100%;
-  height: 100%;
+  height: 95%;
   background-color: rgba(33, 36, 42, .98);
 }
 .changelog-content > .version {

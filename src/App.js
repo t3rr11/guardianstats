@@ -51,10 +51,6 @@ class App extends React.Component {
     if(!localStorage.getItem("First Load")) {
       localStorage.clear();
       localStorage.setItem("First Load", "false");
-      localStorage.setItem("Settings", `{
-        "loader": "class",
-        "background": "shadowkeep"
-      }`);
       window.location.reload();
     }
     else {

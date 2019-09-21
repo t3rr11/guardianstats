@@ -2,7 +2,7 @@ import React from 'react';
 import * as Misc from '../../Misc';
 import { Titles } from './Titles';
 
-export function generate(profileInfo) {
+export function generate(profileInfo, hiddenSeals) {
   return (
     <React.Fragment>
       <div className="inspectVersion" style={{ backgroundImage: `url("./images/icons/versions/${ getVersionImage(getVersion(profileInfo.profile.data.versionsOwned)) }")` }}></div>
@@ -11,7 +11,7 @@ export function generate(profileInfo) {
         <div className="inspectTimePlayed">Time Played: { Math.round(totalTime(profileInfo.profile.data.characterIds, profileInfo.characters.data) / 60) } Hours</div>
         <div className="inspectLastPlayed">Last Played: { Misc.convertTimeToDate(profileInfo.profile.data.dateLastPlayed) } </div>
       </div>
-      <div className="inspectTitles"> { getTitles(profileInfo) } </div>
+      <div className="inspectTitles"> { getTitles(profileInfo, hiddenSeals) } </div>
     </React.Fragment>
   );
 }
@@ -56,24 +56,40 @@ const getVersionImage = (version) => {
   else if(version === "Base Destiny 2") { return ("destiny.png"); }
   else { return "destiny.png"; }
 }
-const getTitles = (profileInfo) => {
+const getTitles = (profileInfo, hiddenSeals) => {
   var titles = Titles(profileInfo);
   if(titles.find(title => title.isObtained === true)) {
-    return (
-      // eslint-disable-next-line
-      titles.map(function (title) {
-        if(!title.hidden) {
-          if(title.isObtained) { return (<div key={ title.title } className="inspectTitleObtained" style={{ backgroundImage: `url("${ title.icon }")` }}></div>)}
-          else {
-            //Disabled due to working on it later...
-            //return (<div key={ title.title } className="inspectTitleNotObtained" style={{ backgroundImage: `url("${ title.icon }")` }}></div>)
+    if(hiddenSeals === "Shown") {
+      return (
+        // eslint-disable-next-line
+        titles.map(function (title) {
+          if(!title.hidden) {
+            if(title.isObtained) { return (<div key={ title.title } className="inspectTitleObtained" style={{ backgroundImage: `url("${ title.icon }")` }}></div>) }
+            else { return (<div key={ title.title } className="inspectTitleNotObtained" style={{ backgroundImage: `url("${ title.icon }")` }}></div>) }
           }
-        }
-        else {
-          if(title.isObtained) { return (<div key={ title.title } className="inspectTitleObtained" style={{ backgroundImage: `url("${ title.icon }")` }}></div>)}
-        }
-      })
-    );
+          else {
+            if(title.isObtained) { return (<div key={ title.title } className="inspectTitleObtained" style={{ backgroundImage: `url("${ title.icon }")` }}></div>)}
+          }
+        })
+      );
+    }
+    else {
+      return (
+        // eslint-disable-next-line
+        titles.map(function (title) {
+          if(!title.hidden) {
+            if(title.isObtained) { return (<div key={ title.title } className="inspectTitleObtained" style={{ backgroundImage: `url("${ title.icon }")` }}></div>)}
+            else {
+              //Disabled due to working on it later...
+              //return (<div key={ title.title } className="inspectTitleNotObtained" style={{ backgroundImage: `url("${ title.icon }")` }}></div>)
+            }
+          }
+          else {
+            if(title.isObtained) { return (<div key={ title.title } className="inspectTitleObtained" style={{ backgroundImage: `url("${ title.icon }")` }}></div>)}
+          }
+        })
+      );
+    }
   }
   else { return (<div className="inspectNoTitlesObtained">No Titles Obtained</div>) }
 }

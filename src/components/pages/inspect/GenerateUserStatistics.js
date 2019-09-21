@@ -159,7 +159,7 @@ const generateRaidsStats = (profileInfo, raidStats) => {
   kd = Math.round((kd / raidStats.length) * 100) / 100;
   kda = Math.round((kda / raidStats.length) * 100) / 100;
   kad = Math.round((kad / raidStats.length) * 100) / 100;
-  timeSpent = Misc.formatSmallTime(Math.round(timeSpent / raidStats.length));
+  timeSpent = Misc.formatSmallTime(Math.round(timeSpent));
   return (
     <div className="inspectBoxStatContent">
       <div className="inspectBoxContentIcon">
@@ -216,18 +216,21 @@ const generateIndividualStrikesCompleted = (profileInfo, PresentationNodes, Reco
   );
 }
 const generateIndividualRaidsCompleted = (profileInfo, PresentationNodes, Records) => {
+  const lastWishFlawless = profileInfo.profileRecords.data.records[4177910003].objectives[0].complete;
+  const scourgeFlawless = profileInfo.profileRecords.data.records[2648109757].objectives[0].complete;
+  const crownFlawless = profileInfo.profileRecords.data.records[1558682416].objectives[0].complete;
   var raidInfoLeft = [
-    { name: "Leviathan: Normal", info: Records[3420353827] },
-    { name: "Leviathan: Prestige", info: Records[940998165] },
-    { name: "Eater of Worlds: Normal", info: Records[2602370549] },
-    { name: "Eater of Worlds: Prestige", info: Records[3861076347] },
-    { name: "Spire of Stars: Normal", info: Records[1742345588] },
-    { name: "Spire of Stars: Prestige", info: Records[2923250426] }
+    { name: "Leviathan: Normal", info: Records[3420353827], flawless: false },
+    { name: "Leviathan: Prestige", info: Records[940998165], flawless: false },
+    { name: "Eater of Worlds: Normal", info: Records[2602370549], flawless: false },
+    { name: "Eater of Worlds: Prestige", info: Records[3861076347], flawless: false },
+    { name: "Spire of Stars: Normal", info: Records[1742345588], flawless: false },
+    { name: "Spire of Stars: Prestige", info: Records[2923250426], flawless: false }
   ];
   var raidInfoRight = [
-    { name: "Last Wish", info: Records[2195455623] },
-    { name: "Scourge of the Past", info: Records[4060320345] },
-    { name: "Crown of Sorrow", info: Records[1558682421] }
+    { name: "Last Wish", info: Records[2195455623], flawless: lastWishFlawless },
+    { name: "Scourge of the Past", info: Records[4060320345], flawless: scourgeFlawless },
+    { name: "Crown of Sorrow", info: Records[1558682421], flawless: crownFlawless }
   ];
   return (
     <div className="inspectBoxStatContent twoColumn">
@@ -263,7 +266,7 @@ const buildRaids = (raidInfo, profileInfo) => {
   return raidInfo.map(function(raid) {
     return (
       profileInfo.profileRecords.data.records[raid.info.hash] ? (
-        <span key={ raid.info.hash }>{ raid.name }
+        <span key={ raid.info.hash }>{ raid.name } { raid.flawless ? "*" : null }
           <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>
             { profileInfo.profileRecords.data.records[raid.info.hash].objectives[0].progress }
           </span>

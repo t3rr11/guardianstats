@@ -13,6 +13,7 @@ export class Inspect extends Component {
 
   state = {
     status: { error: null, status: 'startUp', statusText: 'Looking for account...' },
+    hiddenSeals: null,
     data: null
   }
 
@@ -23,6 +24,8 @@ export class Inspect extends Component {
   async startUpChecks() {
     this.setState({ status: { status: 'checkingManifest', statusText: 'Checking Manifest...' } });
     if(checks.checkManifestMounted()) {
+      const Settings = JSON.parse(localStorage.getItem("Settings"));
+      this.setState({ hiddenSeals: Settings.hiddenSeals });
       this.loadProfile();
     }
     else { setTimeout(() => { this.startUpChecks(); }, 1000); }
@@ -126,7 +129,7 @@ export class Inspect extends Component {
       return (
         <div className="inspectContainer">
           <div className="inspectTitlebar">
-            { UserDetails.generate(profileInfo) }
+            { UserDetails.generate(profileInfo, this.state.hiddenSeals) }
             { UserStatistics.generateRanks(profileInfo) }
           </div>
           <div className="inspectContent">

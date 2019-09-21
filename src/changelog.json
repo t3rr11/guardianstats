@@ -1,5 +1,11 @@
 [
   {
+    "1.3.8": [
+      "= Fixed bug with the amount of time spent playing raids. It now shows accurate time.",
+      "+ Added flawless tracking to raids that support flawless tracking. Such as: Last Wish, Scourge of the Past, Crown of Sorrow"
+    ]
+  },
+  {
     "1.3.7": [
       "+ Home page now instantly loades and deals with the manifest loading/downloading in the background.",
       "+ Added more checks to make the website respond better. If trying to load a page without the manifest it will wait."
