@@ -110,6 +110,7 @@
   width: 40px;
   background-repeat: no-repeat;
   background-size: contain;
+  position: relative;
 }
 .inspectTitleNotObtained {
   float: left;
@@ -117,7 +118,32 @@
   width: 40px;
   background-repeat: no-repeat;
   background-size: contain;
+  position: relative;
   opacity: 0.3;
+}
+.inspectTitleObtained .titleInfo, .inspectTitleNotObtained .titleInfo { display: none; }
+.inspectTitleObtained:hover .titleInfo, .inspectTitleNotObtained:hover .titleInfo, .titleInfo.selected {
+  background: var(--LightNavyBlue) no-repeat 100% 5%;
+  border: var(--NavyBlue) 1px solid;
+  position: absolute;
+  display: block;
+  right: 20px;
+  top: 35px;
+  width: 250px;
+  z-index: 5;
+}
+.titleName {
+  text-align: center;
+  padding: 3px;
+  border-bottom: 1px solid var(--NavyBlue);
+  color: darkorchid;
+  font-weight: bold;
+}
+.titleDesc {
+  padding: 5px;
+  font-size: 14px;
+  border-bottom: 1px solid var(--NavyBlue);
+  color: #ccc;
 }
 .inspectNoTitlesObtained {
   display: inline-block;

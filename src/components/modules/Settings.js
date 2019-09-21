@@ -20,7 +20,6 @@ export class Error extends Component {
   }
   setHiddenSeals = async (hiddenSeals) => {
     await this.setState({ hiddenSeals });
-    document.getElementById("refresh-update-text").style.display = "block";
     this.setAllSettings();
   }
   setAllSettings() {
@@ -29,6 +28,7 @@ export class Error extends Component {
       "background": "${ this.state.background }",
       "hiddenSeals": "${ this.state.hiddenSeals }"
     }`);
+    document.getElementById("refresh-update-text").style.display = "block";
   }
 
   componentDidMount() {
@@ -40,21 +40,21 @@ export class Error extends Component {
       }`);
     }
     const Settings = JSON.parse(localStorage.getItem("Settings"));
+    this.setState({
+      loader: Settings.loader,
+      background: Settings.background,
+      hiddenSeals: Settings.hiddenSeals
+    });
     const SettingsKeys = Object.keys(Settings);
     const StateKeys = Object.keys(this.state);
     const UnsetSettings = StateKeys.filter((setting) => !SettingsKeys.includes(setting));
     if(UnsetSettings !== "") {
       for(var i in UnsetSettings) {
         if(UnsetSettings[i] === "loader") { this.setLoader("class"); }
-        else if(UnsetSettings[i] === "background") { this.setLoader("shadowkeep"); }
-        else if(UnsetSettings[i] === "hiddenSeals") { this.setLoader("Hidden"); }
+        else if(UnsetSettings[i] === "background") { this.setBackground("shadowkeep"); }
+        else if(UnsetSettings[i] === "hiddenSeals") { this.setHiddenSeals("Hidden"); }
       }
     }
-    this.setState({
-      loader: Settings.loader,
-      background: Settings.background,
-      hiddenSeals: Settings.hiddenSeals
-    });
   }
 
   render() {

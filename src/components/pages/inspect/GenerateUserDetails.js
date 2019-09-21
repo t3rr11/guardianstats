@@ -61,35 +61,62 @@ const getTitles = (profileInfo, hiddenSeals) => {
   if(titles.find(title => title.isObtained === true)) {
     if(hiddenSeals === "Shown") {
       return (
-        // eslint-disable-next-line
         titles.map(function (title) {
           if(!title.hidden) {
-            if(title.isObtained) { return (<div key={ title.title } className="inspectTitleObtained" style={{ backgroundImage: `url("${ title.icon }")` }}></div>) }
-            else { return (<div key={ title.title } className="inspectTitleNotObtained" style={{ backgroundImage: `url("${ title.icon }")` }}></div>) }
+            if(title.isObtained) { return buildTitleObtained(title) }
+            else { return buildTitleNotObtained(title) }
           }
-          else {
-            if(title.isObtained) { return (<div key={ title.title } className="inspectTitleObtained" style={{ backgroundImage: `url("${ title.icon }")` }}></div>)}
-          }
+          else { if(title.isObtained) { return buildTitleObtained(title) } }
         })
       );
     }
     else {
       return (
-        // eslint-disable-next-line
         titles.map(function (title) {
-          if(!title.hidden) {
-            if(title.isObtained) { return (<div key={ title.title } className="inspectTitleObtained" style={{ backgroundImage: `url("${ title.icon }")` }}></div>)}
-            else {
-              //Disabled due to working on it later...
-              //return (<div key={ title.title } className="inspectTitleNotObtained" style={{ backgroundImage: `url("${ title.icon }")` }}></div>)
-            }
-          }
-          else {
-            if(title.isObtained) { return (<div key={ title.title } className="inspectTitleObtained" style={{ backgroundImage: `url("${ title.icon }")` }}></div>)}
-          }
+          if(title.isObtained) { return buildTitleObtained(title) }
         })
       );
     }
   }
   else { return (<div className="inspectNoTitlesObtained">No Titles Obtained</div>) }
 }
+const buildTitleObtained = (title) => {
+  console.log(title);
+  return (
+    <div key={ title.title } className="inspectTitleObtained" style={{ backgroundImage: `url("${ title.icon }")` }}>
+      <div className="titleInfo">
+        <div className="titleName">{ title.title }</div>
+        <div className="titleDesc">{ title.description }</div>
+      </div>
+    </div>
+  );
+}
+const buildTitleNotObtained = (title) => {
+  return (
+    <div key={ title.title } className="inspectTitleNotObtained" style={{ backgroundImage: `url("${ title.icon }")` }}>
+      <div className="titleInfo">
+        <div className="titleName">{ title.title }</div>
+        <div className="titleDesc">{ title.description }</div>
+      </div>
+    </div>
+  );
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//
