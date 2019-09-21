@@ -2,7 +2,8 @@
   {
     "1.3.8": [
       "= Fixed bug with the amount of time spent playing raids. It now shows accurate time.",
-      "+ Added flawless tracking to raids that support flawless tracking. Such as: Last Wish, Scourge of the Past, Crown of Sorrow"
+      "+ Added flawless tracking to raids that support flawless tracking. Such as: Last Wish, Scourge of the Past, Crown of Sorrow",
+      "+ Added option to toggle seals that are not yet obtained, Hidden by default."
     ]
   },
   {

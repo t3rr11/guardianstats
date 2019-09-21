@@ -83,7 +83,7 @@ export class Error extends Component {
               </div>
             </div>
             <div className="toggle-hidden-seals">
-              <p>Toggle Hidden Seals</p>
+              <p>Toggle Unobtained Seals</p>
               <button className="btn btn-info" onClick={ this.state.hiddenSeals === "Hidden" ? (() => this.setHiddenSeals("Shown")) : (() => this.setHiddenSeals("Hidden")) }>{ this.state.hiddenSeals }</button>
             </div>
             <div id="refresh-update-text">Refresh to update</div>
