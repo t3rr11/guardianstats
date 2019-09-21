@@ -61,7 +61,6 @@ export class Home extends Component {
       else if(input === "+") { return "lime" }
       else if(input === "-") { return "tomato" }
     }
-
     const homeContent = () => {
       return(
         <div className="home-content">
@@ -80,8 +79,15 @@ export class Home extends Component {
       if(Donators !== null) {
         return (
           <div className="supporters-content">
-            <div className="donators"><h4>Donators</h4><div className="inspectDonated"></div></div>
-            { Donators.map(function(donator) { if(donator.name !== "Terrii") { return ( <div className="donar">{ donator.name }</div> ); } }) }
+            <div className="donators"><h5>Supporters / Donators</h5></div>
+            {
+              Donators.map(function(donator) {
+                if(donator.name !== "Terrii") {
+                  if(donator.type === "Patreon") { return ( <div className="donar patreon">{ donator.name }</div> ); }
+                  else { return ( <div className="donar paypal">{ donator.name }</div> ); }
+                }
+              })
+            }
             <p>Thank you guys so much!</p>
             <div className="donate-links">
               <div className="paypalDiv">
@@ -141,7 +147,7 @@ export class Home extends Component {
       );
     }
     else {
-      return <Loader />
+      return <Loader statusText={ "Loading..." } />
     }
   }
 }

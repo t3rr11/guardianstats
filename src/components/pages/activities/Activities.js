@@ -32,7 +32,7 @@ export class Activities extends Component {
         this.grabActivityData();
       }
       else {
-        this.setState({ status: { status: 'error', statusText: checks } });
+        this.setState({ status: { status: 'error', statusText: check } });
       }
     }
     else { setTimeout(() => { this.startUpChecks(); }, 1000); }

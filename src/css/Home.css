@@ -4,6 +4,7 @@
   display: grid;
   grid-template-columns: auto;
   background-size: cover;
+  background-position: top center;
 }
 .home-content {
   background-color: rgba(33, 36, 42, .7);
@@ -248,7 +249,7 @@
   align-content: start;
   margin-top: 15px;
   position: absolute;
-  width: 190px;
+  width: 250px;
 }
 .supporters-content > p {
   font-size: 12px;
@@ -260,6 +261,12 @@
 .donators {
   display: flex;
   align-items: flex-start;
+  margin: auto;
+}
+.donators > h5 {
+  display: flex;
+  align-items: center;
+  height: 30px;
   margin: auto;
 }
 .donate-links {
@@ -290,6 +297,34 @@
 }
 .donar {
   font-size: 14px;
+  display: flex;
+  align-items: center;
+  height: 25px;
+  margin: auto;
+}
+.donar.patreon:before {
+  content: "";
+  background-image: url("/images/patreon_icon.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  display: inline-block;
+  margin-right: 10px;
+  border-radius: 10px;
+  margin-top: -2px;
+  height: 20px;
+  width: 20px;
+}
+.donar.paypal:before {
+  content: "";
+  background-image: url("/images/paypal_icon.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  display: inline-block;
+  margin-right: 10px;
+  border-radius: 10px;
+  margin-top: -2px;
+  height: 20px;
+  width: 20px;
 }
 .changelogBtn {
   height: 35px;

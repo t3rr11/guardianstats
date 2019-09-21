@@ -25,7 +25,7 @@ export class Items extends Component {
         this.getItems();
       }
       else {
-        this.setState({ status: { status: 'error', statusText: checks } });
+        this.setState({ status: { status: 'error', statusText: check } });
       }
     }
     else { setTimeout(() => { this.startUpChecks(); }, 1000); }

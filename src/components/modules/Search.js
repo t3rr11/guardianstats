@@ -125,7 +125,7 @@ export class Search extends Component {
 
       }
     }
-    else { this.setState({ error: "This error should never appear, but it's best to catch it just incase. Tweet at me if you see this though @Guardianstats" }); }
+    else { this.setState({ error: "No destiny membershipIds were found for this account. Making it impossible to display their stats." }); }
   }
 
   prefillSearch = async () => {

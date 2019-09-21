@@ -27,7 +27,7 @@ export class Vendors extends Component {
         this.getVendors();
       }
       else {
-        this.setState({ status: { status: 'error', statusText: checks } });
+        this.setState({ status: { status: 'error', statusText: check } });
       }
     }
     else { setTimeout(() => { this.startUpChecks(); }, 1000); }

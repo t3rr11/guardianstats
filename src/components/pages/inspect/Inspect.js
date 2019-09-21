@@ -23,14 +23,7 @@ export class Inspect extends Component {
   async startUpChecks() {
     this.setState({ status: { status: 'checkingManifest', statusText: 'Checking Manifest...' } });
     if(checks.checkManifestMounted()) {
-      const check = await checks.startUpPageChecks();
-      if(check === "Checks OK") {
-        this.setState({ status: { status: 'getActivities', statusText: 'Looking for account...' } });
-        this.loadProfile();
-      }
-      else {
-        this.setState({ status: { status: 'error', statusText: checks } });
-      }
+      this.loadProfile();
     }
     else { setTimeout(() => { this.startUpChecks(); }, 1000); }
   }
