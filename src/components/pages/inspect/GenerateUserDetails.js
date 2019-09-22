@@ -83,7 +83,7 @@ const getTitles = (profileInfo, hiddenSeals) => {
 const buildTitleObtained = (title) => {
   console.log(title);
   return (
-    <div key={ title.title } className="inspectTitleObtained" style={{ backgroundImage: `url("${ title.icon }")` }}>
+    <div key={ title.title } className="inspectTitleObtained" style={{ backgroundImage: `url("${ title.icon }.png")` }}>
       <div className="titleInfo">
         <div className="titleName">{ title.title }</div>
         <div className="titleDesc">{ title.description }</div>
@@ -93,7 +93,7 @@ const buildTitleObtained = (title) => {
 }
 const buildTitleNotObtained = (title) => {
   return (
-    <div key={ title.title } className="inspectTitleNotObtained" style={{ backgroundImage: `url("${ title.icon }")` }}>
+    <div key={ title.title } className="inspectTitleNotObtained" style={{ backgroundImage: `url("${ title.icon }_disabled.png")` }}>
       <div className="titleInfo">
         <div className="titleName">{ title.title }</div>
         <div className="titleDesc">{ title.description }</div>

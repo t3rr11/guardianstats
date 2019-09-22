@@ -119,7 +119,6 @@
   background-repeat: no-repeat;
   background-size: contain;
   position: relative;
-  opacity: 0.3;
 }
 .inspectTitleObtained .titleInfo, .inspectTitleNotObtained .titleInfo { display: none; }
 .inspectTitleObtained:hover .titleInfo, .inspectTitleNotObtained:hover .titleInfo, .titleInfo.selected {

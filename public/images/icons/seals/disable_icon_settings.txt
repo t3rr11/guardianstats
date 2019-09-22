@@ -1,0 +1,5 @@
+Set Exposure to:
+
+Exposure: -2.48
+Offset: +0.0124
+Gamma Correction: 1.00
