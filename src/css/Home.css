@@ -262,6 +262,7 @@
   display: flex;
   align-items: flex-start;
   margin: auto;
+  margin-bottom: 5px;
 }
 .donators > h5 {
   display: flex;
@@ -297,30 +298,43 @@
 }
 .donar {
   font-size: 14px;
-  display: flex;
-  align-items: center;
+  display: grid;
+  grid-template-columns: 100px 60px;
   height: 25px;
+  width: 150px;
   margin: auto;
 }
-.donar.patreon:before {
+.patreon {
   content: "";
   background-image: url("/images/patreon_icon.png");
   background-size: contain;
   background-repeat: no-repeat;
   display: inline-block;
-  margin-right: 10px;
+  margin-right: 3px;
   border-radius: 10px;
   margin-top: -2px;
   height: 20px;
   width: 20px;
 }
-.donar.paypal:before {
+.paypal {
   content: "";
   background-image: url("/images/paypal_icon.png");
   background-size: contain;
   background-repeat: no-repeat;
   display: inline-block;
-  margin-right: 10px;
+  margin-right: 3px;
+  border-radius: 10px;
+  margin-top: -2px;
+  height: 20px;
+  width: 20px;
+}
+.twitch {
+  content: "";
+  background-image: url("/images/twitch_icon.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  display: inline-block;
+  margin-right: 3px;
   border-radius: 10px;
   margin-top: -2px;
   height: 20px;

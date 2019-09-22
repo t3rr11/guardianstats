@@ -30,7 +30,7 @@ export class Home extends Component {
 
   async getDonators() {
     if(process.env.NODE_ENV === 'development') {
-      const donators = await fetch(`https://cors-anywhere.herokuapp.com/https://guardianstats.com/donators.json`).then(a => a.json());
+      const donators = await fetch(`./donators.json`).then(a => a.json());
       this.setState({ donators });
     }
     else {
@@ -55,7 +55,6 @@ export class Home extends Component {
   foundUser = (platform, mbmID) => { this.props.foundUser(platform, mbmID); }
 
   render() {
-
     const getMathColor = (input) => {
       if(input === "=") { return "yellow" }
       else if(input === "+") { return "lime" }
@@ -83,8 +82,18 @@ export class Home extends Component {
             {
               Donators.map(function(donator) {
                 if(donator.name !== "Terrii") {
-                  if(donator.type === "Patreon") { return ( <div className="donar patreon">{ donator.name }</div> ); }
-                  else { return ( <div className="donar paypal">{ donator.name }</div> ); }
+                  return (
+                    <div className="donar">
+                      <div className="donarName">{ donator.name }</div>
+                      <div className="donationTypes">
+                        {
+                          donator.type.map(function (type) {
+                            return (<div className={ type }></div>)
+                          })
+                        }
+                      </div>
+                    </div>
+                  );
                 }
               })
             }
