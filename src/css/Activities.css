@@ -267,12 +267,76 @@
 .pgcrDetailsTitle {
   background-color: #0d75b5;
   text-align: center;
-  font-size: small;
+  font-size: 14px;
   height: 26px;
   line-height: 26px;
   display: grid;
 }
 .pgcrDetailsMedal {
-  color: #ccc;
   font-size: 12px;
+  background-color: var(--NavyBlue);
+  padding: 5px;
+  border-radius: 10px;
+  width: 150px;
+  text-align: center;
+  margin: 10px auto;
+}
+.pgcrInnerDetailsContainer {
+  display: grid;
+  grid-template-columns: auto 170px;
+}
+.pgcrItemContainer {
+  position: relative;
+}
+.pgcrItemContainer .pgcrItemInfo { display: none; }
+.pgcrItemContainer:hover .pgcrItemInfo, .pgcrItemInfo.selected {
+  background: var(--LightNavyBlue) no-repeat 100% 5%;
+  border: var(--NavyBlue) 1px solid;
+  position: absolute;
+  display: block;
+  bottom: 50px;
+  right: -125px;
+  width: 250px;
+  z-index: 5;
+}
+.pgcrItemInfo > .title {
+  border-bottom: 1px solid var(--NavyBlue);
+  font-size: 14px;
+  line-height: 25px;
+  padding: 5px;
+  font-weight: bold;
+  font-family: sans-serif;
+}
+.pgcrItemInfo > .description {
+  padding: 5px;
+  font-size: 12px;
+  color: #ccc;
+}
+.medalContainer {
+  display: inline-block;
+  position: relative;
+}
+.medalContainer .medalInfoContainer { display: none; position: relative; }
+.medalContainer:hover .medalInfoContainer, .medalInfoContainer.selected {
+  background: var(--LightNavyBlue) no-repeat 100% 5%;
+  border: var(--NavyBlue) 1px solid;
+  position: absolute;
+  display: block;
+  bottom: 50px;
+  right: -125px;
+  width: 250px;
+  z-index: 5;
+}
+.medalInfoContainer > .medalInfoName {
+  border-bottom: 1px solid var(--NavyBlue);
+  font-size: 14px;
+  line-height: 25px;
+  padding: 5px;
+  font-weight: bold;
+  font-family: sans-serif;
+}
+.medalInfoContainer > .medalInfoDesc {
+  padding: 5px;
+  font-size: 12px;
+  color: #ccc;
 }

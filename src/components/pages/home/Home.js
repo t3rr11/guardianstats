@@ -116,28 +116,48 @@ export class Home extends Component {
       return (
         <div className="changelog-content scrollbar" id="changelog">
           <h4>Changelog</h4>
-          {
-            Object.keys(Changelog).map(function(log) {
-              return (
-                Object.keys(Changelog[log]).map(function(version) {
-                  return (
-                    <div className="version"> { Object.keys(Changelog[log]) }
-                     {
-                       Object.keys(Changelog[log][version]).map(function(entry) {
-                         return (
-                           <div className="entry">
-                             <span style={{ color: getMathColor(Changelog[log][version][entry].slice(0, 1)) }}>{ `${ Changelog[log][version][entry].slice(0, 1) }`}</span>
-                             <span>{ `${ Changelog[log][version][entry].slice(1) }`}</span>
-                           </div>
-                         );
-                       })
-                     }
-                    </div>
-                  );
-                })
-              );
-            })
-          }
+          <div className="changelogs">
+            {
+              Object.keys(Changelog).map(function(log) {
+                return (
+                  Object.keys(Changelog[log]).map(function(version) {
+                    if(log === "0"){
+                      return (
+                        <div className="version">Current Version: { Object.keys(Changelog[log]) }
+                         {
+                           Object.keys(Changelog[log][version]).map(function(entry) {
+                             return (
+                               <div className="entry">
+                                 <span style={{ color: getMathColor(Changelog[log][version][entry].slice(0, 1)) }}>{ `${ Changelog[log][version][entry].slice(0, 1) }`}</span>
+                                 <span>{ `${ Changelog[log][version][entry].slice(1) }`}</span>
+                               </div>
+                             );
+                           })
+                         }
+                        </div>
+                      );
+                    }
+                    else {
+                      return (
+                        <div className="version"> { Object.keys(Changelog[log]) }
+                         {
+                           Object.keys(Changelog[log][version]).map(function(entry) {
+                             return (
+                               <div className="entry">
+                                 <span style={{ color: getMathColor(Changelog[log][version][entry].slice(0, 1)) }}>{ `${ Changelog[log][version][entry].slice(0, 1) }`}</span>
+                                 <span>{ `${ Changelog[log][version][entry].slice(1) }`}</span>
+                               </div>
+                             );
+                           })
+                         }
+                        </div>
+                      );
+                    }
+                  })
+                );
+              })
+            }
+          </div>
         </div>
       );
     }

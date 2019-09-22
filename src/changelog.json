@@ -1,8 +1,16 @@
 [
   {
+    "1.4.0": [
+      "+ Added medal tooltips on the activity page.",
+      "+ Added item tooltips on the activity page",
+      "= Made the changelog bigger, (It ran out of space)"
+    ]
+  },
+  {
     "1.3.9": [
-      "+ Added hover overs for seals/titles on inspect and profile page.",
-      ""
+      "+ Added tooltips for seals/titles on inspect and profile page.",
+      "+ Added mutliple badge support for donators",
+      "= Fixed a bug which prevented accounts without activity data to load."
     ]
   },
   {

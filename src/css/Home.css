@@ -226,17 +226,22 @@
   height: 95%;
   background-color: rgba(33, 36, 42, .98);
 }
-.changelog-content > .version {
+.changelogs {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  max-width: 1000px;
+  margin: auto;
+}
+.changelogs > .version {
   text-align: left;
   font-weight: bold;
   font-size: 16px;
   display: block;
   padding-top: 5px;
   padding-bottom: 5px;
-  margin: auto;
-  width: 500px;
+  width: 450px;
 }
-.changelog-content > .version > .entry {
+.changelogs > .version > .entry {
   text-align: left;
   font-weight: normal;
   font-size: 12px;
