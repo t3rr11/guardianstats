@@ -2,7 +2,8 @@
   {
     "1.4.1": [
       "= Fixed a loader bug.",
-      "= Fixed a manifest setting on first load bug"
+      "= Fixed a manifest setting on first load bug",
+      "= Fixed a bug where normal leviatian raid completions were including prestige raid completions."
     ]
   },
   {

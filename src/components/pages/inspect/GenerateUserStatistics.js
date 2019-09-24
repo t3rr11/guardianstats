@@ -268,7 +268,10 @@ const buildRaids = (raidInfo, profileInfo) => {
       profileInfo.profileRecords.data.records[raid.info.hash] ? (
         <span key={ raid.info.hash }>{ raid.name } { raid.flawless ? "*" : null }
           <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>
-            { profileInfo.profileRecords.data.records[raid.info.hash].objectives[0].progress }
+            { raid.name === "Leviathan: Normal" ?
+              (profileInfo.profileRecords.data.records[3420353827].objectives[0].progress - profileInfo.profileRecords.data.records[940998165].objectives[0].progress) :
+              (profileInfo.profileRecords.data.records[raid.info.hash].objectives[0].progress)
+            }
           </span>
         </span>
       ) : null
