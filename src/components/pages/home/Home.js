@@ -3,6 +3,7 @@ import Search from '../../modules/Search';
 import Loader from '../../modules/Loader';
 import Changelog from '../../../changelog.json';
 import * as Checks from '../../scripts/Checks';
+import uuid from  'uuid';
 
 export class Home extends Component {
 
@@ -79,12 +80,12 @@ export class Home extends Component {
               Donators.map(function(donator) {
                 if(donator.name !== "Terrii") {
                   return (
-                    <div className="donar">
+                    <div key={ uuid.v4() } className="donar">
                       <div className="donarName">{ donator.name }</div>
                       <div className="donationTypes">
                         {
                           donator.type.map(function (type) {
-                            return (<div className={ type }></div>)
+                            return (<div key={ uuid.v4() } className={ type }></div>)
                           })
                         }
                       </div>
