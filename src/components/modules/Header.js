@@ -28,7 +28,20 @@ export class Header extends React.Component {
   async startUpChecks() {
     if(await checks.checkLogin()) {
       var platformInfo = await pf.getPlatform(this.props.accountInfo);
-      this.setState({ platform: { platform: platformInfo.platformUsername, platforms: platformInfo.platforms } });
+      if(platformInfo.platforms.length === 1) {
+        var platformType = null;
+        localStorage.setItem('SelectedAccount', platformInfo.platforms[0].platform);
+        if(platformInfo.platforms[0].platform === 'BNET') { platformType = "4" }
+        else if(platformInfo.platforms[0].platform === 'PSN') { platformType = "2" }
+        else if(platformInfo.platforms[0].platform === 'XBL') { platformType = "1" }
+        else if(platformInfo.platforms[0].platform === 'STADIA') { platformType = "5" }
+        else if(platformInfo.platforms[0].platform === 'STEAM') { platformType = "3" }
+        await this.getPlatformReponse(platformType);
+        this.setState({ platform: { platform: platformInfo.platforms[0].name, platforms: platformInfo.platforms } });
+      }
+      else {
+        this.setState({ platform: { platform: platformInfo.platformUsername, platforms: platformInfo.platforms } });
+      }
     }
   }
 
@@ -42,7 +55,7 @@ export class Header extends React.Component {
     else if(platform === 'STADIA') { this.getPlatformReponse("5"); }
     else if(platform === 'STEAM') { this.getPlatformReponse("3"); }
   }
-  async getPlatformReponse(membershipType) { await auth.SetCurrentMembershipInfo(this.props.accountInfo.membershipId, membershipType).then(response => { window.location.reload(); }) }
+  async getPlatformReponse(membershipType) { await auth.SetCurrentMembershipInfo(this.props.accountInfo.membershipId, membershipType).then(response => { this.setState(this.state); }) }
   async changeCharacter(characterId) { console.log(characterId); localStorage.setItem('SelectedCharacter', characterId); window.location.reload(); }
   toggleMenuSlider(ignore) {
     if(window.screen.width < 800 && !ignore) {
@@ -156,7 +169,9 @@ export class Header extends React.Component {
     );
     if(accountInfo) {
       if(platforms !== null) {
-        if(platform === null) { return( SelectPlatformHeader() ); }
+        if(platform === null) {
+          return( SelectPlatformHeader() );
+        }
         else {
           if(localStorage.getItem("ProfileInfo")) {
             return( HeaderWithPlatform() );
