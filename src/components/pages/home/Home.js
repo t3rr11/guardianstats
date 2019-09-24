@@ -3,7 +3,6 @@ import Search from '../../modules/Search';
 import Loader from '../../modules/Loader';
 import Changelog from '../../../changelog.json';
 import * as Checks from '../../scripts/Checks';
-import * as Settings from '../../modules/Settings';
 import uuid from  'uuid';
 
 export class Home extends Component {

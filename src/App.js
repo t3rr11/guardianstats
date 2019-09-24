@@ -86,9 +86,7 @@ class App extends React.Component {
         else {
           this.setState({ status: { status: 'updatingManifest', statusText: 'Updating Manifest...', loading: true } });
           //New Manifest Found. Store manifest and set manifest to global variable: MANIFEST;
-          const newManifest = await this.getManifest(currentVersion);
-          //Update only if no errors returned.
-          if(newManifest !== "Failed") { globals.SetManifest(newManifest); }
+          await this.getManifest(currentVersion);
           this.manifestLoaded();
           this.setLastManifestCheck();
         }
@@ -97,9 +95,7 @@ class App extends React.Component {
     else {
       //No manifest found
       this.setState({ status: { status: 'noManifest', statusText: 'Downloading Bungie Manifest...', loading: true } });
-      const newManifest = await this.getManifest(await bungie.GetManifestVersion());
-      //Update only if no errors returned.
-      if(newManifest !== "Failed") { globals.SetManifest(newManifest); }
+      await this.getManifest(await bungie.GetManifestVersion());
       this.manifestLoaded();
       this.setLastManifestCheck();
     }
@@ -110,7 +106,7 @@ class App extends React.Component {
       this.setState({ status: { status: 'storingManifest', statusText: "Storing Manfiest...", loading: true } });
       db.table('manifest').add({ version: currentVersion.version, value: newManifest }).then(() => {
         console.log('Manifest Added Successfully!');
-        return newManifest;
+        globals.SetManifest(newManifest);
       }).catch(error => {
         if((error.name === 'QuotaExceededError') || (error.inner && error.inner.name === 'QuotaExceededError')) {
           console.log('If you see this message, then error handling works as expected.', error);

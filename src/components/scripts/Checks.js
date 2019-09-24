@@ -33,6 +33,6 @@ export async function checkManifestVersion(storedVersion, currentVersion) {
 }
 
 export function checkManifestMounted() {
-  if(globals.MANIFEST !== null) { return true; }
+  if(globals.MANIFEST !== null && globals.MANIFEST !== undefined) { return true; }
   else { return false; }
 }

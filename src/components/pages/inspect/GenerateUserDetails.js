@@ -81,7 +81,6 @@ const getTitles = (profileInfo, hiddenSeals) => {
   else { return (<div className="inspectNoTitlesObtained">No Titles Obtained</div>) }
 }
 const buildTitleObtained = (title) => {
-  console.log(title);
   return (
     <div key={ title.title } className="inspectTitleObtained" style={{ backgroundImage: `url("${ title.icon }.png")` }}>
       <div className="titleInfo">

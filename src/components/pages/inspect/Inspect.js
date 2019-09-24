@@ -23,7 +23,7 @@ export class Inspect extends Component {
 
   async startUpChecks() {
     this.setState({ status: { status: 'checkingManifest', statusText: 'Checking Manifest...' } });
-    if(checks.checkManifestMounted()) {
+    if(await checks.checkManifestMounted()) {
       const Settings = JSON.parse(localStorage.getItem("Settings"));
       this.setState({ hiddenSeals: Settings.hiddenSeals });
       this.loadProfile();
@@ -102,7 +102,7 @@ export class Inspect extends Component {
             //With all data retrieved, Set page.
             this.setState({
               status: {
-                status: 'ready', statusText: 'Finished the inspection! (You shouldn\'t see this unless something went wrong)' },
+                status: 'ready', statusText: 'Finished the inspection! (You shouldn\'t see this unless something went wrong, Please refresh)' },
                 data: { Manifest, profileInfo, historicStats, activities, gambitStats, raidStats }
             });
           }

@@ -1,11 +1,19 @@
 [
   {
+    "1.4.1": [
+      "= Fixed a loader bug.",
+      "= Fixed a manifest setting on first load bug"
+    ]
+  },
+  {
     "1.4.0": [
+      "+ Guardianstats Launch Day!",
       "+ Added medal tooltips on the activity page.",
       "+ Added item tooltips on the activity page",
       "= Made the changelog bigger, (It ran out of space)",
       "+ Added report bugs button",
-      "= Fixed a heap of lint errors"
+      "= Fixed a heap of lint errors",
+      "= Fixed custom loader selection"
     ]
   },
   {

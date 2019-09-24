@@ -9,16 +9,13 @@ const classLoaderOptions = { loop: true, autoplay: true, animationData: classLoa
 export class Loader extends Component {
 
   render() {
-    //Check if first loader
-    if(!localStorage.getItem("loader")) { localStorage.setItem("loader", "class"); }
-
-    //Set variables
-    var loader = localStorage.getItem("loader");
-
+    var loader = "class";
+    if(localStorage.getItem("Settings")) {
+      loader = JSON.parse(localStorage.getItem("Settings")).loader;
+    }
     if(this.props.custom) {
-      loader = this.props.custom.loader;
-      if(loader === "class") { return (<Lottie options={ classLoaderOptions } height={this.props.custom.height} width={this.props.custom.width} isStopped={false} isPaused={false} />) }
-      else if(loader === "ability") { return (<Lottie options={ abilityLoaderOptions } height={this.props.custom.height} width={this.props.custom.width} isStopped={false} isPaused={false} />) }
+      if(this.props.custom.loader === "class") { return (<Lottie options={ classLoaderOptions } height={this.props.custom.height} width={this.props.custom.width} isStopped={false} isPaused={false} />) }
+      else if(this.props.custom.loader === "ability") { return (<Lottie options={ abilityLoaderOptions } height={this.props.custom.height} width={this.props.custom.width} isStopped={false} isPaused={false} />) }
     }
     else {
       if(loader === "class") {
