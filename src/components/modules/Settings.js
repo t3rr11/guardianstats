@@ -75,10 +75,10 @@ export class Error extends Component {
               <p>Select Custom Background</p>
               <div className="settings-background-options">
                 <div className={ `settings-background-option ${ this.state.background === "shadowkeep" ? "selected" : null }` } onClick={ (() => this.setBackground("shadowkeep")) }>
-                  <img className="settings-background-image" src="/images/backgrounds/shadowkeep.jpg" />
+                  <img className="settings-background-image" src="/images/backgrounds/shadowkeep.jpg" alt="background" />
                 </div>
                 <div className={ `settings-background-option ${ this.state.background === "forsaken" ? "selected" : null }` } onClick={ (() => this.setBackground("forsaken")) }>
-                  <img className="settings-background-image" src="/images/backgrounds/forsaken.jpg" />
+                  <img className="settings-background-image" src="/images/backgrounds/forsaken.jpg" alt="background" />
                 </div>
               </div>
             </div>

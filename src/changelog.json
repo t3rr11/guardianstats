@@ -3,7 +3,9 @@
     "1.4.0": [
       "+ Added medal tooltips on the activity page.",
       "+ Added item tooltips on the activity page",
-      "= Made the changelog bigger, (It ran out of space)"
+      "= Made the changelog bigger, (It ran out of space)",
+      "+ Added report bugs button",
+      "= Fixed a heap of lint errors"
     ]
   },
   {

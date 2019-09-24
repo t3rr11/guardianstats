@@ -3,8 +3,6 @@ import Search from '../../modules/Search';
 import Loader from '../../modules/Loader';
 import Changelog from '../../../changelog.json';
 import * as Checks from '../../scripts/Checks';
-import * as bungie from '../../requests/BungieReq';
-import * as Misc from '../../Misc';
 
 export class Home extends Component {
 
@@ -22,12 +20,10 @@ export class Home extends Component {
     if(await Checks.checkLogin()) { this.setState({ isConnected: true }); }
     else { this.setState({ isConnected: false }); }
   }
-
   setBackground() {
     const Settings = JSON.parse(localStorage.getItem("Settings"));
     this.setState({ background: Settings.background });
   }
-
   async getDonators() {
     if(process.env.NODE_ENV === 'development') {
       const donators = await fetch(`./donators.json`).then(a => a.json());
@@ -38,8 +34,8 @@ export class Home extends Component {
       this.setState({ donators });
     }
   }
-
   GotoAuth() { window.location.href = 'https://www.bungie.net/en/oauth/authorize?client_id=24178&response_type=code&state=1'; }
+  GotoTwitter() { window.open('https://twitter.com/Guardianstats', '_blank'); }
   defaultConnectWindow() {
     return(
       <div className="home-content" style={{ width: '300px' }}>
@@ -95,6 +91,7 @@ export class Home extends Component {
                     </div>
                   );
                 }
+                else { return null }
               })
             }
             <p>Thank you guys so much!</p>
@@ -106,7 +103,7 @@ export class Home extends Component {
                   <input type="image" className="paypalBtn" src="/images/donate.png" border="0" name="submit" width="90px" alt="PayPal – The safer, easier way to pay online!" />
                 </form>
               </div>
-              <a href="https://www.patreon.com/Terrii" target="_blank"><img className="patreonBtn" src="/images/patreon.png" /></a>
+              <a href="https://www.patreon.com/Terrii" target="_blank" rel="noopener noreferrer"><img className="patreonBtn" src="/images/patreon.png" alt="patreonBtn" /></a>
             </div>
           </div>
         );
@@ -170,6 +167,7 @@ export class Home extends Component {
             { this.state.supportersVisible ? supportersContent() : null }
             { this.state.changelogVisible ? changelogContent() : null }
             <div className="btn btn-dark changelogBtn" onClick={() => { this.toggleChangeLog() }}>View Changelog</div>
+            <div className="btn btn-dark reportBugs" onClick={() => { this.GotoTwitter() }}>Report Bugs</div>
             <div className="imgCredit">© Bungie, Inc. All rights reserved. Destiny, the Destiny Logo, Bungie and the Bungie logo are among the trademarks of Bungie, Inc.</div>
           </div>
         </React.Fragment>

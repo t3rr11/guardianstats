@@ -217,6 +217,7 @@ const generateExtendedData = (ManifestItems, PGCRs, currentActivity, modeType) =
                   </div>
                 );
               }
+              else { return null }
             })
           }
         </div>

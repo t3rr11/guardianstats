@@ -4,7 +4,6 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 //Modules
 import Header from './components/modules/Header';
-import Loader from './components/modules/Loader';
 import SmallLoader from './components/modules/SmallLoader';
 import Error from './components/modules/Error';
 import Warning from './components/modules/Warning';
@@ -13,8 +12,7 @@ import Manifest from './manifest.json';
 //Pages
 import Home from './components/pages/home/Home';
 import Inspect from './components/pages/inspect/Inspect';
-import Profile from './components/pages/profile/Profile';
-import Items from './components/pages/items/Items';
+import Exotics from './components/pages/exotics/Exotics';
 import Activities from './components/pages/activities/Activities';
 import Vendors from './components/pages/vendors/Vendors';
 import Register from './components/pages/others/Register';
@@ -200,7 +198,7 @@ class App extends React.Component {
                   <Route exact path="/" render={ props => (<Home inspectPlayer={ this.inspectPlayer } foundUser={ ((platform, mbmID) => props.history.push(`/inspect/${ platform }/${ mbmID }`)) } />) } />
                   <Route path="/home" render={ props => (<Home inspectPlayer={ this.inspectPlayer } foundUser={ ((platform, mbmID) => props.history.push(`/inspect/${ platform }/${ mbmID }`)) } />) } />
                   <Route path="/activities" render={ props => (<Activities />) } />
-                  <Route path="/items" render={ props => (<Items />) } />
+                  <Route path="/exotics" render={ props => (<Exotics />) } />
                   <Route path="/vendors" render={ props => (<Vendors />) } />
                   <Route path="/profile" render={ props => (<Inspect />) } />
                   <Route path="/inspect" render={ props => (<Inspect membershipInfo={ props.location.pathname.replace('/inspect/', '') } />) } />
@@ -208,8 +206,8 @@ class App extends React.Component {
                   <Route path="/thanks" render={ props => (<Thanks />) } />
                   <Route path="*" component={ NotFound } />
                 </Switch>
-                { warning != null ? (<Warning warning={ warning } />) : null }
-                { loading == true ? (<SmallLoader statusText={ statusText } />) : null }
+                { warning === true ? (<Warning warning={ warning } />) : null }
+                { loading === true ? (<SmallLoader statusText={ statusText } />) : null }
               </div>
             </div>
           </Router>
@@ -230,7 +228,7 @@ class App extends React.Component {
                   <Route path="/thanks" render={ props => (<Thanks />) } />
                   <Route path="*" component={ Login } />
                 </Switch>
-                { loading == true ? (<SmallLoader statusText={ statusText } />) : null }
+                { loading === true ? (<SmallLoader statusText={ statusText } />) : null }
               </div>
             </div>
           </Router>

@@ -5,10 +5,10 @@ import Error from '../../modules/Error';
 import * as extendedItems from '../../scripts/Items';
 import * as checks from '../../scripts/Checks';
 
-export class Items extends Component {
+export class Exotics extends Component {
 
   state = {
-    status: { error: null, status: 'startUp', statusText: 'Loading Items...' },
+    status: { error: null, status: 'startUp', statusText: 'Loading Exotics...' },
     data: null
   }
 
@@ -21,7 +21,7 @@ export class Items extends Component {
     if(checks.checkManifestMounted()) {
       const check = await checks.startUpPageChecks();
       if(check === "Checks OK") {
-        this.setState({ status: { status: 'getActivities', statusText: 'Loading Items...' } });
+        this.setState({ status: { status: 'getActivities', statusText: 'Loading Exotics...' } });
         this.getItems();
       }
       else {
@@ -97,4 +97,4 @@ export class Items extends Component {
   }
 }
 
-export default Items;
+export default Exotics;

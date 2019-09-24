@@ -66,14 +66,14 @@ const getTitles = (profileInfo, hiddenSeals) => {
             if(title.isObtained) { return buildTitleObtained(title) }
             else { return buildTitleNotObtained(title) }
           }
-          else { if(title.isObtained) { return buildTitleObtained(title) } }
+          else { if(title.isObtained) { return buildTitleObtained(title) } else { return null } }
         })
       );
     }
     else {
       return (
         titles.map(function (title) {
-          if(title.isObtained) { return buildTitleObtained(title) }
+          if(title.isObtained) { return buildTitleObtained(title) } else { return null }
         })
       );
     }

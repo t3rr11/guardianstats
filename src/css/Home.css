@@ -357,6 +357,28 @@
 .changelogBtn:hover {
   background-color: var(--LightNavyBlue) !important;
 }
+.reportBugs {
+  height: 35px;
+  width: 150px;
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  cursor: pointer;
+  font-size: 15px;
+  display: grid;
+  grid-template-columns: 30px auto;
+}
+.reportBugs:before {
+  content: "";
+  background-image: url("/images/twitter_icon.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  display: inline-block;
+  margin-right: 3px;
+  border-radius: 10px;
+  height: 20px;
+  width: 20px;
+}
 
 @media only screen and (max-width: 1500px) {
   .home-container { grid-template-columns: auto; }
