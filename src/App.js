@@ -7,6 +7,7 @@ import Header from './components/modules/Header';
 import SmallLoader from './components/modules/SmallLoader';
 import Error from './components/modules/Error';
 import Warning from './components/modules/Warning';
+import * as Settings from './components/modules/Settings';
 import Manifest from './manifest.json';
 
 //Pages
@@ -28,6 +29,7 @@ import * as bungie from './components/requests/BungieReq';
 import * as timers from './components/Timers';
 import * as checks from './components/scripts/Checks';
 import * as globals from './components/scripts/Globals';
+import * as Checks from './components/scripts/Checks';
 import * as Misc from './components/Misc';
 
 //CSS
@@ -44,7 +46,7 @@ class App extends React.Component {
     }
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     this.setState({ status: { status: 'startingUp', statusText: `Loading Guardianstats ${ Manifest.version }`, loading: true } });
     if(!localStorage.getItem("First Load")) {
       localStorage.clear();
@@ -52,6 +54,7 @@ class App extends React.Component {
       window.location.reload();
     }
     else {
+      if(!await Checks.checkSettingsExist()) { Settings.setDefaultSettings(); }
       if(Misc.noManifest()) { this.manifestLoaded(); }
       else { Misc.timed('Manifest', this.loadManifest()); }
     }

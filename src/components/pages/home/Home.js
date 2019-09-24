@@ -3,6 +3,7 @@ import Search from '../../modules/Search';
 import Loader from '../../modules/Loader';
 import Changelog from '../../../changelog.json';
 import * as Checks from '../../scripts/Checks';
+import * as Settings from '../../modules/Settings';
 import uuid from  'uuid';
 
 export class Home extends Component {
@@ -23,7 +24,8 @@ export class Home extends Component {
   }
   setBackground() {
     const Settings = JSON.parse(localStorage.getItem("Settings"));
-    this.setState({ background: Settings.background });
+    if(!Settings === null) { this.setState({ background: Settings.background }); }
+    else { this.setState({ background: "shadowkeep" }); }
   }
   async getDonators() {
     if(process.env.NODE_ENV === 'development') {

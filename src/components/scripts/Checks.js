@@ -10,6 +10,7 @@ export async function startUpPageChecks() {
 export async function checkPlatform() { if(localStorage.getItem('SelectedAccount') !== 'Please Select Platform') { return true; } else { return false; } }
 export async function checkCharacter() { if(localStorage.getItem('SelectedCharacter') === null) { return false; } else { return true; } }
 export async function checkLogin() { if(localStorage.getItem('Authorization') === null) { return false; } else { return true; } }
+export async function checkSettingsExist() { if(localStorage.getItem('Settings') === null) { return false; } else { return true; } }
 
 export async function checkManifestExists() {
   if(await database.checkManifestExists()) { return true; }

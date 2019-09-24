@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Loader from './Loader';
+import * as Checks from '../scripts/Checks';
 
 export class Error extends Component {
 
@@ -32,13 +33,7 @@ export class Error extends Component {
   }
 
   componentDidMount() {
-    if(!localStorage.getItem("Settings")) {
-      localStorage.setItem("Settings", `{
-        "loader": "class",
-        "background": "shadowkeep",
-        "hiddenSeals": "Hidden"
-      }`);
-    }
+    if(!Checks.checkSettingsExist()) { setDefaultSettings(); }
     const Settings = JSON.parse(localStorage.getItem("Settings"));
     this.setState({
       loader: Settings.loader,
@@ -92,6 +87,14 @@ export class Error extends Component {
       </div>
     );
   }
+}
+
+export function setDefaultSettings() {
+  localStorage.setItem("Settings", `{
+    "loader": "class",
+    "background": "shadowkeep",
+    "hiddenSeals": "Hidden"
+  }`);
 }
 
 export default Error;
