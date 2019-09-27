@@ -94,15 +94,15 @@ body {
 #username-field:focus {
   box-shadow: 0 0;
 }
-#LoginBtn {
+.custom.loginBtn {
   padding: 5px;
   font-size: 16px;
   float: right;
-  margin-top: 6px;
   border: 0px;
   border-radius: 0px;
+  margin-top: 8px;
 }
-#UsernameBtn {
+.custom.usernameBtn {
   font-size: 16px;
   float: right;
   border: 0px;
@@ -111,7 +111,7 @@ body {
   border-color: var(--NavyBlue);
   color: white;
   height: 35px;
-  margin-top: 6px;
+  margin-top: 8px;
 }
 #UsernameBtn:focus {
   box-shadow: 0 0 0 0.2rem rgba(0,0,0,.10);
@@ -138,7 +138,7 @@ body {
 .settings-cog {
   width: 30px;
   height: 30px;
-  margin: 9px 7px 10px 9px;
+  margin: 10px 8px 10px 9px;
   display: inline-block;
   float: right;
   cursor:pointer;
@@ -156,7 +156,6 @@ body {
   position: absolute;
   right: 0px;
   width: 170px;
-  margin-top: 50px;
   padding: 5px;
   font-size: 14px;
   background: var(--DarkNavyBlue);
@@ -367,11 +366,13 @@ select.custom::-ms-expand {
   position: absolute;
   top: 50px;
   right: 0px;
-  width: 180px;
-  height: 135px;
+  width: 240px;
+  height: 170px;
   text-align: center;
   font-size: 12px;
-  background: var(--LightNavyBlue);
+  background: var(--DarkNavyBlue);
+  border-bottom-left-radius: 10px;
+  padding: 10px;
 }
 .warning-icon {
   background-size: cover;

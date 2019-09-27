@@ -1,5 +1,6 @@
 import * as timers from '../Timers';
 import * as bungie from './BungieReq';
+import * as Misc from '../Misc';
 
 const encodedAuth = 'Basic ' + new Buffer('24178:KneOjNrkLFQj0RfeeSJjZnQbEa6oqOnfhCw2E7gZl8E').toString('base64');
 
@@ -22,7 +23,7 @@ export async function GetAuthentication(code) {
     else {
       localStorage.setItem('Authorization', JSON.stringify(response));
       localStorage.setItem("NextCheck", new Date().getTime() + 3600000);
-      SetCurrentBungieNetUser();
+      SetMembershipsForCurrentUser();
     }
   })
   .catch((error) => { console.error(error); });
@@ -36,15 +37,25 @@ export const BearerHeaders = (access_token) => {
   };
 }
 
-export async function SetCurrentBungieNetUser() {
-  fetch(`https://www.bungie.net/Platform/User/GetCurrentBungieNetUser/`, {
+export async function SetMembershipsForCurrentUser() {
+  fetch(`https://www.bungie.net/Platform/User/GetMembershipsForCurrentUser/`, {
     method: 'GET',
     headers: BearerHeaders(JSON.parse(localStorage.getItem('Authorization')).access_token)
   })
   .then(async (response) =>  {
-    response = JSON.parse(await response.text());
-    localStorage.setItem('BungieAccount', JSON.stringify(response.Response));
-    localStorage.setItem('SelectedAccount', 'Please Select Platform');
+    const destinyMemberships = JSON.parse(await response.text()).Response.destinyMemberships;
+    localStorage.setItem('DestinyMemberships', JSON.stringify(destinyMemberships));
+    if(destinyMemberships.length === 1) {
+      localStorage.setItem('SelectedAccount', JSON.stringify({"platform": Misc.getPlatformName(destinyMemberships[0].membershipType), "name": destinyMemberships[0].displayName, "id": destinyMemberships[0].membershipId}));
+      await bungie.GetProfile(destinyMemberships[0].membershipType, destinyMemberships[0].membershipId, '100,200').then(response => {
+        const characters = response.characters.data;
+        var lastOnlineCharacter = 0;
+        for(var i in characters) { if(new Date(characters[i].dateLastPlayed) > lastOnlineCharacter) { lastOnlineCharacter = characters[i]; } }
+        if(localStorage.getItem('SelectedCharacter') === null) { localStorage.setItem('SelectedCharacter', lastOnlineCharacter.characterId); }
+        localStorage.setItem('ProfileInfo', JSON.stringify(response));
+      });
+    }
+    else { localStorage.setItem('SelectedAccount', 'Please Select Platform'); }
     window.location.href = '/';
   })
   .catch((error) => { console.error(error); });

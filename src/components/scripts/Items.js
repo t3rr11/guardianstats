@@ -1,15 +1,16 @@
 import * as bungie from '../requests/BungieReq';
 import * as globals from '../scripts/Globals';
+import * as Misc from '../Misc';
 
 //Consts
 const flagEnum = (state, value) => !!(state & value);
 
 export async function getItemData() {
   //Get required infomation from the manifest and bungie account records.
-  const { membershipId, membershipType } = JSON.parse(localStorage.getItem('BasicMembershipInfo'));
+  const accountInfo = JSON.parse(localStorage.getItem("SelectedAccount"));
   const ManifestCollectibles = globals.MANIFEST.DestinyCollectibleDefinition;
   const PresentationNodes = globals.MANIFEST.DestinyPresentationNodeDefinition;
-  const ProfileData = await bungie.GetProfile(membershipType, membershipId, '200,202,600,800');
+  const ProfileData = await bungie.GetProfile(Misc.getPlatformType(accountInfo.platform), accountInfo.id, '200,202,600,800');
   const ProfileCollectibles = ProfileData.profileCollectibles.data.collectibles;
   const CharacterCollectibles = ProfileData.characterCollectibles.data;
   const ExoticNode = PresentationNodes[1068557105];

@@ -5,8 +5,10 @@ import Error from '../../modules/Error';
 import { modeTypes } from '../../scripts/ModeTypes';
 import * as checks from '../../scripts/Checks';
 import * as globals from '../../scripts/Globals';
+import * as profileHelper from '../../scripts/ProfileHelper';
 import * as bungie from '../../requests/BungieReq';
 import * as PGCRGeneration from './PGCRGeneration';
+import * as Misc from '../../Misc';
 
 var ActivityWatcher = null;
 
@@ -25,24 +27,32 @@ export class Activities extends Component {
 
   async startUpChecks() {
     this.setState({ status: { status: 'checkingManifest', statusText: 'Checking Manifest...' } });
-    if(checks.checkManifestMounted()) {
-      const check = await checks.startUpPageChecks();
-      if(check === "Checks OK") {
-        this.setState({ status: { status: 'getActivities', statusText: 'Grabbing activity history...' } });
-        this.grabActivityData();
-      }
-      else {
-        this.setState({ status: { status: 'error', statusText: check } });
-      }
+    if(await checks.checkManifestMounted()) {
+      this.setState({ status: { status: 'gettingPGCRs', statusText: 'Getting battle reports...' } });
+      if(localStorage.getItem("SelectedAccount") !== "Please Select Platform") { this.grabActivityData(); }
+      else { this.setState({ status: { status: 'error', statusText: 'Please select a platform first.' } }); }
     }
     else { setTimeout(() => { this.startUpChecks(); }, 1000); }
   }
 
   async makeActiveDisplay(instanceId) { this.setState({ currentActivity: parseInt(instanceId) }); }
+  setSelectedCharacter(profileInfo) {
+    if(!localStorage.getItem("SelectedCharacter")) {
+      var characterIds = profileInfo.profile.data.characterIds;
+      var lastPlayedTimes = new Date(profileInfo.characters.data[characterIds[0]].dateLastPlayed).getTime();
+      var lastPlayedCharacter = characterIds[0]; for(var i in characterIds) { if(new Date(profileInfo.characters.data[characterIds[i]].dateLastPlayed).getTime() > lastPlayedTimes) { lastPlayedCharacter = characterIds[i]; } }
+      localStorage.setItem("SelectedCharacter", lastPlayedCharacter);
+      return lastPlayedCharacter;
+    }
+    else {
+      return localStorage.getItem("SelectedCharacter");
+    }
+  }
   async grabActivityData() {
-    const basicMI = JSON.parse(localStorage.getItem('BasicMembershipInfo'));
-    const selectedCharacter = localStorage.getItem('SelectedCharacter');
-    const activityData = await bungie.GetActivityHistory(basicMI.membershipType, basicMI.membershipId, selectedCharacter, 15, 0);
+    const accountInfo = JSON.parse(localStorage.getItem("SelectedAccount"));
+    const profileInfo = await bungie.GetProfile(Misc.getPlatformType(accountInfo.platform), accountInfo.id, '100,200');
+    const selectedCharacter = localStorage.getItem("SelectedCharacter");
+    const activityData = await bungie.GetActivityHistory(Misc.getPlatformType(accountInfo.platform), accountInfo.id, selectedCharacter, 15, 0);
     const Manifest = globals.MANIFEST;
     const ManifestActivities = Manifest.DestinyActivityDefinition;
     const ManifestItems = Manifest.DestinyInventoryItemDefinition;
@@ -101,10 +111,11 @@ export class Activities extends Component {
   startActivityTimer() { ActivityWatcher = setInterval(this.checkActivityUpdates, 30000); console.log('Activity Watcher Started.'); }
   stopActivityTimer() { clearInterval(ActivityWatcher); ActivityWatcher = null; console.log('Activity Watcher Stopped'); }
   checkActivityUpdates = async () => {
-    const basicMI = JSON.parse(localStorage.getItem('BasicMembershipInfo'));
-    const selectedCharacter = localStorage.getItem('SelectedCharacter');
+    const accountInfo = JSON.parse(localStorage.getItem("SelectedAccount"));
+    const profileInfo = await bungie.GetProfile(Misc.getPlatformType(accountInfo.platform), accountInfo.id, '100,200');
+    const selectedCharacter = localStorage.getItem("SelectedCharacter");
     const previousActivities = this.state.activities;
-    const recentActivityData = (await bungie.GetActivityHistory(basicMI.membershipType, basicMI.membershipId, selectedCharacter, 15, 0)).activities;
+    const recentActivityData = (await bungie.GetActivityHistory(Misc.getPlatformType(accountInfo.platform), accountInfo.id, selectedCharacter, 15, 0)).activities;
     var newActivities = [];
     var updatesFound = 0;
     recentActivityData.map(function(activity) {
@@ -121,6 +132,7 @@ export class Activities extends Component {
       this.grabPGCRs(newActivities, newActivitiesArray);
     }
   }
+  async changeCharacter(characterId) { localStorage.setItem('SelectedCharacter', characterId); window.location.reload(); }
 
   render() {
     //Define Consts and Variables
@@ -130,6 +142,33 @@ export class Activities extends Component {
     //Check for errors, show loader, or display content.
     if(status === 'error') { return <Error error={ statusText } /> }
     else if(status === 'ready') {
+      const profileInfo = JSON.parse(localStorage.getItem("ProfileInfo"));
+      const characters = profileInfo.characters.data;
+      const characterIds = profileInfo.profile.data.characterIds;
+      const selectedCharacter = localStorage.getItem("SelectedCharacter");
+      const characterSelection = (
+        <div id="character_select">
+          <div key={ selectedCharacter } className="character_data" id={ selectedCharacter }>
+            <div className="innerDiv" style={{ backgroundImage: `url("https://bungie.net${characters[selectedCharacter].emblemBackgroundPath}")` }}>
+              <span id="left_span">{ profileHelper.getClassName(characters[selectedCharacter].classType) }</span>
+              <span id="right_span">✦ { characters[selectedCharacter].light }</span>
+            </div>
+          </div>
+          { characterIds.map(function(charId) {
+            if(charId !== selectedCharacter) {
+              return (
+                <div key={ charId } className="character_data" id={ charId } onClick={ (() => this.changeCharacter(charId)) }>
+                  <div className="innerDiv" style={{ backgroundImage: `url("https://bungie.net${characters[charId].emblemBackgroundPath}")` }}>
+                    <span id='left_span'>{ profileHelper.getClassName(characters[charId].classType) }</span>
+                    <span id='right_span'>✦ { characters[charId].light }</span>
+                  </div>
+                </div>
+              );
+            }
+            else { return null; }
+          }, this) }
+        </div>
+      );
       return (
         <div className="ActivitiesContent">
           <div className="RecentActivitiesView activityScrollbar">
@@ -150,6 +189,7 @@ export class Activities extends Component {
             }, this)}
           </div>
           <div className="ActivityPGCR activityScrollbar" id="ActivityPGCR">
+            { characterSelection }
             { PGCRGeneration.generate(ManifestActivities, ManifestItems, PGCRs, activities, currentActivity) }
           </div>
         </div>

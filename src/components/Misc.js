@@ -109,3 +109,17 @@ function fadeOut(idName) {
   try { document.getElementById(idName).style.opacity = '0'; }
   catch (err) { console.log("Failed to fade: " + idName + " due to: " + err); }
 }
+export function getPlatformName(type) {
+  if(type === 1){ return "XBL" }
+  else if(type === 2){ return "PSN" }
+  else if(type === 3){ return "STEAM" }
+  else if(type === 4){ return "BNET" }
+  else if(type === 5){ return "STADIA" }
+}
+export function getPlatformType(name) {
+  if(name === "XBL"){ return 1 }
+  else if(name === "PSN"){ return 2 }
+  else if(name === "STEAM"){ return 3 }
+  else if(name === "BNET"){ return 4 }
+  else if(name === "STADIA"){ return 5 }
+}

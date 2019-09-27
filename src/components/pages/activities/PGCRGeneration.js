@@ -229,7 +229,7 @@ const generateExtendedData = (ManifestItems, PGCRs, currentActivity, modeType) =
 }
 const checkPlayer = (displayName, team) => {
   if(team === null) { return 'pgcrPlayersBlob' }
-  else { return JSON.parse(localStorage.getItem('BasicMembershipInfo')).displayName.includes(displayName) ? 'pgcrCurrPlayersBlob' : 'pgcrPvpPlayersBlob' }
+  else { return JSON.parse(localStorage.getItem("SelectedAccount")).name.includes(displayName) ? 'pgcrCurrPlayersBlob' : 'pgcrPvpPlayersBlob' }
 }
 function adjustEntriesBoxSizing(activity) {
   if(activity.entries.length > 6) { const heightOf = activity.entries.length * 25 + 48; return { height: heightOf }; }

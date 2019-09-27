@@ -149,20 +149,20 @@ class App extends React.Component {
     }
   }
   async getProfile() {
-    if(localStorage.getItem('BasicMembershipInfo')) {
-      const basicMembershipInfo = JSON.parse(localStorage.getItem('BasicMembershipInfo'));
-      await bungie.GetProfile(basicMembershipInfo.membershipType, basicMembershipInfo.membershipId, '100,200').then(response => {
+    if(localStorage.getItem("SelectedAccount")) {
+      const accountInfo = JSON.parse(localStorage.getItem("SelectedAccount"));
+      await bungie.GetProfile(Misc.getPlatformType(accountInfo.platform), accountInfo.id, '100,200').then(response => {
         if(response) {
           const characters = response.characters.data;
           var lastOnlineCharacter = 0;
           for(var i in characters) { if(new Date(characters[i].dateLastPlayed) > lastOnlineCharacter) { lastOnlineCharacter = characters[i]; } }
-          if(localStorage.getItem('SelectedCharacter') === null) { localStorage.setItem('SelectedCharacter', lastOnlineCharacter.characterId); }
-          localStorage.setItem('ProfileInfo', JSON.stringify(response));
+          if(localStorage.getItem("SelectedCharacter") === null) { localStorage.setItem("SelectedCharacter", lastOnlineCharacter.characterId); }
+          localStorage.setItem("ProfileInfo", JSON.stringify(response));
           this.profileLoaded();
         }
         else {
-          localStorage.setItem('ProfileInfo', "");
-          localStorage.setItem('SelectedAccount', "Please Select Platform");
+          localStorage.setItem("ProfileInfo", "");
+          localStorage.setItem("SelectedAccount", "Please Select Platform");
           this.setState({ status: { status: 'ready', warning: 'Couldn\'t find Destiny 2 account on that platform.', loading: false } });
         }
       });
@@ -179,7 +179,7 @@ class App extends React.Component {
       return (
         <Router>
           <div className="App">
-            <Header accountInfo={ JSON.parse(localStorage.getItem('BungieAccount')) } />
+            <Header BungieMemberships={ JSON.parse(localStorage.getItem("DestinyMemberships")) } platformChange={ (() => this.checkProfile()) } />
             <Error error={ statusText } />
           </div>
         </Router>
@@ -191,7 +191,7 @@ class App extends React.Component {
         return (
           <Router>
             <div className="App">
-              <Header accountInfo={ JSON.parse(localStorage.getItem('BungieAccount')) } />
+              <Header BungieMemberships={ JSON.parse(localStorage.getItem("DestinyMemberships")) } platformChange={ (() => this.checkProfile()) } />
               <div className="page-content" id="page-content">
                 <Switch>
                   <Route exact path="/" render={ props => (<Home inspectPlayer={ this.inspectPlayer } foundUser={ ((platform, mbmID) => props.history.push(`/inspect/${ platform }/${ mbmID }`)) } />) } />
@@ -205,7 +205,7 @@ class App extends React.Component {
                   <Route path="/thanks" render={ props => (<Thanks />) } />
                   <Route path="*" component={ NotFound } />
                 </Switch>
-                { warning === true ? (<Warning warning={ warning } />) : null }
+                { warning ? (<Warning warning={ warning } />) : null }
                 { loading === true ? (<SmallLoader statusText={ statusText } />) : null }
               </div>
             </div>

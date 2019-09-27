@@ -2,10 +2,10 @@
   display: grid;
   width: 195px;
   height: 40px;
-  float: right;
-  margin-right: 5px;
-  margin-top: 3.4px;
   overflow: hidden;
+  position: absolute;
+  right: 0;
+  top: 0;
 }
 #character_select:hover {
   overflow: unset;

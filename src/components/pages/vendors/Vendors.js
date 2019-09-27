@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Loader from '../../modules/Loader';
 import Error from '../../modules/Error';
+import * as Misc from '../../Misc';
 
 import * as globals from '../../scripts/Globals';
 import * as bungie from '../../requests/BungieReq';
@@ -34,9 +35,9 @@ export class Vendors extends Component {
   }
 
   async getVendors() {
-    const basicMI = JSON.parse(localStorage.getItem('BasicMembershipInfo'));
-    const characterId = localStorage.getItem('SelectedCharacter');
-    const vendors = await bungie.GetVendors(basicMI.membershipType, basicMI.membershipId, characterId);
+    const accountInfo = JSON.parse(localStorage.getItem("SelectedAccount"));
+    const characterId = localStorage.getItem("SelectedCharacter");
+    const vendors = await bungie.GetVendors(Misc.getPlatformType(accountInfo.platform), accountInfo.id, characterId);
     this.setState({ status: { status: 'ready', statusText: 'Finished Loading...' }, manifest: globals.MANIFEST, vendors });
   }
 
