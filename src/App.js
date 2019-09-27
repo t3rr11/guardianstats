@@ -48,9 +48,9 @@ class App extends React.Component {
 
   async componentDidMount() {
     this.setState({ status: { status: 'startingUp', statusText: `Loading Guardianstats ${ Manifest.version }`, loading: true } });
-    if(!localStorage.getItem("First Load")) {
+    if(!localStorage.getItem("Firstload")) {
       localStorage.clear();
-      localStorage.setItem("First Load", "false");
+      localStorage.setItem("Firstload", "false");
       window.location.reload();
     }
     else {
