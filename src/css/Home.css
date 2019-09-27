@@ -309,7 +309,7 @@
   width: 150px;
   margin: auto;
 }
-.patreon {
+.donationTypes > .patreon, .donatorBox > .patreon {
   content: "";
   background-image: url("/images/patreon_icon.png");
   background-size: contain;
@@ -320,8 +320,9 @@
   margin-top: -2px;
   height: 20px;
   width: 20px;
+  cursor: pointer;
 }
-.paypal {
+.donationTypes > .paypal, .donatorBox > .paypal {
   content: "";
   background-image: url("/images/paypal_icon.png");
   background-size: contain;
@@ -332,8 +333,9 @@
   margin-top: -2px;
   height: 20px;
   width: 20px;
+  cursor: pointer;
 }
-.twitch {
+.donationTypes > .twitch, .donatorBox > .twitch {
   content: "";
   background-image: url("/images/twitch_icon.png");
   background-size: contain;
@@ -344,7 +346,31 @@
   margin-top: -2px;
   height: 20px;
   width: 20px;
+  cursor: pointer;
 }
+.donatorBox {
+  display: none;
+}
+.donationTypes > div:hover .donatorBox {
+  display: block;
+  width: 200px;
+  position: absolute;
+  right: -170px;
+  background-color: var(--NavyBlue);
+  border: 1px solid var(--LightNavyBlue);
+  border-radius: 10px;
+}
+.donationTypes > div:hover .donatorBox.twitch {
+  background-color: #6441A4;
+}
+.donationTypes > div:hover .donatorBox.paypal {
+  background-color: #113983;
+}
+.donationTypes > div:hover .donatorBox.patreon {
+  background-color: #F96853;
+}
+.donationTypeTitle { padding: 5px; font-size: 12px; }
+.donationTypeTitle:first-letter { text-transform:capitalize; }
 .changelogBtn {
   height: 35px;
   width: 150px;
@@ -379,16 +405,51 @@
   height: 20px;
   width: 20px;
 }
-
+.isLive {
+  height: 35px;
+  width: 100px;
+  position: absolute;
+  bottom: 50px;
+  left: 10px;
+  cursor: pointer;
+  font-size: 15px;
+  display: grid;
+  grid-template-columns: 25px auto;
+}
+.isLive:before {
+  content: "";
+  background-image: url("/images/live_icon.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  display: inline-block;
+  margin-right: 3px;
+  border-radius: 10px;
+  height: 20px;
+  width: 20px;
+  animation: fadeInOpacity 3s infinite;
+}
+.clickMeLiveBtn { display: none; }
+.isLive:hover .clickMeLiveBtn {
+  display: block;
+  background-color: var(--NavyBlue);
+  border: 1px solid var(--LightNavyBlue);
+  position: absolute;
+  bottom: 50px;
+  width: 150px;
+  font-size: 12px;
+}
 @media only screen and (max-width: 1500px) {
   .home-container { grid-template-columns: auto; }
   .bungie-content { display: none; }
 }
 @keyframes fadeInOpacity {
 	0% {
-		opacity: 0;
+		opacity: 1;
 	}
-	100% {
+  50% {
+		opacity: 0.1;
+	}
+  100% {
 		opacity: 1;
 	}
 }

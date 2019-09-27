@@ -43,7 +43,8 @@ class App extends React.Component {
       error: null,
       warning: null,
       loading: true
-    }
+    },
+    isLive: false
   }
 
   async componentDidMount() {
@@ -57,9 +58,16 @@ class App extends React.Component {
       if(!await Checks.checkSettingsExist()) { Settings.setDefaultSettings(); }
       if(Misc.noManifest()) { this.manifestLoaded(); }
       else { Misc.timed('Manifest', this.loadManifest()); }
+      this.checkIfLive();
     }
   }
-
+  async checkIfLive() {
+    fetch(`https://api.twitch.tv/helix/streams/?user_id=214472144`, { method: 'GET', headers: new Headers({ 'Content-Type': 'application/x-www-form-urlencoded', 'Client-id': '9mrfng8ubhs40gu19cksn69dq47gzy' }) })
+    .then(response => response.json()).then(data => {
+      if(data.data.length > 0) { this.setState({ isLive: true }); }
+      else { this.setState({ isLive: false }); }
+    }).catch((error) => { console.error(error); });
+  }
   async loadManifest() {
     if(await checks.checkManifestExists()) {
       //Manifest exists.
@@ -128,8 +136,6 @@ class App extends React.Component {
       return "Failed";
     });
   }
-  setLastManifestCheck() { localStorage.setItem('lastManifestCheck', new Date().getTime()) }
-  manifestLoaded() { this.checkProfile(); }
   async checkProfile() {
     if(await checks.checkLogin()) {
       //Successfully Logged in.
@@ -171,7 +177,9 @@ class App extends React.Component {
       this.profileLoaded();
     }
   }
-  async profileLoaded() { this.setState({ status: { status: 'ready', statusText: 'Ready to go!', loading: false } }); }
+  manifestLoaded() { this.checkProfile(); }
+  setLastManifestCheck() { localStorage.setItem('lastManifestCheck', new Date().getTime()) }
+  profileLoaded() { this.setState({ status: { status: 'ready', statusText: 'Ready to go!', loading: false } }); }
 
   render() {
     const { status, statusText, warning, loading } = this.state.status;
@@ -194,8 +202,8 @@ class App extends React.Component {
               <Header BungieMemberships={ JSON.parse(localStorage.getItem("DestinyMemberships")) } platformChange={ (() => this.checkProfile()) } />
               <div className="page-content" id="page-content">
                 <Switch>
-                  <Route exact path="/" render={ props => (<Home inspectPlayer={ this.inspectPlayer } foundUser={ ((platform, mbmID) => props.history.push(`/inspect/${ platform }/${ mbmID }`)) } />) } />
-                  <Route path="/home" render={ props => (<Home inspectPlayer={ this.inspectPlayer } foundUser={ ((platform, mbmID) => props.history.push(`/inspect/${ platform }/${ mbmID }`)) } />) } />
+                  <Route exact path="/" render={ props => (<Home inspectPlayer={ this.inspectPlayer } foundUser={ ((platform, mbmID) => props.history.push(`/inspect/${ platform }/${ mbmID }`)) } isLive={ this.state.isLive } />) } />
+                  <Route path="/home" render={ props => (<Home inspectPlayer={ this.inspectPlayer } foundUser={ ((platform, mbmID) => props.history.push(`/inspect/${ platform }/${ mbmID }`)) } isLive={ this.state.isLive } />) } />
                   <Route path="/activities" render={ props => (<Activities />) } />
                   <Route path="/exotics" render={ props => (<Exotics />) } />
                   <Route path="/vendors" render={ props => (<Vendors />) } />
@@ -219,10 +227,10 @@ class App extends React.Component {
               <Header />
               <div className="page-content" id="page-content">
                 <Switch>
-                  <Route exact path="/" render={ props => (<Home inspectPlayer={ this.inspectPlayer } foundUser={ ((platform, mbmID) => props.history.push(`/inspect/${ platform }/${ mbmID }`)) } />) } />
+                  <Route exact path="/" render={ props => (<Home inspectPlayer={ this.inspectPlayer } foundUser={ ((platform, mbmID) => props.history.push(`/inspect/${ platform }/${ mbmID }`)) } isLive={ this.state.isLive } />) } />
+                  <Route path="/home" render={ props => (<Home inspectPlayer={ this.inspectPlayer } foundUser={ ((platform, mbmID) => props.history.push(`/inspect/${ platform }/${ mbmID }`)) } isLive={ this.state.isLive } />) } />
                   <Route path="/register" render={ props => (<Register {...props} />) } />
                   <Route path="/failed" component={ Failed } />
-                  <Route path="/home" render={ props => (<Home inspectPlayer={ this.inspectPlayer } foundUser={ ((platform, mbmID) => props.history.push(`/inspect/${ platform }/${ mbmID }`)) } />) } />
                   <Route path="/inspect" render={ props => (<Inspect membershipInfo={ props.location.pathname.replace('/inspect/', '') } />) } />
                   <Route path="/thanks" render={ props => (<Thanks />) } />
                   <Route path="*" component={ Login } />

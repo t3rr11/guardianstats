@@ -1,8 +1,9 @@
 [
   {
     "1.4.2": [
-      "Overhauled the login system entirely. Should work way more effectively.",
-      "Moved the character selection option to inside the activities page, as it is the only one that uses it currently"
+      "+ Overhauled the login system entirely. Should work way more effectively.",
+      "+ Moved the character selection option to inside the activities page, as it is the only one that uses it currently",
+      "+ Added tooltips for the donation badges"
     ]
   },
   {

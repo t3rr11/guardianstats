@@ -21,11 +21,6 @@ export class Home extends Component {
     if(await Checks.checkLogin()) { this.setState({ isConnected: true }); }
     else { this.setState({ isConnected: false }); }
   }
-  setBackground() {
-    const Settings = JSON.parse(localStorage.getItem("Settings"));
-    if(!Settings === null) { this.setState({ background: Settings.background }); }
-    else { this.setState({ background: "shadowkeep" }); }
-  }
   async getDonators() {
     if(process.env.NODE_ENV === 'development') {
       const donators = await fetch(`./donators.json`).then(a => a.json());
@@ -35,6 +30,11 @@ export class Home extends Component {
       const donators = await fetch(`https://guardianstats.com/donators.json`).then(a => a.json());
       this.setState({ donators });
     }
+  }
+  setBackground() {
+    const Settings = JSON.parse(localStorage.getItem("Settings"));
+    if(!Settings === null) { this.setState({ background: Settings.background }); }
+    else { this.setState({ background: "shadowkeep" }); }
   }
   GotoAuth() { window.location.href = 'https://www.bungie.net/en/oauth/authorize?client_id=24178&response_type=code&state=1'; }
   GotoTwitter() { window.open('https://twitter.com/Guardianstats', '_blank'); }
@@ -53,6 +53,7 @@ export class Home extends Component {
   foundUser = (platform, mbmID) => { this.props.foundUser(platform, mbmID); }
 
   render() {
+    const { isLive } = this.props;
     const getMathColor = (input) => {
       if(input === "=") { return "yellow" }
       else if(input === "+") { return "lime" }
@@ -85,8 +86,21 @@ export class Home extends Component {
                       <div className="donarName">{ donator.name }</div>
                       <div className="donationTypes">
                         {
-                          donator.type.map(function (type) {
-                            return (<div key={ uuid.v4() } className={ type }></div>)
+                          donator.type.map(function(type) {
+                            return (
+                              <div key={ uuid.v4() } className={ type }>
+                                <div className={`donatorBox ${ type }`}>
+                                  <div className={ type } style={{ height: "50px", width: "50px", marginTop: "5px" }}></div>
+                                  <div className="donationTypeTitle">
+                                    {
+                                      type === "twitch" ? "This person has earned the twitch badge for supporting my work though a twitch subscription" : (
+                                      type === "paypal" ? "This person has earned the paypal badge for supporting my work though a $5 or more paypal donation" : (
+                                      type === "patreon" ? "This person has earned the twitch badge for supporting my work though a $5 or more patreon subscription" : null ))
+                                    }
+                                  </div>
+                                </div>
+                              </div>
+                            )
                           })
                         }
                       </div>
@@ -168,6 +182,9 @@ export class Home extends Component {
             { homeContent() }
             { this.state.supportersVisible ? supportersContent() : null }
             { this.state.changelogVisible ? changelogContent() : null }
+            { isLive === true ? (
+              <div className="btn btn-dark isLive" onClick={() => { this.GotoTwitch() }}>I'm live <div className="clickMeLiveBtn">Come check me out, Click the button</div></div>
+            ) : null }
             <div className="btn btn-dark changelogBtn" onClick={() => { this.toggleChangeLog() }}>View Changelog</div>
             <div className="btn btn-dark reportBugs" onClick={() => { this.GotoTwitter() }}>Report Bugs</div>
             <div className="imgCredit">© Bungie, Inc. All rights reserved. Destiny, the Destiny Logo, Bungie and the Bungie logo are among the trademarks of Bungie, Inc.</div>
