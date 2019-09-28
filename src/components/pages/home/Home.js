@@ -38,6 +38,7 @@ export class Home extends Component {
   }
   GotoAuth() { window.location.href = 'https://www.bungie.net/en/oauth/authorize?client_id=24178&response_type=code&state=1'; }
   GotoTwitter() { window.open('https://twitter.com/Guardianstats', '_blank'); }
+  GotoTwitch() { window.open('https://twitch.tv/Terrii_Dev', '_blank'); }
   defaultConnectWindow() {
     return(
       <div className="home-content" style={{ width: '300px' }}>
