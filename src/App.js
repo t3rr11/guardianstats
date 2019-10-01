@@ -131,7 +131,7 @@ class App extends React.Component {
       });
     }).catch(function(err) {
       if(err.message === 'Failed to fetch') { this.setState({ status: { error: err.message, status: 'error', statusText: 'Failed to fetch: Manifest', loading: false } }); }
-      else if(err.message === 'maintenance') { this.setState({ status: { error: err.message, status: 'error', statusText: 'Bungie API is down for maintenance.', loading: false } }); }
+      else if(err.ErrorCode === 5) { this.setState({ status: { error: err.message, status: 'error', statusText: 'Bungie API is down for maintenance.', loading: false } }); }
       else { console.log(err); this.setState({ status: { error: err.message, status: 'error', statusText: err.message, loading: false } }); }
       return "Failed";
     });

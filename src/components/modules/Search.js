@@ -114,7 +114,6 @@ export class Search extends Component {
         if(membershipInfo.destinyMemberships[i].membershipType == platform) {
           found = true;
           if(await bungie.GetProfile(platform, membershipInfo.destinyMemberships[i].membershipId, "100")) {
-            //window.history.pushState("", "", `/inspect/${ platform }/${ membershipInfo.destinyMemberships[i].membershipId }`);
             this.foundUser(platform, membershipInfo.destinyMemberships[i].membershipId);
           }
           else { this.setState({ error: "This account does not own Destiny 2 but has linked to bungie." }); }
