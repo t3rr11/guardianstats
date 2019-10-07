@@ -1,5 +1,10 @@
 [
   {
+    "1.4.3": [
+      "+ Added a glory checking tool, at https://guardianstats.com/glorycheck"
+    ]
+  },
+  {
     "1.4.2": [
       "+ Overhauled the login system entirely. Should work way more effectively.",
       "+ Moved the character selection option to inside the activities page, as it is the only one that uses it currently",

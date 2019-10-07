@@ -21,6 +21,7 @@ import Failed from './components/pages/others/Failed';
 import Login from './components/pages/others/Login';
 import Thanks from './components/pages/others/Thanks';
 import NotFound from './components/pages/others/PageNotFound';
+import Glory from './components/pages/others/Glory';
 
 //Functions
 import db from './components/requests/Database';
@@ -211,6 +212,7 @@ class App extends React.Component {
                   <Route path="/inspect" render={ props => (<Inspect membershipInfo={ props.location.pathname.replace('/inspect/', '') } />) } />
                   <Route path="/loader" render={ props => (<SmallLoader statusText="Text example" />) } />
                   <Route path="/thanks" render={ props => (<Thanks />) } />
+                  <Route path="/glorycheck" render={ props => (<Glory />) } />
                   <Route path="*" component={ NotFound } />
                 </Switch>
                 { warning ? (<Warning warning={ warning } />) : null }
@@ -233,6 +235,7 @@ class App extends React.Component {
                   <Route path="/failed" component={ Failed } />
                   <Route path="/inspect" render={ props => (<Inspect membershipInfo={ props.location.pathname.replace('/inspect/', '') } />) } />
                   <Route path="/thanks" render={ props => (<Thanks />) } />
+                  <Route path="/glorycheck" render={ props => (<Glory />) } />
                   <Route path="*" component={ Login } />
                 </Switch>
                 { loading === true ? (<SmallLoader statusText={ statusText } />) : null }
