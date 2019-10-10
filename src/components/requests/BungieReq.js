@@ -27,7 +27,8 @@ export const GetPGCR = async (instanceId) => apiRequest(`/Platform/Destiny2/Stat
 export const GetManifestVersion = async () => apiRequest(`/Platform/Destiny2/Manifest/`, false, false);
 export const GetManifest = async url => fetch(`https://www.bungie.net${url}`).then(a => a.json());
 export const SearchUsers = async username => apiRequest(`/Platform/User/SearchUsers/?q=${username}`, false, false);
-export const GetMembershipId = async platformName => apiRequest(`/Platform/Destiny2/SearchDestinyPlayer/-1/${ platformName }/`, false, false);
+export const SearchDestinyPlayer = async username => apiRequest(`/Platform/Destiny2/SearchDestinyPlayer/-1/${username}/`, false, false);
+export const GetMembershipId = async platformName => apiRequest(`/Platform/Destiny2/SearchDestinyPlayer/-1/${platformName}/`, false, false);
 export const GetMembershipsForCurrentUser = async () => apiRequest(`/Platform/User/GetMembershipsForCurrentUser/`, false, true);
 export const GetMembershipsById = async (userId, platform) => apiRequest(`/Platform/User/GetMembershipsById/${userId}/${platform}/`, false, false);
 export const GetInstancedItem = async (membershipId, membershipType, instancedItemId, components) => apiRequest(`/Platform/Destiny2/${membershipType}/Profile/${membershipId}/Item/${instancedItemId}/?components=${components}`, false, false);

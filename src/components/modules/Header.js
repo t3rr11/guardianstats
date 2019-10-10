@@ -22,8 +22,9 @@ export class Header extends React.Component {
   toggleSettingsModal = () => { this.setState({ showSettingsWheel: !this.state.showSettingsWheel, showSettingsModal: !this.state.showSettingsModal }); }
   hideSettingsModal = () => { this.setState({ showSettingsModal: false }); }
   toggleMenuSlider = (ignore) => { if(window.screen.width < 800 && !ignore) { document.getElementById("menu").classList.toggle("show"); document.getElementById("title-bar").classList.toggle("show"); } }
-  async findAccount() {
-
+  alertID = () => {
+    if(!localStorage.getItem("SelectedAccount")) { alert("Please choose platform first."); }
+    else { alert(JSON.parse(localStorage.getItem("SelectedAccount")).id); }
   }
 
   async componentDidMount() {
@@ -106,6 +107,7 @@ export class Header extends React.Component {
       <React.Fragment>
         <div className="settings-cog" style={{ backgroundImage: 'url("./images/icons/cog.png")' }} onClick={ (() => this.toggleSettingsWheel()) }></div>
         <div className="settings-container" style={{ display: `${ this.state.showSettingsWheel ? 'grid' : 'none'}` }}>
+          <p onClick={ (() => this.alertID()) }>Get Membership ID</p>
           <p onClick={ (() => this.toggleSettingsModal()) }>Settings</p>
           <p onClick={ (() => Misc.logout()) }>Logout</p>
         </div>
