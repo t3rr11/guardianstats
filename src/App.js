@@ -79,6 +79,7 @@ class App extends React.Component {
         this.manifestLoaded();
       }
       else {
+        console.log("Checking Manifest");
         //Manifest has expired
         this.setState({ status: { status: 'expiredManifest', statusText: 'Checking Bungie Manifest...', loading: true } });
         //Define variables
@@ -93,6 +94,7 @@ class App extends React.Component {
           this.setLastManifestCheck();
         }
         else {
+          console.log("Updating Manifest");
           this.setState({ status: { status: 'updatingManifest', statusText: 'Updating Manifest...', loading: true } });
           //New Manifest Found. Store manifest and set manifest to global variable: MANIFEST;
           await this.getManifest(currentVersion);

@@ -13,6 +13,10 @@
 @import url('Scrollbar.css');
 @import url('Smallscreen.css');
 @import url('Mobile.css');
+@font-face {
+  font-family: DestinySymbols;
+  src: url("/fonts/DestinySymbols.woff");
+}
 :root {
   --DarkerNavyBlue: #181a1f;
   --DarkNavyBlue: #1A1D22;
@@ -29,7 +33,7 @@ body {
   height: 100%;
   margin:0px;
   padding:0px;
-  font-family: 'Nunito', sans-serif;
+  font-family: 'Nunito', sans-serif, DestinySymbols;
   background-color: var(--DarkNavyBlue);
   background-attachment: fixed;
   color:white;

@@ -1,8 +1,14 @@
 import React from 'react';
 import Error from '../../modules/Error';
 import HistoricalStats from './HistoricalStats.json';
+import * as globals from '../../scripts/Globals';
 
-export function generate(ManifestActivities, ManifestItems, PGCRs, activities, currentActivity) {
+export function generate(PGCRs, activities, currentActivity) {
+  const Manifest = globals.MANIFEST;
+  const ManifestActivities = Manifest.DestinyActivityDefinition;
+  const ManifestItems = Manifest.DestinyInventoryItemDefinition;
+  const ManifestModifiers = Manifest.DestinyActivityModifierDefinition;
+
   if(ManifestActivities[PGCRs[currentActivity].activityDetails.referenceId].isPvP === true) {
     //If mode is PVP show PvP Display
     if(PGCRs[currentActivity].teams.length !== 0) {
@@ -25,7 +31,7 @@ export function generate(ManifestActivities, ManifestItems, PGCRs, activities, c
   }
   else {
     //If mode is not pvp, then get display:
-    if(PGCRs[currentActivity].activityDetails.mode === 4) { return raidPGCR(ManifestActivities, ManifestItems, PGCRs, activities, currentActivity) }
+    if(PGCRs[currentActivity].activityDetails.mode === 4) { return raidPGCR(ManifestActivities, ManifestItems, ManifestModifiers, PGCRs, activities, currentActivity) }
     else { return defaultPGCR(ManifestActivities, ManifestItems, PGCRs, activities, currentActivity) }
   }
 }
@@ -42,10 +48,11 @@ const defaultPGCR = (ManifestActivities, ManifestItems, PGCRs, activities, curre
     </div>
   )
 }
-const raidPGCR = (ManifestActivities, ManifestItems, PGCRs, activities, currentActivity) => {
+const raidPGCR = (ManifestActivities, ManifestItems, ManifestModifiers, PGCRs, activities, currentActivity) => {
   const activity = PGCRs[currentActivity];
   const activityData = activities.find(e => e.activityDetails.instanceId === activity.activityDetails.instanceId); console.log(activityData);
-  const manifestActivityData = ManifestActivities[activity.activityDetails.referenceId];
+  const manifestActivityData = ManifestActivities[activity.activityDetails.referenceId]; console.log(manifestActivityData);
+  var modifiers = []; for(var i in manifestActivityData.modifiers) { if(!modifiers.find(modifier => modifier.activityModifierHash === manifestActivityData.modifiers[i].activityModifierHash)) { modifiers.push(manifestActivityData.modifiers[i]); } }
   var mostKills = { "name": activity.entries[0].player.bungieNetUserInfo.displayName, "value": activity.entries[0].values.kills.basic.value };
   var mostDeaths = { "name": activity.entries[0].player.bungieNetUserInfo.displayName, "value": activity.entries[0].values.deaths.basic.value };
   for(var i in activity.entries) {
@@ -76,7 +83,22 @@ const raidPGCR = (ManifestActivities, ManifestItems, PGCRs, activities, currentA
               </div>
             </div>
           </div>
-        <div className="pgcrImage" style={{ backgroundImage: `url(https://bungie.net${ ManifestActivities[activity.activityDetails.referenceId].pgcrImage })` }}></div>
+        <div className="pgcrImage" style={{ backgroundImage: `url(https://bungie.net${ ManifestActivities[activity.activityDetails.referenceId].pgcrImage })` }}>
+          <div className="pgcrModifiers">
+            {
+              modifiers.map(function(modifier) {
+                return (
+                  <div className="pgcrModifier" style={{ backgroundImage: `url(https://bungie.net${ ManifestModifiers[modifier.activityModifierHash].displayProperties.icon })` }}>
+                    <div className="pgcrModifierContainer">
+                      <div className="pgcrModifierName">{ ManifestModifiers[modifier.activityModifierHash].displayProperties.name }</div>
+                      <div className="pgcrModifierDesc">{ ManifestModifiers[modifier.activityModifierHash].displayProperties.description }</div>
+                    </div>
+                  </div>
+                )
+              })
+            }
+          </div>
+        </div>
       </div>
       <div className="pgcrBottomContainer">
         { generateExtendedData(ManifestItems, PGCRs, currentActivity, 'other') }

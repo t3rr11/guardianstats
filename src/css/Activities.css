@@ -312,6 +312,41 @@
   font-size: 12px;
   color: #ccc;
 }
+.pgcrModifiers {
+  display: flex;
+}
+.pgcrModifier {
+  width: 35px;
+  height: 35px;
+  margin: 5px;
+  background-position: center;
+  background-size: cover;
+  position: relative;
+}
+.pgcrModifier .pgcrModifierContainer { display: none; position: relative; }
+.pgcrModifier:hover .pgcrModifierContainer, .pgcrModifierContainer.selected {
+  background: var(--LightNavyBlue) no-repeat 100% 5%;
+  border: var(--NavyBlue) 1px solid;
+  position: absolute;
+  display: block;
+  top: 40px;
+  left: 25px;
+  width: 250px;
+  z-index: 5;
+}
+.pgcrModifierContainer > .pgcrModifierName {
+  border-bottom: 1px solid var(--NavyBlue);
+  font-size: 14px;
+  line-height: 25px;
+  padding: 5px;
+  font-weight: bold;
+  font-family: sans-serif;
+}
+.pgcrModifierContainer > .pgcrModifierDesc {
+  padding: 5px;
+  font-size: 12px;
+  color: #ccc;
+}
 .medalContainer {
   display: inline-block;
   position: relative;

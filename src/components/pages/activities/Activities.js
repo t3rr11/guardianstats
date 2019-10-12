@@ -53,15 +53,10 @@ export class Activities extends Component {
     const profileInfo = await bungie.GetProfile(Misc.getPlatformType(accountInfo.platform), accountInfo.id, '100,200');
     const selectedCharacter = localStorage.getItem("SelectedCharacter");
     const activityData = await bungie.GetActivityHistory(Misc.getPlatformType(accountInfo.platform), accountInfo.id, selectedCharacter, 15, 0);
-    const Manifest = globals.MANIFEST;
-    const ManifestActivities = Manifest.DestinyActivityDefinition;
-    const ManifestItems = Manifest.DestinyInventoryItemDefinition;
     this.setState({
       status: { status: 'gettingPGCRs', 'statusText': 'Getting battle reports...' },
       activities: activityData.activities,
-      currentActivity: parseInt(activityData.activities[0].activityDetails.instanceId),
-      ManifestActivities,
-      ManifestItems
+      currentActivity: parseInt(activityData.activities[0].activityDetails.instanceId)
     });
     this.grabPGCRs(activityData.activities, null);
   }
@@ -137,7 +132,7 @@ export class Activities extends Component {
   render() {
     //Define Consts and Variables
     const { status, statusText } = this.state.status;
-    const { activities, currentActivity, ManifestActivities, ManifestItems, PGCRs } = this.state;
+    const { activities, currentActivity, PGCRs } = this.state;
 
     //Check for errors, show loader, or display content.
     if(status === 'error') { return <Error error={ statusText } /> }
@@ -146,6 +141,8 @@ export class Activities extends Component {
       const characters = profileInfo.characters.data;
       const characterIds = profileInfo.profile.data.characterIds;
       const selectedCharacter = localStorage.getItem("SelectedCharacter");
+      const Manifest = globals.MANIFEST;
+      const ManifestActivities = Manifest.DestinyActivityDefinition;
       const characterSelection = (
         <div id="character_select">
           <div key={ selectedCharacter } className="character_data" id={ selectedCharacter }>
@@ -173,7 +170,8 @@ export class Activities extends Component {
         <div className="ActivitiesContent">
           <div className="RecentActivitiesView activityScrollbar">
             { activities.slice(0, 15).map(function(activity) {
-              var icon = `https://bungie.net${ManifestActivities[activity.activityDetails.directorActivityHash].displayProperties.icon}`
+              var icon = `https://bungie.net/img/misc/missing_icon_d2.png`;
+              if(ManifestActivities[activity.activityDetails.directorActivityHash].displayProperties.hasIcon === true) { icon = `https://bungie.net${ManifestActivities[activity.activityDetails.directorActivityHash].displayProperties.icon}`; }
               var classProp = this.addCompletedClass(activity);
               return (
                 <div key={ activity.activityDetails.instanceId } className={ classProp } id={ activity.activityDetails.instanceId } onClick={ (() => this.makeActiveDisplay(activity.activityDetails.instanceId)) }>
@@ -190,7 +188,7 @@ export class Activities extends Component {
           </div>
           <div className="ActivityPGCR activityScrollbar" id="ActivityPGCR">
             { characterSelection }
-            { PGCRGeneration.generate(ManifestActivities, ManifestItems, PGCRs, activities, currentActivity) }
+            { PGCRGeneration.generate(PGCRs, activities, currentActivity) }
           </div>
         </div>
       );
