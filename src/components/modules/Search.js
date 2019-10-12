@@ -38,15 +38,11 @@ export class Search extends Component {
       else if(searchPlatform === 'STEAM') { if(returnedUsers[i].steamDisplayName) { users.push({ userId: returnedUsers[i].membershipId, searchPlatform: "STEAM", steamDisplayName: returnedUsers[i].steamDisplayName }); } }
     }
     this.setState({ users });
-    if(!users.length > 0) {
-      this.setState({ error: "Doing a deeper scan. Please wait." });
-      this.searchDeeperForUser(input);
-    }
+    this.searchDeeperForUser(users, input);
   }
-  async searchDeeperForUser(input) {
+  async searchDeeperForUser(users, input) {
     const searchPlatform = document.getElementById('membership-type').value;
     const returnedUsers = await bungie.SearchDestinyPlayer(input);
-    var users = [];
     if(returnedUsers.length > 0) {
       for(var i in returnedUsers) {
         var platform = Misc.getPlatformName(returnedUsers[i].membershipType);
