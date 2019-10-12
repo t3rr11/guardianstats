@@ -55,9 +55,8 @@ export class GloryCheck extends Component {
     const accountInfo = JSON.parse(localStorage.getItem("SelectedAccount"));
     const selectedCharacter = localStorage.getItem("SelectedCharacter");
     var activities = await bungie.GetActivityHistory(Misc.getPlatformType(accountInfo.platform), accountInfo.id, selectedCharacter, 1, 0);
-    console.log(activities.activities[0]);
     if(activities.activities[0].activityDetails.modes.includes(5)) {
-      this.setState({ previousGame: true });
+      this.setState({ previousGame: true, alphaTeam: [], bravoTeam: [] });
       var pgcr = await bungie.GetPGCR(activities.activities[0].activityDetails.instanceId);
       for(var i in pgcr.entries) {
         var user = await this.getGlory(pgcr.entries[i].player.destinyUserInfo.displayName, pgcr.entries[i].player.destinyUserInfo.membershipType, pgcr.entries[i].player.destinyUserInfo.membershipId, pgcr.entries[i].values.team.basic.value);
@@ -71,7 +70,7 @@ export class GloryCheck extends Component {
   }
 
   async componentDidMount() {
-    if(await Checks.checkLogin()) { this.getPreviousMatch(); }
+    if(await Checks.checkLogin()) { setInterval(this.getPreviousMatch, 30000); this.getPreviousMatch(); }
   }
 
   render() {
