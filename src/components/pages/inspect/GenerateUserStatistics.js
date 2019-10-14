@@ -3,7 +3,7 @@ import * as Misc from '../../Misc';
 
 export function generate(profileInfo, Manifest, historicStats, gambitStats, raidStats) {
   return (
-    <div className="inspectBox inspectBoxScrollbar" id="InspectBoxUserStatistics">
+    <div id="InspectBoxUserStatistics">
       <div className="inspectBoxContainer">
         <div className="inspectBoxContent">
           <div className="inspectBoxContentTitle"> Overall Crucible Statistics </div>

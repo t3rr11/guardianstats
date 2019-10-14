@@ -32,6 +32,22 @@
   display: grid;
   grid-template-rows: 36px auto;
 }
+.inspectBoxMenu {
+  display: grid;
+  grid-template-columns: 25% 25% 25% 25%;
+  background-color: var(--NavyBlue);
+  border-top: 1px solid var(--DarkNavyBlue);
+}
+.inspectBoxMenu > div {
+  height: 34px;
+  line-height: 34px;
+  border-right: 1px solid var(--DarkNavyBlue);
+}
+.inspectBoxMenu > div:hover {
+  background-color: var(--LightNavyBlue);
+  cursor: pointer;
+}
+.inspectBoxMenu > div.active { background-color: var(--LightNavyBlue); }
 .inspectBoxTitle {
   width: 100%;
   padding: 5px;

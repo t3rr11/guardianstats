@@ -7,6 +7,9 @@ import * as UserDetails from './GenerateUserDetails';
 import * as UserStatistics from './GenerateUserStatistics';
 import * as UserActivities from './GenerateUserActivities';
 import * as CharacterViewer from './GenerateUserCharacterView';
+import * as UserChecklists from './GenerateUserChecklists';
+import * as UserCollections from './GenerateUserCollections';
+import * as UserClan from './GenerateUserClan';
 import * as checks from '../../scripts/Checks';
 import * as Misc from '../../Misc';
 
@@ -14,14 +17,12 @@ export class Inspect extends Component {
 
   state = {
     status: { error: null, status: 'startUp', statusText: 'Looking for account...' },
+    activeView: "Statistics",
     hiddenSeals: null,
     data: null
   }
 
-  async componentDidMount() {
-    this.startUpChecks();
-  }
-
+  async componentDidMount() { this.startUpChecks(); }
   async startUpChecks() {
     this.setState({ status: { status: 'checkingManifest', statusText: 'Checking Manifest...' } });
     if(await checks.checkManifestMounted()) {
@@ -31,7 +32,6 @@ export class Inspect extends Component {
     }
     else { setTimeout(() => { this.startUpChecks(); }, 1000); }
   }
-
   async loadProfile() {
     var { membershipInfo } = this.props;
     var isProfile = false;
@@ -130,8 +130,8 @@ export class Inspect extends Component {
       console.log(err);
       this.setState({ status: { status: 'error', statusText: 'Please select a platform first.' } });
     }
-
   }
+  toggleActiveView(view) { this.setState({ activeView: view }); }
 
   render() {
     //Define Consts and Variables
@@ -150,7 +150,18 @@ export class Inspect extends Component {
           </div>
           <div className="inspectContent">
             { CharacterViewer.generate(profileInfo, Manifest) }
-            { UserStatistics.generate(profileInfo, Manifest, historicStats, gambitStats, raidStats) }
+            <div className="inspectBox inspectBoxScrollbar">
+              <div className="inspectBoxMenu">
+                <div className={ this.state.activeView === "Statistics" ? "active" : null } onClick={ (() => this.toggleActiveView("Statistics")) }>Statistics</div>
+                <div className={ this.state.activeView === "Checklists" ? "active" : null } onClick={ (() => this.toggleActiveView("Checklists")) }>Checklists</div>
+                <div className={ this.state.activeView === "Collections" ? "active" : null } onClick={ (() => this.toggleActiveView("Collections")) }>Collections</div>
+                <div className={ this.state.activeView === "Clan" ? "active" : null } onClick={ (() => this.toggleActiveView("Clan")) }>Clan</div>
+              </div>
+              { this.state.activeView === "Statistics" ? ( UserStatistics.generate(profileInfo, Manifest, historicStats, gambitStats, raidStats) ) : null }
+              { this.state.activeView === "Checklists" ? ( UserChecklists.generate(profileInfo, Manifest) ) : null }
+              { this.state.activeView === "Collections" ? ( UserCollections.generate(profileInfo, Manifest) ) : null }
+              { this.state.activeView === "Clan" ? ( UserClan.generate(profileInfo, Manifest) ) : null }
+            </div>
             { UserActivities.generate(profileInfo, membershipInfo, Manifest, activities) }
           </div>
         </div>
