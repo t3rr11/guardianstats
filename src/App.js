@@ -17,6 +17,7 @@ import Exotics from './components/pages/exotics/Exotics';
 import Activities from './components/pages/activities/Activities';
 import Vendors from './components/pages/vendors/Vendors';
 import Register from './components/pages/others/Register';
+import Blog from './components/pages/blog/Blog';
 import Failed from './components/pages/others/Failed';
 import Login from './components/pages/others/Login';
 import Thanks from './components/pages/others/Thanks';
@@ -211,6 +212,7 @@ class App extends React.Component {
                   <Route path="/activities" render={ props => (<Activities />) } />
                   <Route path="/exotics" render={ props => (<Exotics />) } />
                   <Route path="/vendors" render={ props => (<Vendors />) } />
+                  <Route path="/news" render={ props => (<Blog />) } />
                   <Route path="/profile" render={ props => (<Inspect />) } />
                   <Route path="/inspect" render={ props => (<Inspect membershipInfo={ props.location.pathname.replace('/inspect/', '') } />) } />
                   <Route path="/loader" render={ props => (<SmallLoader statusText="Text example" />) } />
@@ -237,6 +239,7 @@ class App extends React.Component {
                   <Route path="/register" render={ props => (<Register {...props} />) } />
                   <Route path="/failed" component={ Failed } />
                   <Route path="/inspect" render={ props => (<Inspect membershipInfo={ props.location.pathname.replace('/inspect/', '') } />) } />
+                  <Route path="/news" render={ props => (<Blog />) } />
                   <Route path="/thanks" render={ props => (<Thanks />) } />
                   <Route path="/glorycheck" render={ props => (<Glory />) } />
                   <Route path="*" component={ Login } />

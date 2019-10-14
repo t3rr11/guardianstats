@@ -53,13 +53,15 @@ const raidPGCR = (ManifestActivities, ManifestItems, ManifestModifiers, PGCRs, a
   const activityData = activities.find(e => e.activityDetails.instanceId === activity.activityDetails.instanceId); console.log(activityData);
   const manifestActivityData = ManifestActivities[activity.activityDetails.referenceId]; console.log(manifestActivityData);
   var modifiers = []; for(var i in manifestActivityData.modifiers) { if(!modifiers.find(modifier => modifier.activityModifierHash === manifestActivityData.modifiers[i].activityModifierHash)) { modifiers.push(manifestActivityData.modifiers[i]); } }
-  var mostKills = { "name": activity.entries[0].player.bungieNetUserInfo.displayName, "value": activity.entries[0].values.kills.basic.value };
-  var mostDeaths = { "name": activity.entries[0].player.bungieNetUserInfo.displayName, "value": activity.entries[0].values.deaths.basic.value };
+  var mostKills = { "name": activity.entries[0].player.destinyUserInfo.displayName, "value": activity.entries[0].values.kills.basic.value };
+  var mostDeaths = { "name": activity.entries[0].player.destinyUserInfo.displayName, "value": activity.entries[0].values.deaths.basic.value };
+  var leastKills = { "name": activity.entries[0].player.destinyUserInfo.displayName, "value": activity.entries[0].values.kills.basic.value };
+  var leastDeaths = { "name": activity.entries[0].player.destinyUserInfo.displayName, "value": activity.entries[0].values.deaths.basic.value };
   for(var i in activity.entries) {
-    //Get Most Kills
-    if(activity.entries[i].values.kills.basic.value > mostKills.value){ mostKills = { "name": activity.entries[i].player.bungieNetUserInfo.displayName, "value": activity.entries[i].values.kills.basic.value } }
-    //Get Most Deaths
-    if(activity.entries[i].values.deaths.basic.value > mostDeaths.value){ mostDeaths = { "name": activity.entries[i].player.bungieNetUserInfo.displayName, "value": activity.entries[i].values.deaths.basic.value } }
+    if(activity.entries[i].values.kills.basic.value > mostKills.value){ mostKills = { "name": activity.entries[i].player.destinyUserInfo.displayName, "value": activity.entries[i].values.kills.basic.value } }
+    if(activity.entries[i].values.deaths.basic.value > mostDeaths.value){ mostDeaths = { "name": activity.entries[i].player.destinyUserInfo.displayName, "value": activity.entries[i].values.deaths.basic.value } }
+    if(activity.entries[i].values.kills.basic.value < leastKills.value){ leastKills = { "name": activity.entries[i].player.destinyUserInfo.displayName, "value": activity.entries[i].values.kills.basic.value } }
+    if(activity.entries[i].values.deaths.basic.value < leastDeaths.value){ leastDeaths = { "name": activity.entries[i].player.destinyUserInfo.displayName, "value": activity.entries[i].values.deaths.basic.value } }
   }
   return (
     <div className="pgcrContainer">
@@ -77,8 +79,16 @@ const raidPGCR = (ManifestActivities, ManifestItems, ManifestModifiers, PGCRs, a
                   <div>{ mostKills.name } ({ mostKills.value })</div>
                 </div>
                 <div className="pgcrDetailsMedal deaths">
+                  <div>Least Deaths:</div>
+                  <div>{ leastDeaths.name } ({ leastDeaths.value })</div>
+                </div>
+                <div className="pgcrDetailsMedal deaths">
                   <div>Most Deaths:</div>
                   <div>{ mostDeaths.name } ({ mostDeaths.value })</div>
+                </div>
+                <div className="pgcrDetailsMedal kills">
+                  <div>Least Kills: </div>
+                  <div>{ leastKills.name } ({ leastKills.value })</div>
                 </div>
               </div>
             </div>
