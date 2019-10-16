@@ -11,6 +11,7 @@ export class GloryCheck extends Component {
   state = {
     users: null,
     previousGame: false,
+    previousGameId: null,
     alphaTeam: [],
     bravoTeam: [],
     error: null
@@ -55,22 +56,29 @@ export class GloryCheck extends Component {
     const accountInfo = JSON.parse(localStorage.getItem("SelectedAccount"));
     const selectedCharacter = localStorage.getItem("SelectedCharacter");
     var activities = await bungie.GetActivityHistory(Misc.getPlatformType(accountInfo.platform), accountInfo.id, selectedCharacter, 1, 0);
-    if(activities.activities[0].activityDetails.modes.includes(5)) {
-      this.setState({ previousGame: true });
-      var alphaTeam = [];
-      var bravoTeam = [];
-      var pgcr = await bungie.GetPGCR(activities.activities[0].activityDetails.instanceId);
-      for(var i in pgcr.entries) {
-        var user = await this.getGlory(pgcr.entries[i].player.destinyUserInfo.displayName, pgcr.entries[i].player.destinyUserInfo.membershipType, pgcr.entries[i].player.destinyUserInfo.membershipId, pgcr.entries[i].values.team.basic.value);
-        if(pgcr.entries[i].values.team.basic.value === 17) { if(user !== "No User" && user !== "User Private") { alphaTeam.push({ "name": user.name, "glory": user.glory, "team": pgcr.entries[i].values.team.basic.value }); } }
-        else if(pgcr.entries[i].values.team.basic.value === 18) { if(user !== "No User" && user !== "User Private") { bravoTeam.push({ "name": user.name, "glory": user.glory, "team": pgcr.entries[i].values.team.basic.value }); } }
+    if(this.state.previousGameId !== activities.activities[0].activityDetails.instanceId) {
+      console.log("New game found");
+      if(activities.activities[0].activityDetails.modes.includes(5)) {
+        this.setState({ previousGame: true, previousGameId: activities.activities[0].activityDetails.instanceId });
+        var alphaTeam = [];
+        var bravoTeam = [];
+        var pgcr = await bungie.GetPGCR(activities.activities[0].activityDetails.instanceId);
+        for(var i in pgcr.entries) {
+          var user = await this.getGlory(pgcr.entries[i].player.destinyUserInfo.displayName, pgcr.entries[i].player.destinyUserInfo.membershipType, pgcr.entries[i].player.destinyUserInfo.membershipId, pgcr.entries[i].values.team.basic.value);
+          if(pgcr.entries[i].values.team.basic.value === 17) { if(user !== "No User" && user !== "User Private") { alphaTeam.push({ "name": user.name, "glory": user.glory, "team": pgcr.entries[i].values.team.basic.value }); } }
+          else if(pgcr.entries[i].values.team.basic.value === 18) { if(user !== "No User" && user !== "User Private") { bravoTeam.push({ "name": user.name, "glory": user.glory, "team": pgcr.entries[i].values.team.basic.value }); } }
+        }
+        this.setState({ alphaTeam, bravoTeam });
       }
-      this.setState({ alphaTeam, bravoTeam });
     }
+    else { console.log("No new games found."); }
   }
 
   async componentDidMount() {
-    if(await Checks.checkLogin()) { setInterval(this.getPreviousMatch, 30000); this.getPreviousMatch(); }
+    if(await Checks.checkLogin()) {
+      setInterval(function () { this.getPreviousMatch() }.bind(this), 30000);
+      this.getPreviousMatch();
+    }
   }
 
   render() {
