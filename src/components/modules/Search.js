@@ -65,7 +65,7 @@ export class Search extends Component {
   					{user.psnDisplayName ? <div key={ uuid.v4() } className='searchResultContainer PSN' onClick={ (() => this.inspectPlayer(user, '2')) } ><div className='searchResultIcon PSN'></div><div className='searchResultName PSN'>{user.psnDisplayName}</div></div> : null}
   					{user.xboxDisplayName ? <div key={ uuid.v4() } className='searchResultContainer XBL' onClick={ (() => this.inspectPlayer(user, '1')) } ><div className='searchResultIcon XBL'></div><div className='searchResultName XBL'>{user.xboxDisplayName}</div></div> : null}
   					{user.stadiaDisplayName ? <div key={ uuid.v4() } className='searchResultContainer STADIA' onClick={ (() => this.inspectPlayer(user, '5')) } ><div className='searchResultIcon STADIA'></div><div className='searchResultName STADIA'>{user.stadiaDisplayName}</div></div> : null}
-  					{user.steamDisplayName ? <div key={ uuid.v4() }className='searchResultContainer STEAM' onClick={ (() => this.inspectPlayer(user, '3')) } ><div className='searchResultIcon STEAM'></div><div className='searchResultName STEAM'>{user.steamDisplayName}</div></div> : null}
+  					{user.steamDisplayName ? <div key={ uuid.v4() } className='searchResultContainer STEAM' onClick={ (() => this.inspectPlayer(user, '3')) } ><div className='searchResultIcon STEAM'></div><div className='searchResultName STEAM'>{user.steamDisplayName}</div></div> : null}
           </React.Fragment>
         )
       }
@@ -111,7 +111,7 @@ export class Search extends Component {
       }
       else if(user.searchPlatform === "CUSTOM") {
         return (
-          <div key={ `search_${user.userId}` } className={`searchResultContainer ${ user.membershipType }`} onClick={ (() => this.inspectPlayer(user, "-1")) } >
+          <div key={ `search_${user.userId}` } className={`searchResultContainer ${ user.membershipType }`} onClick={ (() => this.inspectPlayer(user, Misc.getPlatformType(user.membershipType))) } >
             <div className={`searchResultIcon ${ user.membershipType }`}></div>
             <div className={`searchResultName ${ user.membershipType }`}>{ user.displayName }</div>
           </div>
