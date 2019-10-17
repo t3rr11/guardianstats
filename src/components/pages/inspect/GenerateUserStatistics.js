@@ -230,7 +230,8 @@ const generateIndividualRaidsCompleted = (profileInfo, PresentationNodes, Record
   var raidInfoRight = [
     { name: "Last Wish", info: Records[2195455623], flawless: lastWishFlawless },
     { name: "Scourge of the Past", info: Records[4060320345], flawless: scourgeFlawless },
-    { name: "Crown of Sorrow", info: Records[1558682421], flawless: crownFlawless }
+    { name: "Crown of Sorrow", info: Records[1558682421], flawless: crownFlawless },
+    { name: "Garden of Salvation", info: Records[1120290476], flawless: false }
   ];
   return (
     <div className="inspectBoxStatContent twoColumn">

@@ -27,7 +27,7 @@
   setInterval(async function(){ await GetDeaths(); console.log('Updated: ' + new Date()); }, 30000);
   async function GetProfileData() {
     return $.ajax({
-      url: "https://www.bungie.net/Platform/Destiny2/4/Account/4611686018471776559/Stats/?groups=102",
+      url: "https://www.bungie.net/Platform/Destiny2/3/Account/4611686018471776559/Stats/?groups=102",
       method: 'GET',
       headers: { "Content-Type": 'application/x-www-form-urlencoded', "X-API-Key": 'fc1f06b666154eeaa8f89d91f32c23e7' },
     });
@@ -57,11 +57,9 @@
     var deaths = pveDeaths + pvpDeaths;
     $('#overallDeaths').html('I\'ve died a total of ' + deaths + ' times.');
     if(StartStreamTotalDeaths == 0) { StartStreamTotalDeaths = deaths; }
-    else {
-      SessionDeaths = deaths - StartStreamTotalDeaths;
-      $('#sessionDeaths').html(SessionDeaths + ' of which were this stream!');
-      $('#marvin').html(marvinsLines[Math.floor(Math.random() * marvinsLines.length)]);
-    }
+    SessionDeaths = deaths - StartStreamTotalDeaths;
+    $('#sessionDeaths').html(SessionDeaths + ' of which were this stream!');
+    $('#marvin').html(marvinsLines[Math.floor(Math.random() * marvinsLines.length)]);
   }
   GetDeaths();
 </script>
