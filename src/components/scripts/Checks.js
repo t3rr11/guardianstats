@@ -18,7 +18,7 @@ export async function checkManifestExists() {
 }
 
 export async function checkManifestValid() {
-  if(new Date().getTime() > parseInt(localStorage.getItem('lastManifestCheck')) + (1000 * 60 * 60)) { return true; }
+  if(new Date().getTime() < parseInt(localStorage.getItem('nextManifestCheck'))) { return true; }
   else { return false; }
 }
 

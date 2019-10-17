@@ -88,12 +88,11 @@ class App extends React.Component {
         //Grab versions
         await Promise.all([ await db.table('manifest').toCollection().first(), await bungie.GetManifestVersion() ]).then(async function(values) { storedVersion = values[0]; currentVersion = values[1]; });
         //Check versions
-        console.log(storedVersion, currentVersion);
         if(await checks.checkManifestVersion(storedVersion, currentVersion)) {
           //Manifest version is the same. Set manifest to global variable: MANIFEST and finish loading page.
           globals.SetManifest(storedVersion.value);
           this.manifestLoaded();
-          this.setLastManifestCheck();
+          this.setNextManifestCheck();
         }
         else {
           console.log("Updating Manifest");
@@ -101,7 +100,7 @@ class App extends React.Component {
           //New Manifest Found. Store manifest and set manifest to global variable: MANIFEST;
           await this.getManifest(currentVersion);
           this.manifestLoaded();
-          this.setLastManifestCheck();
+          this.setNextManifestCheck();
         }
       }
     }
@@ -110,7 +109,7 @@ class App extends React.Component {
       this.setState({ status: { status: 'noManifest', statusText: 'Downloading Bungie Manifest...', loading: true } });
       await this.getManifest(await bungie.GetManifestVersion());
       this.manifestLoaded();
-      this.setLastManifestCheck();
+      this.setNextManifestCheck();
     }
   }
   async getManifest(currentVersion) {
@@ -183,7 +182,7 @@ class App extends React.Component {
     }
   }
   manifestLoaded() { this.checkProfile(); }
-  setLastManifestCheck() { localStorage.setItem('lastManifestCheck', new Date().getTime()) }
+  setNextManifestCheck() { localStorage.setItem('nextManifestCheck', new Date().getTime() + (1000 * 60 * 60)) }
   profileLoaded() { this.setState({ status: { status: 'ready', statusText: 'Ready to go!', loading: false } }); }
 
   render() {
