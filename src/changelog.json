@@ -1,5 +1,24 @@
 [
   {
+    "1.4.5": [
+      "+ Added a collectibles tab to the inspect page / profile page. You can now see what exotics people have!",
+      "= Soon the Exotics page will be removed in place of this change."
+    ]
+  },
+  {
+    "1.4.4": [
+      "= So many various little bug fixes",
+      "= Fixed a manifest not updating issue causing people to get blank screens.",
+      "= Fixed a transparency issue with the titlebar",
+      "+ Added more badges to the raid activity PGCR",
+      "+ Added modifiers to the raid activity PGCR, but they are not the active modifiers, They most likely will not be staying.",
+      "= Fixed some streaming tools in the background",
+      "+ Made the glory checking tool grab the last played pvp match (includes quickplay, sorry, lazy)",
+      "+ Made the glory checking tool auto-update every 30 seconds",
+      "+ Added a grayed out news tab, that will be used for updates like this, eventually."
+    ]
+  },
+  {
     "1.4.3": [
       "+ Added a glory checking tool, at https://guardianstats.com/glorycheck"
     ]

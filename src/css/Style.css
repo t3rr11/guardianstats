@@ -63,6 +63,7 @@ body {
   z-index: 5;
   display: grid;
   grid-template-columns: 170px auto;
+  background-color: var(--DarkNavyBlue);
 }
 .logo {
   width: 30px;

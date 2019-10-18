@@ -150,7 +150,7 @@ export class Inspect extends Component {
           </div>
           <div className="inspectContent">
             { CharacterViewer.generate(profileInfo, Manifest) }
-            <div className="inspectBox inspectBoxScrollbar">
+            <div className="inspectBox" style={{ display: "inline-grid", gridTemplateRows: "35px auto" }}>
               <div className="inspectBoxMenu">
                 <div className={ this.state.activeView === "Statistics" ? "active" : null } onClick={ (() => this.toggleActiveView("Statistics")) }>Statistics</div>
                 <div className={ this.state.activeView === "Checklists" ? "active" : null } onClick={ (() => this.toggleActiveView("Checklists")) }>Checklists</div>

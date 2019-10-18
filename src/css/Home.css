@@ -228,24 +228,24 @@
 }
 .changelogs {
   display: grid;
-  grid-template-columns: 50% 50%;
-  max-width: 1000px;
-  margin: auto;
+  grid-template-columns: 23% 23% 23% 23%;
+  margin-left: 4%;
+  margin-right: 4%;
 }
 .changelogs > .version {
   text-align: left;
   font-weight: bold;
-  font-size: 16px;
+  font-size: 24px;
   display: block;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  width: 450px;
+  padding: 5px;
 }
 .changelogs > .version > .entry {
   text-align: left;
   font-weight: normal;
   font-size: 12px;
   display: block;
+  word-break: break-word;
+  max-width: 100%;
 }
 .supporters-content {
   text-align: center;

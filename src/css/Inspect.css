@@ -405,3 +405,56 @@
   font-size: 14px;
   display: block;
 }
+.inspectSubCategoryTitle {
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  background-color: var(--NavyBlue);
+  margin-top: 10px;
+}
+.inspectCollectibleItemContainer {
+  display: inline-block;
+  height: 40px;
+  width: 40px;
+  margin: 5px;
+  position: relative;
+  cursor: pointer;
+}
+.inspectCollectibleItemContainer > img {
+  width: 40px;
+  height: 40px;
+}
+.inspectCollectibleItemContainer .inspectCollectibleItemInfo { display: none; }
+.inspectCollectibleItemContainer:hover .inspectCollectibleItemInfo, .inspectCollectibleItemInfo.selected {
+  background: var(--LightNavyBlue) no-repeat 100% 5%;
+  border: var(--NavyBlue) 1px solid;
+  position: absolute;
+  display: block;
+  left: 45px;
+  top: 45px;
+  width: 250px;
+  z-index: 5;
+}
+.inspectCollectibleItemInfo > .title {
+  border-bottom: 1px solid var(--NavyBlue);
+  font-size: 14px;
+  line-height: 25px;
+  padding: 5px;
+  font-weight: bold;
+  font-family: sans-serif;
+}
+.inspectCollectibleItemInfo > .description {
+  padding: 5px;
+  font-size: 12px;
+  color: #ccc;
+}
+.inspectCollectibleItemInfo > .requirements {
+  padding: 5px;
+  font-size: 10px;
+  font-style: italic;
+  color: #bbb;
+}
+.notAcquired { opacity: 0.3; }
+.inspectCollectibleItemInfo .notAcquired { opacity: 1; }
