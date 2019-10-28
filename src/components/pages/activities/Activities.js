@@ -188,7 +188,7 @@ export class Activities extends Component {
           </div>
           <div className="ActivityPGCR activityScrollbar" id="ActivityPGCR">
             { characterSelection }
-            { PGCRGeneration.generate(PGCRs, activities, currentActivity) }
+            { PGCRGeneration.generate(PGCRs, activities, currentActivity, this.props) }
           </div>
         </div>
       );

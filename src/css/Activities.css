@@ -126,6 +126,19 @@
   grid-template-columns: minmax(130px, 100%) 50px 50px 50px 50px 50px;
   font-size: 14px;
 }
+.pgcrGambitCurrPlayersBlob {
+  display: grid;
+  background-color: var(--NavyBlue);
+  grid-template-columns: minmax(130px, 100%) 50px 50px 50px 50px 50px 50px 100px;
+  font-size: 14px;
+  color: burlywood;
+}
+.pgcrGambitPlayersBlob {
+  display: grid;
+  background-color: var(--NavyBlue);
+  grid-template-columns: minmax(130px, 100%) 50px 50px 50px 50px 50px 50px 100px;
+  font-size: 14px;
+}
 .pgcrPlayerName {
   cursor: pointer;
 }
@@ -165,9 +178,33 @@
   display: grid;
 }
 .pgcrBravoTeamTitle > div { cursor: default; }
+.pgcrGambitAlphaTeamTitle {
+  background-color: #0d75b5;
+  text-align: center;
+  font-size: small;
+  height: 24px;
+  line-height: 24px;
+  grid-template-columns: minmax(130px, 100%) 50px 50px 50px 50px 50px 50px 100px;
+  display: grid;
+  white-space: nowrap;
+}
+.pgcrGambitAlphaTeamTitle > div { cursor: default; }
+.pgcrGambitBravoTeamTitle {
+  background-color: #8c3828;
+  text-align: center;
+  font-size: small;
+  height: 24px;
+  line-height: 24px;
+  grid-template-columns: minmax(130px, 100%) 50px 50px 50px 50px 50px 50px 100px;
+  display: grid;
+  white-space: nowrap;
+}
+.pgcrGambitBravoTeamTitle > div { cursor: default; }
 .pgcrPlayersBlob div { display: inline-block; padding: 2px; text-align: center; border-right: 1px var(--LightNavyBlue) double; }
 .pgcrCurrPlayersBlob div { display: inline-block; padding: 2px; text-align: center; border-right: 1px var(--LightNavyBlue) double; }
 .pgcrPvpPlayersBlob div { display: inline-block; padding: 2px; text-align: center; border-right: 1px var(--LightNavyBlue) double; }
+.pgcrGambitCurrPlayersBlob div { display: inline-block; padding: 2px; text-align: center; border-right: 1px var(--LightNavyBlue) double; }
+.pgcrGambitPlayersBlob div { display: inline-block; padding: 2px; text-align: center; border-right: 1px var(--LightNavyBlue) double; }
 .pgcrExtendedInfo.pvp {
   width: 100%;
   display: grid;
@@ -257,6 +294,7 @@
   text-align: center;
   width: 195px;
   line-height: 33px;
+  white-space: nowrap;
 }
 .pgcrDetails {
   float: left;
