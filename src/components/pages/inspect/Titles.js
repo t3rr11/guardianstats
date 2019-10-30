@@ -65,13 +65,6 @@ export const Titles = (profileInfo) => {
         "hidden": false
       },
       {
-        "title": "Golden Armory",
-        "isObtained": profileInfo.profileRecords.data.records["3804641932"].objectives[0].complete,
-        "icon": "./images/icons/seals/goldenarmory",
-        "description": "Complete all Exotic Armory Triumphs.",
-        "hidden": true
-      },
-      {
         "title": "Reckoner",
         "isObtained": profileInfo.profileRecords.data.records["1313291220"].objectives[0].complete,
         "icon": "./images/icons/seals/reckoner",
@@ -87,7 +80,7 @@ export const Titles = (profileInfo) => {
       },
       {
         "title": "MMXIX",
-        "isObtained": profileInfo.characterRecords.data[profileInfo.profile.data.characterIds[0]].records["2254764897"].objectives[0].complete,
+        "isObtained": profileInfo.profileRecords.data.records["2254764897"].objectives[0].complete,
         "icon": "./images/icons/seals/MMXIX",
         "description": "Complete these feats of strength before 9/17/2019 to claim your unique rewards.",
         "hidden": true

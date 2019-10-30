@@ -33,7 +33,7 @@
     function numberWithCommas(x) { return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); }
     async function GetRecords() {
       var progressions = await $.ajax({ url: "https://www.bungie.net/Platform/Destiny2/3/Profile/4611686018471334813/Character/2305843009304566372/?components=202", method: 'GET', headers: { "Content-Type": 'application/x-www-form-urlencoded', "X-API-Key": 'fc1f06b666154eeaa8f89d91f32c23e7' } });
-      var trackedProgressions = [3742972145, 56164121];
+      var trackedProgressions = [3715926175, 3710486535, 2269402074];
       $('#trackedObjectives').html("");
       for(i in trackedProgressions) {
         $('#trackedObjectives').append(
