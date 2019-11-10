@@ -10,6 +10,8 @@
     "query-string": "^6.8.3",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
+    "react-gesture-gallery": "^1.1.0",
+    "react-gesture-responder": "^2.1.0",
     "react-lottie": "^1.2.3",
     "react-router-dom": "^5.0.1",
     "react-scripts": "3.0.1",
