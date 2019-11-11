@@ -71,7 +71,6 @@ const raidPGCR = (ManifestActivities, ManifestItems, ManifestModifiers, PGCRs, a
   const activity = PGCRs[currentActivity];
   const activityData = activities.find(e => e.activityDetails.instanceId === activity.activityDetails.instanceId); console.log(activityData);
   const manifestActivityData = ManifestActivities[activity.activityDetails.referenceId]; console.log(manifestActivityData);
-  var modifiers = []; for(var i in manifestActivityData.modifiers) { if(!modifiers.find(modifier => modifier.activityModifierHash === manifestActivityData.modifiers[i].activityModifierHash)) { modifiers.push(manifestActivityData.modifiers[i]); } }
   var mostKills = { "name": activity.entries[0].player.destinyUserInfo.displayName, "value": activity.entries[0].values.kills.basic.value };
   var mostDeaths = { "name": activity.entries[0].player.destinyUserInfo.displayName, "value": activity.entries[0].values.deaths.basic.value };
   var leastKills = { "name": activity.entries[0].player.destinyUserInfo.displayName, "value": activity.entries[0].values.kills.basic.value };
@@ -113,20 +112,6 @@ const raidPGCR = (ManifestActivities, ManifestItems, ManifestModifiers, PGCRs, a
             </div>
           </div>
         <div className="pgcrImage" style={{ backgroundImage: `url(https://bungie.net${ ManifestActivities[activity.activityDetails.referenceId].pgcrImage })` }}>
-          <div className="pgcrModifiers">
-            {
-              modifiers.map(function(modifier) {
-                return (
-                  <div className="pgcrModifier" style={{ backgroundImage: `url(https://bungie.net${ ManifestModifiers[modifier.activityModifierHash].displayProperties.icon })` }}>
-                    <div className="pgcrModifierContainer">
-                      <div className="pgcrModifierName">{ ManifestModifiers[modifier.activityModifierHash].displayProperties.name }</div>
-                      <div className="pgcrModifierDesc">{ ManifestModifiers[modifier.activityModifierHash].displayProperties.description }</div>
-                    </div>
-                  </div>
-                )
-              })
-            }
-          </div>
         </div>
       </div>
       <div className="pgcrBottomContainer">
@@ -139,10 +124,10 @@ const raidPGCR = (ManifestActivities, ManifestItems, ManifestModifiers, PGCRs, a
 const generateTeamData = (ManifestItems, PGCRs, currentActivity, modeType, team, props) => {
   if(modeType === 'pvp') {
     if(team === 'alpha') {
-      var teamData = PGCRs[currentActivity].teams.find(team => team.teamId === 17);
+      var alphaTeamData = PGCRs[currentActivity].teams.find(team => team.teamId === 17);
       return (
         <div className="pgcrAlphaTeam">
-          <div className="pgcrAlphaTeamTitle">{ teamData.standing.basic.displayValue }: Alpha Team - { teamData.score.basic.value }
+          <div className="pgcrAlphaTeamTitle">{ alphaTeamData.standing.basic.displayValue }: Alpha Team - { alphaTeamData.score.basic.value }
             <div title="Score">S</div>
             <div title="Kills">K</div>
             <div title="Deaths">D</div>
@@ -154,10 +139,10 @@ const generateTeamData = (ManifestItems, PGCRs, currentActivity, modeType, team,
       )
     }
     else if(team === 'bravo') {
-      var teamData = PGCRs[currentActivity].teams.find(team => team.teamId === 18);
+      var bravoTeamData = PGCRs[currentActivity].teams.find(team => team.teamId === 18);
       return (
         <div className="pgcrBravoTeam">
-          <div className="pgcrBravoTeamTitle">{ teamData.standing.basic.displayValue }: Bravo Team - { teamData.score.basic.value }
+          <div className="pgcrBravoTeamTitle">{ bravoTeamData.standing.basic.displayValue }: Bravo Team - { bravoTeamData.score.basic.value }
             <div title="Score">S</div>
             <div title="Kills">K</div>
             <div title="Deaths">D</div>
@@ -171,10 +156,10 @@ const generateTeamData = (ManifestItems, PGCRs, currentActivity, modeType, team,
   }
   else if(modeType === 'gambit') {
     if(team === 'alpha') {
-      var teamData = PGCRs[currentActivity].teams.find(team => team.teamId === 17);
+      var gAlphaTeamData = PGCRs[currentActivity].teams.find(team => team.teamId === 17);
       return (
         <div className="pgcrAlphaTeam">
-          <div className="pgcrGambitAlphaTeamTitle">{ teamData.standing.basic.displayValue }: Alpha Team - { teamData.score.basic.value }
+          <div className="pgcrGambitAlphaTeamTitle">{ gAlphaTeamData.standing.basic.displayValue }: Alpha Team - { gAlphaTeamData.score.basic.value }
             <div title="Motes Banked">MB</div>
             <div title="Hostiles Defeated">HD</div>
             <div title="Guardians Defeated">GD</div>
@@ -188,10 +173,10 @@ const generateTeamData = (ManifestItems, PGCRs, currentActivity, modeType, team,
       )
     }
     else if(team === 'bravo') {
-      var teamData = PGCRs[currentActivity].teams.find(team => team.teamId === 18);
+      var gBravoTeamData = PGCRs[currentActivity].teams.find(team => team.teamId === 18);
       return (
         <div className="pgcrBravoTeam">
-          <div className="pgcrGambitBravoTeamTitle">{ teamData.standing.basic.displayValue }: Bravo Team - { teamData.score.basic.value }
+          <div className="pgcrGambitBravoTeamTitle">{ gBravoTeamData.standing.basic.displayValue }: Bravo Team - { gBravoTeamData.score.basic.value }
             <div title="Motes Banked">MB</div>
             <div title="Hostiles Defeated">HD</div>
             <div title="Guardians Defeated">GD</div>

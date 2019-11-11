@@ -3,7 +3,6 @@ import Search from '../../modules/Search';
 import Loader from '../../modules/Loader';
 import Changelog from '../../../changelog.json';
 import * as Checks from '../../scripts/Checks';
-import * as Misc from '../../Misc';
 import uuid from  'uuid';
 
 export class Home extends Component {
@@ -21,7 +20,6 @@ export class Home extends Component {
     await this.getDonators();
     if(await Checks.checkLogin()) { this.setState({ isConnected: true }); }
     else { this.setState({ isConnected: false }); }
-    var skTimer = setInterval((() => { this.countDownTimer() }), 1000);
   }
   async getDonators() {
     if(process.env.NODE_ENV === 'development') {
@@ -46,12 +44,6 @@ export class Home extends Component {
     else { this.setState({ changelogVisible: true }); }
   }
   foundUser = (platform, mbmID) => { this.props.foundUser(platform, mbmID); }
-  countDownTimer() {
-    const shadowKeepLaunchTime = new Date("2019-10-01T17:00:00.000Z").getTime() / 1000;
-    const thisTime = new Date().getTime() / 1000;
-    if(shadowKeepLaunchTime > thisTime) { document.getElementById("skCountdown").innerHTML = (Misc.formatCountDownTime(shadowKeepLaunchTime - thisTime)); }
-    else { return clearInterval("skTimer"); }
-  }
 
   render() {
     const { isLive } = this.props;
@@ -69,7 +61,6 @@ export class Home extends Component {
               <p style={{ fontSize: "14px", margin: "auto", maxWidth: "500px" }}>Feel free to search below or consider connecting with bungie to get the full experience from Guardianstats! Press Enter to Search.</p>
             ): null
           }
-          <p style={{ fontSize: "20px", margin: "15px auto -25px auto" }} id="skCountdown"></p>
           <Search foundUser={ this.foundUser } />
         </div>
       );

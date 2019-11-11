@@ -1,7 +1,4 @@
 import React, { Component } from 'react';
-import qs from 'query-string';
-
-import Loader from '../../modules/Loader';
 import * as bungie from '../../requests/BungieReq';
 import * as Checks from '../../scripts/Checks';
 import * as Misc from '../../Misc';
@@ -46,9 +43,9 @@ export class GloryCheck extends Component {
     else if(!userdata.characterProgressions.data) { return "No User"; }
     else if(Object.keys(userdata.characterProgressions.data).length > 0) {
       var characters = userdata.profile.data.characterIds;
-      var name = userdata.profile.data.userInfo.displayName;
+      var displayName = userdata.profile.data.userInfo.displayName;
       var glory = userdata.characterProgressions.data[characters[0]].progressions[2679551909].currentProgress;
-      return { name, glory, team };
+      return { displayName, glory, team };
     }
     else { return "User Private"; }
   }
@@ -99,11 +96,11 @@ export class GloryCheck extends Component {
             <div style={{ display: "grid", width: "500px", gridTemplateColumns: "50% 50%", margin: "auto" }}>
               <div className="alphaTeam" style={{  }}>
                 <div style={{ color: "#88C4EC" }}>Alpha Team</div>
-                { this.state.alphaTeam.length > 0 ? ( this.state.alphaTeam.map(function(user) { if(user.team == 17) { return <div style={{ padding: "5px"}}>{ user.name }: { user.glory }</div> } }) ) : <div>Loading...</div> }
+                { this.state.alphaTeam.length > 0 ? ( this.state.alphaTeam.map(function(user) { if(user.team === 17) { return <div style={{ padding: "5px"}}>{ user.name }: { user.glory }</div> } else { return null } }) ) : <div>Loading...</div> }
               </div>
               <div className="bravoTeam" style={{  }}>
                 <div style={{ color: "tomato" }}>Bravo Team</div>
-                { this.state.bravoTeam.length > 0 ? ( this.state.bravoTeam.map(function(user) { if(user.team == 18) { return <div style={{ padding: "5px"}}>{ user.name }: { user.glory }</div> } }) ) : <div>Loading...</div> }
+                { this.state.bravoTeam.length > 0 ? ( this.state.bravoTeam.map(function(user) { if(user.team === 18) { return <div style={{ padding: "5px"}}>{ user.name }: { user.glory }</div> } else { return null } }) ) : <div>Loading...</div> }
               </div>
             </div>
           </div>

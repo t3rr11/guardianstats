@@ -1,7 +1,5 @@
 import React from 'react';
-import * as Misc from '../../Misc';
 import * as globals from '../../scripts/Globals';
-import * as bungie from '../../requests/BungieReq';
 
 export function generate(profileInfo, Manifest) {
   const ManifestCollectibles = globals.MANIFEST.DestinyCollectibleDefinition;
@@ -14,7 +12,7 @@ export function generate(profileInfo, Manifest) {
     <div className="inspectBox" id="InspectBoxUserCollections">
       <div id="itemCategories" className="scrollbar">
         {
-          PresentationNodes[1068557105].children.presentationNodes.map(category => (
+          ExoticNode.children.presentationNodes.map(category => (
             <div key={ category.presentationNodeHash } id={ category.presentationNodeHash } className="itemSubCategory">
               <p className="inspectSubCategoryTitle">{ PresentationNodes[category.presentationNodeHash].displayProperties.name }</p>
               {

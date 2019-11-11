@@ -1,5 +1,4 @@
 import React from 'react';
-import * as Misc from '../../Misc';
 
 export function generate(profileInfo, Manifest) {
   return (

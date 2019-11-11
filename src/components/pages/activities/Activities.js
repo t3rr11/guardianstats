@@ -50,7 +50,6 @@ export class Activities extends Component {
   }
   async grabActivityData() {
     const accountInfo = JSON.parse(localStorage.getItem("SelectedAccount"));
-    const profileInfo = await bungie.GetProfile(Misc.getPlatformType(accountInfo.platform), accountInfo.id, '100,200');
     const selectedCharacter = localStorage.getItem("SelectedCharacter");
     const activityData = await bungie.GetActivityHistory(Misc.getPlatformType(accountInfo.platform), accountInfo.id, selectedCharacter, 15, 0);
     this.setState({
@@ -107,7 +106,6 @@ export class Activities extends Component {
   stopActivityTimer() { clearInterval(ActivityWatcher); ActivityWatcher = null; console.log('Activity Watcher Stopped'); }
   checkActivityUpdates = async () => {
     const accountInfo = JSON.parse(localStorage.getItem("SelectedAccount"));
-    const profileInfo = await bungie.GetProfile(Misc.getPlatformType(accountInfo.platform), accountInfo.id, '100,200');
     const selectedCharacter = localStorage.getItem("SelectedCharacter");
     const previousActivities = this.state.activities;
     const recentActivityData = (await bungie.GetActivityHistory(Misc.getPlatformType(accountInfo.platform), accountInfo.id, selectedCharacter, 15, 0)).activities;

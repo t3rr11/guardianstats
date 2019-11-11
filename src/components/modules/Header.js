@@ -1,9 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import * as bungie from '../requests/BungieReq';
-import * as auth from '../requests/BungieAuth';
-import * as pf from '../scripts/Platforms';
-import * as checks from '../scripts/Checks';
 import * as Misc from '../Misc';
 import Settings from './Settings';
 
