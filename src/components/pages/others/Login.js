@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 export class Login extends Component {
 
   render() {
+    document.body.style.backgroundImage = "var(--DarkNavyBlue)";
     return(
       <div className="home-container" style={{ gridTemplateColumns: "auto" }}>
         <div className="home-content" style={{ width: "100%" }}>

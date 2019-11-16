@@ -46,6 +46,8 @@ export class Home extends Component {
   foundUser = (platform, mbmID) => { this.props.foundUser(platform, mbmID); }
 
   render() {
+    document.body.style.backgroundImage = "var(--DarkNavyBlue)";
+
     const { isLive } = this.props;
     const getMathColor = (input) => {
       if(input === "=") { return "yellow" }

@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 function PageNotFound() {
+  document.body.style.backgroundImage = "var(--DarkNavyBlue)";
   return(
     <div className="error-container">
       <p style={{ fontSize: "larger" }}>Uhhh... Page Not Found</p>

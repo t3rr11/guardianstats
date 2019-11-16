@@ -53,6 +53,8 @@ export class Exotics extends Component {
   }
 
   render() {
+    document.body.style.backgroundImage = "var(--DarkNavyBlue)";
+    
     //Define Consts and Variables
     const { status, statusText } = this.state.status;
     const { data } = this.state;

@@ -134,6 +134,8 @@ export class Inspect extends Component {
   toggleActiveView(view) { this.setState({ activeView: view }); }
 
   render() {
+    document.body.style.backgroundImage = "var(--DarkNavyBlue)";
+    
     //Define Consts and Variables
     const { status, statusText } = this.state.status;
     const { membershipInfo } = this.props;

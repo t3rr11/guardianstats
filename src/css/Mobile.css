@@ -122,7 +122,12 @@
     right: 10px;
     top: unset;
   }
-  .isLive {
-    display: none;
+  .isLive { display: none; }
+  .detailsContainer { grid-template-columns: auto; }
+  .para {
+    font-size: 14px;
+    margin-top: 5px;
   }
+  .howToConnect { grid-template-rows: auto auto; }
+  .features { grid-template-rows: auto auto; }
 }

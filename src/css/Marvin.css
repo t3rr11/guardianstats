@@ -1,0 +1,67 @@
+h2::selection { background-color: rgba(0.2, 0.2, 0.2, 0.2); }
+h3::selection { background-color: rgba(0.2, 0.2, 0.2, 0.2); }
+.detailsContainer {
+  display: grid;
+  height: 100%;
+  grid-template-columns: 50% 50%;
+}
+.howToConnect {
+  margin: 20px;
+  display: grid;
+  grid-template-rows: 450px 270px;
+}
+.features {
+  margin: 20px;
+  display: grid;
+  grid-template-rows: 450px 350px;
+}
+.connectContainer {
+  justify-content: center;
+  display: inherit;
+}
+.paraContainer {
+  background-color: rgba(0.2, 0.2, 0.2, 0.2);
+  border-radius: 10px;
+  padding: 10px;
+  align-items: center;
+  justify-content: center;
+  display: inherit;
+}
+.para {
+  width: 90%;
+  margin: auto;
+}
+.para::selection { background-color: rgba(0.2, 0.2, 0.2, 0.2); }
+.d_highlight {
+  background-color: rgba(0, 0, 0, 0.2)!important;
+  width: auto;
+  height: auto;
+  padding: .2em;
+  margin: -.2em 0;
+  border-radius: 3px;
+  font-size: 85%;
+  font-family: SourceCodePro, Consolas, Liberation Mono, Menlo, Courier, monospace;
+  text-indent: 0;
+  border: none;
+}
+.d_highlight::selection { background-color: rgba(0.2, 0.2, 0.2, 0.2); }
+.marvinsDisplayImages {
+  height: 350px;
+  margin: auto;
+  padding: 20px;
+}
+.marvinsDisplayImages > img {
+  height: 100%;
+}
+.marvinBtn {
+  height: 40px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  box-sizing: border-box;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.animatedLogo {
+  margin-top: 20px;
+}

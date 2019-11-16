@@ -19,4 +19,6 @@
     .select-custom-background { width: 300px; }
     .settings-background-options { grid-template-columns: auto; }
     .settings-background-image { width: 250px; height: 150px; }
+    .howToConnect { grid-template-rows: 450px auto; }
+    .features { grid-template-rows: 450px auto; }
 }

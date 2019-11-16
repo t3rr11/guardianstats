@@ -42,6 +42,8 @@ export class Vendors extends Component {
   }
 
   render() {
+    document.body.style.backgroundImage = "var(--DarkNavyBlue)";
+    
     //Define Consts and Variables
     const { status, statusText } = this.state.status;
     const { manifest, vendors } = this.state;

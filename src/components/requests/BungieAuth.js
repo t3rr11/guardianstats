@@ -22,7 +22,7 @@ export async function GetAuthentication(code) {
     }
     else {
       localStorage.setItem('Authorization', JSON.stringify(response));
-      localStorage.setItem("NextCheck", new Date().getTime() + 3600000);
+      localStorage.setItem("nextManifestCheck", new Date().getTime() + 3600000);
       SetMembershipsForCurrentUser();
     }
   })
@@ -44,19 +44,24 @@ export async function SetMembershipsForCurrentUser() {
   })
   .then(async (response) =>  {
     const destinyMemberships = JSON.parse(await response.text()).Response.destinyMemberships;
-    localStorage.setItem('DestinyMemberships', JSON.stringify(destinyMemberships));
-    if(destinyMemberships.length === 1) {
-      localStorage.setItem('SelectedAccount', JSON.stringify({"platform": Misc.getPlatformName(destinyMemberships[0].membershipType), "name": destinyMemberships[0].displayName, "id": destinyMemberships[0].membershipId}));
-      await bungie.GetProfile(destinyMemberships[0].membershipType, destinyMemberships[0].membershipId, '100,200').then(response => {
-        const characters = response.characters.data;
-        var lastOnlineCharacter = 0;
-        for(var i in characters) { if(new Date(characters[i].dateLastPlayed) > lastOnlineCharacter) { lastOnlineCharacter = characters[i]; } }
-        if(localStorage.getItem('SelectedCharacter') === null) { localStorage.setItem('SelectedCharacter', lastOnlineCharacter.characterId); }
-        localStorage.setItem('ProfileInfo', JSON.stringify(response));
-      });
+    if(destinyMemberships.length > 0) {
+      localStorage.setItem('DestinyMemberships', JSON.stringify(destinyMemberships));
+      if(destinyMemberships.length === 1) {
+        localStorage.setItem('SelectedAccount', JSON.stringify({"platform": Misc.getPlatformName(destinyMemberships[0].membershipType), "name": destinyMemberships[0].displayName, "id": destinyMemberships[0].membershipId}));
+        await bungie.GetProfile(destinyMemberships[0].membershipType, destinyMemberships[0].membershipId, '100,200').then(response => {
+          const characters = response.characters.data;
+          var lastOnlineCharacter = 0;
+          for(var i in characters) { if(new Date(characters[i].dateLastPlayed) > lastOnlineCharacter) { lastOnlineCharacter = characters[i]; } }
+          if(localStorage.getItem('SelectedCharacter') === null) { localStorage.setItem('SelectedCharacter', lastOnlineCharacter.characterId); }
+          localStorage.setItem('ProfileInfo', JSON.stringify(response));
+        });
+      }
+      else { localStorage.setItem('SelectedAccount', 'Please Select Platform'); }
+      window.location.href = '/';
     }
-    else { localStorage.setItem('SelectedAccount', 'Please Select Platform'); }
-    window.location.href = '/';
+    else {
+      console.log(response);
+    }
   })
   .catch((error) => { console.error(error); });
 }
@@ -114,7 +119,7 @@ export async function RenewToken(refresh_token) {
     if(response.error) { console.log(response); }
     else {
       localStorage.setItem('Authorization', JSON.stringify(response));
-      localStorage.setItem("NextCheck", new Date().getTime() + 3600000);
+      localStorage.setItem("nextManifestCheck", new Date().getTime() + 3600000);
       console.log(`Authorization has been renewed!`);
       timers.StartAuthTimer();
     }

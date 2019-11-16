@@ -128,6 +128,8 @@ export class Activities extends Component {
   async changeCharacter(characterId) { localStorage.setItem('SelectedCharacter', characterId); window.location.reload(); }
 
   render() {
+    document.body.style.backgroundImage = "var(--DarkNavyBlue)";
+    
     //Define Consts and Variables
     const { status, statusText } = this.state.status;
     const { activities, currentActivity, PGCRs } = this.state;

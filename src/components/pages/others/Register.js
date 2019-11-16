@@ -21,6 +21,7 @@ export class Register extends Component {
   }
 
   render() {
+    document.body.style.backgroundImage = "var(--DarkNavyBlue)";
     return(
       <React.Fragment>
         <Loader statusText="Registering you now! Welcome to the Guardianstats family!" />

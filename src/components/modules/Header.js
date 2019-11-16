@@ -64,6 +64,7 @@ export class Header extends React.Component {
           <li className="menu-item" id="Activities"><Link to="/activities" onClick={ (() => this.toggleMenuSlider()) }>Activities</Link></li>
           <li className="menu-item" id="Exotics"><Link to="/exotics" onClick={ (() => this.toggleMenuSlider()) }>Exotics</Link></li>
           <li className="menu-item" id="Vendors"><Link to="/vendors" onClick={ (() => this.toggleMenuSlider()) }>Vendors</Link></li>
+          <li className="menu-item Marvin" id="Marvin"><Link to="/marvin" onClick={ (() => this.toggleMenuSlider()) }>Marvin</Link></li>
           <li className="menu-item-disabled" id="News"><span>News</span></li>
         </React.Fragment>
       )
@@ -74,6 +75,7 @@ export class Header extends React.Component {
           <li className="menu-item-disabled" id="Activities"><span>Activities</span></li>
           <li className="menu-item-disabled" id="Exotics"><span>Exotics</span></li>
           <li className="menu-item-disabled" id="Vendors"><span>Vendors</span></li>
+          <li className="menu-item Marvin" id="Marvin"><Link to="/marvin" onClick={ (() => this.toggleMenuSlider()) }>Marvin</Link></li>
           <li className="menu-item-disabled" id="News"><span>News</span></li>
         </React.Fragment>
       )

@@ -79,6 +79,7 @@ export class GloryCheck extends Component {
   }
 
   render() {
+    document.body.style.backgroundImage = "var(--DarkNavyBlue)";
     return(
       <div className="home-content">
         <p style={{ margin: "0", fontSize: "24px" }}>Glory Check</p>

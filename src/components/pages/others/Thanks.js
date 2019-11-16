@@ -1,6 +1,7 @@
 import React from 'react';
 
 function Thanks() {
+  document.body.style.backgroundImage = "var(--DarkNavyBlue)";
   return(
     <div className="home-container" style={{ gridTemplateColumns: "auto" }}>
       <div className="home-content" style={{ width: "100%" }}>

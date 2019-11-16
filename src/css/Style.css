@@ -5,10 +5,10 @@
 @import url('Profile.css');
 @import url('Inspect.css');
 @import url('Activities.css');
-@import url('Piechart.css');
 @import url('Loader.css');
 @import url('Home.css');
 @import url('Triumphs.css');
+@import url('Marvin.css');
 @import url('Items.css');
 @import url('Scrollbar.css');
 @import url('Smallscreen.css');
@@ -25,6 +25,10 @@
   --InbetweenerNavyBlue: #25282F;
   --LightNavyBlue: #292C33;
   --LighterNavyBlue: #353841;
+  --PurpleGradient: linear-gradient( 178.1deg,  rgba(60,55,106,1) 8.5%, rgba(23,20,69,1) 82.4% );
+  --BlueGradient: linear-gradient( 359.8deg,  rgba(56,104,178,1) 7.3%, rgba(31,67,122,1) 84.8% );
+  --GreenGradient: linear-gradient( 178deg,  rgba(33,96,66,1) 0%, rgba(174,219,130,0.78) 90% );
+  --MidnightGradient: linear-gradient( 179.4deg,  rgba(12,20,69,1) -16.9%, rgba(71,30,84,1) 119.9% );
 }
 html {
   height: 100%;
@@ -63,7 +67,6 @@ body {
   z-index: 5;
   display: grid;
   grid-template-columns: 170px auto;
-  background-color: var(--DarkNavyBlue);
 }
 .logo {
   width: 30px;
@@ -112,11 +115,13 @@ body {
   float: right;
   border: 0px;
   border-radius: 0px;
-  background-color: var(--NavyBlue);
   border-color: var(--NavyBlue);
   color: white;
   height: 35px;
   margin-top: 8px;
+}
+.custom.usernameBtn > option {
+  background-color: var(--dark);
 }
 #UsernameBtn:focus {
   box-shadow: 0 0 0 0.2rem rgba(0,0,0,.10);
