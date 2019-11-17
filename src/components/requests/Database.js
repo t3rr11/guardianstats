@@ -1,6 +1,6 @@
 import Dexie from 'dexie';
 
-const db = new Dexie('guardianstats');
+export const db = new Dexie('guardianstats');
 db.version(1).stores({
   ManifestVersion: 'version',
   DestinyActivityDefinition: 'definition',
@@ -12,7 +12,8 @@ db.version(1).stores({
   DestinyInventoryItemLiteDefinition: 'definition',
   DestinyObjectiveDefinition: 'definition',
   DestinyProgressionDefinition: 'definition',
-  DestinyTalentGridDefinition: 'definition'
+  DestinyTalentGridDefinition: 'definition',
+  DestinyVendorDefinition: 'definition'
 });
 
 export async function checkManifestExists() { return Dexie.exists("guardianstats").then(function(exists) { if(exists) { return true } else { return false } }).catch(function (error) { return error; }); }
@@ -29,6 +30,7 @@ export async function getDefinition(definition) {
   else if(definition === "DestinyObjectiveDefinition") { return (await db.table('DestinyObjectiveDefinition').toCollection().first()).data; }
   else if(definition === "DestinyProgressionDefinition") { return (await db.table('DestinyProgressionDefinition').toCollection().first()).data; }
   else if(definition === "DestinyTalentGridDefinition") { return (await db.table('DestinyTalentGridDefinition').toCollection().first()).data; }
+  else if(definition === "DestinyVendorDefinition") { return (await db.table('DestinyVendorDefinition').toCollection().first()).data; }
 }
 export async function clearManifest() {
   db.table('ManifestVersion').clear();
@@ -42,6 +44,7 @@ export async function clearManifest() {
   db.table('DestinyObjectiveDefinition').clear();
   db.table('DestinyProgressionDefinition').clear();
   db.table('DestinyTalentGridDefinition').clear();
+  db.table('DestinyVendorDefinition').clear();
 }
 
 export default db;

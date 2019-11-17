@@ -51,9 +51,10 @@ class App extends React.Component {
 
   async componentDidMount() {
     this.setState({ status: { status: 'startingUp', statusText: `Loading Guardianstats ${ Manifest.version }`, loading: true } });
-    if(!localStorage.getItem("Firstload")) {
+    if(!localStorage.getItem("v146")) {
       localStorage.clear();
-      localStorage.setItem("Firstload", "false");
+      indexedDB.deleteDatabase("guardianstats");
+      localStorage.setItem("v146", "true");
       window.location.reload();
     }
     else {
@@ -77,7 +78,6 @@ class App extends React.Component {
         //Manifest is less than an hour old. Set manifest to global variable: MANIFEST;
         this.setState({ status: { status: 'grabbingManifest', statusText: 'Unpacking Manifest...', loading: true } });
         await this.setManifest();
-        this.manifestLoaded();
       }
       else {
         console.log("Checking Manifest");
@@ -91,7 +91,6 @@ class App extends React.Component {
         if(await checks.checkManifestVersion(storedVersion, currentVersion)) {
           //Manifest version is the same. Set manifest to global variable: MANIFEST and finish loading page.
           await this.setManifest();
-          this.manifestLoaded();
           this.setNextManifestCheck();
         }
         else {
@@ -124,6 +123,7 @@ class App extends React.Component {
     const DestinyObjectiveDefinition = currentVersion.jsonWorldComponentContentPaths['en'].DestinyObjectiveDefinition;
     const DestinyProgressionDefinition = currentVersion.jsonWorldComponentContentPaths['en'].DestinyProgressionDefinition;
     const DestinyTalentGridDefinition = currentVersion.jsonWorldComponentContentPaths['en'].DestinyTalentGridDefinition;
+    const DestinyVendorDefinition = currentVersion.jsonWorldComponentContentPaths['en'].DestinyVendorDefinition;
 
     Promise.all([
       bungie.GetManifest(DestinyActivityDefinition),
@@ -135,7 +135,8 @@ class App extends React.Component {
       bungie.GetManifest(DestinyInventoryItemLiteDefinition),
       bungie.GetManifest(DestinyObjectiveDefinition),
       bungie.GetManifest(DestinyProgressionDefinition),
-      bungie.GetManifest(DestinyTalentGridDefinition)
+      bungie.GetManifest(DestinyTalentGridDefinition),
+      bungie.GetManifest(DestinyVendorDefinition)
     ]).then(async (values) => {
       this.setState({ status: { status: 'storingManifest', statusText: "Storing Manfiest...", loading: true } });
       try { db.clearManifest(); } catch (err) { console.log("No manifest to clear. Ignore this."); }
@@ -152,6 +153,7 @@ class App extends React.Component {
       db.table('DestinyObjectiveDefinition').add({ definition: 'DestinyObjectiveDefinition', data: values[7] }).then(() => { console.log("Successfully Added DestinyObjectiveDefinition"); }).catch(error => { this.handleError(error); return "Failed"; });
       db.table('DestinyProgressionDefinition').add({ definition: 'DestinyProgressionDefinition', data: values[8] }).then(() => { console.log("Successfully Added DestinyProgressionDefinition"); }).catch(error => { this.handleError(error); return "Failed"; });
       db.table('DestinyTalentGridDefinition').add({ definition: 'DestinyTalentGridDefinition', data: values[9] }).then(() => { console.log("Successfully Added DestinyTalentGridDefinition"); }).catch(error => { this.handleError(error); return "Failed"; });
+      db.table('DestinyVendorDefinition').add({ definition: 'DestinyVendorDefinition', data: values[10] }).then(() => { console.log("Successfully Added DestinyVendorDefinition"); }).catch(error => { this.handleError(error); return "Failed"; });
 
       //Set manifest
       await this.setManifest();
@@ -219,7 +221,8 @@ class App extends React.Component {
       db.table('DestinyInventoryItemLiteDefinition').toCollection().first(),
       db.table('DestinyObjectiveDefinition').toCollection().first(),
       db.table('DestinyProgressionDefinition').toCollection().first(),
-      db.table('DestinyTalentGridDefinition').toCollection().first()
+      db.table('DestinyTalentGridDefinition').toCollection().first(),
+      db.table('DestinyVendorDefinition').toCollection().first()
     ]).then(async (values) => {
       //Add data to global manifest object
       globals.SetManifest({
@@ -233,9 +236,11 @@ class App extends React.Component {
         "DestinyInventoryItemLiteDefinition": values[6].data,
         "DestinyObjectiveDefinition": values[7].data,
         "DestinyProgressionDefinition": values[8].data,
-        "DestinyTalentGridDefinition": values[9].data
+        "DestinyTalentGridDefinition": values[9].data,
+        "DestinyVendorDefinition": values[10].data
       });
     }).catch((error) => { this.handleError(error); return "Failed"; });
+    this.manifestLoaded();
   }
 
   render() {
