@@ -208,6 +208,11 @@ class App extends React.Component {
     if(error.name === 'QuotaExceededError') { this.setState({ status: { error: error.message, status: 'error', statusText: 'Failed to save manifest: QuotaExceededError (Possible reasons: Are you using Incognito mode?)', loading: false } }); }
     else if(error.message === 'Failed to fetch') { this.setState({ status: { error: error.message, status: 'error', statusText: 'Failed to fetch: Manifest', loading: false } }); }
     else if(error.ErrorCode === 5) { this.setState({ status: { error: error.message, status: 'error', statusText: 'Bungie API is down for maintenance.', loading: false } }); }
+    else if(error.name === 'TypeError') {
+      localStorage.clear();
+      indexedDB.deleteDatabase("guardianstats");
+      window.location.reload();
+    }
     else { console.log('Here is something wrong:', error); this.setState({ status: { error: error.message, status: 'error', statusText: `Failed to save manifest: ${ error.message }`, loading: false } }); }
   }
   async setManifest() {
