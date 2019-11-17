@@ -32,7 +32,6 @@ import * as bungie from './components/requests/BungieReq';
 import * as timers from './components/Timers';
 import * as checks from './components/scripts/Checks';
 import * as globals from './components/scripts/Globals';
-import * as Checks from './components/scripts/Checks';
 import * as Misc from './components/Misc';
 
 //CSS
@@ -58,7 +57,7 @@ class App extends React.Component {
       window.location.reload();
     }
     else {
-      if(!await Checks.checkSettingsExist()) { Settings.setDefaultSettings(); }
+      if(!await checks.checkSettingsExist()) { Settings.setDefaultSettings(); }
       if(Misc.noManifest()) { this.manifestLoaded(); }
       else { Misc.timed('Manifest', this.loadManifest()); }
       this.checkIfLive();
@@ -77,7 +76,7 @@ class App extends React.Component {
       if(await checks.checkManifestValid()) {
         //Manifest is less than an hour old. Set manifest to global variable: MANIFEST;
         this.setState({ status: { status: 'grabbingManifest', statusText: 'Unpacking Manifest...', loading: true } });
-        globals.SetManifest((await db.table('manifest').toCollection().first()).value);
+        await this.setManifest();
         this.manifestLoaded();
       }
       else {
@@ -91,7 +90,7 @@ class App extends React.Component {
         //Check versions
         if(await checks.checkManifestVersion(storedVersion, currentVersion)) {
           //Manifest version is the same. Set manifest to global variable: MANIFEST and finish loading page.
-          globals.SetManifest(storedVersion.value);
+          await this.setManifest();
           this.manifestLoaded();
           this.setNextManifestCheck();
         }
@@ -114,32 +113,50 @@ class App extends React.Component {
     }
   }
   async getManifest(currentVersion) {
-    await bungie.GetManifest(currentVersion.jsonWorldContentPaths['en']).then((newManifest) => {
-      try { db.table('manifest').clear(); } catch (err) { console.log("No manifest to clear. Ignore this."); }
+
+    const DestinyActivityDefinition = currentVersion.jsonWorldComponentContentPaths['en'].DestinyActivityDefinition;
+    const DestinyActivityTypeDefinition = currentVersion.jsonWorldComponentContentPaths['en'].DestinyActivityTypeDefinition;
+    const DestinyActivityModeDefinition = currentVersion.jsonWorldComponentContentPaths['en'].DestinyActivityModeDefinition;
+    const DestinyCollectibleDefinition = currentVersion.jsonWorldComponentContentPaths['en'].DestinyCollectibleDefinition;
+    const DestinyPresentationNodeDefinition = currentVersion.jsonWorldComponentContentPaths['en'].DestinyPresentationNodeDefinition;
+    const DestinyRecordDefinition = currentVersion.jsonWorldComponentContentPaths['en'].DestinyRecordDefinition;
+    const DestinyInventoryItemLiteDefinition = currentVersion.jsonWorldComponentContentPaths['en'].DestinyInventoryItemLiteDefinition;
+    const DestinyObjectiveDefinition = currentVersion.jsonWorldComponentContentPaths['en'].DestinyObjectiveDefinition;
+    const DestinyProgressionDefinition = currentVersion.jsonWorldComponentContentPaths['en'].DestinyProgressionDefinition;
+    const DestinyTalentGridDefinition = currentVersion.jsonWorldComponentContentPaths['en'].DestinyTalentGridDefinition;
+
+    Promise.all([
+      bungie.GetManifest(DestinyActivityDefinition),
+      bungie.GetManifest(DestinyActivityTypeDefinition),
+      bungie.GetManifest(DestinyActivityModeDefinition),
+      bungie.GetManifest(DestinyCollectibleDefinition),
+      bungie.GetManifest(DestinyPresentationNodeDefinition),
+      bungie.GetManifest(DestinyRecordDefinition),
+      bungie.GetManifest(DestinyInventoryItemLiteDefinition),
+      bungie.GetManifest(DestinyObjectiveDefinition),
+      bungie.GetManifest(DestinyProgressionDefinition),
+      bungie.GetManifest(DestinyTalentGridDefinition)
+    ]).then(async (values) => {
       this.setState({ status: { status: 'storingManifest', statusText: "Storing Manfiest...", loading: true } });
-      db.table('manifest').add({ version: currentVersion.version, value: newManifest }).then(() => {
-        console.log('Manifest Added Successfully!');
-        globals.SetManifest(newManifest);
-      }).catch(error => {
-        if((error.name === 'QuotaExceededError') || (error.inner && error.inner.name === 'QuotaExceededError')) {
-          console.log('If you see this message, then error handling works as expected.', error);
-          this.setState({ status: { error: error.message, status: 'error', statusText: 'Failed to save manifest: QuotaExceededError (Possible reasons: Are you using Incognito mode?)', loading: false } });
-        }
-        else {
-          console.log('Here is something wrong:', error);
-          console.log('error.message', error.message);
-          console.log('error.name', error.name);
-          console.log('error', error);
-          this.setState({ status: { error: error.message, status: 'error', statusText: `Failed to save manifest: ${ error.name }`, loading: false } });
-        }
-        return "Failed";
-      });
-    }).catch(function(err) {
-      if(err.message === 'Failed to fetch') { this.setState({ status: { error: err.message, status: 'error', statusText: 'Failed to fetch: Manifest', loading: false } }); }
-      else if(err.ErrorCode === 5) { this.setState({ status: { error: err.message, status: 'error', statusText: 'Bungie API is down for maintenance.', loading: false } }); }
-      else { console.log(err); this.setState({ status: { error: err.message, status: 'error', statusText: err.message, loading: false } }); }
-      return "Failed";
-    });
+      try { db.clearManifest(); } catch (err) { console.log("No manifest to clear. Ignore this."); }
+
+      //Add data to databases
+      db.table('ManifestVersion').add({ version: currentVersion.version }).then(() => { console.log("Successfully Added ManifestVersion"); }).catch(error => { this.handleError(error); return "Failed"; });
+      db.table('DestinyActivityDefinition').add({ definition: 'DestinyActivityDefinition', data: values[0] }).then(() => { console.log("Successfully Added DestinyActivityDefinition"); }).catch(error => { this.handleError(error); return "Failed"; });
+      db.table('DestinyActivityTypeDefinition').add({ definition: 'DestinyActivityTypeDefinition', data: values[1] }).then(() => { console.log("Successfully Added DestinyActivityTypeDefinition"); }).catch(error => { this.handleError(error); return "Failed"; });
+      db.table('DestinyActivityModeDefinition').add({ definition: 'DestinyActivityModeDefinition', data: values[2] }).then(() => { console.log("Successfully Added DestinyActivityModeDefinition"); }).catch(error => { this.handleError(error); return "Failed"; });
+      db.table('DestinyCollectibleDefinition').add({ definition: 'DestinyCollectibleDefinition', data: values[3] }).then(() => { console.log("Successfully Added DestinyCollectibleDefinition"); }).catch(error => { this.handleError(error); return "Failed"; });
+      db.table('DestinyPresentationNodeDefinition').add({ definition: 'DestinyPresentationNodeDefinition', data: values[4] }).then(() => { console.log("Successfully Added DestinyPresentationNodeDefinition"); }).catch(error => { this.handleError(error); return "Failed"; });
+      db.table('DestinyRecordDefinition').add({ definition: 'DestinyRecordDefinition', data: values[5] }).then(() => { console.log("Successfully Added DestinyRecordDefinition"); }).catch(error => { this.handleError(error); return "Failed"; });
+      db.table('DestinyInventoryItemLiteDefinition').add({ definition: 'DestinyInventoryItemLiteDefinition', data: values[6] }).then(() => { console.log("Successfully Added DestinyInventoryItemLiteDefinition"); }).catch(error => { this.handleError(error); return "Failed"; });
+      db.table('DestinyObjectiveDefinition').add({ definition: 'DestinyObjectiveDefinition', data: values[7] }).then(() => { console.log("Successfully Added DestinyObjectiveDefinition"); }).catch(error => { this.handleError(error); return "Failed"; });
+      db.table('DestinyProgressionDefinition').add({ definition: 'DestinyProgressionDefinition', data: values[8] }).then(() => { console.log("Successfully Added DestinyProgressionDefinition"); }).catch(error => { this.handleError(error); return "Failed"; });
+      db.table('DestinyTalentGridDefinition').add({ definition: 'DestinyTalentGridDefinition', data: values[9] }).then(() => { console.log("Successfully Added DestinyTalentGridDefinition"); }).catch(error => { this.handleError(error); return "Failed"; });
+
+      //Set manifest
+      await this.setManifest();
+      console.log('Manifest Added Successfully!');
+    }).catch((error) => { this.handleError(error); return "Failed"; });
   }
   async checkProfile() {
     if(await checks.checkLogin()) {
@@ -185,6 +202,41 @@ class App extends React.Component {
   manifestLoaded() { this.checkProfile(); }
   setNextManifestCheck() { localStorage.setItem('nextManifestCheck', new Date().getTime() + (1000 * 60 * 60)) }
   profileLoaded() { this.setState({ status: { status: 'ready', statusText: 'Ready to go!', loading: false } }); }
+  handleError(error) {
+    if(error.name === 'QuotaExceededError') { this.setState({ status: { error: error.message, status: 'error', statusText: 'Failed to save manifest: QuotaExceededError (Possible reasons: Are you using Incognito mode?)', loading: false } }); }
+    else if(error.message === 'Failed to fetch') { this.setState({ status: { error: error.message, status: 'error', statusText: 'Failed to fetch: Manifest', loading: false } }); }
+    else if(error.ErrorCode === 5) { this.setState({ status: { error: error.message, status: 'error', statusText: 'Bungie API is down for maintenance.', loading: false } }); }
+    else { console.log('Here is something wrong:', error); this.setState({ status: { error: error.message, status: 'error', statusText: `Failed to save manifest: ${ error.name }`, loading: false } }); }
+  }
+  async setManifest() {
+    Promise.all([
+      db.table('DestinyActivityDefinition').toCollection().first(),
+      db.table('DestinyActivityTypeDefinition').toCollection().first(),
+      db.table('DestinyActivityModeDefinition').toCollection().first(),
+      db.table('DestinyCollectibleDefinition').toCollection().first(),
+      db.table('DestinyPresentationNodeDefinition').toCollection().first(),
+      db.table('DestinyRecordDefinition').toCollection().first(),
+      db.table('DestinyInventoryItemLiteDefinition').toCollection().first(),
+      db.table('DestinyObjectiveDefinition').toCollection().first(),
+      db.table('DestinyProgressionDefinition').toCollection().first(),
+      db.table('DestinyTalentGridDefinition').toCollection().first()
+    ]).then(async (values) => {
+      //Add data to global manifest object
+      globals.SetManifest({
+        "DestinyActivityDefinition": values[0].data,
+        "DestinyActivityTypeDefinition": values[1].data,
+        "DestinyActivityModeDefinition": values[2].data,
+        "DestinyCollectibleDefinition": values[3].data,
+        "DestinyPresentationNodeDefinition": values[4].data,
+        "DestinyRecordDefinition": values[5].data,
+        "DestinyInventoryItemDefinition": values[6].data,
+        "DestinyInventoryItemLiteDefinition": values[6].data,
+        "DestinyObjectiveDefinition": values[7].data,
+        "DestinyProgressionDefinition": values[8].data,
+        "DestinyTalentGridDefinition": values[9].data
+      });
+    }).catch((error) => { this.handleError(error); return "Failed"; });
+  }
 
   render() {
     const { status, statusText, warning, loading } = this.state.status;
