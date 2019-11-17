@@ -1,5 +1,11 @@
 [
   {
+    "1.4.6": [
+      "+ Added a new page for Marvin.",
+      "= Reworked the manifest storing system, should be much faster and have way less issues."
+    ]
+  },
+  {
     "1.4.5": [
       "+ Added a collectibles tab to the inspect page / profile page. You can now see what exotics people have!",
       "= Soon the Exotics page will be removed in place of this change."
