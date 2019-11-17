@@ -84,7 +84,29 @@ export const Titles = (profileInfo) => {
         "icon": "./images/icons/seals/MMXIX",
         "description": "Complete these feats of strength before 9/17/2019 to claim your unique rewards.",
         "hidden": true
+      },
+      {
+        "title": "Undying",
+        "isObtained": profileInfo.profileRecords.data.records["2707428411"].objectives[0].complete,
+        "icon": "./images/icons/seals/undying",
+        "description": "Complete all Triumphs for Season of the Undying.",
+        "hidden": false
+      },
+      {
+        "title": "Enlightened",
+        "isObtained": profileInfo.profileRecords.data.records["3387213440"].objectives[0].complete,
+        "icon": "./images/icons/seals/enlightened",
+        "description": "Complete all Triumphs for the Garden of Salvation raid.",
+        "hidden": false
+      },
+      {
+        "title": "Harbinger",
+        "isObtained": profileInfo.profileRecords.data.records["3793754396"].objectives[0].complete,
+        "icon": "./images/icons/seals/harbinger",
+        "description": "Complete all Triumphs for Shadowkeep.",
+        "hidden": false
       }
+
     ]
   )
 }
