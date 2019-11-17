@@ -261,6 +261,7 @@ class App extends React.Component {
                 <Switch>
                   <Route exact path="/" render={ props => (<Home foundUser={ ((platform, mbmID) => props.history.push(`/inspect/${ platform }/${ mbmID }`)) } isLive={ this.state.isLive } />) } />
                   <Route path="/home" render={ props => (<Home foundUser={ ((platform, mbmID) => props.history.push(`/inspect/${ platform }/${ mbmID }`)) } isLive={ this.state.isLive } />) } />
+                  <Route path="/register" render={ props => (<Register {...props} />) } />
                   <Route path="/activities" render={ props => (<Activities foundUser={ ((platform, mbmID) => props.history.push(`/inspect/${ platform }/${ mbmID }`)) } />) } />
                   <Route path="/exotics" render={ props => (<Exotics />) } />
                   <Route path="/vendors" render={ props => (<Vendors />) } />

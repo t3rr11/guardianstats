@@ -116,7 +116,10 @@ export async function RenewToken(refresh_token) {
   })
   .then(async (response) => {
     response = JSON.parse(await response.text());
-    if(response.error) { console.log(response); }
+    if(response.error) {
+      if(response.error === "invalid_grant") { window.location.href = 'https://www.bungie.net/en/oauth/authorize?client_id=24178&response_type=code&state=1'; }
+      else { console.log(response); }
+    }
     else {
       localStorage.setItem('Authorization', JSON.stringify(response));
       localStorage.setItem("nextManifestCheck", new Date().getTime() + 3600000);
