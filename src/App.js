@@ -86,7 +86,7 @@ class App extends React.Component {
         //Define variables
         var storedVersion, currentVersion;
         //Grab versions
-        await Promise.all([ await db.table('manifest').toCollection().first(), await bungie.GetManifestVersion() ]).then(async function(values) { storedVersion = values[0]; currentVersion = values[1]; });
+        await Promise.all([ await db.table('ManifestVersion').toCollection().first(), await bungie.GetManifestVersion() ]).then(async function(values) { storedVersion = values[0]; currentVersion = values[1]; });
         //Check versions
         if(await checks.checkManifestVersion(storedVersion, currentVersion)) {
           //Manifest version is the same. Set manifest to global variable: MANIFEST and finish loading page.
