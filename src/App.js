@@ -88,18 +88,21 @@ class App extends React.Component {
         //Grab versions
         await Promise.all([ await db.table('ManifestVersion').toCollection().first(), await bungie.GetManifestVersion() ]).then(async function(values) { storedVersion = values[0]; currentVersion = values[1]; });
         //Check versions
-        if(await checks.checkManifestVersion(storedVersion, currentVersion)) {
-          //Manifest version is the same. Set manifest to global variable: MANIFEST and finish loading page.
-          await this.setManifest();
-          this.setNextManifestCheck();
-        }
+        if(!currentVersion) { this.handleError({ ErrorCode: 5 }); }
         else {
-          console.log("Updating Manifest");
-          this.setState({ status: { status: 'updatingManifest', statusText: 'Updating Manifest...', loading: true } });
-          //New Manifest Found. Store manifest and set manifest to global variable: MANIFEST;
-          await this.getManifest(currentVersion);
-          this.manifestLoaded();
-          this.setNextManifestCheck();
+          if(await checks.checkManifestVersion(storedVersion, currentVersion)) {
+            //Manifest version is the same. Set manifest to global variable: MANIFEST and finish loading page.
+            await this.setManifest();
+            this.setNextManifestCheck();
+          }
+          else {
+            console.log("Updating Manifest");
+            this.setState({ status: { status: 'updatingManifest', statusText: 'Updating Manifest...', loading: true } });
+            //New Manifest Found. Store manifest and set manifest to global variable: MANIFEST;
+            await this.getManifest(currentVersion);
+            this.manifestLoaded();
+            this.setNextManifestCheck();
+          }
         }
       }
     }
@@ -207,7 +210,7 @@ class App extends React.Component {
   handleError(error) {
     if(error.name === 'QuotaExceededError') { this.setState({ status: { error: error.message, status: 'error', statusText: 'Failed to save manifest: QuotaExceededError (Possible reasons: Are you using Incognito mode?)', loading: false } }); }
     else if(error.message === 'Failed to fetch') { this.setState({ status: { error: error.message, status: 'error', statusText: 'Failed to fetch: Manifest', loading: false } }); }
-    else if(error.ErrorCode === 5) { this.setState({ status: { error: error.message, status: 'error', statusText: 'Bungie API is down for maintenance.', loading: false } }); }
+    else if(error.ErrorCode === 5) { this.setState({ status: { error: error.message, status: 'error', statusText: 'The Bungie API is temporarily disabled for maintenance.', loading: false } }); }
     else if(error.name === 'TypeError') {
       localStorage.clear();
       indexedDB.deleteDatabase("guardianstats");

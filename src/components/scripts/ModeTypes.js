@@ -45,7 +45,7 @@ export function modeTypes(type) {
   else if(type === 75){ return 'Gambit Prime: '; }
   else if(type === 76){ return 'Reckoning: '; }
   else if(type === 77){ return 'Menagerie: '; }
-  else if(type === 78){ return 'Vex Offensive: '; }
+  else if(type === 78){ return ''; } //Vex Offensive
   else if(type === 79){ return ''; } //Nightmare Hunt
   else if(type === 80){ return 'Elimination: '; }
   else if(type === 81){ return 'Momentum: '; }
