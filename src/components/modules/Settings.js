@@ -46,7 +46,7 @@ export class Error extends Component {
     if(UnsetSettings !== "") {
       for(var i in UnsetSettings) {
         if(UnsetSettings[i] === "loader") { this.setLoader("class"); }
-        else if(UnsetSettings[i] === "background") { this.setBackground("shadowkeep"); }
+        else if(UnsetSettings[i] === "background") { this.setBackground("vex"); }
         else if(UnsetSettings[i] === "hiddenSeals") { this.setHiddenSeals("Hidden"); }
       }
     }
@@ -74,6 +74,9 @@ export class Error extends Component {
                 </div>
                 <div className={ `settings-background-option ${ this.state.background === "forsaken" ? "selected" : null }` } onClick={ (() => this.setBackground("forsaken")) }>
                   <img className="settings-background-image" src="/images/backgrounds/forsaken.jpg" alt="background" />
+                </div>
+                <div className={ `settings-background-option ${ this.state.background === "vex" ? "selected" : null }` } onClick={ (() => this.setBackground("vex")) }>
+                  <img className="settings-background-image" src="/images/backgrounds/vex.jpg" alt="background" />
                 </div>
               </div>
             </div>

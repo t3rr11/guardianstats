@@ -12,6 +12,7 @@ export class Home extends Component {
     changelogVisible: false,
     supportersVisible: true,
     background: null,
+    bgPos: null,
     donators: null
   }
 
@@ -33,8 +34,12 @@ export class Home extends Component {
   }
   setBackground() {
     const Settings = JSON.parse(localStorage.getItem("Settings"));
-    if(!Settings === null) { this.setState({ background: Settings.background }); }
-    else { this.setState({ background: "shadowkeep" }); }
+    if(Settings !== null) {
+      if(Settings.background === "vex") { this.setState({ background: Settings.background, bgPos: "center" }); }
+      else { this.setState({ background: Settings.background, bgPos: "top center" }); }
+
+    }
+    else { this.setState({ background: "vex" }); }
   }
   GotoAuth() { window.location.href = 'https://www.bungie.net/en/oauth/authorize?client_id=24178&response_type=code&state=1'; }
   GotoTwitter() { window.open('https://twitter.com/Guardianstats', '_blank'); }
@@ -173,7 +178,7 @@ export class Home extends Component {
     if(this.state.isConnected !== null) {
       return(
         <React.Fragment>
-          <div className="home-container" style={{ backgroundImage: `url("/images/backgrounds/${ this.state.background }.jpg")` }}>
+          <div className="home-container" style={{ backgroundImage: `url("/images/backgrounds/${ this.state.background }.jpg")`, backgroundPosition: this.state.bgPos }}>
             { homeContent() }
             { this.state.supportersVisible ? supportersContent() : null }
             { this.state.changelogVisible ? changelogContent() : null }
