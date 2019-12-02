@@ -23,7 +23,9 @@ import Login from './components/pages/others/Login';
 import Thanks from './components/pages/others/Thanks';
 import NotFound from './components/pages/others/PageNotFound';
 import Glory from './components/pages/others/Glory';
+import Test from './components/pages/others/Test';
 import Marvin from './components/pages/marvin/Marvin';
+import Clan from './components/pages/clans/Clan';
 
 //Functions
 import db from './components/requests/Database';
@@ -204,20 +206,6 @@ class App extends React.Component {
       this.profileLoaded();
     }
   }
-  manifestLoaded() { this.checkProfile(); }
-  setNextManifestCheck() { localStorage.setItem('nextManifestCheck', new Date().getTime() + (1000 * 60 * 60)) }
-  profileLoaded() { this.setState({ status: { status: 'ready', statusText: 'Ready to go!', loading: false } }); }
-  handleError(error) {
-    if(error.name === 'QuotaExceededError') { this.setState({ status: { error: error.message, status: 'error', statusText: 'Failed to save manifest: QuotaExceededError (Possible reasons: Are you using Incognito mode?)', loading: false } }); }
-    else if(error.message === 'Failed to fetch') { this.setState({ status: { error: error.message, status: 'error', statusText: 'Failed to fetch: Manifest', loading: false } }); }
-    else if(error.ErrorCode === 5) { this.setState({ status: { error: error.message, status: 'error', statusText: 'The Bungie API is temporarily disabled for maintenance.', loading: false } }); }
-    else if(error.name === 'TypeError') {
-      localStorage.clear();
-      indexedDB.deleteDatabase("guardianstats");
-      window.location.reload();
-    }
-    else { console.log('Here is something wrong:', error); this.setState({ status: { error: error.message, status: 'error', statusText: `Failed to save manifest: ${ error.message }`, loading: false } }); }
-  }
   async setManifest() {
     Promise.all([
       db.table('DestinyActivityDefinition').toCollection().first(),
@@ -249,6 +237,20 @@ class App extends React.Component {
       });
     }).catch((error) => { this.handleError(error); return "Failed"; });
     this.manifestLoaded();
+  }
+  manifestLoaded() { this.checkProfile(); }
+  setNextManifestCheck() { localStorage.setItem('nextManifestCheck', new Date().getTime() + (1000 * 60 * 60)) }
+  profileLoaded() { this.setState({ status: { status: 'ready', statusText: 'Ready to go!', loading: false } }); }
+  handleError(error) {
+    if(error.name === 'QuotaExceededError') { this.setState({ status: { error: error.message, status: 'error', statusText: 'Failed to save manifest: QuotaExceededError (Possible reasons: Are you using Incognito mode?)', loading: false } }); }
+    else if(error.message === 'Failed to fetch') { this.setState({ status: { error: error.message, status: 'error', statusText: 'Failed to fetch: Manifest', loading: false } }); }
+    else if(error.ErrorCode === 5) { this.setState({ status: { error: error.message, status: 'error', statusText: 'The Bungie API is temporarily disabled for maintenance.', loading: false } }); }
+    else if(error.name === 'TypeError') {
+      localStorage.clear();
+      indexedDB.deleteDatabase("guardianstats");
+      window.location.reload();
+    }
+    else { console.log('Here is something wrong:', error); this.setState({ status: { error: error.message, status: 'error', statusText: `Failed to save manifest: ${ error.message }`, loading: false } }); }
   }
 
   render() {
@@ -285,6 +287,8 @@ class App extends React.Component {
                   <Route path="/thanks" render={ props => (<Thanks />) } />
                   <Route path="/glorycheck" render={ props => (<Glory />) } />
                   <Route path="/marvin" render={ props => (<Marvin />) } />
+                  <Route path="/myclan" render={ props => (<Clan />) } />
+                  <Route path="/test" render={ props => (<Test />) } />
                   <Route path="*" component={ NotFound } />
                 </Switch>
                 { warning ? (<Warning warning={ warning } />) : null }
@@ -310,6 +314,7 @@ class App extends React.Component {
                   <Route path="/thanks" render={ props => (<Thanks />) } />
                   <Route path="/glorycheck" render={ props => (<Glory />) } />
                   <Route path="/marvin" render={ props => (<Marvin />) } />
+                  <Route path="/test" render={ props => (<Test />) } />
                   <Route path="*" component={ Login } />
                 </Switch>
                 { loading === true ? (<SmallLoader statusText={ statusText } />) : null }

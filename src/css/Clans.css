@@ -1,0 +1,23 @@
+.clanPage {
+  display: grid;
+  grid-template-columns: 400px auto;
+}
+.clanBannerContainer {
+  position: relative;
+}
+.clanStaff {
+  position: absolute;
+  width: 300px;
+}
+.gonfalon {
+  position: absolute;
+  width: 300px;
+}
+.gonfalonDetail {
+  position: absolute;
+  width: 300px;
+}
+.gonfalonDecal {
+  position: absolute;
+  width: 300px;
+}

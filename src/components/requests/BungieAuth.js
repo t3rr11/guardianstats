@@ -122,7 +122,7 @@ export async function RenewToken(refresh_token) {
     }
     else {
       localStorage.setItem('Authorization', JSON.stringify(response));
-      localStorage.setItem("nextManifestCheck", new Date().getTime() + 3600000);
+      localStorage.setItem("nextAuthCheck", new Date().getTime() + 3600000);
       console.log(`Authorization has been renewed!`);
       timers.StartAuthTimer();
     }

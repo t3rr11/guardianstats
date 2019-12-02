@@ -35,3 +35,5 @@ export const GetInstancedItem = async (membershipId, membershipType, instancedIt
 export const GetSpecificModeStats = async (membershipId, membershipType, characterId, modes) => apiRequest(`/Platform/Destiny2/${membershipType}/Account/${membershipId}/Character/${characterId}/Stats/?groups=101&modes=${modes}&periodType=2`, false, false)
 export const GetVendors = async (membershipType, membershipId, characterId) => apiRequest(`/Platform/Destiny2/${membershipType}/Profile/${membershipId}/Character/${characterId}/Vendors/?components=400,402`, false, true);
 export const GetTWABs = async () => apiRequest(`/Platform/Trending/Categories/`, false, false);
+export const GetClan = async (membershipType, membershipId) => apiRequest(`/Platform/GroupV2/User/${ membershipType }/${ membershipId }/0/1/`, false, false);
+export const GetClanById = async (clan_id) => apiRequest(`/Platform/GroupV2/${ clan_id }/`, false, false);
