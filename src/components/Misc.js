@@ -83,11 +83,12 @@ export function formatCountDownTime(TimeinSeconds) {
   if (TimeinSeconds >= 86400 && TimeinSeconds !== Infinity) { return dDisplay + hDisplay + mDisplay + sDisplay; }
   return dDisplay + hDisplay + mDisplay + sDisplay;
 }
-export function convertTimeToDate(time){
+export function convertTimeToDate(time) {
   var date = new Date(time);
   var day = date.getDate();
   var month = date.getMonth() + 1;
   var year = date.getFullYear();
+  day < 10 ? day = "0" + day : day = day;
   var result = day + '/' + month + '/' + year;
   return result;
 }

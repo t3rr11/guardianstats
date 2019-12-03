@@ -1,9 +1,22 @@
 .clanPage {
   display: grid;
-  grid-template-columns: 400px auto;
+  grid-template-columns: 400px auto 400px;
 }
 .clanBannerContainer {
   position: relative;
+}
+.clanInfo > h4 {
+  text-align: center;
+}
+.clanBroadcasts > h4 {
+  text-align: center;
+}
+.clanBanner {
+  width: 200px;
+  text-align: center;
+}
+.clanBanner > canvas {
+  position: absolute;
 }
 .clanStaff {
   position: absolute;
@@ -20,4 +33,34 @@
 .gonfalonDecal {
   position: absolute;
   width: 300px;
+}
+.clanPlayerStats {
+  display: grid;
+  grid-template-columns: 80px 50px auto 120px 120px 100px 150px 150px;
+}
+.clanPlayerStatsTitle {
+  display: grid;
+  grid-template-columns: 80px 50px auto 120px 120px 100px 150px 150px;
+  cursor: pointer;
+}
+.clanPlayerStats > .seasonRank { text-align: center; }
+.clanPlayerStatsTitle > .seasonRank { text-align: center; }
+.clanPlayerStats > .displayName { padding-left: 5px; }
+.clanPlayerStatsTitle > .displayName { padding-left: 5px; }
+.clanPlayerStats > .displayName > .memberType { padding-left: 5px; font-size: 11px; display: inline-block; }
+.clanPlayerStats > .triumphScore { text-align: center; }
+.clanPlayerStatsTitle > .triumphScore { text-align: center; }
+.clanPlayerStats > .totalTime { text-align: center; }
+.clanPlayerStatsTitle > .totalTime { text-align: center; }
+.clanPlayerStats > .glory { text-align: center; }
+.clanPlayerStatsTitle > .glory { text-align: center; }
+.clanPlayerStats > .lastOnline { text-align: center; }
+.clanPlayerStatsTitle > .lastOnline { text-align: center; }
+.clanPlayerStats > .joinDate { text-align: center; }
+.clanPlayerStatsTitle > .joinDate { text-align: center; }
+.membershipTypeIcon { display: inline-block; }
+.membershipTypeIcon > img {
+  width: 26px;
+  height: 26px;
+  padding: 2px;
 }
