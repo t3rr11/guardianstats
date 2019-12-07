@@ -197,7 +197,7 @@ export class Clan extends Component {
                       <div className="totalTime">{ Misc.numberWithCommas(Math.round(clanPlayerInfo.ClanOthers.totalTime.find(e => e.membership_Id === player.membership_Id).totalTime / 60)) } Hrs</div>
                       <div className="triumphScore">{ Misc.numberWithCommas(clanPlayerInfo.ClanOthers.triumphRankings.find(e => e.membership_Id === player.membership_Id).triumphScore) }</div>
                       <div className="glory">{ Misc.numberWithCommas(clanPlayerInfo.ClanRankings.gloryRankings.find(e => e.membership_Id === player.membership_Id).glory) }</div>
-                      <div className="lastOnline"> { player.isOnline ? "Online" : `${ Misc.formatSmallTime((new Date().getTime() - new Date(player.lastOnlineStatusChange * 1000).getTime()) / 1000) } ago` } </div>
+                      <div className="lastOnline"> { player.isOnline ? "Online" : ( player.lastOnlineStatusChange !== 0 ? `${ Misc.formatSmallTime((new Date().getTime() - new Date(player.lastOnlineStatusChange * 1000).getTime()) / 1000) } ago` : `` ) } </div>
                       <div className="joinDate">{ Misc.convertTimeToDate(player.joinDate) }</div>
                     </div>
                   );
