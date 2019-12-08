@@ -37,13 +37,13 @@ export class Clan extends Component {
     const clanBannerManifest = require("./ClanBanner.json");
 
     //Clan Player Info
-    const clanMembers = await fetch(`./marvin/clans/${ clanData.results[0].group.groupId }/ClanMembers.json`).then(a => a.json());
-    const clanAnnouncements = await fetch(`./marvin/clans/${ clanData.results[0].group.groupId }/Announcements.json`).then(a => a.json());
-    const clanRankings = await fetch(`./marvin/clans/${ clanData.results[0].group.groupId }/Rankings.json`).then(a => a.json());
-    const clanRaids = await fetch(`./marvin/clans/${ clanData.results[0].group.groupId }/Raids.json`).then(a => a.json());
-    const clanItems = await fetch(`./marvin/clans/${ clanData.results[0].group.groupId }/Items.json`).then(a => a.json());
-    const clanTitles = await fetch(`./marvin/clans/${ clanData.results[0].group.groupId }/Titles.json`).then(a => a.json());
-    const clanOthers = await fetch(`./marvin/clans/${ clanData.results[0].group.groupId }/Others.json`).then(a => a.json());
+    const clanMembers = await fetch(`./data/marvin/clans/${ clanData.results[0].group.groupId }/ClanMembers.json`).then(a => a.json());
+    const clanAnnouncements = await fetch(`./data/marvin/clans/${ clanData.results[0].group.groupId }/Announcements.json`).then(a => a.json());
+    const clanRankings = await fetch(`./data/marvin/clans/${ clanData.results[0].group.groupId }/Rankings.json`).then(a => a.json());
+    const clanRaids = await fetch(`./data/marvin/clans/${ clanData.results[0].group.groupId }/Raids.json`).then(a => a.json());
+    const clanItems = await fetch(`./data/marvin/clans/${ clanData.results[0].group.groupId }/Items.json`).then(a => a.json());
+    const clanTitles = await fetch(`./data/marvin/clans/${ clanData.results[0].group.groupId }/Titles.json`).then(a => a.json());
+    const clanOthers = await fetch(`./data/marvin/clans/${ clanData.results[0].group.groupId }/Others.json`).then(a => a.json());
 
     //Default Sort
     clanMembers.sort((a, b) => b.lastOnlineStatusChange - a.lastOnlineStatusChange).sort((a, b) => b.isOnline - a.isOnline).sort((a, b) => b.memberType - a.memberType);
@@ -180,12 +180,12 @@ export class Clan extends Component {
                 clanPlayerInfo.ClanMembers
                 .map(function(player) {
                   return(
-                    <div className="clanPlayerStats">
+                    <div key={ player.membership_Id } className="clanPlayerStats">
                       <div className="membershipTypes">
                         {
                           player.membershipTypes.sort((a, b) => b - a).map(function(membershipType) {
                             return (
-                              <div className="membershipTypeIcon">
+                              <div key={ Misc.getPlatformName(membershipType).toLowerCase() } className="membershipTypeIcon">
                                 <img src={ `/images/icons/platforms/${ Misc.getPlatformName(membershipType).toLowerCase() }.png` } />
                               </div>
                             )

@@ -46,7 +46,7 @@ export class Error extends Component {
     if(UnsetSettings !== "") {
       for(var i in UnsetSettings) {
         if(UnsetSettings[i] === "loader") { this.setLoader("class"); }
-        else if(UnsetSettings[i] === "background") { this.setBackground("vex"); }
+        else if(UnsetSettings[i] === "background") { this.setBackground("classes2"); }
         else if(UnsetSettings[i] === "hiddenSeals") { this.setHiddenSeals("Hidden"); }
       }
     }
@@ -77,6 +77,21 @@ export class Error extends Component {
                 </div>
                 <div className={ `settings-background-option ${ this.state.background === "vex" ? "selected" : null }` } onClick={ (() => this.setBackground("vex")) }>
                   <img className="settings-background-image" src="/images/backgrounds/vex.jpg" alt="background" />
+                </div>
+                <div className={ `settings-background-option ${ this.state.background === "vexlair" ? "selected" : null }` } onClick={ (() => this.setBackground("vexlair")) }>
+                  <img className="settings-background-image" src="/images/backgrounds/vexlair.jpg" alt="background" />
+                </div>
+                <div className={ `settings-background-option ${ this.state.background === "vextree" ? "selected" : null }` } onClick={ (() => this.setBackground("vextree")) }>
+                  <img className="settings-background-image" src="/images/backgrounds/vextree.jpg" alt="background" />
+                </div>
+                <div className={ `settings-background-option ${ this.state.background === "classes" ? "selected" : null }` } onClick={ (() => this.setBackground("classes")) }>
+                  <img className="settings-background-image" src="/images/backgrounds/classes.jpg" alt="background" />
+                </div>
+                <div className={ `settings-background-option ${ this.state.background === "classes2" ? "selected" : null }` } onClick={ (() => this.setBackground("classes2")) }>
+                  <img className="settings-background-image" src="/images/backgrounds/classes2.jpg" alt="background" />
+                </div>
+                <div className={ `settings-background-option ${ this.state.background === "saint14" ? "selected" : null }` } onClick={ (() => this.setBackground("saint14")) }>
+                  <img className="settings-background-image" src="/images/backgrounds/saint14.jpg" alt="background" />
                 </div>
               </div>
             </div>

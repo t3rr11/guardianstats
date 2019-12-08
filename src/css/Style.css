@@ -254,6 +254,7 @@ body {
   width: 425px;
   padding: 10px;
   margin-left: 30px;
+  grid-row: span 3;
 }
 .settings-background-options {
   display: grid;

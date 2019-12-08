@@ -2,7 +2,7 @@
 
 # dependencies
 /node_modules
-/public/marvin
+/public/data
 /.pnp
 .pnp.js
 

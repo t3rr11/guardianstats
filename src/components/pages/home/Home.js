@@ -39,7 +39,7 @@ export class Home extends Component {
       else { this.setState({ background: Settings.background, bgPos: "top center" }); }
 
     }
-    else { this.setState({ background: "vex" }); }
+    else { this.setState({ background: "classes2" }); }
   }
   GotoAuth() { window.location.href = 'https://www.bungie.net/en/oauth/authorize?client_id=24178&response_type=code&state=1'; }
   GotoTwitter() { window.open('https://twitter.com/Guardianstats', '_blank'); }
