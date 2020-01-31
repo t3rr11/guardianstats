@@ -61,24 +61,15 @@ const getVersionImage = (version) => {
 export const getTitles = (profileInfo, hiddenSeals) => {
   var titles = Titles(profileInfo);
   if(titles.find(title => title.isObtained === true)) {
-    if(hiddenSeals === "Shown") {
-      return (
-        titles.map(function (title) {
-          if(!title.hidden) {
-            if(title.isObtained) { return buildTitle(title, true) }
-            else { return buildTitle(title, false) }
-          }
-          else { if(title.isObtained) { return buildTitle(title, true) } else { return null } }
-        })
-      );
-    }
-    else {
-      return (
-        titles.map(function (title) {
-          if(title.isObtained) { return buildTitle(title, true) } else { return null }
-        })
-      );
-    }
+    return (
+      titles.map(function (title) {
+        if(!title.hidden) {
+          if(title.isObtained) { return buildTitle(title, true) }
+          else { return buildTitle(title, false) }
+        }
+        else { if(title.isObtained) { return buildTitle(title, true) } else { return null } }
+      })
+    );
   }
   else { return (<div className="inspectNoTitlesObtained">No Titles Obtained</div>) }
 }

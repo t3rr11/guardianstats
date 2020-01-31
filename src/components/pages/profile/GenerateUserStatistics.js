@@ -2,11 +2,6 @@ import React from 'react';
 import * as UserDetails from './GenerateUserDetails';
 import * as Misc from '../../Misc';
 
-function getSealsState() {
-  const Settings = JSON.parse(localStorage.getItem("Settings"));
-  return Settings.hiddenSeals;
-}
-
 export function generate(profileInfo, Manifest, historicStats, gambitStats, raidStats, props) {
   return (
     <div className="inspectBoxStatistics">
@@ -16,7 +11,7 @@ export function generate(profileInfo, Manifest, historicStats, gambitStats, raid
       </div>
       <div className="inspectBoxContent">
         <div className="inspectBoxContentTitle">Titles</div>
-        <div className="inspectTitles"> { UserDetails.getTitles(profileInfo, getSealsState()) } </div>
+        <div className="inspectTitles"> { UserDetails.getTitles(profileInfo) } </div>
       </div>
       <div className="inspectBoxContent">
         <div className="inspectBoxContentTitle"> Overall Crucible Statistics </div>
