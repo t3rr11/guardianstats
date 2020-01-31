@@ -14,9 +14,7 @@ export class Search extends Component {
   async componentDidMount() {
     if(await Checks.checkLogin()) { this.prefillSearch() }
   }
-  async foundUser(platform, mbmID) {
-    this.props.foundUser(platform, mbmID);
-  }
+  async foundUser(mbmID) { this.props.foundUser(mbmID); }
   async searchForUser(input) {
     const searchPlatform = document.getElementById('membership-type').value;
     const returnedUsers = await bungie.SearchUsers(input);
@@ -55,74 +53,43 @@ export class Search extends Component {
     }
     else { this.setState({ error: "Failed to find any users with that username." }); }
   }
-  returnSearchPlatformUsers = (users) => {
+  returnSearchPlatformUsers = (users, platformType) => {
     // eslint-disable-next-line
     return users.map((user, index) => {
-      if(user.searchPlatform === "ALL") {
+      if(platformType === "PSN") {
         return (
           <React.Fragment key={ uuid.v4() }>
-            {user.blizzardDisplayName ? <div key={ uuid.v4() } className='searchResultContainer BNET' onClick={ (() => this.inspectPlayer(user, '4')) } ><div className='searchResultIcon BNET'></div><div className='searchResultName BNET'>{user.blizzardDisplayName}</div></div> : null}
-  					{user.psnDisplayName ? <div key={ uuid.v4() } className='searchResultContainer PSN' onClick={ (() => this.inspectPlayer(user, '2')) } ><div className='searchResultIcon PSN'></div><div className='searchResultName PSN'>{user.psnDisplayName}</div></div> : null}
-  					{user.xboxDisplayName ? <div key={ uuid.v4() } className='searchResultContainer XBL' onClick={ (() => this.inspectPlayer(user, '1')) } ><div className='searchResultIcon XBL'></div><div className='searchResultName XBL'>{user.xboxDisplayName}</div></div> : null}
-  					{user.stadiaDisplayName ? <div key={ uuid.v4() } className='searchResultContainer STADIA' onClick={ (() => this.inspectPlayer(user, '5')) } ><div className='searchResultIcon STADIA'></div><div className='searchResultName STADIA'>{user.stadiaDisplayName}</div></div> : null}
-  					{user.steamDisplayName ? <div key={ uuid.v4() } className='searchResultContainer STEAM' onClick={ (() => this.inspectPlayer(user, '3')) } ><div className='searchResultIcon STEAM'></div><div className='searchResultName STEAM'>{user.steamDisplayName}</div></div> : null}
+            { user.psnDisplayName ? <div key={ uuid.v4() } className='searchResultContainer PSN' onClick={ (() => this.inspectPlayer(user, '2')) } ><div className='searchResultIcon PSN'></div><div className='searchResultName PSN'>{user.psnDisplayName}</div></div> : null }
           </React.Fragment>
         )
       }
-      else if(user.searchPlatform === "BNET") {
+      else if(platformType === "XBL") {
         return (
-          <div key={ `search_${user.userId}` } className="searchResultContainer BNET" onClick={ (() => this.inspectPlayer(user, "4")) } >
-            <div className='searchResultIcon BNET'></div>
-            <div className='searchResultName BNET'>{ user.blizzardDisplayName }</div>
-          </div>
-        );
+          <React.Fragment key={ uuid.v4() }>
+            { user.xboxDisplayName ? <div key={ uuid.v4() } className='searchResultContainer XBL' onClick={ (() => this.inspectPlayer(user, '1')) } ><div className='searchResultIcon XBL'></div><div className='searchResultName XBL'>{user.xboxDisplayName}</div></div> : null }
+          </React.Fragment>
+        )
       }
-      else if(user.searchPlatform === "PSN") {
+      else if(platformType === "STEAM") {
         return (
-          <div key={ `search_${user.userId}` } className="searchResultContainer PSN" onClick={ (() => this.inspectPlayer(user, "2")) } >
-            <div className='searchResultIcon PSN'></div>
-            <div className='searchResultName PSN'>{ user.psnDisplayName }</div>
-          </div>
-        );
+          <React.Fragment key={ uuid.v4() }>
+            { user.steamDisplayName ? <div key={ uuid.v4() } className='searchResultContainer STEAM' onClick={ (() => this.inspectPlayer(user, '3')) } ><div className='searchResultIcon STEAM'></div><div className='searchResultName STEAM'>{user.steamDisplayName}</div></div> : null }
+          </React.Fragment>
+        )
       }
-      else if(user.searchPlatform === "XBL") {
+      else if(platformType === "STADIA") {
         return (
-          <div key={ `search_${user.userId}` } className="searchResultContainer XBL" onClick={ (() => this.inspectPlayer(user, "1")) } >
-            <div className='searchResultIcon XBL'></div>
-            <div className='searchResultName XBL'>{ user.xblDisplayName }</div>
-          </div>
-        );
-      }
-      else if(user.searchPlatform === "STADIA") {
-        return (
-          <div key={ `search_${user.userId}` } className="searchResultContainer STADIA" onClick={ (() => this.inspectPlayer(user, "5")) } >
-            <div className='searchResultIcon STADIA'></div>
-            <div className='searchResultName STADIA'>{ user.stadiaDisplayName }</div>
-          </div>
-        );
-      }
-      else if(user.searchPlatform === "STEAM") {
-        return (
-          <div key={ `search_${user.userId}` } className="searchResultContainer STEAM" onClick={ (() => this.inspectPlayer(user, "3")) } >
-            <div className='searchResultIcon STEAM'></div>
-            <div className='searchResultName STEAM'>{ user.steamDisplayName }</div>
-          </div>
-        );
-      }
-      else if(user.searchPlatform === "CUSTOM") {
-        return (
-          <div key={ `search_${user.userId}` } className={`searchResultContainer ${ user.membershipType }`} onClick={ (() => this.inspectPlayer(user, Misc.getPlatformType(user.membershipType))) } >
-            <div className={`searchResultIcon ${ user.membershipType }`}></div>
-            <div className={`searchResultName ${ user.membershipType }`}>{ user.displayName }</div>
-          </div>
-        );
+          <React.Fragment key={ uuid.v4() }>
+            { user.stadiaDisplayName ? <div key={ uuid.v4() } className='searchResultContainer STADIA' onClick={ (() => this.inspectPlayer(user, '5')) } ><div className='searchResultIcon STADIA'></div><div className='searchResultName STADIA'>{user.stadiaDisplayName}</div></div> : null }
+          </React.Fragment>
+        )
       }
     });
   }
   inspectPlayer = async (user, platform) => {
     if(user.userId === null) {
       if(await bungie.GetProfile(platform, user.membershipId, "100")) {
-        this.foundUser(platform, user.membershipId);
+        this.foundUser(user.membershipId);
       }
       else { this.setState({ error: "This account does not own Destiny 2 but has linked to bungie." }); }
     }
@@ -135,7 +102,7 @@ export class Search extends Component {
           if(membershipInfo.destinyMemberships[i].membershipType == platform) {
             found = true;
             if(await bungie.GetProfile(platform, membershipInfo.destinyMemberships[i].membershipId, "100")) {
-              this.foundUser(platform, membershipInfo.destinyMemberships[i].membershipId);
+              this.foundUser(membershipInfo.destinyMemberships[i].membershipId);
             }
             else { this.setState({ error: "This account does not own Destiny 2 but has linked to bungie." }); }
           }
@@ -212,7 +179,12 @@ export class Search extends Component {
             (users.length !== 0 ?
               (
                 <div className="search-output">
-                  <div className="search-content"> { this.returnSearchPlatformUsers(users) } </div>
+                  <div className="search-content">
+                    <div className="psnField">{ this.returnSearchPlatformUsers(users, "PSN") }</div>
+                    <div className="xblField">{ this.returnSearchPlatformUsers(users, "XBL") }</div>
+                    <div className="steamField">{ this.returnSearchPlatformUsers(users, "STEAM") }</div>
+                    <div className="stadiaField">{ this.returnSearchPlatformUsers(users, "STADIA") }</div>
+                  </div>
                 </div>
               ) : null
             ) : null

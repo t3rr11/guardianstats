@@ -7,11 +7,13 @@ h3::selection { background-color: rgba(0.2, 0.2, 0.2, 0.2); }
 }
 .howToConnect {
   margin: 20px;
+  padding-top: 50px;
   display: grid;
   grid-template-rows: 450px 270px;
 }
 .features {
   margin: 20px;
+  padding-top: 50px;
   display: grid;
   grid-template-rows: 450px 350px;
 }
@@ -20,7 +22,7 @@ h3::selection { background-color: rgba(0.2, 0.2, 0.2, 0.2); }
   display: inherit;
 }
 .paraContainer {
-  background-color: rgba(0.2, 0.2, 0.2, 0.2);
+  background-color: rgba(0.4, 0.4, 0.4, 0.4);
   border-radius: 10px;
   padding: 10px;
   align-items: center;
@@ -33,7 +35,7 @@ h3::selection { background-color: rgba(0.2, 0.2, 0.2, 0.2); }
 }
 .para::selection { background-color: rgba(0.2, 0.2, 0.2, 0.2); }
 .d_highlight {
-  background-color: rgba(0, 0, 0, 0.2)!important;
+  background-color: rgba(0, 0, 0, 0.4)!important;
   width: auto;
   height: auto;
   padding: .2em;
@@ -65,3 +67,105 @@ h3::selection { background-color: rgba(0.2, 0.2, 0.2, 0.2); }
 .animatedLogo {
   margin-top: 20px;
 }
+.marvins_dashboard { padding-top: 60px; }
+.marvins_dashboard > .marvins_header { display: grid; grid-template-columns: 50% 50%; }
+.marvins_dashboard > .marvins_header > h1 { margin-left: 16px; }
+.marvins_dashboard > .marvins_header > h5 { text-align: right; margin-right: 16px; }
+.marvins_dashboard_content_container { display: grid; grid-template-columns: 200px auto; }
+.marvins_dashboard_menu { display: grid; height: 255px; }
+.marvins_dashboard_menu > .marvins_dashboard_menu_item { width: fit-content; }
+.marvins_dashboard_menu > .marvins_dashboard_menu_item.selected > img { cursor: pointer; width: 85px; height: 85px; padding: 0px; filter: var(--BlueFilter); }
+.marvins_dashboard_menu > .marvins_dashboard_menu_item.selected > div { display: inline-block; font-weight: bold; font-family: 'Nunito', 'Open Sans'; filter: var(--BlueFilter); color: gray; }
+.marvins_dashboard_menu > .marvins_dashboard_menu_item > img { cursor: pointer; filter: invert(1); width: 85px; height: 85px; padding: 5px; }
+.marvins_dashboard_menu > .marvins_dashboard_menu_item > img:hover { cursor: pointer; width: 85px; height: 85px; padding: 0px; filter: var(--BlueFilter); }
+.marvins_dashboard_menu > .marvins_dashboard_menu_item > div { display: none; }
+.marvins_dashboard_menu > .marvins_dashboard_menu_item:not(.selected):hover > div {
+  animation-duration: 0.7s;
+  animation-name: fadeInRight;
+  display: inline-block;
+  font-weight: bold;
+  font-family: 'Nunito', 'Open Sans';
+  filter: var(--BlueFilter);
+  color: gray;
+}
+.marvins_dashboard_content { padding-top: 13px; overflow-x: hidden; }
+.marvins_dashboard_content > div { display: none; }
+.marvins_dashboard_content > div.selected { display: grid; }
+.marvins_dashboard_content > div { animation-duration: 0.7s; animation-name: fadeInRight; transition: 0.7s; }
+.marvins_dashboard_content > div > div { padding: 5px; }
+.marvin_clan_settings {
+  display: grid;
+  grid-template-columns: 260px 240px 240px;
+}
+#blacklist { text-align: center; display: grid; grid-template-rows: 25px; }
+#blacklist > div > div {
+  display: inline-block;
+  border-radius: 10px;
+  background-color: lightslategray;
+  padding: 2px 6px;
+  font-size: 12px;
+  margin: 2px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+}
+#whitelist { text-align: center; display: grid; grid-template-rows: 25px; }
+#whitelist > div > div {
+  display: inline-block;
+  border-radius: 10px;
+  background-color: lightslategray;
+  padding: 2px 6px;
+  font-size: 12px;
+  margin: 2px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+}
+
+.customCheck {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  font-size: 14px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  line-height: 25px;
+}
+.customCheck input { position: absolute; opacity: 0; cursor: pointer; height: 0; width: 0; }
+.checkmark { position: absolute; top: 0; left: 0; height: 25px; width: 25px; background-color: #eee; }
+.customCheck:hover input ~ .checkmark { background-color: #ccc; }
+.customCheck input:checked ~ .checkmark { background-color: #2196F3; }
+.checkmark:after { content: ""; position: absolute; display: none; }
+.customCheck input:checked ~ .checkmark:after { display: block; }
+.customCheck .checkmark:after {
+  left: 9px;
+  top: 3px;
+  width: 7px;
+  height: 15px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+.customTextbox {
+  display: inline-block;
+  position: relative;
+  margin-bottom: 10px;
+  cursor: pointer;
+  font-size: 14px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  line-height: 25px;
+}
+.customTextbox input {
+  width: 40px;
+  margin-right: 10px;
+  height: 25px;
+  text-align: center;
+  float: left;
+}
+
+@keyframes fadeInRight { 0% { opacity: 0; transform: translateX(20px); } 100% { opacity: 1; transform: translateX(0); } }

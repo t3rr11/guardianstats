@@ -1,26 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import * as Misc from '../Misc';
-import Settings from './Settings';
 
 function GotoAuth() { window.location.href = 'https://www.bungie.net/en/oauth/authorize?client_id=24178&response_type=code&state=1'; }
 
 export class Header extends React.Component {
 
   state = {
-    showSettingsWheel: false,
-    showSettingsModal: false,
     loggedIn: false,
+    showCopied: false,
     platforms: null
-  }
-
-  toggleSettingsWheel = () => { this.setState({ showSettingsWheel: !this.state.showSettingsWheel }); }
-  toggleSettingsModal = () => { this.setState({ showSettingsWheel: !this.state.showSettingsWheel, showSettingsModal: !this.state.showSettingsModal }); }
-  hideSettingsModal = () => { this.setState({ showSettingsModal: false }); }
-  toggleMenuSlider = (ignore) => { if(window.screen.width < 800 && !ignore) { document.getElementById("menu").classList.toggle("show"); document.getElementById("title-bar").classList.toggle("show"); } }
-  alertID = () => {
-    if(!localStorage.getItem("SelectedAccount")) { alert("Please choose platform first."); }
-    else { alert(JSON.parse(localStorage.getItem("SelectedAccount")).id); }
   }
 
   async componentDidMount() {
@@ -28,8 +17,8 @@ export class Header extends React.Component {
   }
 
   getPlatforms() {
-    const { BungieMemberships } = this.props;
-    if(BungieMemberships !== null && BungieMemberships !== undefined) {
+    if(localStorage.getItem("DestinyMemberships")) {
+      var BungieMemberships = JSON.parse(localStorage.getItem("DestinyMemberships"));
       var platforms = [];
       for(var i in BungieMemberships) {
         platforms.push({
@@ -41,89 +30,89 @@ export class Header extends React.Component {
       this.setState({ loggedIn: true, platforms });
     }
   }
-  setPlatform() {
-    var selectBox = document.getElementById("PlatformSelection");
-    var platform = selectBox.options[selectBox.selectedIndex].value;
-    var platforms = this.state.platforms;
-    for(var i in platforms) {
-      if(platforms[i].platform === platform) {
-        localStorage.setItem("SelectedAccount", JSON.stringify(platforms[i]));
-      }
-    }
+  setPlatform(event) {
+    var selectedMbmId = event.target.id;
+    localStorage.setItem("SelectedAccount", JSON.stringify(this.state.platforms.find(e => e.id === selectedMbmId)));
     this.setState(this.state);
-    this.props.platformChange();
+  }
+
+  toggleMenuSlider() { console.log("Toggled Menu"); }
+  toggleSettingsModal() {
+    console.log("Toggled");
+    this.props.toggleSettingsModal();
+  }
+  showMembershipId() {
+    this.setState({ showCopied: true, });
+    setTimeout(() => { this.setState({ showCopied: false, }); }, 10000);
   }
 
   render() {
     const { loggedIn, platforms } = this.state;
+
+    //Pre-Render
     const menuItems = (
       loggedIn ? (
         <React.Fragment>
+          <Link to="/home" style={{ textDecoration: "none" }}><img className="logo" alt='Logo' src='./images/logo.png' /></Link>
           <li className="menu-item Home" id="Home"><Link to="/home" onClick={ (() => this.toggleMenuSlider()) }>Home</Link></li>
           <li className="menu-item" id="Profile"><Link to="/profile" onClick={ (() => this.toggleMenuSlider()) }>Profile</Link></li>
           <li className="menu-item" id="Activities"><Link to="/activities" onClick={ (() => this.toggleMenuSlider()) }>Activities</Link></li>
-          <li className="menu-item" id="Exotics"><Link to="/exotics" onClick={ (() => this.toggleMenuSlider()) }>Exotics</Link></li>
-          <li className="menu-item" id="Vendors"><Link to="/vendors" onClick={ (() => this.toggleMenuSlider()) }>Vendors</Link></li>
           <li className="menu-item" id="Marvin"><Link to="/marvin" onClick={ (() => this.toggleMenuSlider()) }>Marvin</Link></li>
-          <li className="menu-item" id="MyClan"><Link to="/myclan" onClick={ (() => this.toggleMenuSlider()) }>My Clan</Link></li>
         </React.Fragment>
       )
       : (
         <React.Fragment>
+          <Link to="/home" style={{ textDecoration: "none" }}><img className="logo" alt='Logo' src='./images/logo.png' /></Link>
           <li className="menu-item Home" id="Home"><Link to="/home" onClick={ (() => this.toggleMenuSlider()) }>Home</Link></li>
-          <li className="menu-item-disabled" id="Profile"><span>Profile</span></li>
-          <li className="menu-item-disabled" id="Activities"><span>Activities</span></li>
-          <li className="menu-item-disabled" id="Exotics"><span>Exotics</span></li>
-          <li className="menu-item-disabled" id="Vendors"><span>Vendors</span></li>
+          <li className="menu-item-disabled" id="Profile" title="Login to see this content"><span>Profile</span></li>
+          <li className="menu-item-disabled" id="Activities" title="Login to see this content"><span>Activities</span></li>
           <li className="menu-item Marvin" id="Marvin"><Link to="/marvin" onClick={ (() => this.toggleMenuSlider()) }>Marvin</Link></li>
-          <li className="menu-item-disabled" id="MyClan"><span>My Clan</span></li>
         </React.Fragment>
       )
     );
-    const platformSelect = (
-      //Check for account Info (basically determines if someone is logged in or not)
-      loggedIn ? (
-        //They are logged in since there is account info. Next check to see if they have selected a platform
-        localStorage.getItem("SelectedAccount") ? (
-          //If they have not selected a platform return with a warning selection box
-          localStorage.getItem("SelectedAccount") === "Please Select Platform" ? (
-            <select type="dropdown" className='btn btn-warning custom loginBtn' id="PlatformSelection" defaultValue="Please Select Platform" onChange={() => { this.setPlatform(); }} style={{ backgroundImage: 'url("../images/icons/blackcaret.png")' }}>
-              <option value="Please Select Platform">Please Select Platform</option>
-              { platforms.map(plat => ( <option key={ plat.platform } value={ plat.platform }> { plat.platform + ': ' + plat.name } </option> )) }
-            </select>
-          ) : (
-            //If they have selected a platform then return with a normal downdown menu that they can use to swap accounts if need be
-            <select type="dropdown" className='btn custom usernameBtn' id="PlatformSelection" onChange={() => { this.setPlatform(); }} style={{ backgroundImage: 'url("../images/icons/caret.png")' }}>
-              { platforms.map(plat => (<option key={ plat.platform } value={ plat.platform } selected={ plat.name === JSON.parse(localStorage.getItem("SelectedAccount")).name ? "selected" : null }> { plat.platform + ': ' + plat.name } </option>)) }
-            </select>
-          )
-        ) : ( null )
-      ) : (
-        //If they are not logged in return with a login button
-        <button type="button" className="btn btn-info" id="PlatformSelection" onClick={() => { GotoAuth() }} style={{ margin: "5px", float: "right" }}>Connect with Bungie.net</button>
-      )
-    );
-    const settings = (
-      <React.Fragment>
-        <div className="settings-cog" style={{ backgroundImage: 'url("./images/icons/cog.png")' }} onClick={ (() => this.toggleSettingsWheel()) }></div>
-        <div className="settings-container" style={{ display: `${ this.state.showSettingsWheel ? 'grid' : 'none'}` }}>
-          <p onClick={ (() => this.alertID()) }>Get Membership ID</p>
-          <p onClick={ (() => this.toggleSettingsModal()) }>Settings</p>
-          <p onClick={ (() => Misc.logout()) }>Logout</p>
-        </div>
-      </React.Fragment>
-    );
 
+    //Actual Render
     return (
-      <header className="title-bar" id="title-bar">
-        <Link to="/home" onClick={ (() => this.toggleMenuSlider(true)) } style={{ textDecoration: "none" }}><div className="logo-container"><img className="logo" alt='Logo' src='./images/logo.png' /><span id="logo_title" href="#">Guardianstats</span></div></Link>
+      <header className="header" id="header">
         <div className="menu-container" id="menu">
           <div className="menu-bar disable-hl"> { menuItems } </div>
-          { loggedIn ? settings : null }
-          { platformSelect }
+          <div className="menu-bar">
+            {
+              loggedIn ? (
+                <div className="usernameBtn">
+                  {
+                    localStorage.getItem("SelectedAccount") === "Please Select Platform" ? ( <div>{ localStorage.getItem("SelectedAccount") }</div> ) :
+                    (
+                      <div className="platformSelection">
+                        <div className="platformName">
+                          <img src={`./images/icons/platforms/${ JSON.parse(localStorage.getItem("SelectedAccount")).platform }.png`} />
+                          <div onClick={ () => this.showMembershipId() }>{ JSON.parse(localStorage.getItem("SelectedAccount")).name }</div>
+                        </div>
+                        <div className={ this.state.showCopied ? 'platformMbmId show' : 'platformMbmId' }>{ JSON.parse(localStorage.getItem("SelectedAccount")).id }</div>
+                      </div>
+                    )
+                  }
+                  {
+                    localStorage.getItem("SelectedAccount") === "Please Select Platform" ? (
+                      platforms.map(function(platform) {
+                        return (
+                          <div className="platformSelection">
+                            <img src={`./images/icons/platforms/${ platform.platform }.png`} />
+                            <div onClick={ ((e) => this.setPlatform(e)) } id={ platform.id }>{ platform.name }</div>
+                          </div>
+                        )
+                      }, this)
+                    ) : null
+                  }
+                </div>
+              ) :
+              (
+                <div className="connectBtn" onClick={ (() => GotoAuth()) }>Connect with bungie</div>
+              )
+            }
+          </div>
+          { ( loggedIn ? ( <div className="menu-bar disable-hl"><div className="settingsBtn" onClick={ (() => this.toggleSettingsModal()) }></div></div> ) : ( null ) ) }
         </div>
-        <div className="menu-switch-icon" onClick={() => { this.toggleMenuSlider() }} >≡</div>
-        { this.state.showSettingsModal ? (<Settings hideSettings={ this.hideSettingsModal } />) : null }
       </header>
     );
   }

@@ -1,4 +1,4 @@
-import * as database from '../requests/Database';
+import * as db from '../requests/Database';
 import * as globals from './Globals';
 
 export async function startUpPageChecks() {
@@ -13,7 +13,7 @@ export async function checkLogin() { if(localStorage.getItem('Authorization') ==
 export async function checkSettingsExist() { if(localStorage.getItem('Settings') === null) { return false; } else { return true; } }
 
 export async function checkManifestExists() {
-  if(await database.checkManifestExists()) { return true; }
+  if(await db.checkManifestExists()) { return true; }
   else { return false; }
 }
 
@@ -23,6 +23,7 @@ export async function checkManifestValid() {
 }
 
 export async function checkManifestVersion(storedVersion, currentVersion) {
+  console.log(storedVersion, currentVersion);
   try {
     if(storedVersion.version !== currentVersion.version) { return false; }
     else { return true; }

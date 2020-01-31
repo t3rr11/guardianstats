@@ -5,6 +5,8 @@
 /public/data
 /.pnp
 .pnp.js
+build.ps1
+startdev.ps1
 
 # testing
 /coverage

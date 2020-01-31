@@ -3,41 +3,34 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 //Modules
-import Header from './components/modules/Header';
+import Manifest from './manifest.json';
+import Loader from './components/modules/Loader';
 import SmallLoader from './components/modules/SmallLoader';
 import Error from './components/modules/Error';
-import Warning from './components/modules/Warning';
-import * as Settings from './components/modules/Settings';
-import Manifest from './manifest.json';
+import Header from './components/modules/Header';
+import Settings from './components/modules/Settings';
+import * as pageSettings from './components/modules/Settings';
 
 //Pages
 import Home from './components/pages/home/Home';
-import Inspect from './components/pages/inspect/Inspect';
-import Exotics from './components/pages/exotics/Exotics';
-import Activities from './components/pages/activities/Activities';
-import Vendors from './components/pages/vendors/Vendors';
-import Register from './components/pages/others/Register';
-import Blog from './components/pages/blog/Blog';
-import Failed from './components/pages/others/Failed';
-import Login from './components/pages/others/Login';
-import Thanks from './components/pages/others/Thanks';
 import NotFound from './components/pages/others/PageNotFound';
-import Glory from './components/pages/others/Glory';
-import Test from './components/pages/others/Test';
+import Login from './components/pages/others/Login';
 import Marvin from './components/pages/marvin/Marvin';
-import Clan from './components/pages/clans/Clan';
+import Dashboard from './components/pages/marvin/Dashboard';
+import Profile from './components/pages/profile/Profile';
+import Activities from './components/pages/profile/Activities';
 
 //Functions
 import db from './components/requests/Database';
 import * as auth from './components/requests/BungieAuth';
 import * as bungie from './components/requests/BungieReq';
-import * as timers from './components/Timers';
 import * as checks from './components/scripts/Checks';
+import * as timers from './components/Timers';
 import * as globals from './components/scripts/Globals';
 import * as Misc from './components/Misc';
 
 //CSS
-import './css/Style.css';
+import './css/style.css';
 class App extends React.Component {
 
   state = {
@@ -45,26 +38,35 @@ class App extends React.Component {
       status: 'startUp',
       statusText: 'Getting ready!',
       error: null,
-      warning: null,
       loading: true
     },
-    isLive: false
+    background: {
+      image: null,
+      position: null
+    },
+    showSettingsModal: false,
+    isLive: false,
+    siteVersion: "2.0"
   }
 
   async componentDidMount() {
+    this.setBackground();
     this.setState({ status: { status: 'startingUp', statusText: `Loading Guardianstats ${ Manifest.version }`, loading: true } });
-    if(!localStorage.getItem("v146")) {
-      localStorage.clear();
-      indexedDB.deleteDatabase("guardianstats");
-      localStorage.setItem("v146", "true");
-      window.location.reload();
-    }
+    if(!localStorage.getItem("siteVersion")) { this.forceReset(); }
     else {
-      if(!await checks.checkSettingsExist()) { Settings.setDefaultSettings(); }
-      if(Misc.noManifest()) { this.manifestLoaded(); }
-      else { Misc.timed('Manifest', this.loadManifest()); }
-      this.checkIfLive();
+      if(localStorage.getItem("siteVersion") === this.state.siteVersion) {
+        if(!await checks.checkSettingsExist()) { pageSettings.setDefaultSettings(); }
+        Misc.timed('Manifest', this.loadManifest());
+        this.checkIfLive();
+      }
+      else { this.forceReset(); }
     }
+  }
+  forceReset() {
+    localStorage.clear();
+    indexedDB.deleteDatabase("guardianstats");
+    localStorage.setItem("siteVersion", this.state.siteVersion);
+    window.location.reload();
   }
   async checkIfLive() {
     fetch(`https://api.twitch.tv/helix/streams/?user_id=214472144`, { method: 'GET', headers: new Headers({ 'Content-Type': 'application/x-www-form-urlencoded', 'Client-id': '9mrfng8ubhs40gu19cksn69dq47gzy' }) })
@@ -144,7 +146,7 @@ class App extends React.Component {
       bungie.GetManifest(DestinyVendorDefinition)
     ]).then(async (values) => {
       this.setState({ status: { status: 'storingManifest', statusText: "Storing Manfiest...", loading: true } });
-      try { db.clearManifest(); } catch (err) { console.log("No manifest to clear. Ignore this."); }
+      try { globals.clearManifest(); } catch (err) { console.log(err); console.log("No manifest to clear. Ignore this."); }
 
       //Add data to databases
       db.table('ManifestVersion').add({ version: currentVersion.version }).then(() => { console.log("Successfully Added ManifestVersion"); }).catch(error => { this.handleError(error); return "Failed"; });
@@ -238,9 +240,25 @@ class App extends React.Component {
     }).catch((error) => { this.handleError(error); return "Failed"; });
     this.manifestLoaded();
   }
-  manifestLoaded() { this.checkProfile(); }
+  manifestLoaded() {
+    if(Misc.getURLVars()["code"] && window.location.pathname !== "/dashboard") {
+      this.setState({ status: { status: 'registeringUser', statusText: `Registering you now...`, loading: true } });
+      auth.GetAuthentication(Misc.getURLVars()["code"]);
+    }
+    else { this.checkProfile(); }
+  }
   setNextManifestCheck() { localStorage.setItem('nextManifestCheck', new Date().getTime() + (1000 * 60 * 60)) }
   profileLoaded() { this.setState({ status: { status: 'ready', statusText: 'Ready to go!', loading: false } }); }
+  setBackground() {
+    const Settings = JSON.parse(localStorage.getItem("Settings"));
+    if(Settings !== null) {
+      if(Settings.background === "vex") { this.setState({ background: { image: Settings.background, position: "center" } }); }
+      else { this.setState({ background: { image: Settings.background, position: "top center" } }); }
+    }
+    else { this.setState({ background: { image: "keep", position: "top center" } }); }
+  }
+  toggleSettingsModal = () => { this.setState({ showSettingsModal: !this.state.showSettingsModal }); }
+  settingsUpdated = () => { this.setBackground(); }
   handleError(error) {
     if(error.name === 'QuotaExceededError') { this.setState({ status: { error: error.message, status: 'error', statusText: 'Failed to save manifest: QuotaExceededError (Possible reasons: Are you using Incognito mode?)', loading: false } }); }
     else if(error.message === 'Failed to fetch') { this.setState({ status: { error: error.message, status: 'error', statusText: 'Failed to fetch: Manifest', loading: false } }); }
@@ -254,12 +272,12 @@ class App extends React.Component {
   }
 
   render() {
-    const { status, statusText, warning, loading } = this.state.status;
+    const { status, statusText, loading } = this.state.status;
     if(status === "error") {
       return (
         <Router>
           <div className="App">
-            <Header BungieMemberships={ JSON.parse(localStorage.getItem("DestinyMemberships")) } platformChange={ (() => this.checkProfile()) } />
+            <Header />
             <Error error={ statusText } />
           </div>
         </Router>
@@ -271,28 +289,24 @@ class App extends React.Component {
         return (
           <Router>
             <div className="App">
-              <Header BungieMemberships={ JSON.parse(localStorage.getItem("DestinyMemberships")) } platformChange={ (() => this.checkProfile()) } />
-              <div className="page-content" id="page-content">
-                <Switch>
-                  <Route exact path="/" render={ props => (<Home foundUser={ ((platform, mbmID) => props.history.push(`/inspect/${ platform }/${ mbmID }`)) } isLive={ this.state.isLive } />) } />
-                  <Route path="/home" render={ props => (<Home foundUser={ ((platform, mbmID) => props.history.push(`/inspect/${ platform }/${ mbmID }`)) } isLive={ this.state.isLive } />) } />
-                  <Route path="/register" render={ props => (<Register {...props} />) } />
-                  <Route path="/activities" render={ props => (<Activities foundUser={ ((platform, mbmID) => props.history.push(`/inspect/${ platform }/${ mbmID }`)) } />) } />
-                  <Route path="/exotics" render={ props => (<Exotics />) } />
-                  <Route path="/vendors" render={ props => (<Vendors />) } />
-                  <Route path="/news" render={ props => (<Blog />) } />
-                  <Route path="/profile" render={ props => (<Inspect />) } />
-                  <Route path="/inspect" render={ props => (<Inspect membershipInfo={ props.location.pathname.replace('/inspect/', '') } />) } />
-                  <Route path="/loader" render={ props => (<SmallLoader statusText="Text example" />) } />
-                  <Route path="/thanks" render={ props => (<Thanks />) } />
-                  <Route path="/glorycheck" render={ props => (<Glory />) } />
-                  <Route path="/marvin" render={ props => (<Marvin />) } />
-                  <Route path="/myclan" render={ props => (<Clan />) } />
-                  <Route path="/test" render={ props => (<Test />) } />
-                  <Route path="*" component={ NotFound } />
-                </Switch>
-                { warning ? (<Warning warning={ warning } />) : null }
-                { loading === true ? (<SmallLoader statusText={ statusText } />) : null }
+              { this.state.showSettingsModal ? (<Settings hideSettings={ this.toggleSettingsModal } updateSettings={ this.settingsUpdated } />) : null }
+              <Header toggleSettingsModal={ this.toggleSettingsModal } />
+              <div className="home-container" style={{ backgroundImage: `url("/images/backgrounds/${ this.state.background.image }.jpg")`, backgroundPosition: this.state.background.position }}>
+                <div className="background-dots">
+                  <div className="page-content" id="page-content">
+                    <Switch>
+                      <Route exact path="/" render={ props => (<Home foundUser={ ((mbmID) => props.history.push(`/profile/${ mbmID }`)) } isLive={ this.state.isLive } />) } />
+                      <Route path="/home" render={ props => (<Home foundUser={ ((mbmID) => props.history.push(`/profile/${ mbmID }`)) } isLive={ this.state.isLive } />) } />
+                      <Route path="/profile" render={ props => (<Profile foundUser={ ((mbmID) => props.history.push(`/activities/${ mbmID }`)) } membershipId={ props.location.pathname.replace('/profile/', '') } />) } />
+                      <Route path="/activities" render={ props => (<Activities foundUser={ ((mbmID) => props.history.push(`/profile/${ mbmID }`)) } membershipId={ props.location.pathname.replace('/activities/', '') } />) } />
+                      <Route path="/marvin" render={ props => (<Marvin />) } />
+                      <Route path="/dashboard" render={ props => (<Dashboard />) } />
+                      <Route path="*" component={ NotFound } />
+                    </Switch>
+                    { loading === true ? (<SmallLoader statusText={ statusText } />) : null }
+                  </div>
+                  <div className="imgCredit">© Bungie, Inc. All rights reserved. Destiny, the Destiny Logo, Bungie and the Bungie logo are among the trademarks of Bungie, Inc.</div>
+                </div>
               </div>
             </div>
           </Router>
@@ -302,22 +316,23 @@ class App extends React.Component {
         return (
           <Router>
             <div className="App">
-              <Header />
-              <div className="page-content" id="page-content">
-                <Switch>
-                  <Route exact path="/" render={ props => (<Home foundUser={ ((platform, mbmID) => props.history.push(`/inspect/${ platform }/${ mbmID }`)) } isLive={ this.state.isLive } />) } />
-                  <Route path="/home" render={ props => (<Home foundUser={ ((platform, mbmID) => props.history.push(`/inspect/${ platform }/${ mbmID }`)) } isLive={ this.state.isLive } />) } />
-                  <Route path="/register" render={ props => (<Register {...props} />) } />
-                  <Route path="/failed" component={ Failed } />
-                  <Route path="/inspect" render={ props => (<Inspect membershipInfo={ props.location.pathname.replace('/inspect/', '') } />) } />
-                  <Route path="/news" render={ props => (<Blog />) } />
-                  <Route path="/thanks" render={ props => (<Thanks />) } />
-                  <Route path="/glorycheck" render={ props => (<Glory />) } />
-                  <Route path="/marvin" render={ props => (<Marvin />) } />
-                  <Route path="/test" render={ props => (<Test />) } />
-                  <Route path="*" component={ Login } />
-                </Switch>
-                { loading === true ? (<SmallLoader statusText={ statusText } />) : null }
+              { this.state.showSettingsModal ? (<Settings hideSettings={ this.toggleSettingsModal } updateSettings={ this.settingsUpdated } />) : null }
+              <Header toggleSettingsModal={ this.toggleSettingsModal } />
+              <div className="home-container" style={{ backgroundImage: `url("/images/backgrounds/${ this.state.background.image }.jpg")`, backgroundPosition: this.state.background.position }}>
+                <div className="background-dots">
+                  <div className="page-content" id="page-content">
+                    <Switch>
+                      <Route exact path="/" render={ props => (<Home foundUser={ ((mbmID) => props.history.push(`/profile/${ mbmID }`)) } isLive={ this.state.isLive } />) } />
+                      <Route path="/home" render={ props => (<Home foundUser={ ((mbmID) => props.history.push(`/profile/${ mbmID }`)) } isLive={ this.state.isLive } />) } />
+                      <Route path="/profile" render={ props => (<Profile foundUser={ ((mbmID) => props.history.push(`/activities/${ mbmID }`)) } membershipId={ props.location.pathname.replace('/profile/', '') } />) } />
+                      <Route path="/activities" render={ props => (<Activities foundUser={ ((mbmID) => props.history.push(`/profile/${ mbmID }`)) } membershipId={ props.location.pathname.replace('/activities/', '') } />) } />
+                      <Route path="/marvin" render={ props => (<Marvin />) } />
+                      <Route path="*" component={ Login } />
+                    </Switch>
+                    { loading === true ? (<SmallLoader statusText={ statusText } />) : null }
+                  </div>
+                  <div className="imgCredit">© Bungie, Inc. All rights reserved. Destiny, the Destiny Logo, Bungie and the Bungie logo are among the trademarks of Bungie, Inc.</div>
+                </div>
               </div>
             </div>
           </Router>

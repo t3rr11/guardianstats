@@ -88,7 +88,7 @@ export function convertTimeToDate(time) {
   var day = date.getDate();
   var month = date.getMonth() + 1;
   var year = date.getFullYear();
-  day < 10 ? day = "0" + day : day = day;
+  if(day < 10) { day = "0" + day; }
   var result = day + '/' + month + '/' + year;
   return result;
 }
@@ -122,8 +122,8 @@ export function getURLVars() {
   return vars;
 }
 export function noManifest() {
-  const urls = ["register"];
-  if(urls.find(e => e === window.location.href.split("/")[3])) { return true; }
+  const urls = ["register, joinmarvin"];
+  if(urls.find(e => e.toLowerCase() === window.location.href.split("/")[3])) { return true; }
 }
 export function logout() {
   localStorage.clear();

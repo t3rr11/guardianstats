@@ -4,7 +4,7 @@
   grid-template-rows: 100%;
   grid-template-columns: minmax(300px, 500px) minmax(500px, 100%);
   color: gainsboro;
-  background-color: var(--DarkNavyBlue);
+  padding-top: 60px;
 }
 .ActivitiesMenu {
   grid-column: 1;
@@ -31,21 +31,64 @@
   border: 1px var(--DarkNavyBlue) solid;
   border-top: 0px;
   background-color: var(--NavyBlue);
-  min-height: 70px;
-  max-height: 70px;
+  height: 45px;
   overflow: hidden;
   display: grid;
-  grid-template-columns: 15% 45% 20% 20%;
+  grid-template-columns: 45px auto 100px 45px 85px;
+}
+.leftActivityContainer > img {
+  height: 35px;
+  width: 35px;
+  margin: 5px;
 }
 .lastActivity:hover, .previousActivity:hover {
   background-color: var(--LightNavyBlue);
   cursor:pointer;
 }
-.activityTitle {
-  margin-top: 0px;
+.activityTitle > span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 200px;
+}
+.activityTitle > p {
+  color: darkgray;
+  font-size: 12px;
+}
+.activityKillsDeaths > div {
+  font-size: 12px;
+  margin: 2px;
+}
+.activityKillsDeaths > div > span {
+  color: darkgray;
+}
+.activityKdRatios > div {
+  font-size: 12px;
+  margin: 2px;
+}
+.activityKdRatios > div > span {
+  color: darkgray;
 }
 .activeDisplay { background-color: var(--LightNavyBlue); }
-.ActivityPGCR { position: relative; }
+.ActivityPGCR {
+  position: relative;
+  background-color: var(--DarkNavyBlue);
+}
+.activityTimePlayed {
+  line-height: 40px;
+}
+.activityTimePlayed > img {
+  display: inline-block;
+  margin-top: -1px;
+  margin-right: 3px;
+  width: 15px;
+  height: 15px;
+  filter: invert(1);
+}
+.activityTimePlayed > span {
+  display: inline-block;
+  font-size: 12px;
+}
 .activityIconBG {
   height: 50px;
   width: 50px;
@@ -211,7 +254,7 @@
   background-color: var(--LightNavyBlue);
   border-bottom: 1px solid var(--DarkNavyBlue);
   border-right: 1px solid var(--NavyBlue);
-  grid-template-columns: 20% 40% 40%;
+  grid-template-columns: 250px minmax(auto, 600px) minmax(auto, 400px);
   padding: 5px;
   font-size: 14px;
   min-height: 127px;
@@ -227,7 +270,7 @@
   background-color: var(--LightNavyBlue);
   border-bottom: 1px solid var(--DarkNavyBlue);
   border-right: 1px solid var(--NavyBlue);
-  grid-template-columns: 50% 50%;
+  grid-template-columns: 250px auto;
   padding: 5px;
   font-size: 14px;
   min-height: 127px;
@@ -236,6 +279,16 @@
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+}
+.pgcrExtendedInfoStats > .innerDiv {
+  height: 35px;
+  width: 195px;
+  margin: 3px;
+  background-position: 0;
+  background-size: auto 40px;
+  background-repeat: no-repeat;
+  background-color: #000;
+  position: relative;
 }
 .pgcrExtendedInfoWeaponKills > div {
   display: inline-block;
@@ -411,4 +464,22 @@
   padding: 5px;
   font-size: 12px;
   color: #ccc;
+}
+.activityFilter {
+  height: 40px;
+  line-height: 30px;
+  padding: 5px;
+  background-color: var(--LighterNavyBlue);
+  border: 1px solid var(--DarkNavyBlue);
+  border-top: 0px;
+}
+.activityFilter > #filterMode {
+  margin-left: 5px;
+  padding: 2px;
+  font-size: 14px;
+}
+.activityFilter > #filterSpecificMode {
+  margin-left: 5px;
+  padding: 2px;
+  font-size: 14px;
 }

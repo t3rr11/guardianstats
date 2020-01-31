@@ -30,7 +30,7 @@ export const SearchUsers = async username => apiRequest(`/Platform/User/SearchUs
 export const SearchDestinyPlayer = async username => apiRequest(`/Platform/Destiny2/SearchDestinyPlayer/-1/${username}/`, false, false);
 export const GetMembershipId = async platformName => apiRequest(`/Platform/Destiny2/SearchDestinyPlayer/-1/${platformName}/`, false, false);
 export const GetMembershipsForCurrentUser = async () => apiRequest(`/Platform/User/GetMembershipsForCurrentUser/`, false, true);
-export const GetMembershipsById = async (userId, platform) => apiRequest(`/Platform/User/GetMembershipsById/${userId}/${platform}/`, false, false);
+export const GetMembershipsById = async (membershipId) => apiRequest(`/Platform/User/GetMembershipsById/${membershipId}/1/`, false, false);
 export const GetInstancedItem = async (membershipId, membershipType, instancedItemId, components) => apiRequest(`/Platform/Destiny2/${membershipType}/Profile/${membershipId}/Item/${instancedItemId}/?components=${components}`, false, false);
 export const GetSpecificModeStats = async (membershipId, membershipType, characterId, modes) => apiRequest(`/Platform/Destiny2/${membershipType}/Account/${membershipId}/Character/${characterId}/Stats/?groups=101&modes=${modes}&periodType=2`, false, false)
 export const GetVendors = async (membershipType, membershipId, characterId) => apiRequest(`/Platform/Destiny2/${membershipType}/Profile/${membershipId}/Character/${characterId}/Vendors/?components=400,402`, false, true);

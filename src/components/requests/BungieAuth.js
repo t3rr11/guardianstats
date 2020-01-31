@@ -44,49 +44,39 @@ export async function SetMembershipsForCurrentUser() {
   })
   .then(async (response) =>  {
     const destinyMemberships = JSON.parse(await response.text()).Response.destinyMemberships;
-    if(destinyMemberships.length > 0) {
-      localStorage.setItem('DestinyMemberships', JSON.stringify(destinyMemberships));
-      if(destinyMemberships.length === 1) {
+    if(destinyMemberships.length === 0) {
+      //No accounts were found. Really not sure what to do here tbh, return an error somehow would work.
+      console.log("No accounts found: " + response);
+    }
+    else if(destinyMemberships.length === 1) {
+      //Easy just assign that first account as the one that is selected.
+      localStorage.setItem('SelectedAccount', JSON.stringify({"platform": Misc.getPlatformName(destinyMemberships[0].membershipType), "name": destinyMemberships[0].displayName, "id": destinyMemberships[0].membershipId}));
+      await bungie.GetProfile(destinyMemberships[0].membershipType, destinyMemberships[0].membershipId, '100,200').then(profile => { localStorage.setItem('ProfileInfo', JSON.stringify(profile)); });
+    }
+    else {
+      //More than 1 account found. Filter through them to remove any that are not associated with Destiny 2.
+      var accounts = [];
+      for(var i in destinyMemberships) {
+        //Check for good error code responses.
+        var validAccountCheck = await bungie.GetProfile(destinyMemberships[i].membershipType, destinyMemberships[i].membershipId, '100,200').then(acc => { if(acc !== undefined) { return true } else { return false } });
+        if(validAccountCheck) { accounts.push(destinyMemberships[i]); }
+      }
+      //Once filtered through save them in localStorage and recheck how many remain.
+      localStorage.setItem('DestinyMemberships', JSON.stringify(accounts));
+      if(accounts.length === 0) {
+        //No accounts were found. Really not sure what to do here tbh, return an error somehow would work.
+        console.log("No accounts found");
+      }
+      else if(accounts.length === 1) {
+        //Easy just assign that first account as the one that is selected.
         localStorage.setItem('SelectedAccount', JSON.stringify({"platform": Misc.getPlatformName(destinyMemberships[0].membershipType), "name": destinyMemberships[0].displayName, "id": destinyMemberships[0].membershipId}));
-        await bungie.GetProfile(destinyMemberships[0].membershipType, destinyMemberships[0].membershipId, '100,200').then(response => {
-          const characters = response.characters.data;
-          var lastOnlineCharacter = 0;
-          for(var i in characters) { if(new Date(characters[i].dateLastPlayed) > lastOnlineCharacter) { lastOnlineCharacter = characters[i]; } }
-          if(localStorage.getItem('SelectedCharacter') === null) { localStorage.setItem('SelectedCharacter', lastOnlineCharacter.characterId); }
-          localStorage.setItem('ProfileInfo', JSON.stringify(response));
-        });
+        await bungie.GetProfile(destinyMemberships[0].membershipType, destinyMemberships[0].membershipId, '100,200').then(profile => { localStorage.setItem('ProfileInfo', JSON.stringify(profile)); });
       }
       else { localStorage.setItem('SelectedAccount', 'Please Select Platform'); }
       window.location.href = '/';
     }
-    else {
-      console.log(response);
-    }
   })
   .catch((error) => { console.error(error); });
-}
-
-export async function SetCurrentMembershipInfo(membershipId, membershipType) {
-  return await bungie.GetMembershipsById(membershipId, membershipType).then(response => {
-    if(response) {
-      const membershipInfo = response;
-      for(var i in membershipInfo.destinyMemberships) {
-        // eslint-disable-next-line
-        if(membershipInfo.destinyMemberships[i].membershipType == membershipType) {
-          const basicInfo = {
-            "displayName": membershipInfo.destinyMemberships[i].displayName,
-            "membershipId": membershipInfo.destinyMemberships[i].membershipId,
-            "membershipType": membershipInfo.destinyMemberships[i].membershipType
-          }
-          localStorage.setItem('BasicMembershipInfo', JSON.stringify(basicInfo));
-          return basicInfo;
-        }
-      }
-      return "No membershipId for platform";
-    }
-  });
-  // eslint-disable-next-line
-  return "Failed due to error in params";
 }
 
 export async function CheckAuth() {

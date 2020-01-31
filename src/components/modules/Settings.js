@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Loader from './Loader';
 import * as Checks from '../scripts/Checks';
 
-export class Error extends Component {
+export class Settings extends Component {
 
   state = {
     loader: null,
@@ -26,10 +26,9 @@ export class Error extends Component {
   setAllSettings() {
     localStorage.setItem("Settings", `{
       "loader": "${ this.state.loader }",
-      "background": "${ this.state.background }",
-      "hiddenSeals": "${ this.state.hiddenSeals }"
+      "background": "${ this.state.background }"
     }`);
-    document.getElementById("refresh-update-text").style.display = "block";
+    this.props.updateSettings();
   }
 
   componentDidMount() {
@@ -38,7 +37,6 @@ export class Error extends Component {
     this.setState({
       loader: Settings.loader,
       background: Settings.background,
-      hiddenSeals: Settings.hiddenSeals
     });
     const SettingsKeys = Object.keys(Settings);
     const StateKeys = Object.keys(this.state);
@@ -46,8 +44,7 @@ export class Error extends Component {
     if(UnsetSettings !== "") {
       for(var i in UnsetSettings) {
         if(UnsetSettings[i] === "loader") { this.setLoader("class"); }
-        else if(UnsetSettings[i] === "background") { this.setBackground("classes2"); }
-        else if(UnsetSettings[i] === "hiddenSeals") { this.setHiddenSeals("Hidden"); }
+        else if(UnsetSettings[i] === "background") { this.setBackground("keep"); }
       }
     }
   }
@@ -69,14 +66,11 @@ export class Error extends Component {
             <div className="select-custom-background">
               <p>Select Custom Background</p>
               <div className="settings-background-options">
+                <div className={ `settings-background-option ${ this.state.background === "keep" ? "selected" : null }` } onClick={ (() => this.setBackground("keep")) }>
+                  <img className="settings-background-image" src="/images/backgrounds/keep.jpg" alt="background" />
+                </div>
                 <div className={ `settings-background-option ${ this.state.background === "shadowkeep" ? "selected" : null }` } onClick={ (() => this.setBackground("shadowkeep")) }>
                   <img className="settings-background-image" src="/images/backgrounds/shadowkeep.jpg" alt="background" />
-                </div>
-                <div className={ `settings-background-option ${ this.state.background === "forsaken" ? "selected" : null }` } onClick={ (() => this.setBackground("forsaken")) }>
-                  <img className="settings-background-image" src="/images/backgrounds/forsaken.jpg" alt="background" />
-                </div>
-                <div className={ `settings-background-option ${ this.state.background === "vex" ? "selected" : null }` } onClick={ (() => this.setBackground("vex")) }>
-                  <img className="settings-background-image" src="/images/backgrounds/vex.jpg" alt="background" />
                 </div>
                 <div className={ `settings-background-option ${ this.state.background === "vexlair" ? "selected" : null }` } onClick={ (() => this.setBackground("vexlair")) }>
                   <img className="settings-background-image" src="/images/backgrounds/vexlair.jpg" alt="background" />
@@ -95,10 +89,6 @@ export class Error extends Component {
                 </div>
               </div>
             </div>
-            <div className="toggle-hidden-seals">
-              <p>Toggle Unobtained Seals</p>
-              <button className="btn btn-info" onClick={ this.state.hiddenSeals === "Hidden" ? (() => this.setHiddenSeals("Shown")) : (() => this.setHiddenSeals("Hidden")) }>{ this.state.hiddenSeals }</button>
-            </div>
             <div id="refresh-update-text">Refresh to update</div>
           </div>
         </div>
@@ -107,12 +97,6 @@ export class Error extends Component {
   }
 }
 
-export function setDefaultSettings() {
-  localStorage.setItem("Settings", `{
-    "loader": "class",
-    "background": "shadowkeep",
-    "hiddenSeals": "Hidden"
-  }`);
-}
+export function setDefaultSettings() { localStorage.setItem("Settings", `{"loader":"class","background":"keep"}`); }
 
-export default Error;
+export default Settings;
