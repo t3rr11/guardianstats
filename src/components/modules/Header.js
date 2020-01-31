@@ -85,7 +85,7 @@ export class Header extends React.Component {
                     (
                       <div className="platformSelection">
                         <div className="platformName">
-                          <img src={`./images/icons/platforms/${ (JSON.parse(localStorage.getItem("SelectedAccount")).platform).toUpperCase() }.png`} />
+                          <img src={`./images/icons/platforms/${ (JSON.parse(localStorage.getItem("SelectedAccount")).platform).toLowerCase() }.png`} />
                           <div onClick={ () => this.showMembershipId() }>{ JSON.parse(localStorage.getItem("SelectedAccount")).name }</div>
                         </div>
                         <div className={ this.state.showCopied ? 'platformMbmId show' : 'platformMbmId' }>{ JSON.parse(localStorage.getItem("SelectedAccount")).id }</div>
