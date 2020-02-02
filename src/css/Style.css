@@ -62,13 +62,10 @@ body {
   font-size: 50px;
   letter-spacing: 4px;
 }
-.imgCredit {
+.getMarvinBtn {
   position: absolute;
-  bottom: 0px;
-  width: 100%;
-  text-align: center;
-  font-size: 10px;
-  display: none;
+  right: 10px;
+  bottom: 10px;
 }
 
 /* Search Box Start */

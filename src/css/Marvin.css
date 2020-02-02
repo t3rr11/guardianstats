@@ -28,6 +28,7 @@ h3::selection { background-color: rgba(0.2, 0.2, 0.2, 0.2); }
   align-items: center;
   justify-content: center;
   display: inherit;
+  height: max-content;
 }
 .para {
   width: 90%;

@@ -24,6 +24,7 @@ export class Home extends Component {
             <div className="searchDesc">Feel free to search below or consider connecting with bungie to get the full experience from Guardianstats!<p>Press Enter to Search.</p></div>
             <Search foundUser={ this.foundUser } />
           </div>
+          <div className="btn btn-dark getMarvinBtn" onClick={ (() => this.props.getMarvin()) }>Get Marvin</div>
         </React.Fragment>
       );
     }

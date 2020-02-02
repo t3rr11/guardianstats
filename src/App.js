@@ -4,7 +4,6 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 //Modules
 import Manifest from './manifest.json';
-import Loader from './components/modules/Loader';
 import SmallLoader from './components/modules/SmallLoader';
 import Error from './components/modules/Error';
 import Header from './components/modules/Header';
@@ -273,6 +272,7 @@ class App extends React.Component {
 
   render() {
     const { status, statusText, loading } = this.state.status;
+    const backgroundStyle = { backgroundImage: `url("/images/backgrounds/${ this.state.background.image }.jpg")`, backgroundPosition: this.state.background.position };
     if(status === "error") {
       return (
         <Router>
@@ -291,12 +291,12 @@ class App extends React.Component {
             <div className="App">
               { this.state.showSettingsModal ? (<Settings hideSettings={ this.toggleSettingsModal } updateSettings={ this.settingsUpdated } />) : null }
               <Header toggleSettingsModal={ this.toggleSettingsModal } />
-              <div className="home-container" style={{ backgroundImage: `url("/images/backgrounds/${ this.state.background.image }.jpg")`, backgroundPosition: this.state.background.position }}>
+              <div className="home-container" style={ backgroundStyle }>
                 <div className="background-dots">
                   <div className="page-content" id="page-content">
                     <Switch>
-                      <Route exact path="/" render={ props => (<Home foundUser={ ((mbmID) => props.history.push(`/profile/${ mbmID }`)) } isLive={ this.state.isLive } />) } />
-                      <Route path="/home" render={ props => (<Home foundUser={ ((mbmID) => props.history.push(`/profile/${ mbmID }`)) } isLive={ this.state.isLive } />) } />
+                      <Route exact path="/" render={ props => (<Home getMarvin={ (() => props.history.push(`/marvin`)) }  foundUser={ ((mbmID) => props.history.push(`/profile/${ mbmID }`)) } isLive={ this.state.isLive } />) } />
+                      <Route path="/home" render={ props => (<Home getMarvin={ (() => props.history.push(`/marvin`)) }  foundUser={ ((mbmID) => props.history.push(`/profile/${ mbmID }`)) } isLive={ this.state.isLive } />) } />
                       <Route path="/profile" render={ props => (<Profile foundUser={ ((mbmID) => props.history.push(`/activities/${ mbmID }`)) } membershipId={ props.location.pathname.replace('/profile/', '') } />) } />
                       <Route path="/activities" render={ props => (<Activities foundUser={ ((mbmID) => props.history.push(`/profile/${ mbmID }`)) } membershipId={ props.location.pathname.replace('/activities/', '') } />) } />
                       <Route path="/marvin" render={ props => (<Marvin />) } />
@@ -306,7 +306,6 @@ class App extends React.Component {
                     </Switch>
                     { loading === true ? (<SmallLoader statusText={ statusText } />) : null }
                   </div>
-                  <div className="imgCredit">© Bungie, Inc. All rights reserved. Destiny, the Destiny Logo, Bungie and the Bungie logo are among the trademarks of Bungie, Inc.</div>
                 </div>
               </div>
             </div>
@@ -319,12 +318,12 @@ class App extends React.Component {
             <div className="App">
               { this.state.showSettingsModal ? (<Settings hideSettings={ this.toggleSettingsModal } updateSettings={ this.settingsUpdated } />) : null }
               <Header toggleSettingsModal={ this.toggleSettingsModal } />
-              <div className="home-container" style={{ backgroundImage: `url("/images/backgrounds/${ this.state.background.image }.jpg")`, backgroundPosition: this.state.background.position }}>
+              <div className="home-container" style={ backgroundStyle }>
                 <div className="background-dots">
                   <div className="page-content" id="page-content">
                     <Switch>
-                      <Route exact path="/" render={ props => (<Home foundUser={ ((mbmID) => props.history.push(`/profile/${ mbmID }`)) } isLive={ this.state.isLive } />) } />
-                      <Route path="/home" render={ props => (<Home foundUser={ ((mbmID) => props.history.push(`/profile/${ mbmID }`)) } isLive={ this.state.isLive } />) } />
+                      <Route exact path="/" render={ props => (<Home getMarvin={ (() => props.history.push(`/marvin`)) }  foundUser={ ((mbmID) => props.history.push(`/profile/${ mbmID }`)) } isLive={ this.state.isLive } />) } />
+                      <Route path="/home" render={ props => (<Home getMarvin={ (() => props.history.push(`/marvin`)) } foundUser={ ((mbmID) => props.history.push(`/profile/${ mbmID }`)) } isLive={ this.state.isLive } />) } />
                       <Route path="/profile" render={ props => (<Profile foundUser={ ((mbmID) => props.history.push(`/activities/${ mbmID }`)) } membershipId={ props.location.pathname.replace('/profile/', '') } />) } />
                       <Route path="/activities" render={ props => (<Activities foundUser={ ((mbmID) => props.history.push(`/profile/${ mbmID }`)) } membershipId={ props.location.pathname.replace('/activities/', '') } />) } />
                       <Route path="/marvin" render={ props => (<Marvin />) } />
@@ -333,7 +332,6 @@ class App extends React.Component {
                     </Switch>
                     { loading === true ? (<SmallLoader statusText={ statusText } />) : null }
                   </div>
-                  <div className="imgCredit">© Bungie, Inc. All rights reserved. Destiny, the Destiny Logo, Bungie and the Bungie logo are among the trademarks of Bungie, Inc.</div>
                 </div>
               </div>
             </div>

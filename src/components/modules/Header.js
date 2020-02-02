@@ -85,7 +85,7 @@ export class Header extends React.Component {
                     (
                       <div className="platformSelection">
                         <div className="platformName">
-                          <img src={`./images/icons/platforms/${ (JSON.parse(localStorage.getItem("SelectedAccount")).platform).toLowerCase() }.png`} />
+                          <img alt="platformLogo" src={`./images/icons/platforms/${ (JSON.parse(localStorage.getItem("SelectedAccount")).platform).toLowerCase() }.png`} />
                           <div onClick={ () => this.showMembershipId() }>{ JSON.parse(localStorage.getItem("SelectedAccount")).name }</div>
                         </div>
                         <div className={ this.state.showCopied ? 'platformMbmId show' : 'platformMbmId' }>{ JSON.parse(localStorage.getItem("SelectedAccount")).id }</div>
@@ -97,7 +97,7 @@ export class Header extends React.Component {
                       platforms.map(function(platform) {
                         return (
                           <div className="platformSelection">
-                            <img src={`./images/icons/platforms/${ platform.platform }.png`} />
+                            <img alt="platformLogo" src={`./images/icons/platforms/${ platform.platform }.png`} />
                             <div onClick={ ((e) => this.setPlatform(e)) } id={ platform.id }>{ platform.name }</div>
                           </div>
                         )

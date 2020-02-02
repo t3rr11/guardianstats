@@ -20,19 +20,19 @@
       grid-template-rows: 50px 100px 50px !important;
       height: 210px !important;
     }
-    .inspectProfileName { grid-row: 1; grid-column: 2; }
-    .inspectUserDetails { grid-row: 1; grid-column: 3; text-align: right; padding-right: 10px; }
-    .inspectViewActivitiesBtn { grid-row: 3; grid-column: span 3; margin: auto; }
-    .inspectBoxRanks { grid-row: 2; grid-column: span 3; width: 100%; }
-    .inspectBoxRanks > div { float: unset; }
-    .inspectTitles { flex-wrap: wrap; height: 140px; }
-    .inspectTitleObtained { width: 40px; height: 40px; }
-    .inspectTitleNotObtained { width: 40px; height: 40px; }
-    .inspectCollectibleItemContainer:hover .inspectCollectibleItemInfo, .inspectCollectibleItemInfo.selected { top: unset; right: unset; left: -110px; bottom: 35px; }
+    .inspectProfileName { grid-row: 1 !important; grid-column: 2 !important; }
+    .inspectUserDetails { grid-row: 1 !important; grid-column: 3 !important; text-align: right !important; padding-right: 10px !important; }
+    .inspectViewActivitiesBtn { grid-row: 3 !important; grid-column: span 3 !important; margin: auto !important; }
+    .inspectBoxRanks { grid-row: 2 !important; grid-column: span 3 !important; width: 100% !important; }
+    .inspectBoxRanks > div { float: unset !important; }
+    .inspectTitles { flex-wrap: wrap !important; height: 140px !important; }
+    .inspectTitleObtained { width: 40px !important; height: 40px !important; }
+    .inspectTitleNotObtained { width: 40px !important; height: 40px !important; }
+    .inspectCollectibleItemContainer:hover .inspectCollectibleItemInfo, .inspectCollectibleItemInfo.selected { top: unset !important; right: unset !important; left: -110px !important; bottom: 35px !important; }
     .inspectBoxStatContent { height: unset !important; }
-    .inspectBoxContentStats { grid-template-columns: 25% 35% 40%; font-size: 12px; }
+    .inspectBoxContentStats { grid-template-columns: 25% 35% 40% !important; font-size: 12px !important; }
     .inspectBoxContentStatsDiv { height: unset !important; }
-    .inspectBoxContentStats.twoColumn { display: block; height: unset !important; padding-bottom: 8px; }
+    .inspectBoxContentStats.twoColumn { display: block; height: unset !important; padding-bottom: 8px !important; }
   /* Profile end */
 
   /* Activities start */
@@ -40,52 +40,60 @@
     .leftActivityContainer { grid-template-columns: 45px auto 100px 45px 85px !important; }
   /* Activities end */
 
+  /* Marvin start */
+  .detailsContainer {
+    grid-template-columns: auto !important;
+  }
+  .features { grid-template-rows: auto !important; }
+  /* Marvin end */
+
   /* Settings start */
     .settings-bg {
-      position: absolute;
+      position: absolute !important;
     }
     .settings-modal {
-      height: max-content;
-      padding-bottom: 15px;
+      height: max-content !important;
+      padding-bottom: 15px !important;
     }
     .settings-content {
-      grid-template-columns: auto;
+      grid-template-columns: auto !important;
     }
     .select-custom-loader {
-      width: 90%;
-      margin-left: unset;
-      margin: auto;
-      margin-bottom: 10px;
+      width: 90% !important;
+      margin-left: unset !important;
+      margin: auto !important;
+      margin-bottom: 10px !important;
     }
     .select-custom-background {
-      width: 90%;
-      margin-left: unset;
-      margin: auto;
-      grid-row: unset;
+      width: 90% !important;
+      margin-left: unset !important;
+      margin: auto !important;
+      grid-row: unset !important;
     }
-    .settings-background-options { grid-template-columns: auto auto; }
+    .settings-background-options { grid-template-columns: auto auto !important; }
     .settings-background-image {
-      background-size: contain;
-      width: 85px;
-      height: 50px;
+      background-size: contain !important;
+      width: 85px !important;
+      height: 50px !important;
     }
   /* Settings end */
 
   /* Others start */
     .home-content { width: 100% !important; }
-    .home-text { width: 90% !important; margin: auto; }
+    .home-text { width: 90% !important; margin: auto !important; }
+    .detailsContainer { background: var(--BlueGradient); height: max-content; }
   /* Others end */
 }
 @media only screen and (max-width: 700px) {
   /* Activities start */
     .leftActivityContainer { grid-template-columns: 45px auto 45px 85px !important; }
-    .activityTitle > span { width: 150px; }
-    .activityTimePlayed { display: none; }
+    .activityTitle > span { width: 150px !important; }
+    .activityTimePlayed { display: none !important; }
   /* Activities end */
 }
 @media only screen and (max-width: 400px) {
   /* Activities start */
     .leftActivityContainer { grid-template-columns: 45px auto 45px 85px !important; }
-    .activityTimePlayed { display: none; }
+    .activityTimePlayed { display: none !important; }
   /* Activities end */
 }
