@@ -4,6 +4,7 @@
 @import url('profile.css');
 @import url('activities.css');
 @import url('scrollbars.css');
+@import url('mobile.css');
 @font-face { font-family: DestinySymbols; src: url("/fonts/DestinySymbols.woff"); }
 :root {
   --DarkerNavyBlue: #181a1f;

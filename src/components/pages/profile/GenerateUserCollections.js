@@ -11,7 +11,7 @@ export function generate(profileInfo, Manifest) {
   return (
     <div className="inspectBoxCollections">
       <div className="inspectBox">
-        <div id="itemCategories" className="scrollbar">
+        <div id="itemCategories">
           {
             ExoticNode.children.presentationNodes.map(category => (
               <div key={ category.presentationNodeHash } id={ category.presentationNodeHash } className="itemSubCategory">

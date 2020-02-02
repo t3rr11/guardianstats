@@ -16,6 +16,7 @@ var ActivityWatcher = null;
 export class Activities extends Component {
   state = {
     status: { error: null, status: 'startUp', statusText: '' },
+    profile: null,
     activities: { },
     currentActivity : null,
     filter: "None",
@@ -153,23 +154,25 @@ export class Activities extends Component {
   startActivityTimer() { ActivityWatcher = setInterval(this.checkActivityUpdates, 30000); console.log('Activity Watcher Started.'); }
   stopActivityTimer() { clearInterval(ActivityWatcher); ActivityWatcher = null; console.log('Activity Watcher Stopped'); }
   checkActivityUpdates = async () => {
-    const profile = this.state.profile;
-    const previousActivities = this.state.activities;
-    const recentActivityData = (await bungie.GetActivityHistory(profile.membershipType, profile.membershipId, profile.lastOnlineCharacterId, 15, 0)).activities;
-    var newActivities = [];
-    var updatesFound = 0;
-    recentActivityData.map(function(activity) {
-      if(!previousActivities.find(ad => ad.period === activity.period)) {
-        newActivities.push(activity);
-        updatesFound++;
+    if(this.state.profile !== null) {
+      const profile = this.state.profile;
+      const previousActivities = this.state.activities;
+      const recentActivityData = (await bungie.GetActivityHistory(profile.membershipType, profile.membershipId, profile.lastOnlineCharacterId, 15, 0)).activities;
+      var newActivities = [];
+      var updatesFound = 0;
+      recentActivityData.map(function(activity) {
+        if(!previousActivities.find(ad => ad.period === activity.period)) {
+          newActivities.push(activity);
+          updatesFound++;
+        }
+        return true;
+      }, this);
+      if(updatesFound > 0) {
+        var newActivitiesArray = previousActivities;
+        for(var i in newActivities) { newActivitiesArray.unshift(newActivities[i]) }
+        console.log('Found: ' + updatesFound + " new activities.");
+        this.grabPGCRs(newActivities, newActivitiesArray);
       }
-      return true;
-    }, this);
-    if(updatesFound > 0) {
-      var newActivitiesArray = previousActivities;
-      for(var i in newActivities) { newActivitiesArray.unshift(newActivities[i]) }
-      console.log('Found: ' + updatesFound + " new activities.");
-      this.grabPGCRs(newActivities, newActivitiesArray);
     }
   }
 

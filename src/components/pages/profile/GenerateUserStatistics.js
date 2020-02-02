@@ -117,9 +117,9 @@ const generateGambitStats = (profileInfo, gambitStats) => {
     try { matches = matches + gambitStats[i].allPvECompetitive.allTime.activitiesEntered.basic.value; } catch (err) {  }
     try { wins = wins + gambitStats[i].allPvECompetitive.allTime.activitiesWon.basic.value; } catch (err) {  }
   }
-  kd = Math.round((kd / gambitStats.length) * 100) / 100;
-  kda = Math.round((kda / gambitStats.length) * 100) / 100;
-  kad = Math.round((kad / gambitStats.length) * 100) / 100;
+  try { kd = Math.round((kd / gambitStats.length) * 100) / 100; } catch (err) { }
+  try { kda = Math.round((kda / gambitStats.length) * 100) / 100; } catch (err) { }
+  try { kad = Math.round((kad / gambitStats.length) * 100) / 100; } catch (err) { }
   return (
     <div className="inspectBoxStatContent">
       <div className="inspectBoxContentIcon">
@@ -158,9 +158,9 @@ const generateRaidsStats = (profileInfo, raidStats) => {
     try { misadventures = misadventures + raidStats[i].raid.allTime.suicides.basic.value; } catch (err) {  }
     try { timeSpent = timeSpent + raidStats[i].raid.allTime.secondsPlayed.basic.value; } catch (err) {  }
   }
-  kd = Math.round((kd / raidStats.length) * 100) / 100;
-  kda = Math.round((kda / raidStats.length) * 100) / 100;
-  kad = Math.round((kad / raidStats.length) * 100) / 100;
+  try { kd = Math.round((kd / raidStats.length) * 100) / 100; } catch (err) { }
+  try { kda = Math.round((kda / raidStats.length) * 100) / 100; } catch (err) { }
+  try { kad = Math.round((kad / raidStats.length) * 100) / 100; } catch (err) { }
   timeSpent = Misc.formatSmallTime(Math.round(timeSpent));
   return (
     <div className="inspectBoxStatContent">
