@@ -301,6 +301,7 @@ class App extends React.Component {
                       <Route path="/activities" render={ props => (<Activities foundUser={ ((mbmID) => props.history.push(`/profile/${ mbmID }`)) } membershipId={ props.location.pathname.replace('/activities/', '') } />) } />
                       <Route path="/marvin" render={ props => (<Marvin />) } />
                       <Route path="/dashboard" render={ props => (<Dashboard />) } />
+                      <Route path="/joinmarvin" render={ props => (window.location.href = "https://discord.gg/jbEbYej") } />
                       <Route path="*" component={ NotFound } />
                     </Switch>
                     { loading === true ? (<SmallLoader statusText={ statusText } />) : null }
@@ -327,6 +328,7 @@ class App extends React.Component {
                       <Route path="/profile" render={ props => (<Profile foundUser={ ((mbmID) => props.history.push(`/activities/${ mbmID }`)) } membershipId={ props.location.pathname.replace('/profile/', '') } />) } />
                       <Route path="/activities" render={ props => (<Activities foundUser={ ((mbmID) => props.history.push(`/profile/${ mbmID }`)) } membershipId={ props.location.pathname.replace('/activities/', '') } />) } />
                       <Route path="/marvin" render={ props => (<Marvin />) } />
+                      <Route path="/joinmarvin" render={ props => (window.location.href = "https://discord.gg/jbEbYej") } />
                       <Route path="*" component={ Login } />
                     </Switch>
                     { loading === true ? (<SmallLoader statusText={ statusText } />) : null }

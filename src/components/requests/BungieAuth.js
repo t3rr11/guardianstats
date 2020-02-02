@@ -50,6 +50,7 @@ export async function SetMembershipsForCurrentUser() {
     }
     else if(destinyMemberships.length === 1) {
       //Easy just assign that first account as the one that is selected.
+      localStorage.setItem('DestinyMemberships', JSON.stringify(destinyMemberships));
       localStorage.setItem('SelectedAccount', JSON.stringify({"platform": Misc.getPlatformName(destinyMemberships[0].membershipType), "name": destinyMemberships[0].displayName, "id": destinyMemberships[0].membershipId}));
       await bungie.GetProfile(destinyMemberships[0].membershipType, destinyMemberships[0].membershipId, '100,200').then(profile => { localStorage.setItem('ProfileInfo', JSON.stringify(profile)); });
     }
