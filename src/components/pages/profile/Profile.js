@@ -38,7 +38,9 @@ export class Profile extends Component {
     if(!isNaN(membershipId) && membershipId.length >= 19) {
       //Variables
       const Manifest = globals.MANIFEST;
-      var membershipType, profileInfo, historicStats, gambitStats, raidStats;
+      var membershipType, profileInfo, historicStats;
+      var gambitStats = [];
+      var raidStats = [];
       try {
         //Check account exists
         this.setState({ status: { status: 'checkingAccountInfo', statusText: 'Checking if account exists...' } });
@@ -53,40 +55,10 @@ export class Profile extends Component {
           profileInfo = promiseData[0];
           historicStats = promiseData[1];
           var characterIds = profileInfo.profile.data.characterIds;
-          if(characterIds.length === 1) {
-            await Promise.all([
-              bungie.GetSpecificModeStats(membershipId, membershipType, characterIds[0], "64"),
-              bungie.GetSpecificModeStats(membershipId, membershipType, characterIds[0], "4"),
-            ]).then(async function(values) {
-              //Set variables
-              gambitStats = values[1];
-              raidStats = values[2];
-            });
-          }
-          else if(characterIds.length === 2) {
-            await Promise.all([
-              bungie.GetSpecificModeStats(membershipId, membershipType, characterIds[0], "64"),
-              bungie.GetSpecificModeStats(membershipId, membershipType, characterIds[1], "64"),
-              bungie.GetSpecificModeStats(membershipId, membershipType, characterIds[0], "4"),
-              bungie.GetSpecificModeStats(membershipId, membershipType, characterIds[1], "4"),
-            ]).then(async function(values) {
-              //Set variables
-              gambitStats = [values[1], values[2]];
-              raidStats = [values[3], values[4]];
-            });
-          }
-          else if(characterIds.length === 3) {
-            await Promise.all([
-              bungie.GetSpecificModeStats(membershipId, membershipType, characterIds[0], "64"),
-              bungie.GetSpecificModeStats(membershipId, membershipType, characterIds[1], "64"),
-              bungie.GetSpecificModeStats(membershipId, membershipType, characterIds[2], "64"),
-              bungie.GetSpecificModeStats(membershipId, membershipType, characterIds[0], "4"),
-              bungie.GetSpecificModeStats(membershipId, membershipType, characterIds[1], "4"),
-              bungie.GetSpecificModeStats(membershipId, membershipType, characterIds[2], "4")
-            ]).then(async function(values) {
-              //Set variables
-              gambitStats = [values[1], values[2], values[3]];
-              raidStats = [values[4], values[5], values[6]];
+          for(var j in characterIds) {
+            await Promise.all([ bungie.GetSpecificModeStats(membershipId, membershipType, characterIds[j], "64"), bungie.GetSpecificModeStats(membershipId, membershipType, characterIds[j], "4"), ]).then(async function(values) {
+              gambitStats.push(values[0]);
+              raidStats.push(values[1]);
             });
           }
         });

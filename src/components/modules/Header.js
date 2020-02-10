@@ -97,7 +97,7 @@ export class Header extends React.Component {
                       platforms.map(function(platform) {
                         return (
                           <div className="platformSelection">
-                            <img alt="platformLogo" src={`./images/icons/platforms/${ platform.platform }.png`} />
+                            <img alt="platformLogo" src={`./images/icons/platforms/${ (platform.platform).toLowerCase() }.png`} />
                             <div onClick={ ((e) => this.setPlatform(e)) } id={ platform.id }>{ platform.name }</div>
                           </div>
                         )

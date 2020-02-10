@@ -1,15 +1,20 @@
 import React, { Component } from 'react';
+import uuid from 'uuid';
 import Loader from '../../modules/Loader';
 import Error from '../../modules/Error';
 import * as Misc from '../../Misc';
 import * as checks from '../../scripts/Checks';
 import * as DiscordAuth from '../../requests/DiscordAuth';
+import * as ClanBanner from './ClanBanner';
 
 export class Dashboard extends Component {
 
   state = {
     status: { error: null, status: 'startUp', statusText: 'Loading Dashboard...' },
-    data: null,
+    clanData: null,
+    managingServer: null,
+    managingClan: null,
+    clanBannerData: null,
     failed: false
   }
 
@@ -48,14 +53,34 @@ export class Dashboard extends Component {
       body: JSON.stringify({ 'id': discordInfo.id, 'username': discordInfo.username, 'avatar': discordInfo.avatar, 'discriminator': discordInfo.discriminator })
     })
     .then((response) => response.json())
-    .then((response) => {
+    .then(async (response) => {
       if(response.error === null) {
-        console.log(response.data);
-        this.setState({ status: { status: 'ready', statusText: 'Finished loading' }, data: response.data });
+        var usersDiscordServers = await DiscordAuth.getDiscordGuildInfo();
+        if(!usersDiscordServers.error) {
+          if(response.data.length === 1) {
+            //Only managing 1 clan. Just load dashboard based on those settings.
+            var managingServer = usersDiscordServers.guildInfo.find(e => e.id === response.data[0].guild_id);
+            this.setState({ status: { status: 'buildingClanBanner', statusText: 'Building Clan Banners...' }, managingServer: managingServer, managingClan: response.data[0] });
+          }
+          else {
+            //Remove this code after finished developing the code. This is only for testing purposes.
+            if(process.env.NODE_ENV === "development") {
+              var managingServer = usersDiscordServers.guildInfo.find(e => e.id === response.data[0].guild_id);
+              this.setState({ status: { status: 'buildingClanBanner', statusText: 'Building Clan Banners...' }, managingServer: managingServer, managingClan: response.data[0] });
+              this.buildClanBanners();
+            }
+            else {
+              var clanServerIds = []; for(var i in response.data) { clanServerIds.push(response.data[i].guild_id); }
+              var filteredDiscordServers = usersDiscordServers.guildInfo.filter(e => clanServerIds.includes(e.id));
+              this.setState({ status: { status: 'pickServer', statusText: 'Please pick a server to manage.' }, clanData: response.data, serverData: filteredDiscordServers, managingServer: null, managingClan: null });
+            }
+          }
+        }
+        else { this.setState({ status: { status: 'error', statusText: usersDiscordServers.reason } }); }
       }
       else { this.setState({ status: { status: 'error', statusText: response.error } }); }
     })
-    .catch((err) => { this.setState({ status: { status: 'error', statusText: "Failed to connect to database to retrieve clan data... Please try again at a later time." } }); });
+    .catch((err) => { console.log(err); this.setState({ status: { status: 'error', statusText: "Failed to connect to database to retrieve clan data... Please try again at a later time." } }); });
   }
   changeMenu(event) {
     var menuItems = document.getElementsByClassName('marvins_dashboard_menu_item');
@@ -69,19 +94,38 @@ export class Dashboard extends Component {
   }
   toggleChecked(event) { this.setState({ data: {...this.state.data, [event.target.id]: JSON.stringify(event.target.checked) } }); }
   updateResultsReturned(event) { console.log("Results Returned: " + event.target.value); }
+  pickServer(guildId) {
+    var managingServer = this.state.serverData.find(e => e.id === guildId);
+    var managingClan = this.state.clanData.find(e => e.guild_id === guildId);
+    this.setState({ status: { status: 'buildingClanBanner', statusText: 'Building Clan Banners...' }, managingServer: managingServer, managingClan: managingClan });
+    this.buildClanBanners();
+  }
+  async buildClanBanners() {
+    const { serverData, managingServer, managingClan } = this.state;
+    const groupIds = managingClan.server_clan_ids.split(",");
+    const clanBannerData = await ClanBanner.BuildClanBanners(groupIds);
+    this.setState({ clanBannerData });
+    this.finishedLoading();
+  }
+  finishedLoading() {
+    this.setState({ status: { status: 'ready', statusText: 'Finished loading' } });
+    const clanBannerData = this.state.clanBannerData;
+    const groupIds = this.state.managingClan.server_clan_ids.split(',');
+    for(var i in groupIds) { ClanBanner.BuildClanBanner(groupIds[i], clanBannerData); }
+  }
 
   render() {
     const { status, statusText } = this.state.status;
-    const { data, failed } = this.state;
+    const { serverData, managingServer, managingClan, clanBannerData, failed } = this.state;
 
     if(status === 'error') { return <Error error={ statusText } /> }
     else if(status === 'ready') {
       const discordInfo = JSON.parse(localStorage.getItem("DiscordInfo"));
+      const groupIds = this.state.managingClan.server_clan_ids.split(',');
       return (
         <div className="marvins_dashboard">
           <div className="marvins_header">
             <h1>Marvins Dashboard</h1>
-            <h5>{ "Logged in as: " + discordInfo.username + "#" + discordInfo.discriminator }</h5>
           </div>
           <div className="marvins_dashboard_content_container">
             <div className="marvins_dashboard_menu">
@@ -91,25 +135,35 @@ export class Dashboard extends Component {
             </div>
             <div className="marvins_dashboard_content">
               <div className="marvin_clan_info selected">
-                <div id="guild_id">Server ID: { data.guild_id }</div>
-                <div id="clan_id"> Clan ID: { data.clan_id }</div>
-                <div id="clan_level">Clan Level: { data.clan_level }</div>
-                <div id="creator_id">Marvins Server Owner: { data.creator_id }</div>
-                <div id="server_clan_ids">Server Clans: { data.server_clan_ids }</div>
-                <div id="announcement_channel">Announcements Channel ID: { data.announcement_channel }</div>
-                <div id="broadcasts_channel">Broadcast Channel ID: { data.broadcasts_channel }</div>
+                <div id="guild_id">Server ID: { managingClan.guild_id }</div>
+                <div id="clan_id"> Clan ID: { managingClan.clan_id }</div>
+                <div id="clan_level">Clan Level: { managingClan.clan_level }</div>
+                <div id="creator_id">Marvins Server Owner: { managingClan.creator_id }</div>
+                <div id="server_clan_ids">Server Clans: { managingClan.server_clan_ids }</div>
+                <div id="broadcasts_channel">Broadcast Channel ID: { managingClan.broadcasts_channel }</div>
+                <div className="clanBannerContainer">
+                  {
+                    groupIds.map((groupId) => {
+                      return (
+                        <div className="clanBanner">
+                          <canvas id={`canvasGonfalon_${ groupId }`} width="215" height="375" />
+                          <canvas id={`canvasDetail_${ groupId }`} width="215" height="375" />
+                          <canvas id={`canvasDecalBg_${ groupId }`} width="215" height="375" />
+                          <canvas id={`canvasDecalFg_${ groupId }`} width="215" height="375" />
+                          <canvas id={`canvasStaff_${ groupId }`} width="215" height="375" />
+                        </div>
+                      )
+                    })
+                  }
+                </div>
               </div>
               <div className="marvin_clan_stats">
                 <div></div>
               </div>
               <div className="marvin_clan_settings">
                 <div>
-                  <label className="customCheck">Enable announcements
-                    <input type="checkbox" id="enable_announcements" onChange={ (e) => this.toggleChecked(e) } checked={ data.enable_announcements === "true" ? true : false } />
-                    <span className="checkmark"></span>
-                  </label>
                   <label className="customCheck">Enable whitelist
-                    <input type="checkbox" id="enable_whitelist" onChange={ (e) => this.toggleChecked(e) } checked={ data.enable_whitelist === "true" ? true : false } />
+                    <input type="checkbox" id="enable_whitelist" onChange={ (e) => this.toggleChecked(e) } checked={ managingClan.enable_whitelist === "true" ? true : false } />
                     <span className="checkmark"></span>
                   </label>
                   <label className="customTextbox">Results returned (1-50)
@@ -117,15 +171,15 @@ export class Dashboard extends Component {
                   </label>
                 </div>
                 {
-                  data.enable_whitelist === "true" ? (
+                  managingClan.enable_whitelist === "true" ? (
                     <div id="whitelist">
                       <span>Tracked Items</span>
-                      <div>{ data.whitelist.split(",").map(function(item) { if(item !== "") { return(<div>{ item }</div>) } }) }</div>
+                      <div>{ managingClan.whitelist.split(",").map(function(item) { if(item !== "") { return(<div key={ uuid.v4() }>{ item }</div>) } }) }</div>
                     </div>
                   ) : (
                     <div id="blacklist">
                       <span>Ignored Items</span>
-                      <div>{ data.blacklist.split(",").map(function(item) { if(item !== "") { return(<div>{ item }</div>) } }) }</div>
+                      <div>{ managingClan.blacklist.split(",").map(function(item) { if(item !== "") { return(<div key={ uuid.v4() }>{ item }</div>) } }) }</div>
                     </div>
                   )
                 }
@@ -134,6 +188,15 @@ export class Dashboard extends Component {
           </div>
         </div>
       );
+    }
+    else if(status === "pickServer") {
+      return (
+        <div className="marvins_dashboard">
+          <h1 style={{ textAlign: "center" }}>Marvins Dashboard</h1>
+          <p style={{ textAlign: "center" }}>Please pick a server to manage.</p>
+          <div style={{ textAlign: "center" }}> { serverData.map((server) => { return(<div className="btn btn-primary" style={{ margin: "5px", cursor: "pointer" }} onClick={ (() => this.pickServer(server.id)) } key={ server.id }>{ server.name }</div>) }) } </div>
+        </div>
+      )
     }
     else if(status === 'needConnect') {
       return (
@@ -145,9 +208,9 @@ export class Dashboard extends Component {
     }
     else if(status === "failedToConnect") {
       return (
-        <div>
-          <h1>Marvins Dashboard</h1>
-          <p>Erroring connecting with discord. Please try again...</p>
+        <div className="marvins_dashboard">
+          <h1 style={{ textAlign: "center" }}>Marvins Dashboard</h1>
+          <p style={{ textAlign: "center" }}>Erroring connecting with discord. Please try again...</p>
           <div className="marvinBtn"><button className="btn btn-primary" onClick={ (() => DiscordAuth.linkWithDiscord()) }>Connect with Discord</button></div>
         </div>
       )

@@ -1,3 +1,30 @@
+@media only screen and (max-width: 1550px) {
+  .inspectBoxStatistics {
+    grid-template-columns: 50% 50% !important;
+    grid-template-rows: 240px 135px 135px 135px 135px !important;
+  }
+  .inspectUserDetailsContainer {
+    grid-template-columns: 40px min-content auto !important;
+    grid-template-rows: 50px 100px 50px !important;
+    height: 205px !important;
+  }
+  .inspectProfileName { grid-row: 1 !important; grid-column: 2 !important; }
+  .inspectUserDetails { grid-row: 1 !important; grid-column: 3 !important; text-align: right !important; padding-right: 10px !important; }
+  .inspectViewActivitiesBtn { grid-row: 3 !important; grid-column: span 3 !important; margin: auto !important; }
+  .inspectBoxRanks { grid-row: 2 !important; grid-column: span 3 !important; width: 100% !important; }
+  .inspectBoxRanks > div { float: unset !important; }
+  .inspectTitles { flex-wrap: wrap !important; height: 205px !important; }
+  .inspectTitleObtained { width: 50px !important; height: 50px !important; }
+  .inspectTitleNotObtained { width: 50px !important; height: 50px !important; }
+  .biggerBox { grid-column: span 2; }
+}
+@media only screen and (max-width: 1350px) {
+  .inspectBoxStatistics {
+    grid-template-columns: auto !important;
+    grid-template-rows: 240px 230px 135px 135px 135px !important;
+  }
+  .biggerBox { grid-column: 1; }
+}
 @media only screen and (max-width: 800px) {
   /* Loader start */
     .loaderText { top: 55% !important; }
@@ -33,6 +60,7 @@
     .inspectBoxContentStats { grid-template-columns: 25% 35% 40% !important; font-size: 12px !important; }
     .inspectBoxContentStatsDiv { height: unset !important; }
     .inspectBoxContentStats.twoColumn { display: block; height: unset !important; padding-bottom: 8px !important; }
+    .biggerBox { grid-column: 1; }
   /* Profile end */
 
   /* Activities start */

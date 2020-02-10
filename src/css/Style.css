@@ -185,7 +185,7 @@ body {
 .searchResultContainer:hover > .searchResultIcon {
   filter: contrast(1);
   height: 32px;
-  line-height: 32px;
+  line-height: 31px;
   padding-left: 2px;
 }
 .searchResultIcon:before { display: inline-block; content: ""; }

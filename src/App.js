@@ -61,12 +61,6 @@ class App extends React.Component {
       else { this.forceReset(); }
     }
   }
-  forceReset() {
-    localStorage.clear();
-    indexedDB.deleteDatabase("guardianstats");
-    localStorage.setItem("siteVersion", this.state.siteVersion);
-    window.location.reload();
-  }
   async checkIfLive() {
     fetch(`https://api.twitch.tv/helix/streams/?user_id=214472144`, { method: 'GET', headers: new Headers({ 'Content-Type': 'application/x-www-form-urlencoded', 'Client-id': '9mrfng8ubhs40gu19cksn69dq47gzy' }) })
     .then(response => response.json()).then(data => {
@@ -118,7 +112,6 @@ class App extends React.Component {
     }
   }
   async getManifest(currentVersion) {
-
     const DestinyActivityDefinition = currentVersion.jsonWorldComponentContentPaths['en'].DestinyActivityDefinition;
     const DestinyActivityTypeDefinition = currentVersion.jsonWorldComponentContentPaths['en'].DestinyActivityTypeDefinition;
     const DestinyActivityModeDefinition = currentVersion.jsonWorldComponentContentPaths['en'].DestinyActivityModeDefinition;
@@ -239,6 +232,12 @@ class App extends React.Component {
     }).catch((error) => { this.handleError(error); return "Failed"; });
     this.manifestLoaded();
   }
+  forceReset() {
+    localStorage.clear();
+    indexedDB.deleteDatabase("guardianstats");
+    localStorage.setItem("siteVersion", this.state.siteVersion);
+    window.location.reload();
+  }
   manifestLoaded() {
     if(Misc.getURLVars()["code"] && window.location.pathname !== "/dashboard") {
       this.setState({ status: { status: 'registeringUser', statusText: `Registering you now...`, loading: true } });
@@ -285,7 +284,7 @@ class App extends React.Component {
     }
     else {
       if(localStorage.getItem('Authorization')) {
-        if(status === 'ready') { auth.CheckAuth(); timers.StartAuthTimer(); }
+        if(status === 'ready') { auth.CheckAuth(); timers.StartAuthTimer(); if(localStorage.getItem('DiscordAuth')) { timers.StartDiscordAuthTimer(); } }
         return (
           <Router>
             <div className="App">

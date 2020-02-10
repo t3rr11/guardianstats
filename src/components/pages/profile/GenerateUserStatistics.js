@@ -29,7 +29,7 @@ export function generate(profileInfo, Manifest, historicStats, gambitStats, raid
         <div className="inspectBoxContentTitle"> Overall Raid Statistics </div>
         { generateRaidsStats(profileInfo, raidStats) }
       </div>
-      <div className="inspectBoxContent">
+      <div className="inspectBoxContent biggerBox">
         <div className="inspectBoxContentTitle"> Specific Raid Completions </div>
         { generateIndividualRaidsCompleted(profileInfo, Manifest.DestinyPresentationNodeDefinition, Manifest.DestinyRecordDefinition) }
         <div className="inspectBoxContentMessage"> (* Flawless) </div>
@@ -60,9 +60,9 @@ const generatePvPStats = (profileInfo, historicStats) => {
       </div>
       <div className="inspectBoxContentStats">
         <div className="inspectBoxContentStatsDiv">
-          <span>KD: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ allPvP.killsDeathsRatio.basic.displayValue }</span></span>
-          <span>KDA: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ allPvP.killsDeathsAssists.basic.displayValue }</span></span>
-          <span>KA/D: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ allPvP.efficiency.basic.displayValue }</span></span>
+          <span>KD: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ parseFloat(allPvP.killsDeathsRatio.basic.displayValue).toFixed(2) }</span></span>
+          <span>KDA: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ parseFloat(allPvP.killsDeathsAssists.basic.displayValue).toFixed(2) }</span></span>
+          <span>KA/D: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ parseFloat(allPvP.efficiency.basic.displayValue).toFixed(2) }</span></span>
         </div>
         <div className="inspectBoxContentStatsDiv">
           <span>Kills: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Misc.numberWithCommas(allPvP.kills.basic.displayValue) }</span></span>
@@ -87,9 +87,9 @@ const generatePvEStats = (profileInfo, historicStats) => {
       </div>
       <div className="inspectBoxContentStats">
         <div className="inspectBoxContentStatsDiv">
-          <span>KD: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ allPvE.killsDeathsRatio.basic.displayValue }</span></span>
-          <span>KDA: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ allPvE.killsDeathsAssists.basic.displayValue }</span></span>
-          <span>KA/D: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ allPvE.efficiency.basic.displayValue }</span></span>
+          <span>KD: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ parseFloat(allPvE.killsDeathsRatio.basic.displayValue).toFixed(2) }</span></span>
+          <span>KDA: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ parseFloat(allPvE.killsDeathsAssists.basic.displayValue).toFixed(2) }</span></span>
+          <span>KA/D: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ parseFloat(allPvE.efficiency.basic.displayValue).toFixed(2) }</span></span>
         </div>
         <div className="inspectBoxContentStatsDiv">
           <span>Kills: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Misc.numberWithCommas(allPvE.kills.basic.displayValue) }</span></span>
@@ -108,6 +108,7 @@ const generatePvEStats = (profileInfo, historicStats) => {
 const generateGambitStats = (profileInfo, gambitStats) => {
   var kd = 0, kda = 0, kad = 0, kills = 0, deaths = 0, assists = 0, matches = 0, wins = 0;
   for (var i in gambitStats) {
+    console.log(gambitStats[i]);
     try { kd = kd + gambitStats[i].allPvECompetitive.allTime.killsDeathsRatio.basic.value; } catch (err) {  }
     try { kda = kda + gambitStats[i].allPvECompetitive.allTime.killsDeathsAssists.basic.value; } catch (err) {  }
     try { kad = kad + gambitStats[i].allPvECompetitive.allTime.efficiency.basic.value; } catch (err) {  }
@@ -127,9 +128,9 @@ const generateGambitStats = (profileInfo, gambitStats) => {
       </div>
       <div className="inspectBoxContentStats">
         <div className="inspectBoxContentStatsDiv">
-          <span>KD: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ kd }</span></span>
-          <span>KDA: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ kda }</span></span>
-          <span>KA/D: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ kad }</span></span>
+          <span>KD: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ kd.toFixed(2) }</span></span>
+          <span>KDA: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ kda.toFixed(2) }</span></span>
+          <span>KA/D: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ kad.toFixed(2) }</span></span>
         </div>
         <div className="inspectBoxContentStatsDiv">
           <span>Kills: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Misc.numberWithCommas(kills) }</span></span>
@@ -169,9 +170,9 @@ const generateRaidsStats = (profileInfo, raidStats) => {
       </div>
       <div className="inspectBoxContentStats">
         <div className="inspectBoxContentStatsDiv">
-          <span>KD: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ kd }</span></span>
-          <span>KDA: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ kda }</span></span>
-          <span>KA/D: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ kad }</span></span>
+          <span>KD: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ kd.toFixed(2) }</span></span>
+          <span>KDA: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ kda.toFixed(2) }</span></span>
+          <span>KA/D: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ kad.toFixed(2) }</span></span>
         </div>
         <div className="inspectBoxContentStatsDiv">
           <span>Kills: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Misc.numberWithCommas(kills) }</span></span>
