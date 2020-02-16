@@ -216,7 +216,7 @@ export class Activities extends Component {
             </div>
             { filteredActivities.map(function(activity) {
               var icon = `https://bungie.net/img/misc/missing_icon_d2.png`;
-              if(Manifest.DestinyActivityDefinition[activity.activityDetails.directorActivityHash].displayProperties.hasIcon === true) { icon = `https://bungie.net${Manifest.DestinyActivityDefinition[activity.activityDetails.directorActivityHash].displayProperties.icon}`; }
+              if(Manifest.DestinyActivityDefinition[activity.activityDetails.directorActivityHash]) { if(Manifest.DestinyActivityDefinition[activity.activityDetails.directorActivityHash].displayProperties.hasIcon === true) { icon = `https://bungie.net${Manifest.DestinyActivityDefinition[activity.activityDetails.directorActivityHash].displayProperties.icon}`; } }
               var classProp = this.addCompletedClass(activity);
               return (
                 <div key={ uuid.v4() } className={ classProp } id={ activity.activityDetails.instanceId } onClick={ (() => this.makeActiveDisplay(activity.activityDetails.instanceId)) }>
