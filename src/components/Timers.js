@@ -22,7 +22,7 @@ export async function StartAuthTimer() {
     try { if(AuthTimer != null) { StopTimer('Auth'); } } catch (err) {  }
     console.log('Auth Timer Starting.');
     AuthTimer = setInterval(function() {
-      if(tokenExpiresIn == 0){
+      if(tokenExpiresIn <= 0){
         StopTimer('Auth');
         auth.RenewToken(JSON.parse(localStorage.getItem('Authorization')).refresh_token);
       }
@@ -46,7 +46,7 @@ export async function StartDiscordAuthTimer() {
     try { if(DiscordAuthTimer != null) { StopTimer('DiscordAuth'); } } catch (err) {  }
     console.log('Discord Auth Timer Starting.');
     DiscordAuthTimer = setInterval(function() {
-      if(tokenExpiresIn == 0){
+      if(tokenExpiresIn <= 0){
         StopTimer('DiscordAuth');
         dAuth.RenewToken();
       }
@@ -57,6 +57,6 @@ export async function StartDiscordAuthTimer() {
   }
   else {
     StopTimer('DiscordAuth');
-    auth.RenewToken(JSON.parse(localStorage.getItem('Authorization')).refresh_token);
+    dAuth.RenewToken();
   }
 }

@@ -47,7 +47,7 @@ export class Dashboard extends Component {
     else { setTimeout(() => { this.startUpChecks(); }, 1000); }
   }
   async getDashboardData(discordInfo) {
-    return fetch('http://localhost:3000/getclan', {
+    return fetch('http://localhost:3000/API/GetGuildsFromDiscordID', {
       method: 'POST',
       headers: { 'Accept': 'application/json', 'Content-Type': 'application/json', },
       body: JSON.stringify({ 'id': discordInfo.id, 'username': discordInfo.username, 'avatar': discordInfo.avatar, 'discriminator': discordInfo.discriminator })
@@ -64,16 +64,19 @@ export class Dashboard extends Component {
           }
           else {
             //Remove this code after finished developing the code. This is only for testing purposes.
-            if(process.env.NODE_ENV === "development") {
-              var managingServer = usersDiscordServers.guildInfo.find(e => e.id === response.data[0].guild_id);
-              this.setState({ status: { status: 'buildingClanBanner', statusText: 'Building Clan Banners...' }, managingServer: managingServer, managingClan: response.data[0] });
-              this.buildClanBanners();
-            }
-            else {
-              var clanServerIds = []; for(var i in response.data) { clanServerIds.push(response.data[i].guild_id); }
-              var filteredDiscordServers = usersDiscordServers.guildInfo.filter(e => clanServerIds.includes(e.id));
-              this.setState({ status: { status: 'pickServer', statusText: 'Please pick a server to manage.' }, clanData: response.data, serverData: filteredDiscordServers, managingServer: null, managingClan: null });
-            }
+            // if(process.env.NODE_ENV === "development") {
+            //   var managingServer = usersDiscordServers.guildInfo.find(e => e.id === response.data[0].guild_id);
+            //   this.setState({ status: { status: 'buildingClanBanner', statusText: 'Building Clan Banners...' }, managingServer: managingServer, managingClan: response.data[0] });
+            //   this.buildClanBanners();
+            // }
+            // else {
+            //   var clanGuildIds = []; for(var i in response.data) { clanGuildIds.push(response.data[i].guild_id); }
+            //   var filteredDiscordServers = usersDiscordServers.guildInfo.filter(e => clanGuildIds.includes(e.id));
+            //   this.setState({ status: { status: 'pickServer', statusText: 'Please pick a server to manage.' }, clanData: response.data, serverData: filteredDiscordServers, managingServer: null, managingClan: null });
+            // }
+            var clanGuildIds = []; for(var i in response.data) { clanGuildIds.push(response.data[i].guild_id); }
+            var filteredDiscordServers = usersDiscordServers.guildInfo.filter(e => clanGuildIds.includes(e.id));
+            this.setState({ status: { status: 'pickServer', statusText: 'Please pick a server to manage.' }, clanData: response.data, serverData: filteredDiscordServers, managingServer: null, managingClan: null });
           }
         }
         else { this.setState({ status: { status: 'error', statusText: usersDiscordServers.reason } }); }
@@ -98,20 +101,19 @@ export class Dashboard extends Component {
     var managingServer = this.state.serverData.find(e => e.id === guildId);
     var managingClan = this.state.clanData.find(e => e.guild_id === guildId);
     this.setState({ status: { status: 'buildingClanBanner', statusText: 'Building Clan Banners...' }, managingServer: managingServer, managingClan: managingClan });
-    this.buildClanBanners();
+    this.buildClanBanners(managingClan);
   }
-  async buildClanBanners() {
-    const { serverData, managingServer, managingClan } = this.state;
-    const groupIds = managingClan.server_clan_ids.split(",");
-    const clanBannerData = await ClanBanner.BuildClanBanners(groupIds);
+  async buildClanBanners(managingClan) {
+    const clanIds = managingClan.clans.split(",");
+    const clanBannerData = await ClanBanner.BuildClanBanners(clanIds);
     this.setState({ clanBannerData });
     this.finishedLoading();
   }
   finishedLoading() {
     this.setState({ status: { status: 'ready', statusText: 'Finished loading' } });
     const clanBannerData = this.state.clanBannerData;
-    const groupIds = this.state.managingClan.server_clan_ids.split(',');
-    for(var i in groupIds) { ClanBanner.BuildClanBanner(groupIds[i], clanBannerData); }
+    const clanIds = this.state.managingClan.clans.split(',');
+    for(var i in clanIds) { ClanBanner.BuildClanBanner(clanIds[i], clanBannerData); }
   }
 
   render() {
@@ -121,7 +123,7 @@ export class Dashboard extends Component {
     if(status === 'error') { return <Error error={ statusText } /> }
     else if(status === 'ready') {
       const discordInfo = JSON.parse(localStorage.getItem("DiscordInfo"));
-      const groupIds = this.state.managingClan.server_clan_ids.split(',');
+      const clanIds = this.state.managingClan.clans.split(',');
       return (
         <div className="marvins_dashboard">
           <div className="marvins_header">
@@ -136,21 +138,19 @@ export class Dashboard extends Component {
             <div className="marvins_dashboard_content">
               <div className="marvin_clan_info selected">
                 <div id="guild_id">Server ID: { managingClan.guild_id }</div>
-                <div id="clan_id"> Clan ID: { managingClan.clan_id }</div>
-                <div id="clan_level">Clan Level: { managingClan.clan_level }</div>
-                <div id="creator_id">Marvins Server Owner: { managingClan.creator_id }</div>
-                <div id="server_clan_ids">Server Clans: { managingClan.server_clan_ids }</div>
+                <div id="owner_id">Marvins Server Owner: { managingClan.owner_id }</div>
+                <div id="clans">Server Clans: { managingClan.clans }</div>
                 <div id="broadcasts_channel">Broadcast Channel ID: { managingClan.broadcasts_channel }</div>
                 <div className="clanBannerContainer">
                   {
-                    groupIds.map((groupId) => {
+                    clanIds.map((clanId) => {
                       return (
                         <div className="clanBanner">
-                          <canvas id={`canvasGonfalon_${ groupId }`} width="215" height="375" />
-                          <canvas id={`canvasDetail_${ groupId }`} width="215" height="375" />
-                          <canvas id={`canvasDecalBg_${ groupId }`} width="215" height="375" />
-                          <canvas id={`canvasDecalFg_${ groupId }`} width="215" height="375" />
-                          <canvas id={`canvasStaff_${ groupId }`} width="215" height="375" />
+                          <canvas id={`canvasGonfalon_${ clanId }`} width="215" height="375" />
+                          <canvas id={`canvasDetail_${ clanId }`} width="215" height="375" />
+                          <canvas id={`canvasDecalBg_${ clanId }`} width="215" height="375" />
+                          <canvas id={`canvasDecalFg_${ clanId }`} width="215" height="375" />
+                          <canvas id={`canvasStaff_${ clanId }`} width="215" height="375" />
                         </div>
                       )
                     })
