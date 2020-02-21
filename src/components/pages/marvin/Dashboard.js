@@ -28,17 +28,17 @@ export class Dashboard extends Component {
       const check = await checks.startUpPageChecks();
       if(check === "Checks OK") {
         this.setState({ status: { status: 'loadingDashboard', statusText: 'Loading Dashboard...' } });
-        if(JSON.parse(localStorage.getItem("DiscordInfo"))) {
-          //Get discord info
-          const discordInfo = JSON.parse(localStorage.getItem("DiscordInfo"));
-          this.getDashboardData(discordInfo);
+        if(Misc.getURLVars()["code"]) {
+          this.setState({ status: { status: 'authing', statusText: 'Authorizing with Discord...' } });
+          DiscordAuth.getAccessToken(Misc.getURLVars()["code"]);
         }
+        else if(Misc.getURLVars()["failed"]) { this.setState({ failed: true }); this.setState({ status: { status: 'failedToConnect', statusText: 'Failed to connect with discord...' } }); }
         else {
-          if(Misc.getURLVars()["code"]) {
-            this.setState({ status: { status: 'authing', statusText: 'Authorizing with Discord...' } });
-            DiscordAuth.getAccessToken(Misc.getURLVars()["code"]);
+          if(JSON.parse(localStorage.getItem("DiscordInfo"))) {
+            //Get discord info
+            const discordInfo = JSON.parse(localStorage.getItem("DiscordInfo"));
+            this.getDashboardData(discordInfo);
           }
-          else if(Misc.getURLVars()["failed"]) { this.setState({ failed: true }); this.setState({ status: { status: 'failedToConnect', statusText: 'Failed to connect with discord...' } }); }
           else { this.setState({ status: { status: 'needConnect', statusText: 'Need to connect with Discord first...' } }); }
         }
       }
@@ -63,17 +63,6 @@ export class Dashboard extends Component {
             this.setState({ status: { status: 'buildingClanBanner', statusText: 'Building Clan Banners...' }, managingServer: managingServer, managingClan: response.data[0] });
           }
           else {
-            //Remove this code after finished developing the code. This is only for testing purposes.
-            // if(process.env.NODE_ENV === "development") {
-            //   var managingServer = usersDiscordServers.guildInfo.find(e => e.id === response.data[0].guild_id);
-            //   this.setState({ status: { status: 'buildingClanBanner', statusText: 'Building Clan Banners...' }, managingServer: managingServer, managingClan: response.data[0] });
-            //   this.buildClanBanners();
-            // }
-            // else {
-            //   var clanGuildIds = []; for(var i in response.data) { clanGuildIds.push(response.data[i].guild_id); }
-            //   var filteredDiscordServers = usersDiscordServers.guildInfo.filter(e => clanGuildIds.includes(e.id));
-            //   this.setState({ status: { status: 'pickServer', statusText: 'Please pick a server to manage.' }, clanData: response.data, serverData: filteredDiscordServers, managingServer: null, managingClan: null });
-            // }
             var clanGuildIds = []; for(var i in response.data) { clanGuildIds.push(response.data[i].guild_id); }
             var filteredDiscordServers = usersDiscordServers.guildInfo.filter(e => clanGuildIds.includes(e.id));
             this.setState({ status: { status: 'pickServer', statusText: 'Please pick a server to manage.' }, clanData: response.data, serverData: filteredDiscordServers, managingServer: null, managingClan: null });
@@ -86,13 +75,10 @@ export class Dashboard extends Component {
     .catch((err) => { console.log(err); this.setState({ status: { status: 'error', statusText: "Failed to connect to database to retrieve clan data... Please try again at a later time." } }); });
   }
   changeMenu(event) {
-    var menuItems = document.getElementsByClassName('marvins_dashboard_menu_item');
-    for(var i = 0; i < menuItems.length; i++) { menuItems[i].classList.remove('selected'); }
-    var elements = document.getElementsByClassName('marvins_dashboard_content')[0].children;
-    for(var i = 0; i < elements.length; i++) { elements[i].classList.remove('selected'); }
+    var menuItems = document.getElementsByClassName('marvins_dashboard_menu_item'); for(var i = 0; i < menuItems.length; i++) { menuItems[i].classList.remove('selected'); }
+    var elements = document.getElementsByClassName('marvins_dashboard_content')[0].children; for(var i = 0; i < elements.length; i++) { elements[i].classList.remove('selected'); }
     event.target.parentElement.classList.add('selected');
-    if(event.target.parentElement.id === "marvins_dashboard_stats") { document.getElementsByClassName('marvin_clan_stats')[0].classList.add('selected'); }
-    else if(event.target.parentElement.id === "marvins_dashboard_settings") { document.getElementsByClassName('marvin_clan_settings')[0].classList.add('selected'); }
+    if(event.target.parentElement.id === "marvins_dashboard_settings") { document.getElementsByClassName('marvin_clan_settings')[0].classList.add('selected'); }
     else { document.getElementsByClassName('marvin_clan_info')[0].classList.add('selected'); }
   }
   toggleChecked(event) { this.setState({ data: {...this.state.data, [event.target.id]: JSON.stringify(event.target.checked) } }); }
@@ -132,20 +118,17 @@ export class Dashboard extends Component {
           <div className="marvins_dashboard_content_container">
             <div className="marvins_dashboard_menu">
               <div className="marvins_dashboard_menu_item selected" id="marvins_dashboard_info" onClick={ (e) => this.changeMenu(e) }><img src="/images/dashboard/info_icon.svg" /><div>Clan</div></div>
-              <div className="marvins_dashboard_menu_item" id="marvins_dashboard_stats" onClick={ (e) => this.changeMenu(e) }><img src="/images/dashboard/stats_icon.svg" /><div>Stats</div></div>
               <div className="marvins_dashboard_menu_item" id="marvins_dashboard_settings" onClick={ (e) => this.changeMenu(e) }><img src="/images/dashboard/settings_icon.svg" /><div>Settings</div></div>
             </div>
             <div className="marvins_dashboard_content">
               <div className="marvin_clan_info selected">
-                <div id="guild_id">Server ID: { managingClan.guild_id }</div>
-                <div id="owner_id">Marvins Server Owner: { managingClan.owner_id }</div>
-                <div id="clans">Server Clans: { managingClan.clans }</div>
-                <div id="broadcasts_channel">Broadcast Channel ID: { managingClan.broadcasts_channel }</div>
+
                 <div className="clanBannerContainer">
                   {
                     clanIds.map((clanId) => {
+                      const clanDetail = clanBannerData.find(e => e.clanDetail.groupId === clanId);
                       return (
-                        <div className="clanBanner">
+                        <div className="clanBanner" title={ clanDetail.clanDetail.name }>
                           <canvas id={`canvasGonfalon_${ clanId }`} width="215" height="375" />
                           <canvas id={`canvasDetail_${ clanId }`} width="215" height="375" />
                           <canvas id={`canvasDecalBg_${ clanId }`} width="215" height="375" />
@@ -157,10 +140,12 @@ export class Dashboard extends Component {
                   }
                 </div>
               </div>
-              <div className="marvin_clan_stats">
-                <div></div>
-              </div>
               <div className="marvin_clan_settings">
+                <div className="marvin_guild_info">
+                  <div id="guild_id">Server ID: { managingClan.guild_id }</div>
+                  <div id="clans">Server Clans: { managingClan.clans }</div>
+                  <div id="broadcasts_channel">Broadcast Channel ID: { managingClan.broadcasts_channel }</div>
+                </div>
                 <div>
                   <label className="customCheck">Enable whitelist
                     <input type="checkbox" id="enable_whitelist" onChange={ (e) => this.toggleChecked(e) } checked={ managingClan.enable_whitelist === "true" ? true : false } />

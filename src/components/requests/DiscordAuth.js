@@ -17,6 +17,7 @@ export function linkWithDiscord() {
 }
 
 export async function getAccessToken(code) {
+  console.log(code);
   fetch(discord_token_url, {
     method: 'POST',
     headers: new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' }),
@@ -75,7 +76,7 @@ export async function RenewToken() {
     if(response.error) {
       if(response.error === "invalid_grant") {
         console.log(response);
-        //window.location.href = 'https://www.bungie.net/en/oauth/authorize?client_id=24178&response_type=code&state=1';
+        linkWithDiscord();
       }
       else { console.log(response); }
     }

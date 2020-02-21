@@ -77,7 +77,7 @@ h3::selection { background-color: rgba(0.2, 0.2, 0.2, 0.2); }
   .marvins_dashboard > .marvins_header > h1 { margin-left: 16px; }
   .marvins_dashboard > .marvins_header > h5 { text-align: right; margin-right: 16px; }
   .marvins_dashboard_content_container { display: grid; grid-template-columns: 200px auto; }
-  .marvins_dashboard_menu { display: grid; height: 255px; }
+  .marvins_dashboard_menu { display: grid; height: 170px; }
   .marvins_dashboard_menu > .marvins_dashboard_menu_item { width: fit-content; }
   .marvins_dashboard_menu > .marvins_dashboard_menu_item.selected > img { cursor: pointer; width: 85px; height: 85px; padding: 0px; filter: var(--BlueFilter); }
   .marvins_dashboard_menu > .marvins_dashboard_menu_item.selected > div { display: inline-block; font-weight: bold; font-family: 'Nunito', 'Open Sans'; filter: var(--BlueFilter); color: gray; }
@@ -98,9 +98,13 @@ h3::selection { background-color: rgba(0.2, 0.2, 0.2, 0.2); }
   .marvins_dashboard_content > div.selected { display: grid; }
   .marvins_dashboard_content > div { animation-duration: 0.7s; animation-name: fadeInRight; transition: 0.7s; }
   .marvins_dashboard_content > div > div { padding: 5px; }
+  .marvin_guild_info > div {
+    padding-top: 3px;
+    padding-bottom: 3px;
+  }
   .marvin_clan_settings {
     display: grid;
-    grid-template-columns: 260px 240px 240px;
+    grid-template-columns: 380px 260px 240px 240px;
   }
   #blacklist { text-align: center; display: grid; grid-template-rows: 25px; }
   #blacklist > div > div {
