@@ -29,7 +29,7 @@ export class Status extends Component {
   }
   componentWillUnmount() { clearInterval(updateTimer); updateTimer = null; }
   makeCharts() {
-    return fetch('http://guardianstats.com:3000/API/GetDailyStatus', { method: 'GET' }).then((response) => response.json()).then(async (response) => {
+    return fetch(`https://api.guardianstats.com/GetDailyStatus`, { method: 'GET' }).then((response) => response.json()).then(async (response) => {
       if(response.error === null) {
         var charts = {
           users_all: { name: "Discord Users", data: [], min: null, max: null, first: null, last: null },
