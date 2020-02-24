@@ -5,6 +5,7 @@ h3::selection { background-color: rgba(0.2, 0.2, 0.2, 0.2); }
   display: grid;
   height: 100%;
   grid-template-columns: 50% 50%;
+  background: rgba(0,0,0,0.3);
 }
 .howToConnect {
   margin: 20px;
@@ -68,6 +69,39 @@ h3::selection { background-color: rgba(0.2, 0.2, 0.2, 0.2); }
 }
 .animatedLogo {
   margin-top: 20px;
+}
+.statusLabels {
+  margin: auto;
+}
+.usersStatusLabel {
+  background-color: #337ab7;
+  display: inline;
+  padding: .2em .6em .3em;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+  color: #fff;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: .25em;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+.guildsStatusLabel {
+  background-color: #337ab7;
+  display: inline;
+  padding: .2em .6em .3em;
+  font-size: 75%;
+  font-weight: 700;
+  line-height: 1;
+  color: #fff;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: .25em;
+  margin-left: 5px;
+  margin-right: 5px;
 }
 /* Marvins Page End */
 
@@ -191,3 +225,27 @@ h3::selection { background-color: rgba(0.2, 0.2, 0.2, 0.2); }
   .gonfalonDecal { position: absolute; width: 130px; }
   @keyframes fadeInRight { 0% { opacity: 0; transform: translateX(20px); } 100% { opacity: 1; transform: translateX(0); } }
 /* Marvins Dashboard End */
+
+/* Marvins Status Start */
+
+  .statusContainer {
+    height: 100%;
+    display: grid;
+    grid-template-rows: auto auto auto;
+    grid-template-columns: auto auto auto auto;
+    color: #d4d4d4;
+    padding-top: 50px;
+    background: var(--DarkNavyBlue);
+  }
+  .statusContainer > div {
+    padding: 10px;
+    margin: auto;
+  }
+  .statusDetails > #name { }
+  .statusDetails > #min { font-size: 12px; }
+  .statusDetails > #max { font-size: 12px; }
+  .statusDetails > #curr { font-size: 12px; }
+  .statusDetails > #curr > #negative { color: tomato; }
+  .statusDetails > #curr > #positive { color: #2cc36f; }
+
+/* Marvins Status End */

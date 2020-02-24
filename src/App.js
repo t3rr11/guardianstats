@@ -16,6 +16,7 @@ import NotFound from './components/pages/others/PageNotFound';
 import Login from './components/pages/others/Login';
 import Marvin from './components/pages/marvin/Marvin';
 import Dashboard from './components/pages/marvin/Dashboard';
+import Status from './components/pages/marvin/MarvinStatus';
 import Profile from './components/pages/profile/Profile';
 import Activities from './components/pages/profile/Activities';
 
@@ -300,6 +301,7 @@ class App extends React.Component {
                       <Route path="/activities" render={ props => (<Activities foundUser={ ((mbmID) => props.history.push(`/profile/${ mbmID }`)) } membershipId={ props.location.pathname.replace('/activities/', '') } />) } />
                       <Route path="/marvin" render={ props => (<Marvin />) } />
                       <Route path="/dashboard" render={ props => (<Dashboard />) } />
+                      <Route path="/status" render={ props => (<Status />) } />
                       <Route path="/joinmarvin" render={ props => (window.location.href = "https://discord.gg/jbEbYej") } />
                       <Route path="*" component={ NotFound } />
                     </Switch>
@@ -326,6 +328,7 @@ class App extends React.Component {
                       <Route path="/profile" render={ props => (<Profile foundUser={ ((mbmID) => props.history.push(`/activities/${ mbmID }`)) } membershipId={ props.location.pathname.replace('/profile/', '') } />) } />
                       <Route path="/activities" render={ props => (<Activities foundUser={ ((mbmID) => props.history.push(`/profile/${ mbmID }`)) } membershipId={ props.location.pathname.replace('/activities/', '') } />) } />
                       <Route path="/marvin" render={ props => (<Marvin />) } />
+                      <Route path="/status" render={ props => (<Status />) } />
                       <Route path="/joinmarvin" render={ props => (window.location.href = "https://discord.gg/jbEbYej") } />
                       <Route path="*" component={ Login } />
                     </Switch>

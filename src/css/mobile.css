@@ -17,6 +17,12 @@
   .inspectTitleObtained { width: 50px !important; height: 50px !important; }
   .inspectTitleNotObtained { width: 50px !important; height: 50px !important; }
   .biggerBox { grid-column: span 2; }
+
+  /* Marvin Status */
+  .statusContainer {
+    grid-template-rows: unset !important;
+    grid-template-columns: auto auto auto !important;
+  }
 }
 @media only screen and (max-width: 1350px) {
   .inspectBoxStatistics {
@@ -24,6 +30,12 @@
     grid-template-rows: 240px 230px 135px 135px 135px !important;
   }
   .biggerBox { grid-column: 1; }
+
+  /* Marvin Status */
+  .statusContainer {
+    grid-template-rows: unset !important;
+    grid-template-columns: auto auto !important;
+  }
 }
 @media only screen and (max-width: 800px) {
   /* Loader start */
@@ -111,6 +123,12 @@
     .home-text { width: 90% !important; margin: auto !important; }
     .detailsContainer { background: var(--BlueGradient); height: max-content; }
   /* Others end */
+
+  /* Marvin Status */
+  .statusContainer {
+    grid-template-rows: unset !important;
+    grid-template-columns: auto !important;
+  }
 }
 @media only screen and (max-width: 700px) {
   /* Activities start */

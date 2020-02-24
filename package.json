@@ -15,6 +15,7 @@
     "react-lottie": "^1.2.3",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.0.1",
+    "react-vis": "^1.11.7",
     "uuid": "^3.4.0",
     "yarn": "^1.22.0"
   },
