@@ -125,7 +125,16 @@
   /* Others end */
 
   /* Marvin Status */
+  .graphSelect {
+    display: inline-block;
+    padding-top: 60px;
+  }
+  .graphSelect > div {
+    display: inline-block;
+    padding-right: 10px;
+  }
   .graphContainers {
+    padding-top: 40px;
     grid-template-rows: unset !important;
     grid-template-columns: auto !important;
   }
