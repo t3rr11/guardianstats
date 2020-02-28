@@ -19,7 +19,7 @@
   .biggerBox { grid-column: span 2; }
 
   /* Marvin Status */
-  .statusContainer {
+  .graphContainers {
     grid-template-rows: unset !important;
     grid-template-columns: auto auto auto !important;
   }
@@ -32,7 +32,7 @@
   .biggerBox { grid-column: 1; }
 
   /* Marvin Status */
-  .statusContainer {
+  .graphContainers {
     grid-template-rows: unset !important;
     grid-template-columns: auto auto !important;
   }
@@ -125,7 +125,7 @@
   /* Others end */
 
   /* Marvin Status */
-  .statusContainer {
+  .graphContainers {
     grid-template-rows: unset !important;
     grid-template-columns: auto !important;
   }
