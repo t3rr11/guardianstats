@@ -240,12 +240,10 @@ h3::selection { background-color: rgba(0.2, 0.2, 0.2, 0.2); }
     padding-top: 10px;
   }
   .graphSelect {
-    position: absolute;
-    width: 100%;
     margin: auto;
-    top: 5px;
     text-align: center;
     font-size: 14px;
+    width: 100%;
   }
   .graphSelect > select {
     font-size: 14px;
