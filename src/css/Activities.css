@@ -75,9 +75,10 @@
   background-color: var(--DarkNavyBlue);
 }
 .activityTimePlayed {
-  line-height: 40px;
+  line-height: 20px;
+  font-size: 12px;
 }
-.activityTimePlayed > img {
+.activityTimePlayed > div > img {
   display: inline-block;
   margin-top: -1px;
   margin-right: 3px;
@@ -85,7 +86,7 @@
   height: 15px;
   filter: invert(1);
 }
-.activityTimePlayed > span {
+.activityTimePlayed > div > span {
   display: inline-block;
   font-size: 12px;
 }

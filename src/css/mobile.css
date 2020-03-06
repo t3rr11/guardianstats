@@ -23,6 +23,10 @@
     grid-template-rows: unset !important;
     grid-template-columns: auto auto auto !important;
   }
+  .clan-rankings {
+    grid-template-rows: unset !important;
+    grid-template-columns: auto auto auto !important;
+  }
 }
 @media only screen and (max-width: 1350px) {
   .inspectBoxStatistics {
@@ -33,6 +37,10 @@
 
   /* Marvin Status */
   .graphContainers {
+    grid-template-rows: unset !important;
+    grid-template-columns: auto auto !important;
+  }
+  .clan-rankings {
     grid-template-rows: unset !important;
     grid-template-columns: auto auto !important;
   }
@@ -127,7 +135,7 @@
   /* Marvin Status */
   .graphSelect {
     display: inline-block;
-    padding-top: 10px;
+    padding-top: 45px;
   }
   .graphSelect > div {
     display: inline-block;
@@ -137,6 +145,16 @@
     padding-top: 10px;
     grid-template-rows: unset !important;
     grid-template-columns: auto !important;
+  }
+  .clans-content {
+    padding-top: 60px;
+  }
+  .clan-rankings {
+    grid-template-rows: unset !important;
+    grid-template-columns: auto !important;
+  }
+  .clan-rankings-full {
+    width: auto !important;
   }
 }
 @media only screen and (max-width: 700px) {

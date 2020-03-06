@@ -1,0 +1,60 @@
+.clans-container {
+  height: 100%;
+  width: 100%;
+  padding-top: 10px;
+  background-color: var(--DarkNavyBlue);
+}
+.clans-content {
+  text-align: center;
+}
+.clan-rankings {
+  display: grid;
+  grid-template-rows: auto auto auto;
+  grid-template-columns: auto auto auto auto;
+  color: #d4d4d4;
+  padding-top: 10px;
+  font-size: 14px;
+}
+.clan-rankings-full {
+  width: 500px;
+  margin: auto;
+}
+.rankings-container {
+  background-color: var(--NavyBlue);
+  box-sizing: border-box;
+  margin: 10px;
+}
+.ranking-title {
+  background-color: var(--InbetweenerNavyBlue);
+  font-size: 20px;
+  padding: 2px;
+  cursor: default;
+}
+.rankings-cell {
+  display: grid;
+  grid-template-columns: 100px auto 110px;
+  padding: 1px;
+}
+.rankings-cell > div:first-child {
+  text-align: left;
+  padding-left: 10px;
+}
+.rankings-cell > div > #clan_name {
+  cursor: default;
+}
+.rankings-cell > div {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.more-cell {
+  background-color: var(--InbetweenerNavyBlue);
+  line-height: 28px;
+  height: 28px;
+}
+.more-cell > div:hover {
+  height: 22px;
+  width: fit-content;
+  cursor: pointer;
+  margin: auto;
+}

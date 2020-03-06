@@ -54,19 +54,21 @@ export class Header extends React.Component {
       loggedIn ? (
         <React.Fragment>
           <Link to="/home" style={{ textDecoration: "none" }}><img className="logo" alt='Logo' src='./images/logo.png' /></Link>
-          <li className="menu-item Home" id="Home"><Link to="/home" onClick={ (() => this.toggleMenuSlider()) }>Home</Link></li>
+          <li className="menu-item" id="Home"><Link to="/home" onClick={ (() => this.toggleMenuSlider()) }>Home</Link></li>
           <li className="menu-item" id="Profile"><Link to="/profile" onClick={ (() => this.toggleMenuSlider()) }>Profile</Link></li>
           <li className="menu-item" id="Activities"><Link to="/activities" onClick={ (() => this.toggleMenuSlider()) }>Activities</Link></li>
           <li className="menu-item" id="Marvin"><Link to="/marvin" onClick={ (() => this.toggleMenuSlider()) }>Marvin</Link></li>
+          <li className="menu-item" id="Clans"><Link to="/clans" onClick={ (() => this.toggleMenuSlider()) }>Clans{ new Date().getTime() < (1583318165570 + 604800000) ? (<span>New</span>) : null }</Link></li>
         </React.Fragment>
       )
       : (
         <React.Fragment>
           <Link to="/home" style={{ textDecoration: "none" }}><img className="logo" alt='Logo' src='./images/logo.png' /></Link>
-          <li className="menu-item Home" id="Home"><Link to="/home" onClick={ (() => this.toggleMenuSlider()) }>Home</Link></li>
+          <li className="menu-item" id="Home"><Link to="/home" onClick={ (() => this.toggleMenuSlider()) }>Home</Link></li>
           <li className="menu-item-disabled" id="Profile" title="Login to see this content"><span>Profile</span></li>
           <li className="menu-item-disabled" id="Activities" title="Login to see this content"><span>Activities</span></li>
-          <li className="menu-item Marvin" id="Marvin"><Link to="/marvin" onClick={ (() => this.toggleMenuSlider()) }>Marvin</Link></li>
+          <li className="menu-item" id="Marvin"><Link to="/marvin" onClick={ (() => this.toggleMenuSlider()) }>Marvin</Link></li>
+          <li className="menu-item" id="Clans"><Link to="/clans" onClick={ (() => this.toggleMenuSlider()) }>Clans<span>New</span></Link></li>
         </React.Fragment>
       )
     );

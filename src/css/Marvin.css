@@ -229,7 +229,7 @@ h3::selection { background-color: rgba(0.2, 0.2, 0.2, 0.2); }
 /* Marvins Status Start */
   .statusContainer {
     height: 100%;
-    padding-top: 50px;
+    padding-top: 10px;
     background: var(--DarkNavyBlue);
   }
   .graphContainers {
@@ -244,6 +244,7 @@ h3::selection { background-color: rgba(0.2, 0.2, 0.2, 0.2); }
     text-align: center;
     font-size: 14px;
     width: 100%;
+    margin-top: 15px;
   }
   .graphSelect > select {
     font-size: 14px;

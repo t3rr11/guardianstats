@@ -1,5 +1,6 @@
 @import "https://fonts.googleapis.com/css?family=Nunito|Crimson+Text|Work+Sans:400,700";
 @import url('marvin.css');
+@import url('clans.css');
 @import url('loader.css');
 @import url('profile.css');
 @import url('activities.css');
@@ -263,12 +264,22 @@ body {
   cursor: pointer;
 }
 .menu-bar > .connectBtn:hover { cursor: pointer; }
-.menu-item > a { color: white; text-decoration: none; }
+.menu-item > a { color: white; text-decoration: none; position: relative; }
 .menu-item > span { color: white; text-decoration: none; }
 .menu-item-disabled > a { color: darkgray; cursor: default; text-decoration: none; }
 .menu-item-disabled > span { color: darkgray; cursor: default; text-decoration: none; }
 .menu-ul { border-bottom: 1px lightblue solid; width: 100%; margin-top: -8px; }
 .menu-item:hover { border-bottom: 1px lightblue solid; cursor: pointer; }
+#Clans { width: 45px; }
+.menu-item > a > span {
+  font-size: 9px;
+  transform: rotate(28deg);
+  display: inline-block;
+  position: absolute;
+  top: -17px;
+  right: -13px;
+  color: #66b1ff;
+}
 .platformSelection {
   height: 33px;
   line-height: 35px;

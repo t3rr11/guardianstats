@@ -12,10 +12,12 @@ import * as PGCRGeneration from './PGCRGeneration';
 import * as Misc from '../../Misc';
 
 var ActivityWatcher = null;
+var isMounted = true;
 
 export class Activities extends Component {
   state = {
     status: { error: null, status: 'startUp', statusText: '' },
+    isMounted: true,
     profile: null,
     activities: { },
     currentActivity : null,
@@ -27,10 +29,11 @@ export class Activities extends Component {
   }
 
   async componentDidMount() { this.startUpChecks(); }
-  async componentWillUnmount() { this.stopActivityTimer('Activity'); }
+  async componentWillUnmount() { isMounted = false; console.log(isMounted); this.stopActivityTimer('Activity'); }
   async startUpChecks() {
     this.setState({ status: { status: 'checkingManifest', statusText: 'Checking Manifest...' } });
     if(await checks.checkManifestMounted()) {
+      isMounted = true;
       var { membershipId } = this.props;
       if(membershipId && membershipId !== '/activities') { this.loadActivities(membershipId); this.startActivityTimer(); }
       else {
@@ -55,7 +58,7 @@ export class Activities extends Component {
         for(var i in membershipInfo.destinyMemberships) { if(membershipInfo.destinyMemberships[i].membershipId === membershipId) { membershipType = membershipInfo.destinyMemberships[i].membershipType; } }
 
         //Found account now get the profile information.
-        this.setState({ status: { status: 'grabbingAccountInfo', statusText: 'Loading recent activities...' } });
+        this.setState({ status: { status: 'grabbingAccountInfo', statusText: 'Loading recent activities...' }, membershipInfo: { membershipId, membershipType } });
         this.grabActivityData(membershipId, membershipType);
       }
       catch(err) {
@@ -99,12 +102,15 @@ export class Activities extends Component {
         }, this);
       }
       else {
-        await bungie.GetPGCR(activities[i].activityDetails.instanceId).then((pgcr) => { //eslint-disable-line no-loop-func
-          overflowCount++;
-          PGCRs[pgcr.activityDetails.instanceId] = pgcr;
-          if(this.state.currentActivity == pgcr.activityDetails.instanceId) { this.makeActiveDisplay(this.state.currentActivity); }
-          if(overflowCount === activities.length) { console.log("Finished loading background activities..."); }
-        }, this);
+        console.log(isMounted);
+        if(isMounted) {
+          await bungie.GetPGCR(activities[i].activityDetails.instanceId).then((pgcr) => { //eslint-disable-line no-loop-func
+            overflowCount++;
+            PGCRs[pgcr.activityDetails.instanceId] = pgcr;
+            if(this.state.currentActivity == pgcr.activityDetails.instanceId) { this.makeActiveDisplay(this.state.currentActivity); }
+            if(overflowCount === activities.length) { console.log("Finished loading background activities..."); }
+          }, this);
+        }
       }
     }
   }
@@ -137,6 +143,14 @@ export class Activities extends Component {
       }
     }
     else { return `leftActivityContainer completed ${ isSelected }`; }
+  }
+  getClassFromPGCR(currentActivity, membershipId) {
+    const { PGCRs } = this.state;
+    if(PGCRs[currentActivity]) {
+      try { var playerInfo = PGCRs[currentActivity].entries.find(e => e.player.destinyUserInfo.membershipId === membershipId); return playerInfo.player.characterClass; }
+      catch (err) { return "Failed"; }
+    }
+    else { return "Loading..."; }
   }
   getClassName(classType) {
     if(classType === 0){ return 'Titan' }
@@ -192,7 +206,7 @@ export class Activities extends Component {
         <div className="ActivitiesContent">
           <div className="RecentActivitiesView activityScrollbar">
             <div className="activityFilter">
-              <select class="btn btn-secondary dropdown-toggle" id="filterMode" onChange={ this.filterMode } value={ filter }>
+              <select className="btn btn-secondary dropdown-toggle" id="filterMode" onChange={ this.filterMode } value={ filter }>
                 <option value="None">Filter</option>
                 <option value="None">None</option>
                 <option value="PvE">PvE</option>
@@ -201,14 +215,9 @@ export class Activities extends Component {
               </select>
               {
                 filter !== "None" ? (
-                  <select class="btn btn-secondary dropdown-toggle" id="filterSpecificMode" onChange={ this.filterSpecificMode } value={ filteredMode }>
+                  <select className="btn btn-secondary dropdown-toggle" id="filterSpecificMode" onChange={ this.filterSpecificMode } value={ filteredMode }>
                     <option key="All" value="All">All</option>
-                    {
-                      modes(filter).map(function(item) {
-                        console.log(item);
-                        return (<option key={ item } value={ modeTypes(item).name }>{ modeTypes(item).name }</option>)
-                      })
-                    }
+                    { modes(filter).map(function(item) { return (<option key={ item } value={ modeTypes(item).name }>{ modeTypes(item).name }</option>) }) }
                   </select>
                 ) : null
               }
@@ -227,7 +236,10 @@ export class Activities extends Component {
                       { Manifest.DestinyActivityDefinition[activity.activityDetails.referenceId].displayProperties.name ? Manifest.DestinyActivityDefinition[activity.activityDetails.referenceId].displayProperties.name : "??????" }</span>
                     <p>{ Misc.formatTime((new Date().getTime() - new Date(activity.period).getTime()) / 1000) } ago</p>
                   </div>
-                  <div className="activityTimePlayed"><img src="./images/icons/clock.png" /><span> { activity.values.timePlayedSeconds.basic.displayValue } </span></div>
+                  <div className="activityTimePlayed">
+                    <div><img src="./images/icons/clock.png" /><span> { activity.values.timePlayedSeconds.basic.displayValue } </span></div>
+                    <div>Class: { this.getClassFromPGCR(activity.activityDetails.instanceId, this.state.profile.membershipId) } </div>
+                  </div>
                   <div className="activityKillsDeaths">
                     <div>
                       <span>K:</span>

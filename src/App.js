@@ -15,6 +15,8 @@ import Home from './components/pages/home/Home';
 import NotFound from './components/pages/others/PageNotFound';
 import Login from './components/pages/others/Login';
 import Marvin from './components/pages/marvin/Marvin';
+import Clans from './components/pages/clans/Clans';
+import ClanRankings from './components/pages/clans/ClanRankings';
 import Dashboard from './components/pages/marvin/Dashboard';
 import Status from './components/pages/marvin/MarvinStatus';
 import Profile from './components/pages/profile/Profile';
@@ -298,10 +300,12 @@ class App extends React.Component {
                       <Route exact path="/" render={ props => (<Home getMarvin={ (() => props.history.push(`/marvin`)) }  foundUser={ ((mbmID) => props.history.push(`/profile/${ mbmID }`)) } isLive={ this.state.isLive } />) } />
                       <Route path="/home" render={ props => (<Home getMarvin={ (() => props.history.push(`/marvin`)) }  foundUser={ ((mbmID) => props.history.push(`/profile/${ mbmID }`)) } isLive={ this.state.isLive } />) } />
                       <Route path="/profile" render={ props => (<Profile foundUser={ ((mbmID) => props.history.push(`/activities/${ mbmID }`)) } membershipId={ props.location.pathname.replace('/profile/', '') } />) } />
-                      <Route path="/activities" render={ props => (<Activities foundUser={ ((mbmID) => props.history.push(`/profile/${ mbmID }`)) } membershipId={ props.location.pathname.replace('/activities/', '') } />) } />
+                      <Route path="/activities" render={ props => (<Activities {...props} foundUser={ ((mbmID) => props.history.push(`/profile/${ mbmID }`)) } membershipId={ props.location.pathname.replace('/activities/', '') } />) } />
                       <Route path="/marvin" render={ props => (<Marvin />) } />
                       <Route path="/dashboard" render={ props => (<Dashboard />) } />
                       <Route path="/status" render={ props => (<Status />) } />
+                      <Route path="/clans" render={ props => (<Clans {...props} />) } />
+                      <Route path="/clanrankings" render={ props => (<ClanRankings {...props} pageType={ props.location.pathname.replace('/clanrankings/', '') } />) } />
                       <Route path="/joinmarvin" render={ props => (window.location.href = "https://discord.gg/jbEbYej") } />
                       <Route path="*" component={ NotFound } />
                     </Switch>
@@ -326,9 +330,11 @@ class App extends React.Component {
                       <Route exact path="/" render={ props => (<Home getMarvin={ (() => props.history.push(`/marvin`)) }  foundUser={ ((mbmID) => props.history.push(`/profile/${ mbmID }`)) } isLive={ this.state.isLive } />) } />
                       <Route path="/home" render={ props => (<Home getMarvin={ (() => props.history.push(`/marvin`)) } foundUser={ ((mbmID) => props.history.push(`/profile/${ mbmID }`)) } isLive={ this.state.isLive } />) } />
                       <Route path="/profile" render={ props => (<Profile foundUser={ ((mbmID) => props.history.push(`/activities/${ mbmID }`)) } membershipId={ props.location.pathname.replace('/profile/', '') } />) } />
-                      <Route path="/activities" render={ props => (<Activities foundUser={ ((mbmID) => props.history.push(`/profile/${ mbmID }`)) } membershipId={ props.location.pathname.replace('/activities/', '') } />) } />
+                      <Route path="/activities" render={ props => (<Activities {...props} foundUser={ ((mbmID) => props.history.push(`/profile/${ mbmID }`)) } membershipId={ props.location.pathname.replace('/activities/', '') } />) } />
                       <Route path="/marvin" render={ props => (<Marvin />) } />
                       <Route path="/status" render={ props => (<Status />) } />
+                      <Route path="/clans" render={ props => (<Clans {...props} />) } />
+                      <Route path="/clanrankings" render={ props => (<ClanRankings {...props} pageType={ props.location.pathname.replace('/clanrankings/', '') } />) } />
                       <Route path="/joinmarvin" render={ props => (window.location.href = "https://discord.gg/jbEbYej") } />
                       <Route path="*" component={ Login } />
                     </Switch>
