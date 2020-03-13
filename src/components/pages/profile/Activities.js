@@ -232,8 +232,9 @@ export class Activities extends Component {
                   <img src={icon} alt="Icon" />
                   <div className='activityTitle'>
                     <span style={{ display: 'block' }}>
+                      { console.log(activity.activityDetails.referenceId) }
                       { modeTypes(activity.activityDetails.mode).friendlyName !== "" ? `${ modeTypes(activity.activityDetails.mode).friendlyName }: ` : null }
-                      { Manifest.DestinyActivityDefinition[activity.activityDetails.referenceId].displayProperties.name ? Manifest.DestinyActivityDefinition[activity.activityDetails.referenceId].displayProperties.name : "??????" }</span>
+                      { Manifest.DestinyActivityDefinition[activity.activityDetails.referenceId] && Manifest.DestinyActivityDefinition[activity.activityDetails.referenceId].displayProperties.name ? Manifest.DestinyActivityDefinition[activity.activityDetails.referenceId].displayProperties.name : "??????" }</span>
                     <p>{ Misc.formatTime((new Date().getTime() - new Date(activity.period).getTime()) / 1000) } ago</p>
                   </div>
                   <div className="activityTimePlayed">
