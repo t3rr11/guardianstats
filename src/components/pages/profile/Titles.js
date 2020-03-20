@@ -112,6 +112,20 @@ export const Titles = (profileInfo) => {
         "icon": "./images/icons/seals/savior",
         "description": "Complete all Triumphs for the Season of Dawn.",
         "hidden": false
+      },
+      {
+        "title": "Almighty",
+        "isObtained": profileInfo.profileRecords.data.records["2860165064"].objectives[0].complete,
+        "icon": "./images/icons/seals/almighty",
+        "description": "Complete all Season of the Worthy Triumphs.",
+        "hidden": false
+      },
+      {
+        "title": "Flawless",
+        "isObtained": profileInfo.profileRecords.data.records["2945528800"].objectives[0].complete,
+        "icon": "./images/icons/seals/flawless",
+        "description": "Complete all Season of the Worthy flawless Triumphs.",
+        "hidden": false
       }
     ]
   )

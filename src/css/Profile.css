@@ -80,11 +80,16 @@
 .inspectBoxRanksInfamy { display: inline-block; position: relative; float: right; }
 .inspectProfileName {
   float: left;
-  font-size: 27px;
+  font-size: 22px;
   margin-left: 5px;
   margin-right: 5px;
   height: 60px;
   line-height: 60px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: left;
+  width: 220px;
 }
 .inspectUserDetailsContainer {
   border-right: 1px solid var(--DarkNavyBlue);
@@ -144,14 +149,14 @@
   height: 55px;
 }
 .inspectTitleObtained {
-  height: 55px;
-  width: 45px;
+  height: 47px;
+  width: 37px;
   background-repeat: no-repeat;
   background-size: contain;
 }
 .inspectTitleNotObtained {
-  height: 55px;
-  width: 45px;
+  height: 47px;
+  width: 37px;
   background-repeat: no-repeat;
   background-size: contain;
   filter: contrast(0.7) brightness(0.5);
