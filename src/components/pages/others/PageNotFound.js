@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 function PageNotFound() {
+  document.title = "Page Not Found - Guardianstats";
   document.body.style.backgroundImage = "var(--DarkNavyBlue)";
   return(
     <div className="error-container">

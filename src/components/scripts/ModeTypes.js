@@ -49,7 +49,9 @@ export function modeTypes(type) {
     { id: 79, name: "Nightmare Hunt", friendlyName: "" },
     { id: 80, name: "Elimination", friendlyName: "Elimination" },
     { id: 81, name: "Momentum", friendlyName: "Momentum" },
-    { id: 82, name: "Dungeon", friendlyName: "Dungeon" }
+    { id: 82, name: "Dungeon", friendlyName: "Dungeon" },
+    { id: 83, name: "Sundial", friendlyName: "Sundial" },
+    { id: 84, name: "TrialsOfOsiris", friendlyName: "Trials" }
   ];
   if(isNaN(type)) {
     var mode = allModeTypes.find(e => e.name === type);
@@ -64,8 +66,8 @@ export function modeTypes(type) {
 }
 
 export function modes(type) {
-  if(type === "PvP") { return [10,12,15,19,31,37,38,48,50,51,52,53,54,55,56,57,59,60,61,65,80,81]; }
-  else if(type === "PvE") { return [2,3,4,6,16,17,40,46,47,58,66,77,78,79,82]; }
+  if(type === "PvP") { return [10,12,15,19,31,37,38,48,50,51,52,53,54,55,56,57,59,60,61,65,80,81,84]; }
+  else if(type === "PvE") { return [2,3,4,6,16,17,40,46,47,58,66,77,78,79,82,83]; }
   else if(type === "Gambit") { return [63,75,76]; }
 }
 

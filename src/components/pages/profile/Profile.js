@@ -16,7 +16,7 @@ export class Profile extends Component {
     data: null
   }
 
-  async componentDidMount() { this.startUpChecks(); }
+  async componentDidMount() { document.title = "Profile - Guardianstats"; this.startUpChecks(); }
   async startUpChecks() {
     this.setState({ status: { status: 'checkingManifest', statusText: 'Checking Manifest...' } });
     if(await checks.checkManifestMounted()) {

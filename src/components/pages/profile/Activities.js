@@ -28,7 +28,7 @@ export class Activities extends Component {
     PGCRs: { }
   }
 
-  async componentDidMount() { this.startUpChecks(); }
+  async componentDidMount() { document.title = "Activities - Guardianstats"; this.startUpChecks(); }
   async componentWillUnmount() { isMounted = false; console.log(isMounted); this.stopActivityTimer('Activity'); }
   async startUpChecks() {
     this.setState({ status: { status: 'checkingManifest', statusText: 'Checking Manifest...' } });

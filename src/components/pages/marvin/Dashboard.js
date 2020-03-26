@@ -19,6 +19,7 @@ export class Dashboard extends Component {
   }
 
   async componentDidMount() {
+    document.title = "Clan Dashboard - Guardianstats";
     this.startUpChecks();
   }
 

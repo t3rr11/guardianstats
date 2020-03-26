@@ -12,6 +12,7 @@ export class Clans extends Component {
   }
 
   componentDidMount() {
+    document.title = "Clan Rankings - Guardianstats";
     const { pageType } = this.props;
     this.setState({ pageType });
     this.LoadClanRankings();

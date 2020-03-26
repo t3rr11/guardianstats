@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 export class Login extends Component {
 
   render() {
+    document.title = "Please Login - Guardianstats";
     document.body.style.backgroundImage = "var(--DarkNavyBlue)";
     return(
       <div className="home-container" style={{ gridTemplateColumns: "auto" }}>

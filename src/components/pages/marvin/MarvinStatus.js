@@ -16,6 +16,7 @@ export class Status extends Component {
   }
 
   async componentDidMount() {
+    document.title = "Status - Guardianstats";
     await this.loadTimeFrame();
     this.makeCharts(this.state.chartTimeframe);
     updateTimer = setInterval(() => {

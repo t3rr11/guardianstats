@@ -8,6 +8,7 @@ export class Home extends Component {
   state = { isConnected: null }
 
   async componentDidMount() {
+    document.title = "Home - Guardianstats";
     if(await Checks.checkLogin()) { this.setState({ isConnected: true }); }
     else { this.setState({ isConnected: false }); }
   }
