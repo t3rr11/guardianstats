@@ -53,6 +53,7 @@ export class Profile extends Component {
         await Promise.all([ bungie.GetProfile(membershipType, membershipId, '100,200,202,205,306,600,800,900'), bungie.GetHistoricStatsForAccount(membershipType, membershipId) ]).then(async function(promiseData) {
           //Variables
           profileInfo = promiseData[0];
+          console.log(profileInfo);
           historicStats = promiseData[1];
           var characterIds = profileInfo.profile.data.characterIds;
           for(var j in characterIds) {
@@ -61,6 +62,7 @@ export class Profile extends Component {
               raidStats.push(values[1]);
             });
           }
+          document.title = `${ profileInfo.profile.data.userInfo.displayName }'s Profile - Guardianstats`;
         });
 
         //With all data retrieved, Set page.

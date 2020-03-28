@@ -19,13 +19,29 @@ async function apiRequest(path, isStat, isAuthRequired) {
     console.log(`Error: ${ JSON.stringify(response) }`);
   }
 }
+async function bungieRequest(path) {
+  const request = await fetch(`https://www.bungie.net${path}`);
+  const response = await request.json();
+  if(request.ok && response.ErrorCode && response.ErrorCode !== 1) {
+    //Error with bungie, might have sent bad headers.
+    console.log(`Error: ${ JSON.stringify(response) }`);
+  }
+  else if(request.ok) {
+    //Everything is ok, request was returned to sender.
+    return response;
+  }
+  else {
+    //Error in request ahhhhh!
+    console.log(`Error: ${ JSON.stringify(response) }`);
+  }
+}
 
 export const GetProfile = async (membershipType, membershipId, components, auth = false) => apiRequest(`/Platform/Destiny2/${membershipType}/Profile/${membershipId}/?components=${components}`, false, auth);
 export const GetActivityHistory = async (membershipType, membershipId, characterId, count, mode, page = 0) => apiRequest(`/Platform/Destiny2/${membershipType}/Account/${membershipId}/Character/${characterId}/Stats/Activities/?count=${count}&mode=${mode}&page=${page}`, false, false);
 export const GetHistoricStatsForAccount = async (membershipType, membershipId) => apiRequest(`/Platform/Destiny2/${membershipType}/Account/${membershipId}/Stats/?groups=101`, false, false);
 export const GetPGCR = async (instanceId) => apiRequest(`/Platform/Destiny2/Stats/PostGameCarnageReport/${instanceId}/`, true, false);
 export const GetManifestVersion = async () => apiRequest(`/Platform/Destiny2/Manifest/`, false, false);
-export const GetManifest = async url => fetch(`https://www.bungie.net${url}`).then(a => a.json());
+export const GetManifest = async url => bungieRequest(url, false, false);
 export const SearchUsers = async username => apiRequest(`/Platform/User/SearchUsers/?q=${username}`, false, false);
 export const SearchDestinyPlayer = async username => apiRequest(`/Platform/Destiny2/SearchDestinyPlayer/-1/${username}/`, false, false);
 export const GetMembershipId = async platformName => apiRequest(`/Platform/Destiny2/SearchDestinyPlayer/-1/${platformName}/`, false, false);

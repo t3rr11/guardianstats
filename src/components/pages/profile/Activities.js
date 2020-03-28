@@ -51,13 +51,20 @@ export class Activities extends Component {
     if(!isNaN(membershipId) && membershipId.length >= 19) {
       try {
         var membershipType;
+        var displayName;
         //Check account exists
         this.setState({ status: { status: 'checkingAccountInfo', statusText: 'Checking if account exists...' } });
         const membershipInfo = await bungie.GetMembershipsById(membershipId);
         //Get membership type for membershipId.
-        for(var i in membershipInfo.destinyMemberships) { if(membershipInfo.destinyMemberships[i].membershipId === membershipId) { membershipType = membershipInfo.destinyMemberships[i].membershipType; } }
+        for(var i in membershipInfo.destinyMemberships) {
+          if(membershipInfo.destinyMemberships[i].membershipId === membershipId) {
+            displayName = membershipInfo.destinyMemberships[i].LastSeenDisplayName;
+            membershipType = membershipInfo.destinyMemberships[i].membershipType;
+          }
+        }
 
         //Found account now get the profile information.
+        document.title = `${ displayName }'s Activities - Guardianstats`;
         this.setState({ status: { status: 'grabbingAccountInfo', statusText: 'Loading recent activities...' }, membershipInfo: { membershipId, membershipType } });
         this.grabActivityData(membershipId, membershipType);
       }

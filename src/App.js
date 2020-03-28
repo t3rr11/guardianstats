@@ -128,17 +128,17 @@ class App extends React.Component {
     const DestinyVendorDefinition = currentVersion.jsonWorldComponentContentPaths['en'].DestinyVendorDefinition;
 
     Promise.all([
-      bungie.GetManifest(DestinyActivityDefinition),
-      bungie.GetManifest(DestinyActivityTypeDefinition),
-      bungie.GetManifest(DestinyActivityModeDefinition),
-      bungie.GetManifest(DestinyCollectibleDefinition),
-      bungie.GetManifest(DestinyPresentationNodeDefinition),
-      bungie.GetManifest(DestinyRecordDefinition),
-      bungie.GetManifest(DestinyInventoryItemLiteDefinition),
-      bungie.GetManifest(DestinyObjectiveDefinition),
-      bungie.GetManifest(DestinyProgressionDefinition),
-      bungie.GetManifest(DestinyTalentGridDefinition),
-      bungie.GetManifest(DestinyVendorDefinition)
+      await bungie.GetManifest(DestinyActivityDefinition),
+      await bungie.GetManifest(DestinyActivityTypeDefinition),
+      await bungie.GetManifest(DestinyActivityModeDefinition),
+      await bungie.GetManifest(DestinyCollectibleDefinition),
+      await bungie.GetManifest(DestinyPresentationNodeDefinition),
+      await bungie.GetManifest(DestinyRecordDefinition),
+      await bungie.GetManifest(DestinyInventoryItemLiteDefinition),
+      await bungie.GetManifest(DestinyObjectiveDefinition),
+      await bungie.GetManifest(DestinyProgressionDefinition),
+      await bungie.GetManifest(DestinyTalentGridDefinition),
+      await bungie.GetManifest(DestinyVendorDefinition)
     ]).then(async (values) => {
       this.setState({ status: { status: 'storingManifest', statusText: "Storing Manfiest...", loading: true } });
       try { globals.clearManifest(); } catch (err) { console.log(err); console.log("No manifest to clear. Ignore this."); }
@@ -256,7 +256,7 @@ class App extends React.Component {
       if(Settings.background === "vex") { this.setState({ background: { image: Settings.background, position: "center" } }); }
       else { this.setState({ background: { image: Settings.background, position: "top center" } }); }
     }
-    else { this.setState({ background: { image: "keep", position: "top center" } }); }
+    else { this.setState({ background: { image: "default", position: "top center" } }); }
   }
   toggleSettingsModal = () => { this.setState({ showSettingsModal: !this.state.showSettingsModal }); }
   settingsUpdated = () => { this.setBackground(); }

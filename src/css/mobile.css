@@ -51,11 +51,6 @@
     .loaderText > p { margin-top: 30px; }
   /* Loader end */
 
-  /* Home start */
-    .menu-bar > li { display: none !important; }
-    .search-output { width: 90% !important; margin: 30px auto !important; }
-  /* Home end */
-
   /* Profile start */
     .userContainer { grid-template-columns: auto !important; }
     .inspectBoxStatistics {
@@ -126,9 +121,16 @@
     }
   /* Settings end */
 
-  /* Others start */
-    .home-content { width: 100% !important; }
+  /* Home start */
+    #username { max-width: unset !important; }
+    .home-content { width: 90% !important; margin: auto; }
     .home-text { width: 90% !important; margin: auto !important; }
+    .menu-bar > li { display: none !important; }
+    .search-input { width: 90% !important; margin: 30px auto !important; }
+    .search-output { width: 90% !important; margin: 30px auto !important; }
+  /* Home end */
+
+  /* Others start */
     .detailsContainer { background: var(--BlueGradient); height: max-content; }
   /* Others end */
 

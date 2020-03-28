@@ -22,7 +22,8 @@ export class Home extends Component {
         <React.Fragment>
           <div className="home-content">
             <h1 className="home-title disable-hl">Guardianstats</h1>
-            <div className="searchDesc">Feel free to search below or consider connecting with bungie to get the full experience from Guardianstats!<p>Press Enter to Search.</p></div>
+            <h4 className="homeh4Titles">Welcome to Guardianstats</h4>
+            <div className="briefDesc">Our focus is on providing Guardians with the best Destiny 2 Stats available. Most of our stats are obtained thanks to the awesome guys behind the Bungie API. We are also the home of Marvin the Destiny 2 discord clan bot with his main focus is based around helping grow the clan communities for this game. Definitely head on over and check out his features by clicking the Get Marvin button. </div>            
             <Search foundUser={ this.foundUser } />
           </div>
           <div className="btn btn-dark getMarvinBtn" onClick={ (() => this.props.getMarvin()) }>Get Marvin</div>

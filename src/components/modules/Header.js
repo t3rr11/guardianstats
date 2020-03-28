@@ -48,6 +48,7 @@ export class Header extends React.Component {
 
   render() {
     const { loggedIn, platforms } = this.state;
+    const checkNew = () => { return new Date().getTime() < (1583318165570 + 604800000) ? (<span>New</span>) : null }
 
     //Pre-Render
     const menuItems = (
@@ -58,7 +59,7 @@ export class Header extends React.Component {
           <li className="menu-item" id="Profile"><Link to="/profile" onClick={ (() => this.toggleMenuSlider()) }>Profile</Link></li>
           <li className="menu-item" id="Activities"><Link to="/activities" onClick={ (() => this.toggleMenuSlider()) }>Activities</Link></li>
           <li className="menu-item" id="Marvin"><Link to="/marvin" onClick={ (() => this.toggleMenuSlider()) }>Marvin</Link></li>
-          <li className="menu-item" id="Clans"><Link to="/clans" onClick={ (() => this.toggleMenuSlider()) }>Clans{ new Date().getTime() < (1583318165570 + 604800000) ? (<span>New</span>) : null }</Link></li>
+          <li className="menu-item" id="Clans"><Link to="/clans" onClick={ (() => this.toggleMenuSlider()) }>Clans</Link></li>
         </React.Fragment>
       )
       : (
@@ -68,7 +69,7 @@ export class Header extends React.Component {
           <li className="menu-item-disabled" id="Profile" title="Login to see this content"><span>Profile</span></li>
           <li className="menu-item-disabled" id="Activities" title="Login to see this content"><span>Activities</span></li>
           <li className="menu-item" id="Marvin"><Link to="/marvin" onClick={ (() => this.toggleMenuSlider()) }>Marvin</Link></li>
-          <li className="menu-item" id="Clans"><Link to="/clans" onClick={ (() => this.toggleMenuSlider()) }>Clans<span>New</span></Link></li>
+          <li className="menu-item" id="Clans"><Link to="/clans" onClick={ (() => this.toggleMenuSlider()) }>Clans</Link></li>
         </React.Fragment>
       )
     );

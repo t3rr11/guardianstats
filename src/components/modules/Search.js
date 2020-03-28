@@ -187,7 +187,7 @@ export class Search extends Component {
                   </div>
                 </div>
               ) : null
-            ) : null
+            ) : (<div className="searchDesc">Feel free to search above or consider connecting with bungie to get the full experience from Guardianstats!<p>Press Enter to Search.</p></div>)
           }
         </div>
         {

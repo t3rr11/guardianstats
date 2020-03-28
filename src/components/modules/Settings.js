@@ -44,7 +44,7 @@ export class Settings extends Component {
     if(UnsetSettings !== "") {
       for(var i in UnsetSettings) {
         if(UnsetSettings[i] === "loader") { this.setLoader("class"); }
-        else if(UnsetSettings[i] === "background") { this.setBackground("keep"); }
+        else if(UnsetSettings[i] === "background") { this.setBackground("default"); }
       }
     }
   }
@@ -66,6 +66,9 @@ export class Settings extends Component {
             <div className="select-custom-background">
               <p>Select Custom Background</p>
               <div className="settings-background-options">
+                <div className={ `settings-background-option ${ this.state.background === "worthy" ? "selected" : null }` } onClick={ (() => this.setBackground("worthy")) }>
+                  <img className="settings-background-image" src="/images/backgrounds/worthy.jpg" alt="background" />
+                </div>
                 <div className={ `settings-background-option ${ this.state.background === "keep" ? "selected" : null }` } onClick={ (() => this.setBackground("keep")) }>
                   <img className="settings-background-image" src="/images/backgrounds/keep.jpg" alt="background" />
                 </div>
@@ -97,6 +100,6 @@ export class Settings extends Component {
   }
 }
 
-export function setDefaultSettings() { localStorage.setItem("Settings", `{"loader":"class","background":"keep"}`); }
+export function setDefaultSettings() { localStorage.setItem("Settings", `{"loader":"class","background":"default"}`); }
 
 export default Settings;
