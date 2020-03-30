@@ -2,6 +2,25 @@
   height: 100%;
   padding-top: 60px;
 }
+.inspectPrivateUser {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width:100%;
+  height:100px;
+  text-align: center;
+}
+.inspectPrivateUser > div { display: inline-grid; }
+.inspectPrivateUser > div > div { display: block; text-decoration: none; color: white; }
+.inspectPrivateUser > div > div > a { display: block; font-weight: bold; color: darkgray; }
+.inspectPrivateUser > img {
+  display: inline-grid;
+  background-size: cover;
+  width: 100px;
+  height: 100px;
+  margin: auto;
+}
 .inspectTitlebar {
   height: 60px;
   width: 100%;

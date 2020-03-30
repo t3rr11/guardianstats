@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import Loader from '../../modules/Loader';
 import Error from '../../modules/Error';
 import * as globals from '../../scripts/Globals';
@@ -73,7 +74,9 @@ export class Profile extends Component {
               gambitStats.push(values[0]);
               raidStats.push(values[1]);
               trialsStats.push(values[2]);
-              for(var k in values[3].activities) { allActivities.push(values[3].activities[k]); }
+              if(values[3]) {
+                for(var k in values[3].activities) { allActivities.push(values[3].activities[k]); }
+              }
             });
           }
           document.title = `${ profileInfo.profile.data.userInfo.displayName }'s Profile - Guardianstats`;
@@ -83,17 +86,23 @@ export class Profile extends Component {
 
         //Do hacker check
         var isHacker = false;
-        for(var i in allActivities) {
-          console.log(allActivities[i].values.deaths.basic.value);
-          if(allActivities[i].values.deaths.basic.value > 50) { isHacker = true }
-        }
+        if(allActivities.length > 0) {
+          for(var i in allActivities) {
+            console.log(allActivities[i].values.deaths.basic.value);
+            if(allActivities[i].values.deaths.basic.value > 50) { isHacker = true }
+          }
 
-        //With all data retrieved, Set page.
-        this.setState({
-          status: {
-            status: 'ready', statusText: 'Finished the inspection! (You shouldn\'t see this unless something went wrong, Please refresh)' },
-            data: { Manifest, profileInfo, historicStats, gambitStats, raidStats, trialsStats, isHacker }
-        });
+          //With all data retrieved, Set page.
+          this.setState({
+            status: {
+              status: 'ready', statusText: 'Finished the inspection! (You shouldn\'t see this unless something went wrong, Please refresh)' },
+              data: { Manifest, profileInfo, historicStats, gambitStats, raidStats, trialsStats, isHacker }
+          });
+        }
+        else {
+          //Page is private. Return private message.
+          this.setState({ status: { status: 'private', statusText: 'This user has their account privated. I wonder what they are hiding...' } });
+        }
       }
       catch(err) {
         if(Misc.isJSON(err)) { var error = JSON.parse(err); this.setState({ status: { status: 'error', statusText: 'Something went wrong... Error: ' + error.Message } }); }
@@ -102,6 +111,7 @@ export class Profile extends Component {
     }
     else {
       //Membership ID is Not a number or has a length of 19 characters.
+      this.setState({ status: { status: 'error', statusText: 'The membership_id entered is not valid. How did you get here?' } });
     }
   }
 
@@ -111,6 +121,17 @@ export class Profile extends Component {
 
     //Check for errors, show loader, or display content.
     if(status === 'error') { return <Error error={ statusText } /> }
+    else if(status === 'private') {
+      return (
+        <div className="inspectPrivateUser">
+          <img src="./images/icons/ghost.png" />
+          <div>
+            <div>{ statusText }</div>
+            <div><Link to="/home">Go Home</Link></div>
+          </div>
+        </div>
+      )
+    }
     else if(status === 'ready') {
       const { Manifest, profileInfo, historicStats, gambitStats, raidStats, trialsStats, isHacker } = this.state.data;
       return (
