@@ -91,6 +91,28 @@
   text-align: left;
   width: 220px;
 }
+.inspectIsHackerContainer { position: relative; }
+.inspectIsHackerDesc { display: none; }
+.inspectIsHackerContainer:hover .inspectIsHackerDesc {
+  display: block;
+  position: absolute;
+  background-color: var(--DarkNavyBlue);
+  top: -10px;
+  left: 50px;
+  padding: 10px;
+  font-size: 12px;
+  width: 200px;
+}
+.inspectIsHackerIcon {
+  display: inline-block;
+  height: 40px;
+  width: 40px;
+  float: left;
+  margin-left: 3px;
+  margin-top: 8px;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
 .inspectUserDetailsContainer {
   border-bottom: 1px solid var(--DarkNavyBlue);
   background-color: var( --NavyBlue);

@@ -2,12 +2,12 @@ import React from 'react';
 import * as UserDetails from './GenerateUserDetails';
 import * as Misc from '../../Misc';
 
-export function generate(profileInfo, Manifest, historicStats, gambitStats, raidStats, trialsStats, props) {
+export function generate(profileInfo, Manifest, historicStats, gambitStats, raidStats, trialsStats, isHacker, props) {
   return (
     <div className="inspectBoxStatistics">
       <div className="inspectBoxContent">
         <div className="inspectBoxContentTitle">User Info</div>
-        { UserDetails.generate(profileInfo, props) }
+        { UserDetails.generate(profileInfo, isHacker, props) }
       </div>
       <div className="inspectBoxContent">
         <div className="inspectBoxContentTitle">Titles</div>

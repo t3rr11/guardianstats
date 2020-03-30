@@ -42,16 +42,21 @@ export class Profile extends Component {
       var gambitStats = [];
       var raidStats = [];
       var trialsStats = [];
+      var allActivities = [];
       try {
         //Check account exists
         this.setState({ status: { status: 'checkingAccountInfo', statusText: 'Checking if account exists...' } });
         const membershipInfo = await bungie.GetMembershipsById(membershipId);
+
         //Get membership type for membershipId.
         for(var i in membershipInfo.destinyMemberships) { if(membershipInfo.destinyMemberships[i].membershipId === membershipId) { membershipType = membershipInfo.destinyMemberships[i].membershipType; } }
 
         //Found account now get the profile information.
         this.setState({ status: { status: 'grabbingAccountInfo', statusText: this.props.membershipId !== '/profile' ? 'Inspecting their account...' : 'Inspecting your account...' } });
-        await Promise.all([ bungie.GetProfile(membershipType, membershipId, '100,200,202,205,306,600,800,900,1100'), bungie.GetHistoricStatsForAccount(membershipType, membershipId) ]).then(async function(promiseData) {
+        await Promise.all([
+          bungie.GetProfile(membershipType, membershipId, '100,200,202,205,306,600,800,900,1100'),
+          bungie.GetHistoricStatsForAccount(membershipType, membershipId)
+        ]).then(async function(promiseData) {
           //Variables
           profileInfo = promiseData[0];
           historicStats = promiseData[1];
@@ -63,20 +68,31 @@ export class Profile extends Component {
               bungie.GetSpecificModeStats(membershipId, membershipType, characterIds[j], "64"),
               bungie.GetSpecificModeStats(membershipId, membershipType, characterIds[j], "4"),
               bungie.GetSpecificModeStats(membershipId, membershipType, characterIds[j], "84"),
+              bungie.GetActivityHistory(membershipType, membershipId, characterIds[j], 200, 5),
             ]).then(async function(values) {
               gambitStats.push(values[0]);
               raidStats.push(values[1]);
               trialsStats.push(values[2]);
+              for(var k in values[3].activities) { allActivities.push(values[3].activities[k]); }
             });
           }
           document.title = `${ profileInfo.profile.data.userInfo.displayName }'s Profile - Guardianstats`;
+
+          console.log(allActivities);
         });
+
+        //Do hacker check
+        var isHacker = false;
+        for(var i in allActivities) {
+          console.log(allActivities[i].values.deaths.basic.value);
+          if(allActivities[i].values.deaths.basic.value > 50) { isHacker = true }
+        }
 
         //With all data retrieved, Set page.
         this.setState({
           status: {
             status: 'ready', statusText: 'Finished the inspection! (You shouldn\'t see this unless something went wrong, Please refresh)' },
-            data: { Manifest, profileInfo, historicStats, gambitStats, raidStats, trialsStats }
+            data: { Manifest, profileInfo, historicStats, gambitStats, raidStats, trialsStats, isHacker }
         });
       }
       catch(err) {
@@ -96,13 +112,13 @@ export class Profile extends Component {
     //Check for errors, show loader, or display content.
     if(status === 'error') { return <Error error={ statusText } /> }
     else if(status === 'ready') {
-      const { Manifest, profileInfo, historicStats, gambitStats, raidStats, trialsStats } = this.state.data;
+      const { Manifest, profileInfo, historicStats, gambitStats, raidStats, trialsStats, isHacker } = this.state.data;
       return (
         <div className="inspectContainer">
           <div className="inspectContent">
             <div className="inspectBox">
               <div className="userContainer">
-                { UserStatistics.generate(profileInfo, Manifest, historicStats, gambitStats, raidStats, trialsStats, this.props) }
+                { UserStatistics.generate(profileInfo, Manifest, historicStats, gambitStats, raidStats, trialsStats, isHacker, this.props) }
                 { UserCollections.generate(profileInfo, Manifest) }
               </div>
             </div>

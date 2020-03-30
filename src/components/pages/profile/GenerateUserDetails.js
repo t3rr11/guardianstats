@@ -3,10 +3,21 @@ import * as Misc from '../../Misc';
 import * as UserStatistics from './GenerateUserStatistics';
 import { Titles } from './Titles';
 
-export function generate(profileInfo, props) {
+var hasHacked = true;
+
+export function generate(profileInfo, isHacker, props) {
   return (
     <div className="inspectUserDetailsContainer">
-      <div className="inspectVersion" style={{ backgroundImage: `url("./images/icons/versions/${ getVersionImage(getVersion(profileInfo.profile.data.versionsOwned)) }")` }}></div>
+      {
+        isHacker ? (
+          <div className="inspectIsHackerContainer">
+            <img className="inspectIsHackerIcon" src={ `./images/icons/warning.png` } />
+            <div className="inspectIsHackerDesc">Guardianstats has reviewed this account and suspects this user to be a hacker.</div>
+          </div>
+        ):(
+          <img className="inspectVersion" src={ `./images/icons/versions/${ getVersionImage(getVersion(profileInfo.profile.data.versionsOwned)) }` } />
+        )
+      }
       <div className="inspectProfileName"> { profileInfo.profile.data.userInfo.displayName } </div>
       <div className="inspectUserDetails">
         <div className="inspectTimePlayed">Time Played: { Math.round(totalTime(profileInfo.profile.data.characterIds, profileInfo.characters.data) / 60) } Hours</div>
@@ -18,6 +29,7 @@ export function generate(profileInfo, props) {
   );
 }
 
+//Functions
 function enumerateVersion(state) {
   var flagEnum = (state, value) => !!(state & value);
   return {
@@ -30,10 +42,22 @@ function enumerateVersion(state) {
     Shadowkeep: flagEnum(state, 32)
   }
 }
-const totalTime = (ids, characters) => {
-  var totalMinutes = 0;
-  for(var i in ids) { totalMinutes = parseInt(totalMinutes) + parseInt(characters[ids[i]].minutesPlayedTotal); }
-  return totalMinutes;
+
+//Gets
+export const getTitles = (profileInfo, hiddenSeals) => {
+  var titles = Titles(profileInfo);
+  if(titles.find(title => title.isObtained === true)) {
+    return (
+      titles.map(function (title) {
+        if(!title.hidden) {
+          if(title.isObtained) { return buildTitle(title, true) }
+          else { return buildTitle(title, false) }
+        }
+        else { if(title.isObtained) { return buildTitle(title, true) } else { return null } }
+      })
+    );
+  }
+  else { return (<div className="inspectNoTitlesObtained">No Titles Obtained</div>) }
 }
 const getVersion = (versionsOwned) => {
   return (
@@ -58,20 +82,12 @@ const getVersionImage = (version) => {
   else if(version === "Base Destiny 2") { return ("destiny.png"); }
   else { return "destiny.png"; }
 }
-export const getTitles = (profileInfo, hiddenSeals) => {
-  var titles = Titles(profileInfo);
-  if(titles.find(title => title.isObtained === true)) {
-    return (
-      titles.map(function (title) {
-        if(!title.hidden) {
-          if(title.isObtained) { return buildTitle(title, true) }
-          else { return buildTitle(title, false) }
-        }
-        else { if(title.isObtained) { return buildTitle(title, true) } else { return null } }
-      })
-    );
-  }
-  else { return (<div className="inspectNoTitlesObtained">No Titles Obtained</div>) }
+
+//Others
+const totalTime = (ids, characters) => {
+  var totalMinutes = 0;
+  for(var i in ids) { totalMinutes = parseInt(totalMinutes) + parseInt(characters[ids[i]].minutesPlayedTotal); }
+  return totalMinutes;
 }
 const buildTitle = (title, obtained) => {
   return (
