@@ -194,7 +194,7 @@ const generateRaidsStats = (profileInfo, raidStats) => {
   );
 }
 const generateTrialsStats = (profileInfo, trialsStats) => {
-  var kd = 0, kda = 0, kad = 0, kills = 0, deaths = 0, assists = 0, matches = 0, wins = 0, combatRating = 0, highestLight = 0;
+  var kd = 0, kda = 0, kad = 0, kills = 0, deaths = 0, assists = 0, matches = 0, wins = 0, loses = 0,combatRating = 0, highestLight = 0;
   var overall_flawless = 0, weekly_flawless = 0, seasonal_flawless = 0, overall_carries = 0, weekly_carries = 0, seasonal_carries = 0;
   trialsStats = trialsStats.filter(e => e.trials_of_osiris.allTime);
   for (var i in trialsStats) {
@@ -212,6 +212,7 @@ const generateTrialsStats = (profileInfo, trialsStats) => {
   try { kd = Math.round((kd / trialsStats.length) * 100) / 100; } catch (err) { }
   try { kda = Math.round((kda / trialsStats.length) * 100) / 100; } catch (err) { }
   try { kad = Math.round((kad / trialsStats.length) * 100) / 100; } catch (err) { }
+  try { loses = matches - wins; } catch (err) { }
   try { overall_flawless = profileInfo.metrics.data.metrics["1765255052"].objectiveProgress.progress; } catch (err) { }
   try { seasonal_flawless = profileInfo.metrics.data.metrics["1114483243"].objectiveProgress.progress; } catch (err) { }
   try { weekly_flawless = profileInfo.metrics.data.metrics["122451876"].objectiveProgress.progress; } catch (err) { }
@@ -243,10 +244,10 @@ const generateTrialsStats = (profileInfo, trialsStats) => {
         <div className="inspectBoxContentStatsDiv threeColumn">
           <span>Matches: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Misc.numberWithCommas(matches) }</span></span>
           <span>Wins: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Misc.numberWithCommas(wins) }</span></span>
+          <span>Loses: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Misc.numberWithCommas(loses) }</span></span>
           <span>Win Rate: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Math.round((wins / matches) * 100) }%</span></span>
-          <span title="Combat Rating (I can only assume this is how bungie match make for skill based modes)">CR: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ combatRating.toFixed(2) }</span></span>
+          <span title="Combat Rating (I can only assume this is how bungie match make for skill based modes)">Combat Rating: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ combatRating.toFixed(2) }</span></span>
           <span>Highest Light: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ highestLight }</span></span>
-          <span className="fake">Fake Line</span>
         </div>
       </div>
     </div>
