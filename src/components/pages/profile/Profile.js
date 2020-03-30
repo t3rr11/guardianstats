@@ -41,6 +41,7 @@ export class Profile extends Component {
       var membershipType, profileInfo, historicStats;
       var gambitStats = [];
       var raidStats = [];
+      var trialsStats = [];
       try {
         //Check account exists
         this.setState({ status: { status: 'checkingAccountInfo', statusText: 'Checking if account exists...' } });
@@ -50,16 +51,22 @@ export class Profile extends Component {
 
         //Found account now get the profile information.
         this.setState({ status: { status: 'grabbingAccountInfo', statusText: this.props.membershipId !== '/profile' ? 'Inspecting their account...' : 'Inspecting your account...' } });
-        await Promise.all([ bungie.GetProfile(membershipType, membershipId, '100,200,202,205,306,600,800,900'), bungie.GetHistoricStatsForAccount(membershipType, membershipId) ]).then(async function(promiseData) {
+        await Promise.all([ bungie.GetProfile(membershipType, membershipId, '100,200,202,205,306,600,800,900,1100'), bungie.GetHistoricStatsForAccount(membershipType, membershipId) ]).then(async function(promiseData) {
           //Variables
           profileInfo = promiseData[0];
-          console.log(profileInfo);
           historicStats = promiseData[1];
           var characterIds = profileInfo.profile.data.characterIds;
+
+          //Loop through characters and get specific mode stats.
           for(var j in characterIds) {
-            await Promise.all([ bungie.GetSpecificModeStats(membershipId, membershipType, characterIds[j], "64"), bungie.GetSpecificModeStats(membershipId, membershipType, characterIds[j], "4"), ]).then(async function(values) {
+            await Promise.all([
+              bungie.GetSpecificModeStats(membershipId, membershipType, characterIds[j], "64"),
+              bungie.GetSpecificModeStats(membershipId, membershipType, characterIds[j], "4"),
+              bungie.GetSpecificModeStats(membershipId, membershipType, characterIds[j], "84"),
+            ]).then(async function(values) {
               gambitStats.push(values[0]);
               raidStats.push(values[1]);
+              trialsStats.push(values[2]);
             });
           }
           document.title = `${ profileInfo.profile.data.userInfo.displayName }'s Profile - Guardianstats`;
@@ -69,7 +76,7 @@ export class Profile extends Component {
         this.setState({
           status: {
             status: 'ready', statusText: 'Finished the inspection! (You shouldn\'t see this unless something went wrong, Please refresh)' },
-            data: { Manifest, profileInfo, historicStats, gambitStats, raidStats }
+            data: { Manifest, profileInfo, historicStats, gambitStats, raidStats, trialsStats }
         });
       }
       catch(err) {
@@ -89,13 +96,13 @@ export class Profile extends Component {
     //Check for errors, show loader, or display content.
     if(status === 'error') { return <Error error={ statusText } /> }
     else if(status === 'ready') {
-      const { Manifest, profileInfo, historicStats, gambitStats, raidStats } = this.state.data;
+      const { Manifest, profileInfo, historicStats, gambitStats, raidStats, trialsStats } = this.state.data;
       return (
         <div className="inspectContainer">
           <div className="inspectContent">
             <div className="inspectBox">
               <div className="userContainer">
-                { UserStatistics.generate(profileInfo, Manifest, historicStats, gambitStats, raidStats, this.props) }
+                { UserStatistics.generate(profileInfo, Manifest, historicStats, gambitStats, raidStats, trialsStats, this.props) }
                 { UserCollections.generate(profileInfo, Manifest) }
               </div>
             </div>

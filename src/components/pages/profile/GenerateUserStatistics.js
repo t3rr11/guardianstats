@@ -2,7 +2,7 @@ import React from 'react';
 import * as UserDetails from './GenerateUserDetails';
 import * as Misc from '../../Misc';
 
-export function generate(profileInfo, Manifest, historicStats, gambitStats, raidStats, props) {
+export function generate(profileInfo, Manifest, historicStats, gambitStats, raidStats, trialsStats, props) {
   return (
     <div className="inspectBoxStatistics">
       <div className="inspectBoxContent">
@@ -28,6 +28,10 @@ export function generate(profileInfo, Manifest, historicStats, gambitStats, raid
       <div className="inspectBoxContent">
         <div className="inspectBoxContentTitle"> Overall Raid Statistics </div>
         { generateRaidsStats(profileInfo, raidStats) }
+      </div>
+      <div className="inspectBoxContent biggerBox">
+        <div className="inspectBoxContentTitle"> Overall Trials Statistics </div>
+        { generateTrialsStats(profileInfo, trialsStats) }
       </div>
       <div className="inspectBoxContent biggerBox">
         <div className="inspectBoxContentTitle"> Specific Raid Completions </div>
@@ -107,8 +111,8 @@ const generatePvEStats = (profileInfo, historicStats) => {
 }
 const generateGambitStats = (profileInfo, gambitStats) => {
   var kd = 0, kda = 0, kad = 0, kills = 0, deaths = 0, assists = 0, matches = 0, wins = 0;
+  gambitStats = gambitStats.filter(e => e.allPvECompetitive.allTime);
   for (var i in gambitStats) {
-    console.log(gambitStats[i]);
     try { kd = kd + gambitStats[i].allPvECompetitive.allTime.killsDeathsRatio.basic.value; } catch (err) {  }
     try { kda = kda + gambitStats[i].allPvECompetitive.allTime.killsDeathsAssists.basic.value; } catch (err) {  }
     try { kad = kad + gambitStats[i].allPvECompetitive.allTime.efficiency.basic.value; } catch (err) {  }
@@ -148,6 +152,7 @@ const generateGambitStats = (profileInfo, gambitStats) => {
 }
 const generateRaidsStats = (profileInfo, raidStats) => {
   var kd = 0, kda = 0, kad = 0, kills = 0, deaths = 0, assists = 0, activities = 0,  misadventures = 0, timeSpent = 0;
+  raidStats = raidStats.filter(e => e.raid.allTime);
   for (var i in raidStats) {
     try { kd = kd + raidStats[i].raid.allTime.killsDeathsRatio.basic.value; } catch (err) {  }
     try { kda = kda + raidStats[i].raid.allTime.killsDeathsAssists.basic.value; } catch (err) {  }
@@ -183,6 +188,65 @@ const generateRaidsStats = (profileInfo, raidStats) => {
           <span>Activities: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Misc.numberWithCommas(activities) }</span></span>
           <span>Misadventures: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Misc.numberWithCommas(misadventures) }</span></span>
           <span>Time Spent: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ timeSpent }</span></span>
+        </div>
+      </div>
+    </div>
+  );
+}
+const generateTrialsStats = (profileInfo, trialsStats) => {
+  var kd = 0, kda = 0, kad = 0, kills = 0, deaths = 0, assists = 0, matches = 0, wins = 0, combatRating = 0, highestLight = 0;
+  var overall_flawless = 0, weekly_flawless = 0, seasonal_flawless = 0, overall_carries = 0, weekly_carries = 0, seasonal_carries = 0;
+  trialsStats = trialsStats.filter(e => e.trials_of_osiris.allTime);
+  for (var i in trialsStats) {
+    try { kd = kd + trialsStats[i].trials_of_osiris.allTime.killsDeathsRatio.basic.value; } catch (err) {  }
+    try { kda = kda + trialsStats[i].trials_of_osiris.allTime.killsDeathsAssists.basic.value; } catch (err) {  }
+    try { kad = kad + trialsStats[i].trials_of_osiris.allTime.efficiency.basic.value; } catch (err) {  }
+    try { kills = kills + trialsStats[i].trials_of_osiris.allTime.kills.basic.value; } catch (err) {  }
+    try { deaths = deaths + trialsStats[i].trials_of_osiris.allTime.deaths.basic.value; } catch (err) {  }
+    try { assists = assists + trialsStats[i].trials_of_osiris.allTime.assists.basic.value; } catch (err) {  }
+    try { matches = matches + trialsStats[i].trials_of_osiris.allTime.activitiesEntered.basic.value; } catch (err) {  }
+    try { wins = wins + trialsStats[i].trials_of_osiris.allTime.activitiesWon.basic.value; } catch (err) {  }
+    try { combatRating = trialsStats[i].trials_of_osiris.allTime.combatRating.basic.value > combatRating ? trialsStats[i].trials_of_osiris.allTime.combatRating.basic.value : combatRating } catch (err) {  }
+    try { highestLight = trialsStats[i].trials_of_osiris.allTime.highestLightLevel.basic.value > highestLight ? trialsStats[i].trials_of_osiris.allTime.highestLightLevel.basic.value : highestLight } catch (err) {  }
+  }
+  try { kd = Math.round((kd / trialsStats.length) * 100) / 100; } catch (err) { }
+  try { kda = Math.round((kda / trialsStats.length) * 100) / 100; } catch (err) { }
+  try { kad = Math.round((kad / trialsStats.length) * 100) / 100; } catch (err) { }
+  try { overall_flawless = profileInfo.metrics.data.metrics["1765255052"].objectiveProgress.progress; } catch (err) { }
+  try { seasonal_flawless = profileInfo.metrics.data.metrics["1114483243"].objectiveProgress.progress; } catch (err) { }
+  try { weekly_flawless = profileInfo.metrics.data.metrics["122451876"].objectiveProgress.progress; } catch (err) { }
+  try { overall_carries = profileInfo.metrics.data.metrics["301249970"].objectiveProgress.progress; } catch (err) { }
+  try { seasonal_carries = profileInfo.metrics.data.metrics["610393611"].objectiveProgress.progress; } catch (err) { }
+  try { weekly_carries = profileInfo.metrics.data.metrics["1155098170"].objectiveProgress.progress; } catch (err) { }
+  return (
+    <div className="inspectBoxStatContent threeColumn">
+      <div className="inspectBoxContentIcon threeColumn">
+        <img alt="trialsIcon" src="./images/icons/destiny/trials.png" style={{ width: '55px' }} />
+      </div>
+      <div className="inspectBoxContentStats threeColumn">
+        <div className="inspectBoxContentStatsDiv threeColumn">
+          <span>Kills: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Misc.numberWithCommas(kills) }</span></span>
+          <span>Assists: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Misc.numberWithCommas(assists) }</span></span>
+          <span>Deaths: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Misc.numberWithCommas(deaths) }</span></span>
+          <span>KD: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ kd.toFixed(2) }</span></span>
+          <span>KDA: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ kda.toFixed(2) }</span></span>
+          <span>KA/D: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ kad.toFixed(2) }</span></span>
+        </div>
+        <div className="inspectBoxContentStatsDiv threeColumn">
+          <span>Overall Flawless: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Misc.numberWithCommas(overall_flawless) }</span></span>
+          <span>Seasonal Flawless: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Misc.numberWithCommas(seasonal_flawless) }</span></span>
+          <span>Weekly Flawless: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Misc.numberWithCommas(weekly_flawless) }</span></span>
+          <span>Overall Carries: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Misc.numberWithCommas(overall_carries) }</span></span>
+          <span>Seasonal Carries: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Misc.numberWithCommas(seasonal_carries) }</span></span>
+          <span>Weekly Carries: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Misc.numberWithCommas(weekly_carries) }</span></span>
+        </div>
+        <div className="inspectBoxContentStatsDiv threeColumn">
+          <span>Matches: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Misc.numberWithCommas(matches) }</span></span>
+          <span>Wins: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Misc.numberWithCommas(wins) }</span></span>
+          <span>Win Rate: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Math.round((wins / matches) * 100) }%</span></span>
+          <span title="Combat Rating (I can only assume this is how bungie match make for skill based modes)">CR: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ combatRating.toFixed(2) }</span></span>
+          <span>Highest Light: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ highestLight }</span></span>
+          <span className="fake">Fake Line</span>
         </div>
       </div>
     </div>
