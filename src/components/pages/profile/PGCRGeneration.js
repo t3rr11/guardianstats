@@ -131,33 +131,39 @@ const generateTeamData = (ManifestItems, PGCRs, currentActivity, modeType, team,
   if(modeType === 'pvp') {
     if(team === 'alpha') {
       var alphaTeamData = PGCRs[currentActivity].teams.find(team => team.teamId === 17);
-      return (
-        <div className="pgcrAlphaTeam">
-          <div className="pgcrAlphaTeamTitle">{ alphaTeamData.standing.basic.displayValue }: Alpha Team - { alphaTeamData.score.basic.value }
-            <div title="Score">S</div>
-            <div title="Kills">K</div>
-            <div title="Deaths">D</div>
-            <div title="K/D Ratio">K/D</div>
-            <div title="Efficiency - K+A/D">KA/D</div>
+      if(alphaTeamData) {
+        return (
+          <div className="pgcrAlphaTeam">
+            <div className="pgcrAlphaTeamTitle">{ alphaTeamData.standing.basic.displayValue }: Alpha Team - { alphaTeamData.score.basic.value }
+              <div title="Score">S</div>
+              <div title="Kills">K</div>
+              <div title="Deaths">D</div>
+              <div title="K/D Ratio">K/D</div>
+              <div title="Efficiency - K+A/D">KA/D</div>
+            </div>
+            { generatePlayerData(ManifestItems, PGCRs, currentActivity, 'pvp', 'alpha', props) }
           </div>
-          { generatePlayerData(ManifestItems, PGCRs, currentActivity, 'pvp', 'alpha', props) }
-        </div>
-      )
+        )
+      }
+      else { return null }
     }
     else if(team === 'bravo') {
       var bravoTeamData = PGCRs[currentActivity].teams.find(team => team.teamId === 18);
-      return (
-        <div className="pgcrBravoTeam">
-          <div className="pgcrBravoTeamTitle">{ bravoTeamData.standing.basic.displayValue }: Bravo Team - { bravoTeamData.score.basic.value }
-            <div title="Score">S</div>
-            <div title="Kills">K</div>
-            <div title="Deaths">D</div>
-            <div title="K/D Ratio">K/D</div>
-            <div title="Efficiency - K+A/D">KA/D</div>
+      if(bravoTeamData) {
+        return (
+          <div className="pgcrBravoTeam">
+            <div className="pgcrBravoTeamTitle">{ bravoTeamData.standing.basic.displayValue }: Bravo Team - { bravoTeamData.score.basic.value }
+              <div title="Score">S</div>
+              <div title="Kills">K</div>
+              <div title="Deaths">D</div>
+              <div title="K/D Ratio">K/D</div>
+              <div title="Efficiency - K+A/D">KA/D</div>
+            </div>
+            { generatePlayerData(ManifestItems, PGCRs, currentActivity, 'pvp', 'bravo', props) }
           </div>
-          { generatePlayerData(ManifestItems, PGCRs, currentActivity, 'pvp', 'bravo', props) }
-        </div>
-      )
+        )
+      }
+      else { return null }
     }
   }
   else if(modeType === 'gambit') {

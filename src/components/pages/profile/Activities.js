@@ -81,10 +81,11 @@ export class Activities extends Component {
     var lastCharPlayed = charData[characters[0]]; for(var c in charData) { if(new Date(lastCharPlayed.dateLastPlayed) < new Date(charData[c].dateLastPlayed).getTime()) { lastCharPlayed = charData[c]; } }
     var allActivities = [];
     for(var i in characters) {
-      const activityData = await bungie.GetActivityHistory(membershipType, membershipId, characters[i], 50, 0);
+      const activityData = await bungie.GetActivityHistory(membershipType, membershipId, characters[i], 200, 0);
       for(var j in activityData.activities) { allActivities.push(activityData.activities[j]); }
     }
     allActivities.sort(function(a, b) { return (new Date(b.period).getTime() - new Date(a.period).getTime()); });
+    allActivities = allActivities.slice(0, 200);
     this.setState({
       status: { status: 'gettingPGCRs', 'statusText': 'Getting battle reports...' },
       profile: { membershipType, membershipId, characters, lastOnlineCharacterId: lastCharPlayed.characterId },
