@@ -7,7 +7,11 @@ import * as bungie from '../../requests/BungieReq';
 import * as UserStatistics from './GenerateUserStatistics';
 import * as UserCollections from './GenerateUserCollections';
 import * as checks from '../../scripts/Checks';
+import * as loadBreaks from '../../scripts/Loadbreaks';
 import * as Misc from '../../Misc';
+
+var start = null;
+var checkpoint = null;
 
 export class Profile extends Component {
 
@@ -17,7 +21,7 @@ export class Profile extends Component {
     data: null
   }
 
-  async componentDidMount() { document.title = "Profile - Guardianstats"; this.startUpChecks(); }
+  async componentDidMount() { document.title = "Profile - Guardianstats"; loadBreaks.StartLoadBreak("profile"); this.startUpChecks(); }
   async startUpChecks() {
     this.setState({ status: { status: 'checkingManifest', statusText: 'Checking Manifest...' } });
     if(await checks.checkManifestMounted()) {
@@ -36,6 +40,7 @@ export class Profile extends Component {
   }
 
   async loadProfile(membershipId) {
+    loadBreaks.AddLoadBreak("profile", "Manifest");
     if(!isNaN(membershipId) && membershipId.length >= 19) {
       //Variables
       const Manifest = globals.MANIFEST;
@@ -48,6 +53,7 @@ export class Profile extends Component {
         //Check account exists
         this.setState({ status: { status: 'checkingAccountInfo', statusText: 'Checking if account exists...' } });
         const membershipInfo = await bungie.GetMembershipsById(membershipId);
+        loadBreaks.AddLoadBreak("profile", "MembershipInfo");
 
         //Get membership type for membershipId.
         for(var i in membershipInfo.destinyMemberships) { if(membershipInfo.destinyMemberships[i].membershipId === membershipId) { membershipType = membershipInfo.destinyMemberships[i].membershipType; } }
@@ -58,6 +64,7 @@ export class Profile extends Component {
           bungie.GetProfile(membershipType, membershipId, '100,200,202,205,306,600,800,900,1100'),
           bungie.GetHistoricStatsForAccount(membershipType, membershipId)
         ]).then(async function(promiseData) {
+          loadBreaks.AddLoadBreak("profile", "Profile and Historic Stats");
           //Variables
           profileInfo = promiseData[0];
           historicStats = promiseData[1];
@@ -74,23 +81,20 @@ export class Profile extends Component {
               gambitStats.push(values[0]);
               raidStats.push(values[1]);
               trialsStats.push(values[2]);
-              if(values[3]) {
-                for(var k in values[3].activities) { allActivities.push(values[3].activities[k]); }
-              }
+              if(values[3]) { for(var k in values[3].activities) { allActivities.push(values[3].activities[k]); } }
             });
           }
+          loadBreaks.AddLoadBreak("profile", "Specific Mode Stats");
           document.title = `${ profileInfo.profile.data.userInfo.displayName }'s Profile - Guardianstats`;
-
-          console.log(allActivities);
         });
 
-        //Do hacker check
-        var isHacker = false;
         if(allActivities.length > 0) {
-          for(var i in allActivities) {
-            console.log(allActivities[i].values.deaths.basic.value);
-            if(allActivities[i].values.deaths.basic.value > 50) { isHacker = true }
-          }
+          //Do hacker check
+          var isHacker = false;
+          // for(var i in allActivities) {
+          //   console.log(allActivities[i].values.deaths.basic.value);
+          //   if(allActivities[i].values.deaths.basic.value > 50) { isHacker = true }
+          // }
 
           //With all data retrieved, Set page.
           this.setState({
@@ -103,6 +107,8 @@ export class Profile extends Component {
           //Page is private. Return private message.
           this.setState({ status: { status: 'private', statusText: 'This user has their account privated. I wonder what they are hiding...' } });
         }
+        loadBreaks.AddLoadBreak("profile", "Whole Page");
+        loadBreaks.StopLoadBreak("profile");
       }
       catch(err) {
         if(Misc.isJSON(err)) { var error = JSON.parse(err); this.setState({ status: { status: 'error', statusText: 'Something went wrong... Error: ' + error.Message } }); }
