@@ -305,35 +305,11 @@ const buildRaids = (raidInfo, profileInfo) => {
   })
 }
 
-export const generateRanks = (profileInfo) => {
+export const generateRanks = (profileInfo, vb_size) => {
   return (
     <div className="inspectBoxRanks">
-      <div className="inspectBoxRanksInfamy">
-      <svg className="progressArc" viewBox="0 0 100 100">
-        <linearGradient id="infamyGradient" x1="0" y1="0" x2="0" y2="100%">
-          <stop offset="0%" stopColor="#49811f" />
-          <stop offset="100%" stopColor="#0d770d" />
-        </linearGradient>
-        <path id="grey" fill='none' d="M30,90 A40,40 0 1,1 80,90" />
-        <path id="lime" strokeDashoffset={ (198 - getRank(profileInfo, "infamy") * (198/15000)) } fill='none' d="M30,90 A40,40 0 1,1 80,90" />
-      </svg>
-      <div className="inspectBoxRanksImage" style={{ backgroundImage: 'url("/images/icons/pvp/infamy_icon.png")' }}></div>
-      <span className="inspectBoxRanksScore">{ getRank(profileInfo, "infamy") }</span>
-    </div>
-      <div className="inspectBoxRanksGlory">
-      <svg className="progressArc" viewBox="0 0 100 100">
-        <linearGradient id="gloryGradient" x1="0" y1="0" x2="0" y2="100%">
-          <stop offset="0%" stopColor="#D62121" />
-          <stop offset="100%" stopColor="#C72C2C" />
-        </linearGradient>
-        <path id="grey" fill='none' d="M30,90 A40,40 0 1,1 80,90" />
-        <path id="red" strokeDashoffset={ (198 - getRank(profileInfo, "glory") * (198/5500)) } fill='none' d="M30,90 A40,40 0 1,1 80,90" />
-      </svg>
-      <div className="inspectBoxRanksImage" style={{ backgroundImage: 'url("/images/icons/pvp/glory_icon.png")' }}></div>
-      <span className="inspectBoxRanksScore">{ getRank(profileInfo, "glory") }</span>
-    </div>
       <div className="inspectBoxRanksValor">
-        <svg className="progressArc" viewBox="0 0 100 100">
+        <svg className="progressArc" viewBox={ `0 0 ${ vb_size } ${ vb_size }` }>
           <linearGradient id="valorGradient" x1="0" y1="0" x2="0" y2="100%">
             <stop offset="0%" stopColor="#ff8800" />
             <stop offset="100%" stopColor="#ff3300" />
@@ -343,6 +319,30 @@ export const generateRanks = (profileInfo) => {
         </svg>
         <div className="inspectBoxRanksImage" style={{ backgroundImage: 'url("/images/icons/pvp/valor_icon.png")' }}></div>
         <span className="inspectBoxRanksScore">{ getRank(profileInfo, "valor") }</span>
+      </div>
+      <div className="inspectBoxRanksGlory">
+        <svg className="progressArc" viewBox={ `0 0 ${ vb_size } ${ vb_size }` }>
+          <linearGradient id="gloryGradient" x1="0" y1="0" x2="0" y2="100%">
+            <stop offset="0%" stopColor="#D62121" />
+            <stop offset="100%" stopColor="#C72C2C" />
+          </linearGradient>
+          <path id="grey" fill='none' d="M30,90 A40,40 0 1,1 80,90" />
+          <path id="red" strokeDashoffset={ (198 - getRank(profileInfo, "glory") * (198/5500)) } fill='none' d="M30,90 A40,40 0 1,1 80,90" />
+        </svg>
+        <div className="inspectBoxRanksImage" style={{ backgroundImage: 'url("/images/icons/pvp/glory_icon.png")' }}></div>
+        <span className="inspectBoxRanksScore">{ getRank(profileInfo, "glory") }</span>
+      </div>
+      <div className="inspectBoxRanksInfamy">
+        <svg className="progressArc" viewBox={ `0 0 ${ vb_size } ${ vb_size }` }>
+          <linearGradient id="infamyGradient" x1="0" y1="0" x2="0" y2="100%">
+            <stop offset="0%" stopColor="#49811f" />
+            <stop offset="100%" stopColor="#0d770d" />
+          </linearGradient>
+          <path id="grey" fill='none' d="M30,90 A40,40 0 1,1 80,90" />
+          <path id="lime" strokeDashoffset={ (198 - getRank(profileInfo, "infamy") * (198/15000)) } fill='none' d="M30,90 A40,40 0 1,1 80,90" />
+        </svg>
+        <div className="inspectBoxRanksImage" style={{ backgroundImage: 'url("/images/icons/pvp/infamy_icon.png")' }}></div>
+        <span className="inspectBoxRanksScore">{ getRank(profileInfo, "infamy") }</span>
       </div>
     </div>
   );

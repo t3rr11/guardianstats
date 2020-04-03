@@ -440,3 +440,133 @@
   cursor: pointer;
   background: rgba(255,255,255,0.1);
 }
+/* Profile Preview Start */
+.profile-card-container {
+  background-color: var(--DarkNavyBlue);
+  position: absolute;
+  text-align: center;
+  top: 235px;
+  right: -200px;
+  height: 450px;
+  width: 420px;
+  z-index: 100;
+  transform: translate(-50%, -50%);
+}
+.profile-card-banner-info {
+  border-bottom: 1px var(--LightNavyBlue) solid;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+  display: grid;
+  height: 85px;
+  width: 100%;
+}
+.profile-card-banner-info > #display-name {
+  position: absolute;
+  left: 90px;
+  top: 15px;
+}
+.profile-card-banner-info > #character-class {
+  position: absolute;
+  font-size: 14px;
+  left: 93px;
+  top: 40px;
+}
+.profile-card-banner-info > #season-rank {
+  display: flex;
+  position: absolute;
+  font-size: 16px;
+  top: 38px;
+  right: 5px;
+}
+.profile-card-banner-info > #season-rank > #season-rank-icon {
+  align-self: flex-start;
+  font-size: 10px;
+  margin-top: 1px;
+  margin-right: 2px;
+}
+.profile-card-banner-info > #character-light-level {
+  display: flex;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  color: #DDCB59;
+}
+.profile-card-banner-info > #character-light-level > #light-level-icon {
+  align-self: flex-start;
+  font-size: 18px;
+  margin-top: 2px;
+  color: #DDCB59;
+}
+.profile-card-info { border-bottom: 1px var(--LightNavyBlue) solid; }
+.profile-card-info > .inspectBoxRanks {
+  display: inline-block;
+  text-align: left;
+  float: left;
+  width: 270px !important;
+}
+.profile-card-info > .inspectBoxRanks > div {
+  position: relative;
+}
+.profile-card-info > .inspectBoxRanks > div > .progressArc {
+  height: 85px;
+  width: 85px;
+  margin: 0px;
+}
+.profile-card-info > .inspectBoxRanks > div > .inspectBoxRanksImage {
+  width: 85px;
+  top: 22px;
+  left: 5px;
+}
+.profile-card-info > .inspectBoxRanks > div > .inspectBoxRanksScore {
+  text-align: center;
+  position: absolute;
+  bottom: 14px;
+  left: 4px;
+  width: 85px;
+}
+.profile-card-info > .profile-card-sub-info {
+  display: inline-block;
+  height: 85px;
+  width: 150px;
+}
+.profile-card-sub-info {
+  width: 100%;
+  font-size: 14px;
+  margin-top: 10px;
+  text-align: left;
+}
+.profile-card-sub-info > #view-profile-btn {
+  padding: 5px 10px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 10px;
+  width: -moz-fit-content;
+  width: fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  margin: 5px auto;
+  font-size: 14px;
+}
+.profile-card-sub-info > #view-profile-btn:hover {
+  cursor: pointer;
+  background: rgba(255,255,255,0.1);
+}
+.profile-card-main-info {
+  display: grid;
+  grid-template-columns: 50% 50%;
+}
+.profile-card-main-info-left {
+  text-align: left;
+  padding: 5px;
+}
+.profile-card-main-info-right {
+  text-align: left;
+  padding: 5px;
+}
+.profile-card-info-title {
+  font-size: 16px;
+}
+.profile-card-info-content {
+  font-size: 12px;
+}
+/* Profile Preview End */

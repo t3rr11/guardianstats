@@ -1,35 +1,44 @@
 import React, { Component } from 'react';
+import ProfileCard from './ProfileCard';
+import PGCRViewer from './PGCRViewer';
 import SmallLoader from '../../modules/SmallLoader';
 import Loader from '../../modules/Loader';
 import Error from '../../modules/Error';
-import uuid from  'uuid';
 
 import { modeTypes, modes } from '../../scripts/ModeTypes';
 import * as checks from '../../scripts/Checks';
 import * as globals from '../../scripts/Globals';
 import * as bungie from '../../requests/BungieReq';
-import * as PGCRGeneration from './PGCRGeneration';
 import * as Misc from '../../Misc';
 
 var ActivityWatcher = null;
 var isMounted = true;
 
 export class Activities extends Component {
+
+  PGCRs = { }
+
   state = {
     status: { error: null, status: 'startUp', statusText: '' },
     isMounted: true,
+    profileCard: null,
     profile: null,
     activities: { },
     currentActivity : null,
     filter: "None",
-    filteredMode: "All",
-    ManifestActivities: null,
-    ManifestItems: null,
-    PGCRs: { }
+    filteredMode: "All"
   }
 
-  async componentDidMount() { document.title = "Activities - Guardianstats"; this.startUpChecks(); }
-  async componentWillUnmount() { isMounted = false; console.log(isMounted); this.stopActivityTimer('Activity'); }
+  async componentDidMount() {
+    //On page load we want to set the title and do startup checks.
+    document.title = "Activities - Guardianstats";
+    this.startUpChecks();
+  }
+  async componentWillUnmount() {
+    //On unmount we want to stop loading activities, if any are still loading.
+    isMounted = false;
+    this.stopActivityTimer('Activity');
+  }
   async startUpChecks() {
     this.setState({ status: { status: 'checkingManifest', statusText: 'Checking Manifest...' } });
     if(await checks.checkManifestMounted()) {
@@ -52,9 +61,11 @@ export class Activities extends Component {
       try {
         var membershipType;
         var displayName;
+
         //Check account exists
         this.setState({ status: { status: 'checkingAccountInfo', statusText: 'Checking if account exists...' } });
         const membershipInfo = await bungie.GetMembershipsById(membershipId);
+
         //Get membership type for membershipId.
         for(var i in membershipInfo.destinyMemberships) {
           if(membershipInfo.destinyMemberships[i].membershipId === membershipId) {
@@ -84,18 +95,24 @@ export class Activities extends Component {
       const activityData = await bungie.GetActivityHistory(membershipType, membershipId, characters[i], 200, 0);
       for(var j in activityData.activities) { allActivities.push(activityData.activities[j]); }
     }
+    //Sort activities by time.
     allActivities.sort(function(a, b) { return (new Date(b.period).getTime() - new Date(a.period).getTime()); });
+
+    //Trim the array to a max of 200 results.
     allActivities = allActivities.slice(0, 200);
+
+    //Store profile and activity information in the state.
     this.setState({
       status: { status: 'gettingPGCRs', 'statusText': 'Getting battle reports...' },
       profile: { membershipType, membershipId, characters, lastOnlineCharacterId: lastCharPlayed.characterId },
       activities: allActivities,
       currentActivity: parseInt(allActivities[0].activityDetails.instanceId)
     });
+
+    //Start grabbing the PGCRs for those activities.
     this.grabPGCRs(allActivities, null);
   }
   async grabPGCRs(activities, newActivitiesArray) {
-    var PGCRs = this.state.PGCRs;
     var count = 0;
     var amount = 30;
     var overflowCount = amount;
@@ -105,33 +122,23 @@ export class Activities extends Component {
         bungie.GetPGCR(activities[i].activityDetails.instanceId).then((pgcr) => { //eslint-disable-line no-loop-func
           count++;
           this.setState({ status: { status: 'gettingPGCRs', 'statusText': `Getting battle reports ${ count } / ${ amount }` } });
-          PGCRs[pgcr.activityDetails.instanceId] = pgcr;
-          if(count === amount) { this.finishedGrabbingPGCRs(PGCRs, newActivitiesArray); }
+          this.PGCRs[pgcr.activityDetails.instanceId] = pgcr;
+          if(count === amount) {
+            this.setState({ status: { status: 'ready', statusText: 'Finished loading...' } });
+            console.log("Finished Grabbing PGCRs...");
+          }
         }, this);
       }
       else {
         if(isMounted) {
           await bungie.GetPGCR(activities[i].activityDetails.instanceId).then((pgcr) => { //eslint-disable-line no-loop-func
             overflowCount++;
-            PGCRs[pgcr.activityDetails.instanceId] = pgcr;
+            this.PGCRs[pgcr.activityDetails.instanceId] = pgcr;
             if(this.state.currentActivity == pgcr.activityDetails.instanceId) { this.makeActiveDisplay(this.state.currentActivity); }
             if(overflowCount === activities.length) { console.log("Finished loading background activities..."); }
           }, this);
         }
       }
-    }
-  }
-  finishedGrabbingPGCRs(PGCRs, newActivitiesArray) {
-    if(newActivitiesArray !== null) {
-      this.setState({
-        status: { status: 'ready', statusText: 'Finished loading...' },
-        activities: newActivitiesArray,
-        currentActivity: parseInt(newActivitiesArray[0].activityDetails.instanceId),
-        PGCRs
-      });
-    }
-    else {
-      this.setState({ status: { status: 'ready', statusText: 'Finished loading...' }, PGCRs });
     }
   }
   addCompletedClass(activity) {
@@ -152,9 +159,8 @@ export class Activities extends Component {
     else { return `leftActivityContainer completed ${ isSelected }`; }
   }
   getClassFromPGCR(currentActivity, membershipId) {
-    const { PGCRs } = this.state;
-    if(PGCRs[currentActivity]) {
-      try { var playerInfo = PGCRs[currentActivity].entries.find(e => e.player.destinyUserInfo.membershipId === membershipId); return playerInfo.player.characterClass; }
+    if(this.PGCRs[currentActivity]) {
+      try { var playerInfo = this.PGCRs[currentActivity].entries.find(e => e.player.destinyUserInfo.membershipId === membershipId); return playerInfo.player.characterClass; }
       catch (err) { return "Failed"; }
     }
     else { return "Loading..."; }
@@ -200,7 +206,7 @@ export class Activities extends Component {
   render() {
     //Define Consts and Variables
     const { status, statusText } = this.state.status;
-    const { activities, currentActivity, PGCRs, filter, filteredMode } = this.state;
+    const { activities, currentActivity, filter, filteredMode, profileCard } = this.state;
 
     //Check for errors, show loader, or display content.
     if(status === 'error') { return <Error error={ statusText } /> }
@@ -235,7 +241,7 @@ export class Activities extends Component {
               if(Manifest.DestinyActivityDefinition[activity.activityDetails.directorActivityHash]) { if(Manifest.DestinyActivityDefinition[activity.activityDetails.directorActivityHash].displayProperties.hasIcon === true) { icon = `https://bungie.net${Manifest.DestinyActivityDefinition[activity.activityDetails.directorActivityHash].displayProperties.icon}`; } }
               var classProp = this.addCompletedClass(activity);
               return (
-                <div key={ uuid.v4() } className={ classProp } id={ activity.activityDetails.instanceId } onClick={ (() => this.makeActiveDisplay(activity.activityDetails.instanceId)) }>
+                <div key={ activity.activityDetails.instanceId } className={ classProp } id={ activity.activityDetails.instanceId } onClick={ (() => this.makeActiveDisplay(activity.activityDetails.instanceId)) }>
                   <img src={icon} alt="Icon" />
                   <div className='activityTitle'>
                     <span style={{ display: 'block' }}>
@@ -272,7 +278,7 @@ export class Activities extends Component {
             }, this)}
           </div>
           <div className="ActivityPGCR activityScrollbar" id="ActivityPGCR">
-            { PGCRGeneration.generate(PGCRs, activities, currentActivity, this.props) }
+            <PGCRViewer PGCRs={ this.PGCRs } activities={ activities } currentActivity={ this.state.currentActivity } />
           </div>
         </div>
       );

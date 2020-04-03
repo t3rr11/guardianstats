@@ -23,7 +23,7 @@ export function generate(profileInfo, isHacker, props) {
         <div className="inspectTimePlayed">Time Played: { Math.round(totalTime(profileInfo.profile.data.characterIds, profileInfo.characters.data) / 60) } Hours</div>
         <div className="inspectLastPlayed">Last Played: { Misc.convertTimeToDate(profileInfo.profile.data.dateLastPlayed) } </div>
       </div>
-      { UserStatistics.generateRanks(profileInfo) }
+      { UserStatistics.generateRanks(profileInfo, 100) }
       <div className="inspectViewActivitiesBtn" onClick={ (() => props.foundUser(profileInfo.profile.data.userInfo.membershipId)) }>View Recent Activity</div>
     </div>
   );

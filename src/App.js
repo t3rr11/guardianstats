@@ -20,6 +20,7 @@ import ClanRankings from './components/pages/clans/ClanRankings';
 import Dashboard from './components/pages/marvin/Dashboard';
 import Status from './components/pages/marvin/MarvinStatus';
 import Profile from './components/pages/profile/Profile';
+import ProfileCard from './components/pages/profile/ProfileCard';
 import Activities from './components/pages/profile/Activities';
 
 //Functions
@@ -306,6 +307,7 @@ class App extends React.Component {
                       <Route path="/status" render={ props => (<Status />) } />
                       <Route path="/clans" render={ props => (<Clans {...props} />) } />
                       <Route path="/clanrankings" render={ props => (<ClanRankings {...props} pageType={ props.location.pathname.replace('/clanrankings/', '') } />) } />
+                      <Route path="/cardTest" render={ props => (<ProfileCard {...props} data={{ characterId: "2305843009304566372", membershipId: "4611686018471334813", membershipType: "3" }} />) } />
                       <Route path="/joinmarvin" render={ props => (window.location.href = "https://discord.gg/jbEbYej") } />
                       <Route path="*" component={ NotFound } />
                     </Switch>

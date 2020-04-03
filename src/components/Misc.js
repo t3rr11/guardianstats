@@ -148,3 +148,8 @@ export function getPlatformType(name) {
   else if(name === "BNET"){ return 4 }
   else if(name === "STADIA"){ return 5 }
 }
+export function getClassName(classType) {
+  if(classType === 0) { return "Titan" }
+  else if(classType === 1) { return "Hunter" }
+  else if(classType === 2) { return "Warlock" }
+}
