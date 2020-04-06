@@ -20,7 +20,6 @@ export class PGCRViewer extends Component {
     status: { error: null, status: 'startUp', statusText: '' },
     currentPGCR: null,
     currentActivity: null,
-    profileCard: null,
   }
 
   async componentDidMount() {
@@ -57,7 +56,6 @@ export class PGCRViewer extends Component {
         return (
           <div>
             { setupPGCR(ManifestActivities, ManifestItems, currentPGCR, currentActivity, this) }
-            { profileCard !== null ? (<ProfileCard data={ profileCard } />) : null }
           </div>
         );
       }
@@ -272,8 +270,13 @@ const generateExtendedData = (ManifestItems, currentPGCR, currentActivity, modeT
               <div key={ weapon.referenceId } className="pgcrItemContainer">
                 <img alt={ ManifestItems[weapon.referenceId].displayProperties.name } src={ 'https://bungie.net' + ManifestItems[weapon.referenceId].displayProperties.icon } className="pgcrItemIcon" />x{ weapon.values.uniqueWeaponKills.basic.displayValue }
                 <div className="pgcrItemInfo">
-                  <div className="title">{ ManifestItems[weapon.referenceId].displayProperties.name }</div>
-                  <div className="description">{ ManifestItems[weapon.referenceId].displayProperties.description }</div>
+                  <div id="title">{ ManifestItems[weapon.referenceId].displayProperties.name }</div>
+                  <div id="description">{ ManifestItems[weapon.referenceId].displayProperties.description }</div>
+                  <div id="extraInfo">
+                    <div>Kills: { weapon.values.uniqueWeaponKills.basic.displayValue }</div>
+                    <div>Headshots: { weapon.values.uniqueWeaponPrecisionKills.basic.displayValue }</div>
+                    <div>Accuracy: { weapon.values.uniqueWeaponKillsPrecisionKills.basic.displayValue }</div>
+                  </div>
                 </div>
               </div>
             )) :
@@ -357,6 +360,6 @@ function adjustEntriesBoxSizing(activity) {
   if(activity.entries.length > 6) { const heightOf = activity.entries.length * 25 + 48; return { height: heightOf }; }
   else { return { height: '250px' }; }
 }
-function updateProfileCard(parent, data, modeType) { parent.setState({ profileCard: data }); }
+function updateProfileCard(parent, data, modeType) { parent.props.profileCard(data); }
 
 export default PGCRViewer;

@@ -1,4 +1,4 @@
-@import "https://fonts.googleapis.com/css?family=Nunito|Crimson+Text|Work+Sans:400,700";
+@import "https://fonts.googleapis.com/css?family=Source+Sans+Pro|Baloo+Thambi+2|Nunito|Work+Sans|Open+Sans";
 @import url('marvin.css');
 @import url('clans.css');
 @import url('loader.css');
@@ -28,7 +28,7 @@ body {
   height: 100%;
   margin:0px;
   padding:0px;
-  font-family: 'Nunito', sans-serif, DestinySymbols;
+  font-family: 'Baloo Thambi 2', sans-serif, DestinySymbols;
   background-color: var(--DarkNavyBlue);
   background-attachment: fixed;
   color: white;
@@ -170,7 +170,7 @@ body {
   margin-left: 2px;
   border-radius: 10px 0px 0px 10px;
   height: 28px;
-  line-height: 28px;
+  line-height: 26px;
   background-position: center;
   background-size: 20px 20px;
   background-repeat: no-repeat;

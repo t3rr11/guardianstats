@@ -45,17 +45,20 @@
   background-color: var(--LightNavyBlue);
   cursor:pointer;
 }
-.activityTitle > span {
+.leftActivityContainer > .activityTitle { height: 45px; }
+.leftActivityContainer > .activityTitle > span {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   width: 200px;
+  padding-top: 2px;
 }
-.activityTitle > p {
+.leftActivityContainer > .activityTitle > p {
   color: darkgray;
   font-size: 12px;
 }
 .activityKillsDeaths > div {
+  padding-top: 1px;
   font-size: 12px;
   margin: 2px;
 }
@@ -63,6 +66,7 @@
   color: darkgray;
 }
 .activityKdRatios > div {
+  padding-top: 1px;
   font-size: 12px;
   margin: 2px;
 }
@@ -75,6 +79,7 @@
   background-color: var(--DarkNavyBlue);
 }
 .activityTimePlayed {
+  padding-top: 2px;
   line-height: 20px;
   font-size: 12px;
 }
@@ -390,7 +395,7 @@
   width: 250px;
   z-index: 5;
 }
-.pgcrItemInfo > .title {
+.pgcrItemInfo > #title {
   border-bottom: 1px solid var(--NavyBlue);
   font-size: 14px;
   line-height: 25px;
@@ -398,7 +403,13 @@
   font-weight: bold;
   font-family: sans-serif;
 }
-.pgcrItemInfo > .description {
+.pgcrItemInfo > #description {
+  padding: 5px;
+  font-size: 12px;
+  color: #ccc;
+  border-bottom: 1px solid var(--NavyBlue);
+}
+.pgcrItemInfo > #extraInfo {
   padding: 5px;
   font-size: 12px;
   color: #ccc;

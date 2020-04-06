@@ -25,6 +25,7 @@ export class Activities extends Component {
     profile: null,
     activities: { },
     currentActivity : null,
+    profileCard: null,
     filter: "None",
     filteredMode: "All"
   }
@@ -95,6 +96,7 @@ export class Activities extends Component {
       const activityData = await bungie.GetActivityHistory(membershipType, membershipId, characters[i], 200, 0);
       for(var j in activityData.activities) { allActivities.push(activityData.activities[j]); }
     }
+
     //Sort activities by time.
     allActivities.sort(function(a, b) { return (new Date(b.period).getTime() - new Date(a.period).getTime()); });
 
@@ -124,7 +126,10 @@ export class Activities extends Component {
           this.setState({ status: { status: 'gettingPGCRs', 'statusText': `Getting battle reports ${ count } / ${ amount }` } });
           this.PGCRs[pgcr.activityDetails.instanceId] = pgcr;
           if(count === amount) {
-            this.setState({ status: { status: 'ready', statusText: 'Finished loading...' } });
+            this.setState({
+              status: { status: 'ready', statusText: 'Finished loading...' },
+              currentActivity: parseInt(activities[0].activityDetails.instanceId)
+            });
             console.log("Finished Grabbing PGCRs...");
           }
         }, this);
@@ -176,6 +181,8 @@ export class Activities extends Component {
   filterSpecificMode = (event) => {
     this.setState({ filteredMode: event.target.value });
   }
+  setProfileCard = (data) => { this.setState({ profileCard: data }); }
+  closeProfileCard = () => { this.setState({ profileCard: null }); }
 
   //Timers
   startActivityTimer() { ActivityWatcher = setInterval(this.checkActivityUpdates, 30000); console.log('Activity Watcher Started.'); }
@@ -187,13 +194,12 @@ export class Activities extends Component {
       const recentActivityData = (await bungie.GetActivityHistory(profile.membershipType, profile.membershipId, profile.lastOnlineCharacterId, 15, 0)).activities;
       var newActivities = [];
       var updatesFound = 0;
-      recentActivityData.map(function(activity) {
+      recentActivityData.map((activity) => {
         if(!previousActivities.find(ad => ad.period === activity.period)) {
           newActivities.push(activity);
           updatesFound++;
         }
-        return true;
-      }, this);
+      });
       if(updatesFound > 0) {
         var newActivitiesArray = previousActivities;
         for(var i in newActivities) { newActivitiesArray.unshift(newActivities[i]) }
@@ -278,7 +284,8 @@ export class Activities extends Component {
             }, this)}
           </div>
           <div className="ActivityPGCR activityScrollbar" id="ActivityPGCR">
-            <PGCRViewer PGCRs={ this.PGCRs } activities={ activities } currentActivity={ this.state.currentActivity } />
+            <PGCRViewer PGCRs={ this.PGCRs } activities={ activities } currentActivity={ this.state.currentActivity } profileCard={ this.setProfileCard } />
+            { profileCard !== null ? (<ProfileCard data={ profileCard } closeProfileCard={ this.closeProfileCard } />) : null }
           </div>
         </div>
       );
