@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ProfileCard from './ProfileCard';
+import ActivityCard from './ActivityCard';
 import SmallLoader from '../../modules/SmallLoader';
 import HistoricalStats from './HistoricalStats.json';
 import Loader from '../../modules/Loader';
@@ -159,13 +160,25 @@ const setupPGCR = (ManifestActivities, ManifestItems, currentPGCR, currentActivi
       )
     }
     else {
+      const allPlayers = currentPGCR.entries.sort(function(a, b){return a.score - b.score});
       return (
         <div className="pgcrContainer">
           <div className="pgcrTopContainer" id={ `pgcrTopContainer_${ currentPGCR.activityDetails.instanceId }` } style={{ height: "400px" }} >
             <div className="pgcrBigImage" style={{ backgroundImage: `url(https://bungie.net${ ManifestActivities[currentPGCR.activityDetails.referenceId].pgcrImage })` }}></div>
           </div>
           <div className="pgcrBottomContainer">
-            { generateExtendedData(ManifestItems, currentPGCR, currentActivity, 'other', parent) }
+            { allPlayers.map((playerData) => {
+              return (
+                <ActivityCard
+                  characterId={ playerData.characterId }
+                  membershipId={ playerData.player.destinyUserInfo.membershipId }
+                  membershipType={ playerData.player.destinyUserInfo.membershipType }
+                  playerData={ playerData }
+                  currentPGCR={ currentPGCR }
+                  currentActivity={ currentActivity }
+                />
+              )
+            }) }
           </div>
         </div>
       )

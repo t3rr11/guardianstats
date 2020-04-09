@@ -46,8 +46,7 @@ export class ProfileCard extends Component {
     var characterId = this.state.profileCard.characterId;
     var membershipId = this.state.profileCard.membershipId;
     var membershipType = this.state.profileCard.membershipType;
-    var tags = { isDonor: false, isPatreon: false, isDeveloper: false }
-    var profileInfo, historicStats, metrics;
+    var profileInfo, historicStats, metrics, statusTags;
     var allActivities = [];
     if(previousProfileCards.find(e => e.membershipId === membershipId)) {
       //Found account, load old data to save requests and time.
@@ -72,16 +71,8 @@ export class ProfileCard extends Component {
           //Variables
           profileInfo = promiseData[0];
           historicStats = promiseData[1];
+          if(promiseData[2].data) { statusTags = Misc.convertStatusTags(promiseData[2].data[0]); } else { statusTags = Misc.convertStatusTags(); }
           var characterIds = profileInfo.profile.data.characterIds;
-
-          //Check for tags
-          if(promiseData[2].data) {
-            tags = {
-              isDonor: promiseData[2].data[0].donor === 1 ? true : false,
-              isPatreon: promiseData[2].data[0].patreon === 1 ? true : false,
-              isDeveloper: promiseData[2].data[0].developer === 1 ? true : false
-            }
-          }
 
           //Loop through characters and get recent activities.
           if(characterIds.length === 1) {
@@ -127,7 +118,7 @@ export class ProfileCard extends Component {
             this.setState({
               status: {
                 status: 'ready', statusText: 'Finished the inspection! (You shouldn\'t see this unless something went wrong, Please refresh)' },
-                profileCard: { characterId, membershipId, membershipType, profileInfo, historicStats, tags, isHacker }
+                profileCard: { characterId, membershipId, membershipType, profileInfo, historicStats, statusTags, isHacker }
             });
           }
           else { this.setState({ status: { status: 'private', statusText: 'This user has their account privated. I wonder what they are hiding...' } }); }
@@ -143,7 +134,7 @@ export class ProfileCard extends Component {
   render() {
     const { status, statusText } = this.state.status;
     if(status === "ready") {
-      const { characterId, membershipId, membershipType, profileInfo, historicStats, tags, isHacker } = this.state.profileCard;
+      const { characterId, membershipId, membershipType, profileInfo, historicStats, statusTags, isHacker } = this.state.profileCard;
       const characterData = profileInfo.characters.data[characterId];
       const trialsWins = profileInfo.characterProgressions.data[characterId].progressions[1062449239].level;
       const trialsLoses = profileInfo.characterProgressions.data[characterId].progressions[2093709363].level;
@@ -165,10 +156,13 @@ export class ProfileCard extends Component {
             <div key={ `${ characterId }_emblem` } className="profile-card-banner-info" style={{ backgroundImage: `url("https://bungie.net${ characterData.emblemBackgroundPath }")` }}>
               <div id="display-name">
                 <h4>{ profileInfo.profile.data.userInfo.displayName }</h4>
-                <div id="status-tags">
-                  { tags.isDeveloper ? (<div id="developer">Developer</div>) : null }
-                  { tags.isPatreon ? (<div id="patreon">Patreon</div>) : null }
-                  { tags.isDonor ? (<div id="donor">Donor</div>) : null }
+                <div className="status-tags">
+                  {
+                    Object.keys(statusTags).map((statusTag) => {
+                      if(statusTags[statusTag].hasLink) { return ( statusTags[statusTag].hasTag ? (<div id={ statusTags[statusTag].id }><a href={ statusTags[statusTag].link } target="_blank">{ statusTags[statusTag].name }</a></div>) : null ) }
+                      else { return ( statusTags[statusTag].hasTag ? (<div id={ statusTags[statusTag].id }>{ statusTags[statusTag].name }</div>) : null ) }
+                    })
+                  }
                 </div>
               </div>
               <span id="character-class">{ Misc.getClassName(characterData.classType) }</span>

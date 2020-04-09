@@ -153,3 +153,23 @@ export function getClassName(classType) {
   else if(classType === 1) { return "Hunter" }
   else if(classType === 2) { return "Warlock" }
 }
+export function convertStatusTags(data) {
+  if(data) {
+    return {
+      isDonor: { "name": "Donor", "id": "donar", "hasTag": data.donor === 1 ? true : false, "hasLink": false },
+      isPatreon: { "name": "Patreon", "id": "patreon", "hasTag": data.patreon === 1 ? true : false, "hasLink": false },
+      isDeveloper: { "name": "Developer", "id": "developer", "hasTag": data.developer === 1 ? true : false, "hasLink": false },
+      isDestinySets: { "name": "Destiny Sets Dev", "id": "customDev", "hasTag": data.destinysets === 1 ? true : false, "hasLink": true, "link": "https://destinysets.com" },
+      isBraytech: { "name": "Braytech Dev", "id": "customDev", "hasTag": data.braytech === 1 ? true : false, "hasLink": true, "link": "https://braytech.org" }
+    }
+  }
+  else {
+    return {
+      isDonor: { "name": "Donor", "id": "donar", "hasTag": false, "hasLink": false },
+      isPatreon: { "name": "Patreon", "id": "patreon", "hasTag": false, "hasLink": false },
+      isDeveloper: { "name": "Developer", "id": "developer", "hasTag": false, "hasLink": false },
+      isDestinySets: { "name": "Destiny Sets Dev", "id": "customDev", "hasTag": false, "hasLink": true, "link": "https://destinysets.com" },
+      isBraytech: { "name": "Braytech Dev", "id": "customDev", "hasTag": false, "hasLink": true, "link": "https://braytech.org" }
+    }
+  }
+}
