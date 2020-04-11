@@ -18,7 +18,7 @@ import Marvin from './components/pages/marvin/Marvin';
 import Clans from './components/pages/clans/Clans';
 import ClanRankings from './components/pages/clans/ClanRankings';
 import Dashboard from './components/pages/marvin/Dashboard';
-import Status from './components/pages/marvin/MarvinStatus';
+import Status from './components/pages/marvin/MarvinStatusNew';
 import Profile from './components/pages/profile/Profile';
 import ProfileCard from './components/pages/profile/ProfileCard';
 import Activities from './components/pages/profile/Activities';
