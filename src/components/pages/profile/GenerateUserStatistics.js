@@ -69,13 +69,13 @@ const generatePvPStats = (profileInfo, historicStats) => {
           <span>KA/D: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ parseFloat(allPvP.efficiency.basic.displayValue).toFixed(2) }</span></span>
         </div>
         <div className="inspectBoxContentStatsDiv">
-          <span>Kills: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Misc.numberWithCommas(allPvP.kills.basic.displayValue) }</span></span>
-          <span>Assists: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Misc.numberWithCommas(allPvP.assists.basic.displayValue) }</span></span>
-          <span>Deaths: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Misc.numberWithCommas(allPvP.deaths.basic.displayValue) }</span></span>
+          <span>Kills: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Misc.AddCommas(allPvP.kills.basic.displayValue) }</span></span>
+          <span>Assists: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Misc.AddCommas(allPvP.assists.basic.displayValue) }</span></span>
+          <span>Deaths: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Misc.AddCommas(allPvP.deaths.basic.displayValue) }</span></span>
         </div>
         <div className="inspectBoxContentStatsDiv">
-          <span>Matches: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Misc.numberWithCommas(activitiesEntered) }</span></span>
-          <span>Wins: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Misc.numberWithCommas(activitiesWon) }</span></span>
+          <span>Matches: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Misc.AddCommas(activitiesEntered) }</span></span>
+          <span>Wins: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Misc.AddCommas(activitiesWon) }</span></span>
           <span>Win Rate: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Math.round((activitiesWon / activitiesEntered) * 100) }%</span></span>
         </div>
       </div>
@@ -96,13 +96,13 @@ const generatePvEStats = (profileInfo, historicStats) => {
           <span>KA/D: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ parseFloat(allPvE.efficiency.basic.displayValue).toFixed(2) }</span></span>
         </div>
         <div className="inspectBoxContentStatsDiv">
-          <span>Kills: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Misc.numberWithCommas(allPvE.kills.basic.displayValue) }</span></span>
-          <span>Assists: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Misc.numberWithCommas(allPvE.assists.basic.displayValue) }</span></span>
-          <span>Deaths: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Misc.numberWithCommas(allPvE.deaths.basic.displayValue) }</span></span>
+          <span>Kills: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Misc.AddCommas(allPvE.kills.basic.displayValue) }</span></span>
+          <span>Assists: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Misc.AddCommas(allPvE.assists.basic.displayValue) }</span></span>
+          <span>Deaths: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Misc.AddCommas(allPvE.deaths.basic.displayValue) }</span></span>
         </div>
         <div className="inspectBoxContentStatsDiv">
-          <span>Activities: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Misc.numberWithCommas(allPvE.activitiesEntered.basic.displayValue) }</span></span>
-          <span>Misadventures: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Misc.numberWithCommas(allPvE.suicides.basic.displayValue) }</span></span>
+          <span>Activities: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Misc.AddCommas(allPvE.activitiesEntered.basic.displayValue) }</span></span>
+          <span>Misadventures: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Misc.AddCommas(allPvE.suicides.basic.displayValue) }</span></span>
           <span>Time Spent: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ allPvE.secondsPlayed.basic.displayValue }</span></span>
         </div>
       </div>
@@ -137,13 +137,13 @@ const generateGambitStats = (profileInfo, gambitStats) => {
           <span>KA/D: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ kad.toFixed(2) }</span></span>
         </div>
         <div className="inspectBoxContentStatsDiv">
-          <span>Kills: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Misc.numberWithCommas(kills) }</span></span>
-          <span>Assists: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Misc.numberWithCommas(assists) }</span></span>
-          <span>Deaths: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Misc.numberWithCommas(deaths) }</span></span>
+          <span>Kills: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Misc.AddCommas(kills) }</span></span>
+          <span>Assists: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Misc.AddCommas(assists) }</span></span>
+          <span>Deaths: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Misc.AddCommas(deaths) }</span></span>
         </div>
         <div className="inspectBoxContentStatsDiv">
-          <span>Matches: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Misc.numberWithCommas(matches) }</span></span>
-          <span>Wins: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Misc.numberWithCommas(wins) }</span></span>
+          <span>Matches: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Misc.AddCommas(matches) }</span></span>
+          <span>Wins: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Misc.AddCommas(wins) }</span></span>
           <span>Win Rate: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Math.round((wins / matches) * 100) }%</span></span>
         </div>
       </div>
@@ -180,13 +180,13 @@ const generateRaidsStats = (profileInfo, raidStats) => {
           <span>KA/D: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ kad.toFixed(2) }</span></span>
         </div>
         <div className="inspectBoxContentStatsDiv">
-          <span>Kills: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Misc.numberWithCommas(kills) }</span></span>
-          <span>Assists: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Misc.numberWithCommas(assists) }</span></span>
-          <span>Deaths: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Misc.numberWithCommas(deaths) }</span></span>
+          <span>Kills: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Misc.AddCommas(kills) }</span></span>
+          <span>Assists: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Misc.AddCommas(assists) }</span></span>
+          <span>Deaths: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Misc.AddCommas(deaths) }</span></span>
         </div>
         <div className="inspectBoxContentStatsDiv">
-          <span>Activities: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Misc.numberWithCommas(activities) }</span></span>
-          <span>Misadventures: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Misc.numberWithCommas(misadventures) }</span></span>
+          <span>Activities: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Misc.AddCommas(activities) }</span></span>
+          <span>Misadventures: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Misc.AddCommas(misadventures) }</span></span>
           <span>Time Spent: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ timeSpent }</span></span>
         </div>
       </div>
@@ -226,25 +226,25 @@ const generateTrialsStats = (profileInfo, trialsStats) => {
       </div>
       <div className="inspectBoxContentStats threeColumn">
         <div className="inspectBoxContentStatsDiv threeColumn">
-          <span>Kills: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Misc.numberWithCommas(kills) }</span></span>
-          <span>Assists: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Misc.numberWithCommas(assists) }</span></span>
-          <span>Deaths: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Misc.numberWithCommas(deaths) }</span></span>
+          <span>Kills: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Misc.AddCommas(kills) }</span></span>
+          <span>Assists: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Misc.AddCommas(assists) }</span></span>
+          <span>Deaths: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Misc.AddCommas(deaths) }</span></span>
           <span>KD: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ kd.toFixed(2) }</span></span>
           <span>KDA: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ kda.toFixed(2) }</span></span>
           <span>KA/D: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ kad.toFixed(2) }</span></span>
         </div>
         <div className="inspectBoxContentStatsDiv threeColumn">
-          <span>Overall Flawless: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Misc.numberWithCommas(overall_flawless) }</span></span>
-          <span>Seasonal Flawless: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Misc.numberWithCommas(seasonal_flawless) }</span></span>
-          <span>Weekly Flawless: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Misc.numberWithCommas(weekly_flawless) }</span></span>
-          <span>Overall Carries: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Misc.numberWithCommas(overall_carries) }</span></span>
-          <span>Seasonal Carries: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Misc.numberWithCommas(seasonal_carries) }</span></span>
-          <span>Weekly Carries: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Misc.numberWithCommas(weekly_carries) }</span></span>
+          <span>Overall Flawless: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Misc.AddCommas(overall_flawless) }</span></span>
+          <span>Seasonal Flawless: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Misc.AddCommas(seasonal_flawless) }</span></span>
+          <span>Weekly Flawless: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Misc.AddCommas(weekly_flawless) }</span></span>
+          <span>Overall Carries: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Misc.AddCommas(overall_carries) }</span></span>
+          <span>Seasonal Carries: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Misc.AddCommas(seasonal_carries) }</span></span>
+          <span>Weekly Carries: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Misc.AddCommas(weekly_carries) }</span></span>
         </div>
         <div className="inspectBoxContentStatsDiv threeColumn">
-          <span>Matches: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Misc.numberWithCommas(matches) }</span></span>
-          <span>Wins: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Misc.numberWithCommas(wins) }</span></span>
-          <span>Loses: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Misc.numberWithCommas(loses) }</span></span>
+          <span>Matches: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Misc.AddCommas(matches) }</span></span>
+          <span>Wins: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Misc.AddCommas(wins) }</span></span>
+          <span>Loses: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Misc.AddCommas(loses) }</span></span>
           <span>Win Rate: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ Math.round((wins / matches) * 100) }%</span></span>
           <span title="Combat Rating (I can only assume this is how bungie match make for skill based modes)">Combat Rating: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ combatRating.toFixed(2) }</span></span>
           <span>Highest Light: <span style={{ color: '#ccc', float: 'right', marginRight: '10px' }}>{ highestLight }</span></span>

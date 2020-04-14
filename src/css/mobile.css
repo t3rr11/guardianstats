@@ -1,3 +1,20 @@
+@media only screen and (max-width: 1850px) {
+  /* Start Marvin Status */
+  .status-container { width: 100% !important; }
+  .status-content { margin: auto auto !important; }
+  .overview-container {
+    grid-template-columns: auto auto !important;
+    padding: 60px 0px 0px 0px !important;
+  }
+  .overview-graphs {
+    margin-top: 10px !important;
+    grid-template-columns: auto auto auto !important;
+  }
+  .graph-containers {
+    grid-template-columns: auto !important;
+  }
+  /* End Marvin Status */
+}
 @media only screen and (max-width: 1550px) {
   .inspectBoxStatistics {
     grid-template-columns: 50% 50% !important;
@@ -18,11 +35,27 @@
   .inspectTitleNotObtained { width: 50px !important; height: 50px !important; }
   .biggerBox { grid-column: span 2; }
 
-  /* Marvin Status */
-  .graphContainers {
-    grid-template-rows: unset !important;
+  /* Start Marvin Status */
+  .status-container { width: 100% !important; }
+  .status-content { margin: auto !important; }
+  .overview-container {
+    width: auto !important;
+    margin: auto !important;
+    grid-template-columns: auto !important;
+    padding: 60px 0px 0px 0px !important;
+  }
+  .server-status-containers { grid-row: 1 !important; display: grid !important; grid-template-columns: auto auto !important; }
+  .server-status-containers > div { width: 90% !important; margin: auto !important; }
+  .overview-graphs {
+    margin-top: 10px !important;
+    grid-row: 2 !important;
     grid-template-columns: auto auto auto !important;
   }
+  .graph-containers {
+    grid-template-columns: auto !important;
+  }
+  /* End Marvin Status */
+
   .clan-rankings {
     grid-template-rows: unset !important;
     grid-template-columns: auto auto auto !important;
@@ -35,15 +68,50 @@
   }
   .biggerBox { grid-column: 1; }
 
-  /* Marvin Status */
-  .graphContainers {
-    grid-template-rows: unset !important;
-    grid-template-columns: auto auto !important;
+  /* Start Marvin Status */
+  .status-container { width: 100% !important; }
+  .status-content { margin: auto !important; }
+  .overview-container {
+    width: auto !important;
+    margin: auto !important;
+    grid-template-columns: auto !important;
+    padding: 60px 0px 0px 0px !important;
   }
+  .server-status-containers { grid-row: 1 !important; display: grid !important; grid-template-columns: auto auto !important; }
+  .server-status-containers > div { width: 90% !important; margin: auto !important; }
+  .overview-graphs {
+    margin-top: 10px !important;
+    grid-row: 2 !important;
+    grid-template-columns: auto auto auto !important;
+  }
+  .graph-containers {
+    grid-template-columns: auto !important;
+  }
+  /* End Marvin Status */
+
   .clan-rankings {
     grid-template-rows: unset !important;
     grid-template-columns: auto auto !important;
   }
+}
+@media only screen and (max-width: 1200px) {
+  /* Start Marvin Status */
+  .status-container { grid-template-columns: 350px !important; display: block !important; width: 100% !important; }
+  .status-menu { display: none !important; }
+  .status-content { margin: auto !important; }
+  .overview-container {
+    width: 700px !important;
+    margin: auto !important;
+    grid-template-columns: auto !important;
+    padding: 60px 0px 0px 0px !important;
+  }
+  .server-status-containers { grid-row: 1 !important; }
+  .overview-graphs {
+    margin-top: 10px !important;
+    grid-row: 2 !important;
+    grid-template-columns: auto auto !important;
+  }
+  /* End Marvin Status */
 }
 @media only screen and (max-width: 800px) {
   /* Loader start */
@@ -136,22 +204,26 @@
     .detailsContainer { background: var(--BlueGradient); height: max-content; }
   /* Others end */
 
-  /* Marvin Status */
-  .graphSelect {
-    display: inline-block;
-    padding-top: 45px;
+  /* Start Marvin Status */
+  .status-container { grid-template-columns: 350px !important; display: block !important; width: 100% !important; }
+  .status-menu { display: none !important; }
+  .status-content { margin: auto !important; }
+  .overview-container {
+    width: 350px !important;
+    margin: auto !important;
+    grid-template-columns: auto !important;
+    padding: 60px 0px 0px 0px !important;
   }
-  .graphSelect > div {
-    display: inline-block;
-    padding-right: 10px;
-  }
-  .graphContainers {
-    padding-top: 10px;
-    grid-template-rows: unset !important;
+  .server-status-containers { grid-row: 1 !important; display: block !important; }
+  .server-status-containers > div { margin: 5px auto auto auto !important; }
+  .overview-graphs {
+    margin-top: 10px !important;
+    grid-row: 2 !important;
     grid-template-columns: auto !important;
   }
+  /* End Marvin Status */
   .clans-content {
-    padding-top: 60px;
+    padding-top: 60px !important;
   }
   .clan-rankings {
     grid-template-rows: unset !important;

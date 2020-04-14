@@ -181,14 +181,14 @@ export class ProfileCard extends Component {
                 <div className="profile-card-main-info-crucible-left">
                   <div className="profile-card-info-title">Crucible Overall</div>
                   <div className="profile-card-info-content">
-                    <div>Kills: { Misc.numberWithCommas(historicStats.mergedAllCharacters.results.allPvP.allTime.kills.basic.displayValue) }</div>
+                    <div>Kills: { Misc.AddCommas(historicStats.mergedAllCharacters.results.allPvP.allTime.kills.basic.displayValue) }</div>
                     <div>KD: { historicStats.mergedAllCharacters.results.allPvP.allTime.killsDeathsRatio.basic.displayValue }</div>
                   </div>
                 </div>
                 <div className="profile-card-main-info-crucible-right">
                   <div className="profile-card-info-title">Crucible Seasonal</div>
                   <div className="profile-card-info-content">
-                    <div>Kills: { Misc.numberWithCommas(profileInfo.metrics.data.metrics[2935221077].objectiveProgress.progress) }</div>
+                    <div>Kills: { Misc.AddCommas(profileInfo.metrics.data.metrics[2935221077].objectiveProgress.progress) }</div>
                     <div>KD: { profileInfo.metrics.data.metrics[871184140].objectiveProgress.progress / 100 }</div>
                   </div>
                 </div>
@@ -197,25 +197,25 @@ export class ProfileCard extends Component {
                 <div className="profile-card-main-info-trials-left">
                   <div className="profile-card-info-title">Trials Overall</div>
                   <div className="profile-card-info-content">
-                    <div>Kills: { Misc.numberWithCommas(profileInfo.metrics.data.metrics[2082314848].objectiveProgress.progress) }</div>
-                    <div>Wins: { Misc.numberWithCommas(profileInfo.metrics.data.metrics[1365664208].objectiveProgress.progress) }</div>
-                    <div>Flawless: { Misc.numberWithCommas(profileInfo.metrics.data.metrics[1765255052].objectiveProgress.progress) }</div>
+                    <div>Kills: { Misc.AddCommas(profileInfo.metrics.data.metrics[2082314848].objectiveProgress.progress) }</div>
+                    <div>Wins: { Misc.AddCommas(profileInfo.metrics.data.metrics[1365664208].objectiveProgress.progress) }</div>
+                    <div>Flawless: { Misc.AddCommas(profileInfo.metrics.data.metrics[1765255052].objectiveProgress.progress) }</div>
                   </div>
                 </div>
                 <div className="profile-card-main-info-trials-mid">
                   <div className="profile-card-info-title">Trials Seasonal</div>
                   <div className="profile-card-info-content">
-                    <div>Kills: { Misc.numberWithCommas(profileInfo.metrics.data.metrics[3481560625].objectiveProgress.progress) }</div>
-                    <div>Wins: { Misc.numberWithCommas(profileInfo.metrics.data.metrics[2367472811].objectiveProgress.progress) }</div>
-                    <div>Flawless: { Misc.numberWithCommas(profileInfo.metrics.data.metrics[1114483243].objectiveProgress.progress) }</div>
+                    <div>Kills: { Misc.AddCommas(profileInfo.metrics.data.metrics[3481560625].objectiveProgress.progress) }</div>
+                    <div>Wins: { Misc.AddCommas(profileInfo.metrics.data.metrics[2367472811].objectiveProgress.progress) }</div>
+                    <div>Flawless: { Misc.AddCommas(profileInfo.metrics.data.metrics[1114483243].objectiveProgress.progress) }</div>
                   </div>
                 </div>
                 <div className="profile-card-main-info-trials-right">
                   <div className="profile-card-info-title">Trials Weekly</div>
                   <div className="profile-card-info-content">
-                    <div>Kills: { Misc.numberWithCommas(profileInfo.metrics.data.metrics[2091173752].objectiveProgress.progress) }</div>
-                    <div>Wins: { Misc.numberWithCommas(profileInfo.metrics.data.metrics[3046315288].objectiveProgress.progress) }</div>
-                    <div>Flawless: { Misc.numberWithCommas(profileInfo.metrics.data.metrics[122451876].objectiveProgress.progress) }</div>
+                    <div>Kills: { Misc.AddCommas(profileInfo.metrics.data.metrics[2091173752].objectiveProgress.progress) }</div>
+                    <div>Wins: { Misc.AddCommas(profileInfo.metrics.data.metrics[3046315288].objectiveProgress.progress) }</div>
+                    <div>Flawless: { Misc.AddCommas(profileInfo.metrics.data.metrics[122451876].objectiveProgress.progress) }</div>
                   </div>
                 </div>
               </div>

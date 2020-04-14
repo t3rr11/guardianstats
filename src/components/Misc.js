@@ -1,5 +1,4 @@
 /*eslint-disable eqeqeq*/
-export function GetFromStorage(storedItem) { try { return JSON.parse(localStorage.getItem(storedItem)); } catch (err) { return localStorage.getItem(storedItem) } }
 export function formatTime(TimeinSeconds) {
   var years, months, weeks, days, hours, minutes, seconds;
 
@@ -92,27 +91,8 @@ export function convertTimeToDate(time) {
   var result = day + '/' + month + '/' + year;
   return result;
 }
-export function numberWithCommas(x) { return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); }
+export function AddCommas(x) { try { return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") } catch (err) { return x } }
 export function isJSON(data) { try { JSON.parse(data); } catch (e) { return false; } return true; }
-export async function ClearLoadingScreen() {
-  //$("#loaderBG").fadeOut( "slow", function() {
-    //$("#loaderBG").remove();
-  //});
-}
-export async function timed(name, promise) {
-  if(process.env.NODE_ENV === 'development') {
-    console.log(`Loading: ${name}`);
-    const before = Date.now();
-    const result = await promise;
-    const after = Date.now();
-    console.log(`Loaded ${name}: ${(after - before) / 1000}s`);
-    return result;
-  }
-  else {
-    const result = await promise;
-    return result;
-  }
-}
 export function getURLVars() {
   var vars = {};
   window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi,
@@ -124,15 +104,6 @@ export function getURLVars() {
 export function noManifest() {
   const urls = ["register, joinmarvin"];
   if(urls.find(e => e.toLowerCase() === window.location.href.split("/")[3])) { return true; }
-}
-export function logout() {
-  localStorage.clear();
-  window.location.reload();
-}
-export function fadeElement(idName, fadeOutTime) { setTimeout(function(){ fadeOut(idName) }, (fadeOutTime*1000)); }
-function fadeOut(idName) {
-  try { document.getElementById(idName).style.opacity = '0'; }
-  catch (err) { console.log("Failed to fade: " + idName + " due to: " + err); }
 }
 export function getPlatformName(type) {
   if(type === 1){ return "XBL" }
@@ -156,11 +127,11 @@ export function getClassName(classType) {
 export function convertStatusTags(data) {
   if(data) {
     return {
-      isDonor: { "name": "Donor", "id": "donar", "hasTag": data.donor === 1 ? true : false, "hasLink": false },
-      isPatreon: { "name": "Patreon", "id": "patreon", "hasTag": data.patreon === 1 ? true : false, "hasLink": false },
-      isDeveloper: { "name": "Developer", "id": "developer", "hasTag": data.developer === 1 ? true : false, "hasLink": false },
-      isDestinySets: { "name": "Destiny Sets Dev", "id": "customDev", "hasTag": data.destinysets === 1 ? true : false, "hasLink": true, "link": "https://destinysets.com" },
-      isBraytech: { "name": "Braytech Dev", "id": "customDev", "hasTag": data.braytech === 1 ? true : false, "hasLink": true, "link": "https://braytech.org" }
+      isDonor: { "name": "Donor", "id": "donar", "hasTag": data.donor === 1, "hasLink": false },
+      isPatreon: { "name": "Patreon", "id": "patreon", "hasTag": data.patreon === 1, "hasLink": false },
+      isDeveloper: { "name": "Developer", "id": "developer", "hasTag": data.developer === 1, "hasLink": false },
+      isDestinySets: { "name": "Destiny Sets Dev", "id": "customDev", "hasTag": data.destinysets === 1, "hasLink": true, "link": "https://destinysets.com" },
+      isBraytech: { "name": "Braytech Dev", "id": "customDev", "hasTag": data.braytech === 1, "hasLink": true, "link": "https://braytech.org" }
     }
   }
   else {

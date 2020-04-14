@@ -34,8 +34,8 @@ export class Marvin extends Component {
           <div className="connectContainer">
             <h2 style={{ textAlign: "center", margin: "10px", marginBottom: "-20px" }}>Marvin | The Clan Bot</h2>
             <div className="statusLabels">
-              <div className="usersStatusLabel">Users: { Misc.numberWithCommas(users) }</div>
-              <div className="guildsStatusLabel">Servers: { Misc.numberWithCommas(guilds) }</div>
+              <div className="usersStatusLabel">Users: { Misc.AddCommas(users) }</div>
+              <div className="guildsStatusLabel">Servers: { Misc.AddCommas(guilds) }</div>
             </div>
             <div className="animatedLogo"><Loader custom={{ loader: "logo", height: "200px", width: "200px" }} /></div>
             <div className="marvinBtn"><button className="btn btn-primary" onClick={ (() => this.gotoMarvin()) }>Invite</button></div>

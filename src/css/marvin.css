@@ -225,42 +225,100 @@ h3::selection { background-color: rgba(0.2, 0.2, 0.2, 0.2); }
 /* Marvins Dashboard End */
 
 /* Marvins Status Start */
-  .statusContainer {
+  .status-container {
     height: 100%;
-    padding-top: 10px;
     background: var(--DarkNavyBlue);
+    display: grid;
+    grid-template-columns: 200px auto;
   }
-  .graphContainers {
+  .graph-containers {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    color: #d4d4d4;
+    padding-top: 50px;
+  }
+  .left-graph-containers {
     display: grid;
     grid-template-rows: 235px 235px 235px;
-    grid-template-columns: auto auto auto auto;
     color: #d4d4d4;
-    padding-top: 10px;
   }
-  .graphSelect {
-    margin: auto;
-    text-align: center;
-    font-size: 14px;
+  .right-graph-containers {
+    display: grid;
+    grid-template-rows: 235px 235px 235px;
+    color: #d4d4d4;
+  }
+  .graph-overview-containers {
+    display: grid;
+    grid-template-columns: 25% 25% 25% 25%;
+    color: #d4d4d4;
+    padding-top: 50px;
+  }
+  .status-menu {
+    padding-top: 60px;
+    background: #1f2227;
+  }
+  .status-menu-item {
     width: 100%;
-    margin-top: 15px;
+    margin: auto;
+    text-align: left;
+    padding: 5px 10px;
   }
-  .graphSelect > select {
-    font-size: 14px;
-    padding: 2px;
+  .status-menu-item.active {
+    background-color: var(--LightNavyBlue);
+    cursor: pointer;
   }
-  .graphContainers > div {
+  .status-menu-item:hover {
+    background-color: var(--LighterNavyBlue);
+    cursor: pointer;
+  }
+  .graph-containers > div {
     margin: 10px auto;
   }
-  .statusDetails {
+  .status-details {
     display: grid;
     grid-template-rows: 22px 20px;
     grid-template-columns: 33.3% 33.3% 33.3%;
   }
-  .statusDetails > #name { grid-row: 1; }
-  .statusDetails > #min { grid-row: 2; grid-column: 1; font-size: 12px; text-align: left; }
-  .statusDetails > #max { grid-row: 2; grid-column: 3; font-size: 12px; text-align: right; }
-  .statusDetails > #curr { grid-row: 2; grid-column: 2; font-size: 12px; text-align: center; }
-  .statusDetails > #curr > #negative { color: tomato; }
-  .statusDetails > #curr > #positive { color: #2cc36f; }
+  .status-details > #name { grid-row: 1; grid-column: span 3; text-align: center; }
+  .status-details > #min { grid-row: 2; grid-column: 1; font-size: 12px; text-align: left; }
+  .status-details > #max { grid-row: 2; grid-column: 3; font-size: 12px; text-align: right; }
+  .status-details > #curr { grid-row: 2; grid-column: 2; font-size: 12px; text-align: center; }
+  .status-details > #curr > #negative { color: tomato; }
+  .status-details > #curr > #positive { color: #2cc36f; }
+
+  .overview-container {
+    padding: 55px 5px 5px 5px;
+    display: grid;
+    font-size: 14px;
+    grid-template-columns: auto 250px;
+  }
+  .frontend-container {
+    width: 100%;
+    height: fit-content;
+    background-color: var(--NavyBlue);
+    border: 1px var(--LightNavyBlue) solid;
+    display: block;
+    margin: 5px;
+    padding: 10px;
+  }
+  .backend-container {
+    width: 100%;
+    height: fit-content;
+    background-color: var(--NavyBlue);
+    border: 1px var(--LightNavyBlue) solid;
+    display: block;
+    margin: 5px;
+    padding: 10px;
+  }
+  .overview-graphs {
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+  }
+  .single-graph {
+    display: inline-block;
+  }
+  .single-graph > div > .status-details > div {
+    padding: 0px 10px;
+  }
 
 /* Marvins Status End */

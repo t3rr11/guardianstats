@@ -18,7 +18,7 @@ import Marvin from './components/pages/marvin/Marvin';
 import Clans from './components/pages/clans/Clans';
 import ClanRankings from './components/pages/clans/ClanRankings';
 import Dashboard from './components/pages/marvin/Dashboard';
-import Status from './components/pages/marvin/MarvinStatusNew';
+import Status from './components/pages/marvin/MarvinStatus';
 import Profile from './components/pages/profile/Profile';
 import ProfileCard from './components/pages/profile/ProfileCard';
 import Activities from './components/pages/profile/Activities';
@@ -59,7 +59,7 @@ class App extends React.Component {
     else {
       if(localStorage.getItem("siteVersion") === this.state.siteVersion) {
         if(!await checks.checkSettingsExist()) { pageSettings.setDefaultSettings(); }
-        Misc.timed('Manifest', this.loadManifest());
+        this.loadManifest();
         this.checkIfLive();
       }
       else { this.forceReset(); }

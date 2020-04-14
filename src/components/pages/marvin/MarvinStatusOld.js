@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Loader from '../../modules/Loader';
 import * as Misc from '../../Misc';
-import * as ChartGen from './ChartGen';
+import {AreaSeries, Crosshair, XYPlot, XAxis, YAxis, HorizontalGridLines, VerticalGridLines, LineSeries} from 'react-vis';
 
 var updateTimer;
 var updated = false;
@@ -11,7 +11,6 @@ export class Status extends Component {
   state = {
     status: { error: null, status: 'startUp', statusText: '' },
     crosshairValues: [],
-    currentChart: 'overview',
     chartTimeframe: null,
     charts: null
   }
@@ -33,7 +32,6 @@ export class Status extends Component {
   }
   componentWillUnmount() { clearInterval(updateTimer); updateTimer = null; }
   async loadTimeFrame() {
-    if(localStorage.getItem("currentChart")) { this.setState({ currentChart: localStorage.getItem("currentChart") }); }
     if(localStorage.getItem("chartTimeframe")) { await this.setState({ chartTimeframe: localStorage.getItem("chartTimeframe") }); }
     else {
       await localStorage.setItem("chartTimeframe", "minute");
@@ -47,30 +45,30 @@ export class Status extends Component {
   }
   makeCharts(chartTimeframe) {
     var charts = {
-      clans_all: { name: "All Clans", data: [], min: null, max: null, first: null, last: null },
-      guilds_all: { name: "All Guilds", data: [], min: null, max: null, first: null, last: null },
-      players_all: { name: "All Players", data: [], min: null, max: null, first: null, last: null },
-      broadcasts: { name: "Broadcasts", data: [], min: null, max: null, first: null, last: null },
-      servers: { name: "Discord Servers", data: [], min: null, max: null, first: null, last: null },
       users_all: { name: "Discord Users", data: [], min: null, max: null, first: null, last: null },
-      players_online: { name: "Online Players", data: [], min: null, max: null, first: null, last: null },
-      clans_tracked: { name: "Tracked Clans", data: [], min: null, max: null, first: null, last: null },
-      guilds_tracked: { name: "Tracked Guilds", data: [], min: null, max: null, first: null, last: null },
+      servers: { name: "Discord Servers", data: [], min: null, max: null, first: null, last: null },
+      users_tracked: { name: "Tracked Users", data: [], min: null, max: null, first: null, last: null },
+      players_all: { name: "All Players", data: [], min: null, max: null, first: null, last: null },
       players_tracked: { name: "Tracked Players", data: [], min: null, max: null, first: null, last: null },
-      users_tracked: { name: "Tracked Users", data: [], min: null, max: null, first: null, last: null }
+      players_online: { name: "Online Players", data: [], min: null, max: null, first: null, last: null },
+      clans_all: { name: "All Clans", data: [], min: null, max: null, first: null, last: null },
+      clans_tracked: { name: "Tracked Clans", data: [], min: null, max: null, first: null, last: null },
+      guilds_all: { name: "All Guilds", data: [], min: null, max: null, first: null, last: null },
+      guilds_tracked: { name: "Tracked Guilds", data: [], min: null, max: null, first: null, last: null },
+      broadcasts: { name: "Broadcasts", data: [], min: null, max: null, first: null, last: null }
     }
     var crosshairValues = {
-      clans_all: { visible: false, data: false },
-      guilds_all: { visible: false, data: false },
-      players_all: { visible: false, data: false },
-      broadcasts: { visible: false, data: false },
-      servers: { visible: false, data: false },
       users_all: { visible: false, data: false },
-      players_online: { visible: false, data: false },
-      clans_tracked: { visible: false, data: false },
-      guilds_tracked: { visible: false, data: false },
+      servers: { visible: false, data: false },
+      users_tracked: { visible: false, data: false },
+      players_all: { visible: false, data: false },
       players_tracked: { visible: false, data: false },
-      users_tracked: { visible: false, data: false }
+      players_online: { visible: false, data: false },
+      clans_all: { visible: false, data: false },
+      clans_tracked: { visible: false, data: false },
+      guilds_all: { visible: false, data: false },
+      guilds_tracked: { visible: false, data: false },
+      broadcasts: { visible: false, data: false }
     }
 
     if(chartTimeframe === "minute") {
@@ -230,10 +228,7 @@ export class Status extends Component {
     }
     else { this.setState({ status: { status: 'error', statusText: 'Failed to load as we could not find the requested timeframe.' } }); }
   }
-  setChart(chart) {
-    localStorage.setItem("currentChart", chart);
-    this.setState({ currentChart: chart });
-  }
+
   onNearestX = (value, { index, event }) => {
     var newState = this.state.crosshairValues;
     newState[value.name].visible = true;
@@ -254,40 +249,51 @@ export class Status extends Component {
   }
 
   render() {
-    const { status, crosshairValues, currentChart, chartTimeframe, charts } = this.state;
+    const { status, crosshairValues, chartTimeframe, charts } = this.state;
     const timestamp = new Date('September 9 2017').getTime();
     const MSEC_DAILY = 86400000;
     if(status.status === "ready") {
-      return (
-        <div className="status-container">
-          <div className="status-menu">
-            <div className="graph-select">
-              <div>View By:</div>
-              <select className="btn btn-secondary dropdown-toggle" onChange={ this.changeChartTimeframe } value={ chartTimeframe }>
-                <option value="minute">10 Min (Growth)</option>
-                <option value="hourly">Hourly (Growth)</option>
-                <option value="daily">Daily (Growth)</option>
-                <option value="minuteDifference">10 Min (Difference)</option>
-                <option value="hourlyDifference">Hourly (Difference)</option>
-                <option value="dailyDifference">Daily (Difference)</option>
-              </select>
-            </div>
-            { Object.keys(charts).map((chart) => { return (<div className="status-menu-item" key={ chart } id={ chart } onClick={ (() => this.setChart(chart)) }>{ charts[chart].name }</div>) }) }
+      return(
+        <div className="statusContainer">
+          <div className="graphSelect">
+            <div>View By:</div>
+            <select className="btn btn-secondary dropdown-toggle" onChange={ this.changeChartTimeframe } value={ chartTimeframe }>
+              <option value="minute">10 Min (Growth)</option>
+              <option value="hourly">Hourly (Growth)</option>
+              <option value="daily">Daily (Growth)</option>
+              <option value="minuteDifference">10 Min (Difference)</option>
+              <option value="hourlyDifference">Hourly (Difference)</option>
+              <option value="dailyDifference">Daily (Difference)</option>
+            </select>
           </div>
-          <div className="status-content">
-            <div className="graph-container">
-              {
-                currentChart === 'overview' ?
-                ChartGen.generateOverviewChart(crosshairValues, currentChart, chartTimeframe, charts, this) :
-                ChartGen.generateChart(crosshairValues, currentChart, chartTimeframe, charts, this)
-              }
-            </div>
+          <div className="graphContainers">
+            {
+              Object.keys(charts).map((chart) => {
+                return (
+                  <div>
+                    <div className="statusDetails">
+                      <div id="name">{ charts[chart].name }</div>
+                      <div id="min">Low: { Misc.AddCommas(charts[chart].min) }</div>
+                      <div id="max">High: { Misc.AddCommas(charts[chart].max) }</div>
+                      <div id="curr">Current: { Misc.AddCommas(charts[chart].last) } { charts[chart].last - charts[chart].first < 0 ? (<span id="negative">{ charts[chart].last - charts[chart].first }</span>) : (<span id="positive">+{ charts[chart].last - charts[chart].first }</span>) }</div>
+                    </div>
+                    <XYPlot xType="time" width={ 380 } height={ 170 } margin={{ left: 50 }} onMouseLeave={ () => this.onMouseLeave(chart) } yDomain={ this.getYDomain(charts[chart].min, charts[chart].max, chartTimeframe) }>
+                      <HorizontalGridLines style={{ stroke: "#333333", color: "#333333" }} />
+                      <XAxis title="X Axis" />
+                      <YAxis title="Y Axis" />
+                      <LineSeries data={ charts[chart].data } color="#5cabff" onNearestX={ this.onNearestX } />
+                      { crosshairValues[chart].visible && <Crosshair values={ crosshairValues[chart].data } titleFormat={ (d) => ({ title: "Date", value: new Date(d[0].x).toLocaleTimeString() }) } itemsFormat={ (d) => [{ title: "Value", value: d[0].y }] } /> }
+                    </XYPlot>
+                  </div>
+                )
+              })
+            }
           </div>
         </div>
       );
     }
     else {
-      return (
+      return(
         <div className="statusContainer">
           <Loader statusText={ status.statusText } />
         </div>

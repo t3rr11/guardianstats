@@ -70,7 +70,7 @@ export class Clans extends Component {
                                       <div className="rankings-cell">
                                         <div style={{ color: "#b3b3b3" }} id="rank">{ rankings[rankingsName].data.indexOf(rank)+1 }</div>
                                         <div style={{ color: "#b3b3b3" }}><span id="clan_name">{ rank.clan_name }</span></div>
-                                        <div style={{ color: "#b3b3b3" }} id="data_count">{ Misc.numberWithCommas(rank.data[rankings[rankingsName].name]) }</div>
+                                        <div style={{ color: "#b3b3b3" }} id="data_count">{ Misc.AddCommas(rank.data[rankings[rankingsName].name]) }</div>
                                       </div>
                                     )
                                   })
