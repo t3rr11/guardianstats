@@ -11,144 +11,37 @@ export function generateChart(parent) {
     return (
       <div className="graph-containers">
         <div className="left-graph-containers">
-          <div className="hourly_data_chart">
-            <div className="status-details">
-              <div id="name">{ chart.friendly_name } - 24 Hours (Growth)</div>
-              <div id="min">Low: { Misc.AddCommas(chart.hourly_data.min) }</div>
-              <div id="max">High: { Misc.AddCommas(chart.hourly_data.max) }</div>
-              <div id="curr">Current: { Misc.AddCommas(chart.hourly_data.last) } { chart.hourly_data.last - chart.hourly_data.first < 0 ? (<span id="negative">{ chart.hourly_data.last - chart.hourly_data.first }</span>) : (<span id="positive">+{ chart.hourly_data.last - chart.hourly_data.first }</span>) }</div>
-            </div>
-            <XYPlot xType="time" width={ 750 } height={ 170 } margin={{ left: 50 }} onMouseLeave={ () => parent.onMouseLeave(currentChart, 'hourly_data') } yDomain={ parent.getYDomain(chart.hourly_data.min, chart.hourly_data.max) }>
-              <HorizontalGridLines style={{ stroke: "#333333", color: "#333333" }} />
-              <XAxis title="X Axis" />
-              <YAxis title="Y Axis" />
-              <LineSeries data={ chart.hourly_data.graph_data } color="#5cabff" onNearestX={ parent.onNearestX } />
-              { chart.hourly_data.crosshair_data.visible && <Crosshair values={ chart.hourly_data.crosshair_data.data } titleFormat={ (d) => ({ title: "Date", value: new Date(d[0].x).toLocaleTimeString() }) } itemsFormat={ (d) => [{ title: "Value", value: d[0].y }] } /> }
-            </XYPlot>
-          </div>
-          <div className="daily_data_chart">
-            <div className="status-details">
-              <div id="name">{ chart.friendly_name } - Weekly (Growth)</div>
-              <div id="min">Low: { Misc.AddCommas(chart.daily_data.min) }</div>
-              <div id="max">High: { Misc.AddCommas(chart.daily_data.max) }</div>
-              <div id="curr">Current: { Misc.AddCommas(chart.daily_data.last) } { chart.daily_data.last - chart.daily_data.first < 0 ? (<span id="negative">{ chart.daily_data.last - chart.daily_data.first }</span>) : (<span id="positive">+{ chart.daily_data.last - chart.daily_data.first }</span>) }</div>
-            </div>
-            <XYPlot xType="time" width={ 750 } height={ 170 } margin={{ left: 50 }} onMouseLeave={ () => parent.onMouseLeave(currentChart, 'daily_data') } yDomain={ parent.getYDomain(chart.daily_data.min, chart.daily_data.max) }>
-              <HorizontalGridLines style={{ stroke: "#333333", color: "#333333" }} />
-              <XAxis title="X Axis" />
-              <YAxis title="Y Axis" />
-              <LineSeries data={ chart.daily_data.graph_data } color="#5cabff" onNearestX={ parent.onNearestX } />
-              { chart.daily_data.crosshair_data.visible && <Crosshair values={ chart.daily_data.crosshair_data.data } titleFormat={ (d) => ({ title: "Date", value: new Date(d[0].x).toLocaleTimeString() }) } itemsFormat={ (d) => [{ title: "Value", value: d[0].y }] } /> }
-            </XYPlot>
-          </div>
-          <div className="weekly_data_chart">
-            <div className="status-details">
-              <div id="name">{ chart.friendly_name } - Monthly (Growth)</div>
-              <div id="min">Low: { Misc.AddCommas(chart.weekly_data.min) }</div>
-              <div id="max">High: { Misc.AddCommas(chart.weekly_data.max) }</div>
-              <div id="curr">Current: { Misc.AddCommas(chart.weekly_data.last) } { chart.weekly_data.last - chart.weekly_data.first < 0 ? (<span id="negative">{ chart.weekly_data.last - chart.weekly_data.first }</span>) : (<span id="positive">+{ chart.weekly_data.last - chart.weekly_data.first }</span>) }</div>
-            </div>
-            <XYPlot xType="time" width={ 750 } height={ 170 } margin={{ left: 50 }} onMouseLeave={ () => parent.onMouseLeave(currentChart, 'weekly_data') } yDomain={ parent.getYDomain(chart.weekly_data.min, chart.weekly_data.max) }>
-              <HorizontalGridLines style={{ stroke: "#333333", color: "#333333" }} />
-              <XAxis title="X Axis" />
-              <YAxis title="Y Axis" />
-              <LineSeries data={ chart.weekly_data.graph_data } color="#5cabff" onNearestX={ parent.onNearestX } />
-              { chart.weekly_data.crosshair_data.visible && <Crosshair values={ chart.weekly_data.crosshair_data.data } titleFormat={ (d) => ({ title: "Date", value: new Date(d[0].x).toLocaleTimeString() }) } itemsFormat={ (d) => [{ title: "Value", value: d[0].y }] } /> }
-            </XYPlot>
-          </div>
+          { generateSingleChart(parent, currentChart, "hourly_data", { width: 750, height: 170 }) }
+          { generateSingleChart(parent, currentChart, "daily_data", { width: 750, height: 170 }) }
+          { generateSingleChart(parent, currentChart, "weekly_data", { width: 750, height: 170 }) }
         </div>
         <div className="right-graph-containers">
-          <div className="d_hourly_data_chart">
-            <div className="status-details">
-              <div id="name">{ chart.friendly_name } - 24 Hours (Difference)</div>
-              <div id="min">Low: { Misc.AddCommas(chart.d_hourly_data.min) }</div>
-              <div id="max">High: { Misc.AddCommas(chart.d_hourly_data.max) }</div>
-              <div id="curr">Current: { Misc.AddCommas(chart.d_hourly_data.last) } { chart.d_hourly_data.last - chart.d_hourly_data.first < 0 ? (<span id="negative">{ chart.d_hourly_data.last - chart.d_hourly_data.first }</span>) : (<span id="positive">+{ chart.d_hourly_data.last - chart.d_hourly_data.first }</span>) }</div>
-            </div>
-            <XYPlot xType="time" width={ 750 } height={ 170 } margin={{ left: 50 }} onMouseLeave={ () => parent.onMouseLeave(currentChart, 'd_hourly_data') } yDomain={ parent.getYDomain(chart.d_hourly_data.min, chart.d_hourly_data.max) }>
-              <HorizontalGridLines style={{ stroke: "#333333", color: "#333333" }} />
-              <XAxis title="X Axis" />
-              <YAxis title="Y Axis" />
-              <LineSeries data={ chart.d_hourly_data.graph_data } color="#5cabff" onNearestX={ parent.onNearestX } />
-              { chart.d_hourly_data.crosshair_data.visible && <Crosshair values={ chart.d_hourly_data.crosshair_data.data } titleFormat={ (d) => ({ title: "Date", value: new Date(d[0].x).toLocaleTimeString() }) } itemsFormat={ (d) => [{ title: "Value", value: d[0].y }] } /> }
-            </XYPlot>
-          </div>
-          <div className="d_daily_data_chart">
-            <div className="status-details">
-              <div id="name">{ chart.friendly_name } - Weekly (Difference)</div>
-              <div id="min">Low: { Misc.AddCommas(chart.d_daily_data.min) }</div>
-              <div id="max">High: { Misc.AddCommas(chart.d_daily_data.max) }</div>
-              <div id="curr">Current: { Misc.AddCommas(chart.d_daily_data.last) } { chart.d_daily_data.last - chart.d_daily_data.first < 0 ? (<span id="negative">{ chart.d_daily_data.last - chart.d_daily_data.first }</span>) : (<span id="positive">+{ chart.d_daily_data.last - chart.d_daily_data.first }</span>) }</div>
-            </div>
-            <XYPlot xType="time" width={ 750 } height={ 170 } margin={{ left: 50 }} onMouseLeave={ () => parent.onMouseLeave(currentChart, 'd_daily_data') } yDomain={ parent.getYDomain(chart.d_daily_data.min, chart.d_daily_data.max) }>
-              <HorizontalGridLines style={{ stroke: "#333333", color: "#333333" }} />
-              <XAxis title="X Axis" />
-              <YAxis title="Y Axis" />
-              <LineSeries data={ chart.d_daily_data.graph_data } color="#5cabff" onNearestX={ parent.onNearestX } />
-              { chart.d_daily_data.crosshair_data.visible && <Crosshair values={ chart.d_daily_data.crosshair_data.data } titleFormat={ (d) => ({ title: "Date", value: new Date(d[0].x).toLocaleTimeString() }) } itemsFormat={ (d) => [{ title: "Value", value: d[0].y }] } /> }
-            </XYPlot>
-          </div>
-          <div className="d_weekly_data_chart">
-            <div className="status-details">
-              <div id="name">{ chart.friendly_name } - Monthly (Difference)</div>
-              <div id="min">Low: { Misc.AddCommas(chart.d_weekly_data.min) }</div>
-              <div id="max">High: { Misc.AddCommas(chart.d_weekly_data.max) }</div>
-              <div id="curr">Current: { Misc.AddCommas(chart.d_weekly_data.last) } { chart.d_weekly_data.last - chart.d_weekly_data.first < 0 ? (<span id="negative">{ chart.d_weekly_data.last - chart.d_weekly_data.first }</span>) : (<span id="positive">+{ chart.d_weekly_data.last - chart.d_weekly_data.first }</span>) }</div>
-            </div>
-            <XYPlot xType="time" width={ 750 } height={ 170 } margin={{ left: 50 }} onMouseLeave={ () => parent.onMouseLeave(currentChart, 'd_weekly_data') } yDomain={ parent.getYDomain(chart.d_weekly_data.min, chart.d_weekly_data.max) }>
-              <HorizontalGridLines style={{ stroke: "#333333", color: "#333333" }} />
-              <XAxis title="X Axis" />
-              <YAxis title="Y Axis" />
-              <LineSeries data={ chart.d_weekly_data.graph_data } color="#5cabff" onNearestX={ parent.onNearestX } />
-              { chart.d_weekly_data.crosshair_data.visible && <Crosshair values={ chart.d_weekly_data.crosshair_data.data } titleFormat={ (d) => ({ title: "Date", value: new Date(d[0].x).toLocaleTimeString() }) } itemsFormat={ (d) => [{ title: "Value", value: d[0].y }] } /> }
-            </XYPlot>
-          </div>
+          { generateSingleChart(parent, currentChart, "d_hourly_data", { width: 750, height: 170 }) }
+          { generateSingleChart(parent, currentChart, "d_daily_data", { width: 750, height: 170 }) }
+          { generateSingleChart(parent, currentChart, "d_weekly_data", { width: 750, height: 170 }) }
         </div>
       </div>
     )
   }
 }
-export function generateSingleHourlyChart(parent, currentChart) {
+export function generateSingleChart(parent, currentChart, data_set, size) {
   const charts = parent.state.charts;
   const chart = charts.find(e => e.name === currentChart);
   if(chart) {
     return (
-      <div className="hourly_data_chart">
+      <div className={ `${ data_set }_chart` }>
         <div className="status-details">
           <div id="name">{ chart.friendly_name } - 24hr Growth</div>
-          <div id="min">Low: { Misc.AddCommas(chart.hourly_data.min) }</div>
-          <div id="max">High: { Misc.AddCommas(chart.hourly_data.max) }</div>
-          <div id="curr">Current: { Misc.AddCommas(chart.hourly_data.last) } { chart.hourly_data.last - chart.hourly_data.first < 0 ? (<span id="negative">{ chart.hourly_data.last - chart.hourly_data.first }</span>) : (<span id="positive">+{ chart.hourly_data.last - chart.hourly_data.first }</span>) }</div>
+          <div id="min">Low: { Misc.AddCommas(chart[data_set].min) }</div>
+          <div id="max">High: { Misc.AddCommas(chart[data_set].max) }</div>
+          <div id="curr">Current: { Misc.AddCommas(chart[data_set].last) } { chart[data_set].last - chart[data_set].first < 0 ? (<span id="negative">{ chart[data_set].last - chart[data_set].first }</span>) : (<span id="positive">+{ chart[data_set].last - chart[data_set].first }</span>) }</div>
         </div>
-        <XYPlot xType="time" width={ 350 } height={ 170 } margin={{ left: 50 }} onMouseLeave={ () => parent.onMouseLeave(currentChart, 'hourly_data') } yDomain={ parent.getYDomain(chart.hourly_data.min, chart.hourly_data.max) }>
+        <XYPlot xType="time" width={ size.width } height={ size.height } margin={{ left: 50 }} onMouseLeave={ () => parent.onMouseLeave(currentChart, data_set) } yDomain={ parent.getYDomain(chart[data_set].min, chart[data_set].max) }>
           <HorizontalGridLines style={{ stroke: "#333333", color: "#333333" }} />
           <XAxis title="X Axis" />
           <YAxis title="Y Axis" />
-          <LineSeries data={ chart.hourly_data.graph_data } color="#5cabff" onNearestX={ parent.onNearestX } />
-          { chart.hourly_data.crosshair_data.visible && <Crosshair values={ chart.hourly_data.crosshair_data.data } titleFormat={ (d) => ({ title: "Date", value: new Date(d[0].x).toLocaleTimeString() }) } itemsFormat={ (d) => [{ title: "Value", value: d[0].y }] } /> }
-        </XYPlot>
-      </div>
-    )
-  }
-}
-export function generateSingleD_HourlyChart(parent, currentChart) {
-  const charts = parent.state.charts;
-  const chart = charts.find(e => e.name === currentChart);
-  if(chart) {
-    return (
-      <div className="d_hourly_data_chart">
-        <div className="status-details">
-          <div id="name">{ chart.friendly_name } - 24hr Difference</div>
-          <div id="min">Low: { Misc.AddCommas(chart.d_hourly_data.min) }</div>
-          <div id="max">High: { Misc.AddCommas(chart.d_hourly_data.max) }</div>
-          <div id="curr">Current: { Misc.AddCommas(chart.d_hourly_data.last) } { chart.d_hourly_data.last - chart.d_hourly_data.first < 0 ? (<span id="negative">{ chart.d_hourly_data.last - chart.d_hourly_data.first }</span>) : (<span id="positive">+{ chart.d_hourly_data.last - chart.d_hourly_data.first }</span>) }</div>
-        </div>
-        <XYPlot xType="time" width={ 350 } height={ 170 } margin={{ left: 50 }} onMouseLeave={ () => parent.onMouseLeave(currentChart, 'd_hourly_data') } yDomain={ parent.getYDomain(chart.d_hourly_data.min, chart.d_hourly_data.max) }>
-          <HorizontalGridLines style={{ stroke: "#333333", color: "#333333" }} />
-          <XAxis title="X Axis" />
-          <YAxis title="Y Axis" />
-          <LineSeries data={ chart.d_hourly_data.graph_data } color="#5cabff" onNearestX={ parent.onNearestX } />
-          { chart.d_hourly_data.crosshair_data.visible && <Crosshair values={ chart.d_hourly_data.crosshair_data.data } titleFormat={ (d) => ({ title: "Date", value: new Date(d[0].x).toLocaleTimeString() }) } itemsFormat={ (d) => [{ title: "Value", value: d[0].y }] } /> }
+          <LineSeries data={ chart[data_set].graph_data } color="#5cabff" onNearestX={ parent.onNearestX } />
+          { chart[data_set].crosshair_data.visible && <Crosshair values={ chart[data_set].crosshair_data.data } titleFormat={ (d) => ({ title: "Date", value: new Date(d[0].x).toLocaleTimeString() }) } itemsFormat={ (d) => [{ title: "Value", value: d[0].y }] } /> }
         </XYPlot>
       </div>
     )
@@ -157,21 +50,20 @@ export function generateSingleD_HourlyChart(parent, currentChart) {
 export function generateOverviewChart(parent) {
   let logs = parent.state.logs;
   let stats = parent.state.stats;
-  console.log(logs, stats);
   return (
     <div className="overview-container">
       <div className="overview-graphs">
-        <div className="single-graph"> { generateSingleHourlyChart(parent, 'users_all') } </div>
-        <div className="single-graph"> { generateSingleHourlyChart(parent, 'players_all') } </div>
-        <div className="single-graph"> { generateSingleHourlyChart(parent, 'players_online') } </div>
-        <div className="single-graph"> { generateSingleHourlyChart(parent, 'clans_tracked') } </div>
-        <div className="single-graph"> { generateSingleHourlyChart(parent, 'clans_all') } </div>
-        <div className="single-graph"> { generateSingleHourlyChart(parent, 'guilds_tracked') } </div>
-        <div className="single-graph"> { generateSingleHourlyChart(parent, 'guilds_all') } </div>
-        <div className="single-graph"> { generateSingleHourlyChart(parent, 'servers') } </div>
-        <div className="single-graph"> { generateSingleHourlyChart(parent, 'players_tracked') } </div>
-        <div className="single-graph"> { generateSingleHourlyChart(parent, 'users_tracked') } </div>
-        <div className="single-graph"> { generateSingleD_HourlyChart(parent, 'broadcasts') } </div>
+        <div className="single-graph"> { generateSingleChart(parent, 'users_all', "hourly_data", { width: 350, height: 170 }) } </div>
+        <div className="single-graph"> { generateSingleChart(parent, 'players_all', "hourly_data", { width: 350, height: 170 }) } </div>
+        <div className="single-graph"> { generateSingleChart(parent, 'players_online', "hourly_data", { width: 350, height: 170 }) } </div>
+        <div className="single-graph"> { generateSingleChart(parent, 'clans_tracked', "hourly_data", { width: 350, height: 170 }) } </div>
+        <div className="single-graph"> { generateSingleChart(parent, 'clans_all', "hourly_data", { width: 350, height: 170 }) } </div>
+        <div className="single-graph"> { generateSingleChart(parent, 'guilds_tracked', "hourly_data", { width: 350, height: 170 }) } </div>
+        <div className="single-graph"> { generateSingleChart(parent, 'guilds_all', "hourly_data", { width: 350, height: 170 }) } </div>
+        <div className="single-graph"> { generateSingleChart(parent, 'servers', "hourly_data", { width: 350, height: 170 }) } </div>
+        <div className="single-graph"> { generateSingleChart(parent, 'players_tracked', "hourly_data", { width: 350, height: 170 }) } </div>
+        <div className="single-graph"> { generateSingleChart(parent, 'users_tracked', "hourly_data", { width: 350, height: 170 }) } </div>
+        <div className="single-graph"> { generateSingleChart(parent, 'broadcasts', "d_hourly_data", { width: 350, height: 170 }) } </div>
       </div>
       <div className="server-status-containers">
         <div className="backend-container">
