@@ -3,7 +3,7 @@ import * as Misc from '../../Misc';
 import { AreaSeries, Crosshair, XYPlot, XAxis, YAxis, HorizontalGridLines, VerticalGridLines, LineSeries } from 'react-vis';
 
 //Generate Charts
-export function generateChart(parent) {
+export function generateChartPage(parent) {
   const charts = parent.state.charts;
   const currentChart = parent.state.currentChart;
   const chart = charts.find(e => e.name === currentChart);
@@ -36,7 +36,7 @@ export function generateSingleChart(parent, currentChart, data_set, size) {
           <div id="max">High: { Misc.AddCommas(chart[data_set].max) }</div>
           <div id="curr">Current: { Misc.AddCommas(chart[data_set].last) } { chart[data_set].last - chart[data_set].first < 0 ? (<span id="negative">{ chart[data_set].last - chart[data_set].first }</span>) : (<span id="positive">+{ chart[data_set].last - chart[data_set].first }</span>) }</div>
         </div>
-        <XYPlot xType="time" width={ size.width } height={ size.height } margin={{ left: 50 }} onMouseLeave={ () => parent.onMouseLeave(currentChart, data_set) } yDomain={ parent.getYDomain(chart[data_set].min, chart[data_set].max) }>
+        <XYPlot xType="time" width={ size.width } height={ size.height } margin={{ left: 50 }} onMouseLeave={ () => parent.onMouseLeave(currentChart, data_set) }>
           <HorizontalGridLines style={{ stroke: "#333333", color: "#333333" }} />
           <XAxis title="X Axis" />
           <YAxis title="Y Axis" />
@@ -90,7 +90,7 @@ export function generateOverviewChart(parent) {
 }
 
 //Make Charts
-export async function makeCharts() {
+export async function buildDataSet() {
   let logs = { frontend: null, backend: null }
   let stats = { frontend: null, backend: null }
   let charts = [

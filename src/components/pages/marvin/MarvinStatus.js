@@ -19,7 +19,7 @@ export class Status extends Component {
 
   async componentDidMount() {
     document.title = "Status - Guardianstats";
-    await this.makeCharts();
+    await this.buildCharts();
   }
   componentWillUnmount() {  }
   async loadTimeFrame() {
@@ -30,14 +30,9 @@ export class Status extends Component {
       await this.setState({ chartTimeframe: "minute" });
     }
   }
-  changeChartTimeframe = (event) => {
-    localStorage.setItem("chartTimeframe", event.target.value);
-    this.setState({ chartTimeframe: event.target.value });
-    this.makeCharts(event.target.value);
-  }
-  async makeCharts() {
+  async buildCharts() {
     let currentChart = 'overview'; if(localStorage.getItem("currentChart")) { currentChart = localStorage.getItem("currentChart") }
-    const { charts, logs, stats } = await ChartGen.makeCharts();
+    const { charts, logs, stats } = await ChartGen.buildDataSet();
     this.setState({ status: { status: 'ready', statusText: 'Finished loading...' }, currentChart, charts, logs, stats });
   }
   setChart(chart) {
@@ -56,10 +51,6 @@ export class Status extends Component {
     charts[charts.indexOf(charts.find(e => e.name === chart))][type].crosshair_data = crosshair_data;
     this.setState({ charts });
   }
-  getYDomain(min, max) {
-    //[Math.abs(min) > Math.abs(max) ? min : -max, Math.abs(min) > Math.abs(max) ? Math.abs(min) : Math.abs(max)]
-    return null;
-  }
 
   render() {
     const { status, currentChart, charts } = this.state;
@@ -70,7 +61,7 @@ export class Status extends Component {
             <div className={ `status-menu-item ${ currentChart === "overview" ? "active" : null }` } key="overview" id="overview" onClick={ (() => this.setChart("overview")) }>Overview</div>
             { Object.keys(charts).map((chart) => { return (<div className={ `status-menu-item ${ charts[chart].name === currentChart ? "active" : null }` } key={ charts[chart].name } id={ charts[chart].name } onClick={ (() => this.setChart(charts[chart].name)) }>{ charts[chart].friendly_name }</div>) }) }
           </div>
-          <div className="status-content">{ currentChart === 'overview' ? ChartGen.generateOverviewChart(this) : ChartGen.generateChart(this) }</div>
+          <div className="status-content">{ currentChart === 'overview' ? ChartGen.generateOverviewChart(this) : ChartGen.generateChartPage(this) }</div>
         </div>
       );
     }
