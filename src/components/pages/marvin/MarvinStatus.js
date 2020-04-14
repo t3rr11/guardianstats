@@ -3,41 +3,39 @@ import Loader from '../../modules/Loader';
 import * as Misc from '../../Misc';
 import * as ChartGen from './ChartGen';
 
-var updateTimer;
-var updated = false;
+let graphUpdateTimer = null;
+let updatingGraphs = false;
+let statusUpdateTimer = null;
 
 export class Status extends Component {
 
   state = {
     status: { error: null, status: 'startUp', statusText: 'Checking status...' },
     currentChart: 'overview',
-    chartTimeframe: null,
     charts: null,
     logs: null,
-    stats: null
+    stats: null,
+    last_update: 0
   }
 
   async componentDidMount() {
     document.title = "Status - Guardianstats";
     await this.buildCharts();
   }
-  componentWillUnmount() {  }
-  async loadTimeFrame() {
-    if(localStorage.getItem("currentChart")) { this.setState({ currentChart: localStorage.getItem("currentChart") }); }
-    if(localStorage.getItem("chartTimeframe")) { await this.setState({ chartTimeframe: localStorage.getItem("chartTimeframe") }); }
-    else {
-      await localStorage.setItem("chartTimeframe", "minute");
-      await this.setState({ chartTimeframe: "minute" });
-    }
-  }
   async buildCharts() {
     let currentChart = 'overview'; if(localStorage.getItem("currentChart")) { currentChart = localStorage.getItem("currentChart") }
-    const { charts, logs, stats } = await ChartGen.buildDataSet();
-    this.setState({ status: { status: 'ready', statusText: 'Finished loading...' }, currentChart, charts, logs, stats });
-  }
-  setChart(chart) {
-    localStorage.setItem("currentChart", chart);
-    this.setState({ currentChart: chart });
+    let charts, last_update, logs, stats;
+    await Promise.all([
+      await ChartGen.buildGraphDataSet(),
+      await ChartGen.buildStatusDataSet(this)
+    ]).then(async (data) => {
+      charts = data[0].charts;
+      last_update = data[0].last_update;
+      logs = data[1].logs;
+      stats = data[1].stats;
+    }).catch(async (err) => { console.log(err); this.setState({ status: { status: 'error', statusText: 'Failed to get graph data from server... Error logged in console.' } }) });
+    this.setState({ status: { status: 'ready', statusText: 'Finished loading...' }, currentChart, charts, logs, stats, last_update });
+    this.startTimers();
   }
   onNearestX = (value, { index, event }) => {
     let charts = this.state.charts;
@@ -50,6 +48,26 @@ export class Status extends Component {
     let crosshair_data = { visible: false, data: false }
     charts[charts.indexOf(charts.find(e => e.name === chart))][type].crosshair_data = crosshair_data;
     this.setState({ charts });
+  }
+  setChart(chart) {
+    localStorage.setItem("currentChart", chart);
+    this.setState({ currentChart: chart });
+  }
+  startTimers() {
+    if(graphUpdateTimer === null) { graphUpdateTimer = setInterval((e) => { if(new Date().getTime() - (this.state.last_update + 605000) > 0 && !updatingGraphs) { this.updateGraphs(); } }, 1000) }
+    if(statusUpdateTimer === null) { statusUpdateTimer = setInterval((e) => { this.updateStatus() }, 1000) }
+  }
+  async updateGraphs() {
+    updatingGraphs = true;
+    const { charts, last_update } = await ChartGen.buildGraphDataSet();
+    if(this.state.last_update !== last_update) { this.setState({ status: { status: 'ready', statusText: 'Finished loading...' }, charts, last_update }) }
+    this.setState({ status: { status: 'ready', statusText: 'Finished loading...' }, charts, last_update });
+    console.log(new Date().toLocaleString() + ": Updated Graphs");
+    updatingGraphs = false;
+  }
+  async updateStatus() {
+    const { logs, stats } = await ChartGen.buildStatusDataSet(this);
+    this.setState({ status: { status: 'ready', statusText: 'Finished loading...' }, logs, stats });
   }
 
   render() {

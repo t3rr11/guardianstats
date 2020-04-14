@@ -277,7 +277,7 @@ h3::selection { background-color: rgba(0.2, 0.2, 0.2, 0.2); }
   .status-details {
     display: grid;
     grid-template-rows: 22px 20px;
-    grid-template-columns: 33.3% 33.3% 33.3%;
+    grid-template-columns: auto auto auto;
   }
   .status-details > #name { grid-row: 1; grid-column: span 3; text-align: center; }
   .status-details > #min { grid-row: 2; grid-column: 1; font-size: 12px; text-align: left; }
