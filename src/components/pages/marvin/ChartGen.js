@@ -1,5 +1,6 @@
 import React from 'react';
 import * as Misc from '../../Misc';
+import Error from '../../modules/Error';
 import { Crosshair, XYPlot, XAxis, YAxis, HorizontalGridLines, LineSeries } from 'react-vis';
 
 //Generate Charts
@@ -54,43 +55,46 @@ export function generateSingleChart(parent, currentChart, data_set, size) {
 export function generateOverviewChart(parent) {
   let logs = parent.state.logs;
   let stats = parent.state.stats;
-  return (
-    <div className="overview-container">
-      <div className="overview-graphs">
-        <div className="single-graph"> { generateSingleChart(parent, 'users_all', "hourly_data", { width: 350, height: 170 }) } </div>
-        <div className="single-graph"> { generateSingleChart(parent, 'players_all', "hourly_data", { width: 350, height: 170 }) } </div>
-        <div className="single-graph"> { generateSingleChart(parent, 'players_online', "hourly_data", { width: 350, height: 170 }) } </div>
-        <div className="single-graph"> { generateSingleChart(parent, 'players_tracked', "hourly_data", { width: 350, height: 170 }) } </div>
-        <div className="single-graph"> { generateSingleChart(parent, 'clans_tracked', "daily_data", { width: 350, height: 170 }) } </div>
-        <div className="single-graph"> { generateSingleChart(parent, 'clans_all', "daily_data", { width: 350, height: 170 }) } </div>
-        <div className="single-graph"> { generateSingleChart(parent, 'guilds_tracked', "daily_data", { width: 350, height: 170 }) } </div>
-        <div className="single-graph"> { generateSingleChart(parent, 'guilds_all', "daily_data", { width: 350, height: 170 }) } </div>
-        <div className="single-graph"> { generateSingleChart(parent, 'servers', "daily_data", { width: 350, height: 170 }) } </div>
-        <div className="single-graph"> { generateSingleChart(parent, 'users_tracked', "daily_data", { width: 350, height: 170 }) } </div>
-        <div className="single-graph"> { generateSingleChart(parent, 'broadcasts', "d_hourly_data", { width: 350, height: 170 }) } </div>
-      </div>
-      <div className="server-status-containers">
-        <div className="backend-container">
-          <h4 className="title">Backend Status</h4>
-          <div>Bungie API: { stats.backend.APIDisabled ? <span style={{ color: "tomato" }}>Offline</span> : <span style={{ color: "#259A58" }}>Online</span> }</div>
-          <div>Uptime: { stats.backend.uptime.displayValue }</div>
-          <div>Scan Time: { Misc.formatTime(stats.backend.scanTime / 1000) }</div>
-          <div>Last Scan: { stats.backend.lastScan.displayValue }</div>
-          <div>Total Scans: { Misc.AddCommas(stats.backend.scans) }</div>
-          <div>Max Scan Speed: { Misc.AddCommas(stats.backend.scanSpeed) } / sec</div>
-          <div>Current Scan Speed: { Misc.AddCommas(stats.backend.processingClans) } / sec</div>
+  if(stats) {
+    return (
+      <div className="overview-container">
+        <div className="overview-graphs">
+          <div className="single-graph"> { generateSingleChart(parent, 'users_all', "hourly_data", { width: 350, height: 170 }) } </div>
+          <div className="single-graph"> { generateSingleChart(parent, 'players_all', "hourly_data", { width: 350, height: 170 }) } </div>
+          <div className="single-graph"> { generateSingleChart(parent, 'players_online', "hourly_data", { width: 350, height: 170 }) } </div>
+          <div className="single-graph"> { generateSingleChart(parent, 'players_tracked', "hourly_data", { width: 350, height: 170 }) } </div>
+          <div className="single-graph"> { generateSingleChart(parent, 'clans_tracked', "daily_data", { width: 350, height: 170 }) } </div>
+          <div className="single-graph"> { generateSingleChart(parent, 'clans_all', "daily_data", { width: 350, height: 170 }) } </div>
+          <div className="single-graph"> { generateSingleChart(parent, 'guilds_tracked', "daily_data", { width: 350, height: 170 }) } </div>
+          <div className="single-graph"> { generateSingleChart(parent, 'guilds_all', "daily_data", { width: 350, height: 170 }) } </div>
+          <div className="single-graph"> { generateSingleChart(parent, 'servers', "daily_data", { width: 350, height: 170 }) } </div>
+          <div className="single-graph"> { generateSingleChart(parent, 'users_tracked', "daily_data", { width: 350, height: 170 }) } </div>
+          <div className="single-graph"> { generateSingleChart(parent, 'broadcasts', "d_hourly_data", { width: 350, height: 170 }) } </div>
         </div>
-        <div className="frontend-container">
-          <h4 className="title">Frontend Status</h4>
-          <div>Marvin: <span style={{ color: "#259A58" }}>Online</span></div>
-          <div>Uptime: { stats.frontend.uptime.displayValue }</div>
-          <div>Commands: { stats.frontend.commandsInput }</div>
-          <div>Users: { Misc.AddCommas(stats.frontend.users) }</div>
-          <div>Servers: { Misc.AddCommas(stats.frontend.servers) }</div>
+        <div className="server-status-containers">
+          <div className="backend-container">
+            <h4 className="title">Backend Status</h4>
+            <div>Bungie API: { stats.backend.APIDisabled ? <span style={{ color: "tomato" }}>Offline</span> : <span style={{ color: "#259A58" }}>Online</span> }</div>
+            <div>Uptime: { stats.backend.uptime.displayValue }</div>
+            <div>Scan Time: { Misc.formatTime(stats.backend.scanTime / 1000) }</div>
+            <div>Last Scan: { stats.backend.lastScan.displayValue }</div>
+            <div>Total Scans: { Misc.AddCommas(stats.backend.scans) }</div>
+            <div>Max Scan Speed: { Misc.AddCommas(stats.backend.scanSpeed) } / sec</div>
+            <div>Current Scan Speed: { Misc.AddCommas(stats.backend.processingClans) } / sec</div>
+          </div>
+          <div className="frontend-container">
+            <h4 className="title">Frontend Status</h4>
+            <div>Marvin: <span style={{ color: "#259A58" }}>Online</span></div>
+            <div>Uptime: { stats.frontend.uptime.displayValue }</div>
+            <div>Commands: { stats.frontend.commandsInput }</div>
+            <div>Users: { Misc.AddCommas(stats.frontend.users) }</div>
+            <div>Servers: { Misc.AddCommas(stats.frontend.servers) }</div>
+          </div>
         </div>
       </div>
-    </div>
-  )
+    )
+  }
+  else { return <Error error="Failed to load..." /> }
 }
 
 //Make Charts
@@ -162,13 +166,16 @@ export async function buildStatusDataSet(parent) {
       stats.frontend = data[2].data;
       stats.backend = data[3].data;
 
-      //Format a little
-      stats.backend.lastScan = { value: stats.backend.lastScan, newValue: new Date().getTime(), displayValue: Misc.formatTime( stats.backend.lastScan / 1000) }
-      stats.backend.uptime = { value: stats.backend.uptime, displayValue: Misc.formatTime(stats.backend.uptime / 1000) }
-      stats.frontend.uptime =  { value: stats.frontend.uptime, displayValue: Misc.formatTime(stats.frontend.uptime / 1000) }
-    }).catch(async (err) => { console.log(err) });
+      if(stats.backend.APIDisabled !== undefined) {
+        //Format a little
+        stats.backend.lastScan = { value: stats.backend.lastScan, newValue: new Date().getTime(), displayValue: Misc.formatTime( stats.backend.lastScan / 1000) }
+        stats.backend.uptime = { value: stats.backend.uptime, displayValue: Misc.formatTime(stats.backend.uptime / 1000) }
+        stats.frontend.uptime =  { value: stats.frontend.uptime, displayValue: Misc.formatTime(stats.frontend.uptime / 1000) }
+      }
+    }).catch(async (err) => { console.log(err); });
+    if(stats.backend !== undefined) { return { logs, stats } }
+    else { return { logs: parent.state.logs, stats: parent.state.stats } }
 
-    return { logs, stats };
   }
   else {
     let logs = { frontend: null, backend: null, last_update: parent.state.logs.last_update }

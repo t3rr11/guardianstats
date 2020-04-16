@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Loader from '../../modules/Loader';
 import * as Misc from '../../Misc';
 import * as UserStatistics from './GenerateUserStatistics';
+import * as UserDetails from './GenerateUserDetails';
 import * as loadBreaks from '../../scripts/Loadbreaks';
 import * as globals from '../../scripts/Globals';
 import * as bungie from '../../requests/BungieReq';
@@ -46,7 +47,7 @@ export class ProfileCard extends Component {
     var characterId = this.state.profileCard.characterId;
     var membershipId = this.state.profileCard.membershipId;
     var membershipType = this.state.profileCard.membershipType;
-    var profileInfo, historicStats, metrics, statusTags;
+    var profileInfo, historicStats, metrics, titles, statusTags;
     var allActivities = [];
     if(previousProfileCards.find(e => e.membershipId === membershipId)) {
       //Found account, load old data to save requests and time.
@@ -63,7 +64,7 @@ export class ProfileCard extends Component {
         //Found account now get the profile information.
         this.setState({ status: { status: 'grabbingAccountInfo', statusText: "Getting account information..." } });
         await Promise.all([
-          bungie.GetProfile(membershipType, membershipId, '100,200,202,1100'),
+          bungie.GetProfile(membershipType, membershipId, '100,200,202,900,1100'),
           bungie.GetHistoricStatsForAccount(membershipType, membershipId),
           api.CheckIfPatreon(membershipId)
         ]).then(async function(promiseData) {
@@ -170,6 +171,7 @@ export class ProfileCard extends Component {
               <h5 id="season-rank"><span id="season-rank-icon">SR</span>{ profileInfo.metrics.data.metrics[2076844101].objectiveProgress.progress }</h5>
             </div>
             <div className="profile-card-info">
+              <div className="inspectTitles"> { UserDetails.getTitles(profileInfo) } </div>
               { UserStatistics.generateRanks(profileInfo, 100) }
               <div className="profile-card-sub-info">
                 <a href={`/activities/${ membershipId }`} id="full-view-btn">View Activities</a>
