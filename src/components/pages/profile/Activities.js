@@ -25,7 +25,6 @@ export class Activities extends Component {
     profile: null,
     activities: { },
     currentActivity : null,
-    profileCard: null,
     filter: "None",
     filteredMode: "All"
   }

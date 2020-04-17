@@ -104,11 +104,11 @@ h3::selection { background-color: rgba(0.2, 0.2, 0.2, 0.2); }
 /* Marvins Page End */
 
 /* Marvins Dashboard Start */
-  .marvins_dashboard { padding-top: 60px; background: rgba(0,0,0,0.3); height: 100%; }
+  .marvins_dashboard { padding-top: 60px; background: var(--DarkNavyBlue); height: 100%; }
   .marvins_dashboard > .marvins_header { display: grid; grid-template-columns: 50% 50%; }
   .marvins_dashboard > .marvins_header > h1 { margin-left: 16px; }
   .marvins_dashboard > .marvins_header > h5 { text-align: right; margin-right: 16px; }
-  .marvins_dashboard_content_container { display: grid; grid-template-columns: 200px auto; }
+  .marvins_dashboard_content_container { display: grid; grid-template-columns: 170px auto; }
   .marvins_dashboard_menu { display: grid; height: 170px; }
   .marvins_dashboard_menu > .marvins_dashboard_menu_item { width: fit-content; }
   .marvins_dashboard_menu > .marvins_dashboard_menu_item.selected > img { cursor: pointer; width: 85px; height: 85px; padding: 0px; filter: var(--BlueFilter); }
@@ -138,6 +138,9 @@ h3::selection { background-color: rgba(0.2, 0.2, 0.2, 0.2); }
     display: grid;
     grid-template-columns: 380px 260px 240px 240px;
   }
+  .marvin_clan_settings > div > .btn {
+    cursor: pointer;
+  }
   #blacklist { text-align: center; display: grid; grid-template-rows: 25px; }
   #blacklist > div > div {
     display: inline-block;
@@ -160,7 +163,60 @@ h3::selection { background-color: rgba(0.2, 0.2, 0.2, 0.2); }
     -webkit-user-select: none;
     -moz-user-select: none;
   }
-
+  .marvin_clan_info {
+    display: grid;
+    grid-template-columns: auto 120px;
+  }
+  .rankings_title {
+    display: grid;
+    grid-template-columns: auto 80px 130px 100px 110px 100px 100px 190px 180px;
+    font-weight: bold;
+    border-top: 1px var(--LightNavyBlue) solid;
+    border-bottom: 1px var(--LightNavyBlue) solid;
+  }
+  .rankings_title > div {
+    padding: 5px 20px;
+    margin-left: -20px;
+    margin-right: 20px;
+    position: relative;
+  }
+  .rankings_title > div:last-child { margin-right: 0px; }
+  .rankings_title > div > div {
+    display: inline-block;
+    padding-right: 5px;
+  }
+  .rankings_title > div > .caret_down {
+    background-image: url("/images/icons/arrow.png");
+    background-size: 15px 15px;
+    transform: rotate(270deg);
+    position: absolute;
+    top: 9px;
+    height: 15px;
+    width: 15px;
+  }
+  .rankings_title > div > .caret_up {
+    background-image: url("/images/icons/arrow.png");
+    background-size: 15px 15px;
+    transform: rotate(90deg);
+    position: absolute;
+    top: 9px;
+    height: 15px;
+    width: 15px;
+  }
+  .rankings_title > div:hover {
+    background-color: var(--NavyBlue);
+    cursor: pointer;
+    color: #c7c7c7;
+  }
+  .clan_member {
+    display: grid;
+    grid-template-columns: auto 80px 130px 100px 110px 100px 100px 190px 180px;
+    margin-bottom: 1px;
+    padding: 5px 2px;
+    border-bottom: 1px var(--LightNavyBlue) solid;
+  }
+  .clan_member > div { padding-left: 2px; }
+  .clan_member > div:first-child { padding-left: 0px; }
   .customCheck {
     display: block;
     position: relative;
@@ -208,19 +264,19 @@ h3::selection { background-color: rgba(0.2, 0.2, 0.2, 0.2); }
     text-align: center;
     float: left;
   }
-  .clanBannerContainer {
+  .clan_banner_container {
     position: absolute;
-    width: 200px;
+    width: 100px;
     right: 0;
     display: grid;
-    grid-template-columns: auto auto;
+    grid-template-columns: auto;
   }
-  .clanBanner { width: 66px; height: 110px; }
-  .clanBanner > canvas { position: absolute; height: 130px; }
-  .clanStaff { position: absolute; width: 130px; }
+  .clan_banner { width: 66px; height: 110px; margin-bottom: 10px; }
+  .clan_banner > canvas { position: absolute; height: 130px; }
+  .clan_staff { position: absolute; width: 130px; }
   .gonfalon { position: absolute; width: 130px; }
-  .gonfalonDetail { position: absolute; width: 130px; }
-  .gonfalonDecal { position: absolute; width: 130px; }
+  .gonfalon_detail { position: absolute; width: 130px; }
+  .gonfalon_decal { position: absolute; width: 130px; }
   @keyframes fadeInRight { 0% { opacity: 0; transform: translateX(20px); } 100% { opacity: 1; transform: translateX(0); } }
 /* Marvins Dashboard End */
 

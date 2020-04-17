@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Loader from '../../modules/Loader';
 import * as Misc from '../../Misc';
-import * as ChartGen from './ChartGen';
+import * as ChartGen from './GenerateChart';
 
 let graphUpdateTimer = null;
 let updatingGraphs = false;
