@@ -108,14 +108,22 @@ export class Dashboard extends Component {
     }
     this.setState({ status: { status: 'ready', statusText: 'Finished loading' }, all_clan_members: all_clan_members });
   }
-  saveServerDetails(new_server_info) {
-    console.log(new_server_info);
+  async saveServerDetails(new_server_info) {
+    const server_response = await Api.UpdateServerInfo(new_server_info);
+    if(!server_response.error) {
+      if(server_response.data === "Successfully updated guild information...") {
+        var saved_alert_div = document.getElementById('saved_successfully_alert');
+        saved_alert_div.classList.toggle('show');
+        setTimeout(() => { saved_alert_div.classList.toggle('show') }, 1500);
+      }
+      else { console.log(server_response); }
+    }
+    else { console.log(server_response); }
   }
 
   render() {
     const { status, statusText } = this.state.status;
     const { discord_servers, users_servers, selected_discord_server, selected_user_server, all_clan_members, failed } = this.state;
-    console.log(discord_servers);
     if(status === 'error') { return <Error error={ statusText } /> }
     else if(status === "pickServer") {
       return (

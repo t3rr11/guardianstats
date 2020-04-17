@@ -14,7 +14,6 @@ export class ClanMemberRankings extends Component {
     this.sortRankings(this.state.sortBy);
   }
   async sortRankings(type) {
-    console.log(type);
     let clan_members = this.state.clan_members;
     clan_members.sort((a, b) => { return b[type] - a[type] });
     this.setState({ sortBy: type, clan_members });

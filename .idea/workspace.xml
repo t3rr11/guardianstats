@@ -19,14 +19,12 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bf2bef26-5fa9-4095-83c2-a74f707f2bea" name="Default Changelist" comment="Added titles to the profile cards">
-      <change beforePath="$PROJECT_DIR$/src/components/pages/marvin/ChartGen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/pages/marvin/GenerateChart.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/pages/marvin/ClanBanner.js" beforeDir="false" />
+    <list default="true" id="bf2bef26-5fa9-4095-83c2-a74f707f2bea" name="Default Changelist" comment="Major updates to the dashboard. Almost finished.">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/pages/marvin/ClanMemberRankings.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/pages/marvin/ClanMemberRankings.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/pages/marvin/Dashboard.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/pages/marvin/Dashboard.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/pages/marvin/MarvinStatus.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/pages/marvin/MarvinStatus.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/pages/profile/Activities.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/pages/profile/Activities.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/pages/marvin/DashboardSettings.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/pages/marvin/DashboardSettings.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/requests/Api.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/requests/Api.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/requests/DiscordAuth.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/requests/DiscordAuth.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/css/marvin.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/css/marvin.css" afterDir="false" />
     </list>
     <list id="9379f175-2041-40bd-bbae-72640c9b786d" name="Revert &quot;Updated the status page quite dramatically. Much better.&quot;" comment="Revert &quot;Updated the status page quite dramatically. Much better.&quot;&#10;&#10;This reverts commit e125cfb8" />
@@ -103,7 +101,7 @@
       <workItem from="1586832182068" duration="15803000" />
       <workItem from="1586946649308" duration="1449000" />
       <workItem from="1587041334393" duration="2752000" />
-      <workItem from="1587080655105" duration="32111000" />
+      <workItem from="1587080655105" duration="35565000" />
     </task>
     <task id="LOCAL-00001" summary="Updated logging data to be raw timestamps">
       <created>1586678348016</created>
@@ -161,7 +159,21 @@
       <option name="project" value="LOCAL" />
       <updated>1587044586814</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Major updates to the dashboard. Almost finished.">
+      <created>1587133633853</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1587133633853</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Major updates to the dashboard. Almost finished.">
+      <created>1587133668792</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1587133668792</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -217,7 +229,8 @@
     <MESSAGE value="Removed unnecessary code v2" />
     <MESSAGE value="Graph titles fixed and some positioning changes." />
     <MESSAGE value="Added titles to the profile cards" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added titles to the profile cards" />
+    <MESSAGE value="Major updates to the dashboard. Almost finished." />
+    <option name="LAST_COMMIT_MESSAGE" value="Major updates to the dashboard. Almost finished." />
   </component>
   <component name="WindowStateProjectService">
     <state x="718" y="216" key="#CSS" timestamp="1586829041324">
@@ -276,9 +289,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="775" y="434" key="VCS.EditChangelistDialog/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1586678378842" />
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1587044589594">
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1587133675964">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040/1920.0.1920.1040/-1920.104.1920.1040@0.0.1920.1040" timestamp="1587133675964" />
     <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1586864698997" />
     <state x="552" y="253" key="Vcs.Push.Dialog.v2/1920.0.1920.1040/-1920.104.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1587044589594" />
     <state x="769" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1586831790129">

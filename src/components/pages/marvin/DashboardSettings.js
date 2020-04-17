@@ -46,6 +46,7 @@ export class DashboardSettings extends Component {
               <span className="checkmark"></span>
             </label>
             <div className="btn btn-primary" onClick={ (() => this.props.saveServerDetails(current_clan)) }>Save</div>
+            <div id="saved_successfully_alert">Saved!</div>
           </div>
           {
             JSON.parse(current_clan.enable_whitelist) ?

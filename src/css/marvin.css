@@ -217,6 +217,14 @@ h3::selection { background-color: rgba(0.2, 0.2, 0.2, 0.2); }
   }
   .clan_member > div { padding-left: 2px; }
   .clan_member > div:first-child { padding-left: 0px; }
+  #saved_successfully_alert {
+    display: inline-block;
+    padding-left: 10px;
+    color: #007bff;
+    transition: opacity 0.5s;
+    opacity: 0;
+  }
+  #saved_successfully_alert.show { opacity: 1; }
   .customCheck {
     display: block;
     position: relative;
