@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="bf2bef26-5fa9-4095-83c2-a74f707f2bea" name="Default Changelist" comment="Added titles to the profile cards">
+      <change beforePath="$PROJECT_DIR$/src/components/pages/marvin/ChartGen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/pages/marvin/GenerateChart.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/pages/marvin/ClanBanner.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/pages/marvin/Dashboard.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/pages/marvin/Dashboard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/pages/marvin/MarvinStatus.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/pages/marvin/MarvinStatus.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/pages/profile/Activities.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/pages/profile/Activities.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/requests/Api.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/requests/Api.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/requests/DiscordAuth.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/requests/DiscordAuth.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/css/marvin.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/css/marvin.css" afterDir="false" />
+    </list>
+    <list id="9379f175-2041-40bd-bbae-72640c9b786d" name="Revert &quot;Updated the status page quite dramatically. Much better.&quot;" comment="Revert &quot;Updated the status page quite dramatically. Much better.&quot;&#10;&#10;This reverts commit e125cfb8" />
+    <list id="2fceacde-cc58-484f-82ed-f856f8894b4f" name="Updated logging data to be raw timestamps" comment="Updated logging data to be raw timestamps" />
+    <list id="48dda601-0711-4663-8c72-ba59311c1a10" name="Updated the status page quite dramatically. Much better." comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="hiddenUrls">
+      <set>
+        <option value="https://github.com/t3rr11/Marvin.git" />
+        <option value="https://github.com/t3rr11/guardianstats.git" />
+      </set>
+    </option>
+  </component>
+  <component name="ProjectId" id="1aNPZw21rl6iYE4lY1aSzgUswER" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
+    <property name="ts.external.directory.path" value="C:\Program Files\JetBrains\WebStorm 2020.1\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
+  </component>
+  <component name="RunManager">
+    <configuration name="build" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="build" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="npm.build" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="bf2bef26-5fa9-4095-83c2-a74f707f2bea" name="Default Changelist" comment="" />
+      <changelist id="2fceacde-cc58-484f-82ed-f856f8894b4f" name="Updated logging data to be raw timestamps" comment="" />
+      <changelist id="48dda601-0711-4663-8c72-ba59311c1a10" name="Updated the status page quite dramatically. Much better." comment="" />
+      <created>1586573136682</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1586573136682</updated>
+      <workItem from="1586573139452" duration="47488000" />
+      <workItem from="1586832182068" duration="15803000" />
+      <workItem from="1586946649308" duration="1449000" />
+      <workItem from="1587041334393" duration="2752000" />
+      <workItem from="1587080655105" duration="32111000" />
+    </task>
+    <task id="LOCAL-00001" summary="Updated logging data to be raw timestamps">
+      <created>1586678348016</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1586678348016</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Updated logging data to be raw timestamps">
+      <created>1586678715705</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1586678715705</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Updated the status page quite dramatically. Much better.">
+      <created>1586831860931</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1586831860931</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Added 3 new items to the Marvin's tracking.">
+      <created>1586832100957</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1586832100957</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Removed unnecessary duplicate code.">
+      <created>1586844612951</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1586844612951</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Removed unnecessary code v2">
+      <created>1586844969886</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1586844969886</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Graph titles fixed and some positioning changes.">
+      <created>1586864697382</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1586864697382</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Added titles to the profile cards">
+      <created>1587044586814</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1587044586814</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="2" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="1">
+          <value>
+            <State>
+              <option name="SHOW_ONLY_AFFECTED_CHANGES" value="true" />
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="HEAD" />
+                      </list>
+                    </value>
+                  </entry>
+                  <entry key="roots">
+                    <value>
+                      <list>
+                        <option value="$PROJECT_DIR$/../../../Discord Bots/Marvin" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="OPEN_GENERIC_TABS">
+      <map>
+        <entry key="1" value="TOOL_WINDOW" />
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Updated logging data to be raw timestamps" />
+    <MESSAGE value="Updated the status page quite dramatically. Much better." />
+    <MESSAGE value="Added 3 new items to the Marvin's tracking." />
+    <MESSAGE value="Removed unnecessary duplicate code." />
+    <MESSAGE value="Removed unnecessary code v2" />
+    <MESSAGE value="Graph titles fixed and some positioning changes." />
+    <MESSAGE value="Added titles to the profile cards" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added titles to the profile cards" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="718" y="216" key="#CSS" timestamp="1586829041324">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="718" y="216" key="#CSS/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1586829041324" />
+    <state x="698" y="229" key="#JavaScript" timestamp="1586574556359">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="698" y="229" key="#JavaScript/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1586574556359" />
+    <state x="686" y="322" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1587113915393">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="686" y="322" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1920.1040/1920.0.1920.1040/-1920.104.1920.1040@0.0.1920.1040" timestamp="1587113915393" />
+    <state x="563" y="116" key="CommitChangelistDialog2" timestamp="1586831904044">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="563" y="116" key="CommitChangelistDialog2/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1586831904044" />
+    <state x="95" y="102" width="1736" height="856" key="DiffContextDialog" timestamp="1586678560618">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="95" y="102" width="1736" height="856" key="DiffContextDialog/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1586678560618" />
+    <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1586651884997">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1586651884997" />
+    <state width="1899" height="282" key="GridCell.Tab.0.bottom" timestamp="1587045672262">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1899" height="282" key="GridCell.Tab.0.bottom/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1586925419032" />
+    <state width="1899" height="282" key="GridCell.Tab.0.bottom/1920.0.1920.1040/-1920.104.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1587045672262" />
+    <state width="1899" height="282" key="GridCell.Tab.0.center" timestamp="1587045672262">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1899" height="282" key="GridCell.Tab.0.center/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1586925419031" />
+    <state width="1899" height="282" key="GridCell.Tab.0.center/1920.0.1920.1040/-1920.104.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1587045672262" />
+    <state width="1899" height="282" key="GridCell.Tab.0.left" timestamp="1587045672261">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1899" height="282" key="GridCell.Tab.0.left/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1586925419028" />
+    <state width="1899" height="282" key="GridCell.Tab.0.left/1920.0.1920.1040/-1920.104.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1587045672261" />
+    <state width="1899" height="282" key="GridCell.Tab.0.right" timestamp="1587045672262">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1899" height="282" key="GridCell.Tab.0.right/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1586925419031" />
+    <state width="1899" height="282" key="GridCell.Tab.0.right/1920.0.1920.1040/-1920.104.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1587045672262" />
+    <state x="541" y="135" key="SettingsEditor" timestamp="1586822672315">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="541" y="135" key="SettingsEditor/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1586822672315" />
+    <state x="807" y="434" key="VCS.ChangelistChooser" timestamp="1586831909776">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="807" y="434" key="VCS.ChangelistChooser/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1586831909776" />
+    <state x="775" y="434" key="VCS.EditChangelistDialog" timestamp="1586678378842">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="775" y="434" key="VCS.EditChangelistDialog/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1586678378842" />
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1587044589594">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1586864698997" />
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2/1920.0.1920.1040/-1920.104.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1587044589594" />
+    <state x="769" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1586831790129">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="769" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1586831790129" />
+    <state x="616" y="240" key="run.anything.popup" timestamp="1587106679304">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="616" y="240" key="run.anything.popup/0.0.1920.1040/1920.0.1920.1040/-1920.104.1920.1040@0.0.1920.1040" timestamp="1587106679304" />
+    <state x="616" y="240" key="run.anything.popup/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1586575538449" />
+  </component>
+</project>
