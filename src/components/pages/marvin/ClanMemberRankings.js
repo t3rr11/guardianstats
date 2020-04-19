@@ -36,10 +36,10 @@ export class ClanMemberRankings extends Component {
         </div>
         {
           clan_members.map((member) => {
-            let lastPlayed = new Date().getTime() - member.lastPlayed;
+            let lastPlayed = (new Date().getTime() - member.lastPlayed) / 1000;
             return (
               <div className="clan_member" key={ member.membershipId }>
-                <div>{ member.displayName } ({ member.clan_callsign })</div>
+                <div>{ member.displayName } (<span dangerouslySetInnerHTML={{ __html: member.clan_callsign }}></span>)</div>
                 <div>{ Misc.AddCommas(member.seasonRank) }</div>
                 <div>{ Misc.AddCommas(Math.round(member.timePlayed / 60)) } Hrs</div>
                 <div>{ Misc.AddCommas(member.valor) } ({ member.valorResets })</div>
@@ -47,7 +47,7 @@ export class ClanMemberRankings extends Component {
                 <div>{ Misc.AddCommas(member.glory) }</div>
                 <div>{ Misc.AddCommas(member.triumphScore) }</div>
                 <div>{ member.joinDate }</div>
-                <div>{ lastPlayed > 60000 ? Misc.formatTime(lastPlayed / 1000) : "Online" }</div>
+                <div>{ lastPlayed > 300 ? (`${ Misc.formatTime(lastPlayed) } ago`) : ( "Online" ) }</div>
               </div>
             )
           })

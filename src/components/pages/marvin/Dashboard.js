@@ -154,9 +154,6 @@ export class Dashboard extends Component {
     else if(status === 'ready') {
       return (
         <div className="marvins_dashboard">
-          <div className="marvins_header">
-            <h1>Marvins Dashboard</h1>
-          </div>
           <div className="marvins_dashboard_content_container">
             <div className="marvins_dashboard_menu">
               <div className="marvins_dashboard_menu_item selected" id="marvins_dashboard_info" onClick={ (e) => this.changeMenu(e) }>

@@ -384,17 +384,5 @@ h3::selection { background-color: rgba(0.2, 0.2, 0.2, 0.2); }
   .single-graph > div > .status-details > div {
     padding: 0px 10px;
   }
-  .profile-card-info > .inspectTitles {
-    height: 30px;
-    padding: 2px;
-    background-color: var(--DarkNavyBlue);
-    border-bottom: 1px var(--LightNavyBlue) solid;
-  }
-  .profile-card-info > .inspectTitles > .inspectTitleContainer > div {
-    height: 20px;
-    width: 20px;
-    background-repeat: no-repeat;
-    background-size: contain;
-  }
 
 /* Marvins Status End */

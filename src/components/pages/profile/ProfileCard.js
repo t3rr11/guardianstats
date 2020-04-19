@@ -47,7 +47,7 @@ export class ProfileCard extends Component {
     var characterId = this.state.profileCard.characterId;
     var membershipId = this.state.profileCard.membershipId;
     var membershipType = this.state.profileCard.membershipType;
-    var profileInfo, historicStats, metrics, titles, statusTags;
+    var profileInfo, historicStats, metrics, timePlayed, statusTags;
     var allActivities = [];
     if(previousProfileCards.find(e => e.membershipId === membershipId)) {
       //Found account, load old data to save requests and time.
@@ -72,8 +72,11 @@ export class ProfileCard extends Component {
           //Variables
           profileInfo = promiseData[0];
           historicStats = promiseData[1];
+          timePlayed = 0;
           if(promiseData[2].data) { statusTags = Misc.convertStatusTags(promiseData[2].data[0]); } else { statusTags = Misc.convertStatusTags(); }
           var characterIds = profileInfo.profile.data.characterIds;
+
+          for(let i in characterIds) { timePlayed = parseInt(timePlayed) + parseInt(profileInfo.characters.data[characterIds[i]].minutesPlayedTotal); }
 
           //Loop through characters and get recent activities.
           if(characterIds.length === 1) {
@@ -119,7 +122,7 @@ export class ProfileCard extends Component {
             this.setState({
               status: {
                 status: 'ready', statusText: 'Finished the inspection! (You shouldn\'t see this unless something went wrong, Please refresh)' },
-                profileCard: { characterId, membershipId, membershipType, profileInfo, historicStats, statusTags, isHacker }
+                profileCard: { characterId, membershipId, membershipType, profileInfo, historicStats, statusTags, timePlayed, isHacker }
             });
           }
           else { this.setState({ status: { status: 'private', statusText: 'This user has their account privated. I wonder what they are hiding...' } }); }
@@ -135,7 +138,7 @@ export class ProfileCard extends Component {
   render() {
     const { status, statusText } = this.state.status;
     if(status === "ready") {
-      const { characterId, membershipId, membershipType, profileInfo, historicStats, statusTags, isHacker } = this.state.profileCard;
+      const { characterId, membershipId, membershipType, profileInfo, historicStats, statusTags, timePlayed, isHacker } = this.state.profileCard;
       const characterData = profileInfo.characters.data[characterId];
       const trialsWins = profileInfo.characterProgressions.data[characterId].progressions[1062449239].level;
       const trialsLoses = profileInfo.characterProgressions.data[characterId].progressions[2093709363].level;
@@ -167,6 +170,7 @@ export class ProfileCard extends Component {
                 </div>
               </div>
               <span id="character-class">{ Misc.getClassName(characterData.classType) }</span>
+              <span id="character-timePlayed">{ Misc.AddCommas(Math.round(timePlayed / 60)) } Hrs</span>
               <h3 id="character-light-level"><span id="light-level-icon">✧</span>{ characterData.light }</h3>
               <h5 id="season-rank"><span id="season-rank-icon">SR</span>{ profileInfo.metrics.data.metrics[2076844101].objectiveProgress.progress }</h5>
             </div>

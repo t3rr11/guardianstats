@@ -27,11 +27,12 @@ export function formatTime(TimeinSeconds) {
   sDisplay = seconds > 0 ? seconds + (seconds == 1 ? ' second ' : ' seconds ') : '';
 
   if (TimeinSeconds < 60) { return sDisplay; }
-  if (TimeinSeconds >= 60 && TimeinSeconds < 3600) { return mDisplay + sDisplay; }
+  if (TimeinSeconds >= 60 && TimeinSeconds < 3600) { return mDisplay; }
   if (TimeinSeconds >= 3600 && TimeinSeconds < 86400) { return hDisplay + mDisplay; }
   if (TimeinSeconds >= 86400 && TimeinSeconds < 604800) { return dDisplay + hDisplay; }
   if (TimeinSeconds >= 604800 && TimeinSeconds < 2624832) { return wDisplay + dDisplay; }
-  if (TimeinSeconds >= 2624832 && TimeinSeconds !== Infinity) { return MDisplay + wDisplay + dDisplay; }
+  if (TimeinSeconds >= 2624832 && TimeinSeconds < 31497984) { return MDisplay + wDisplay; }
+  if (TimeinSeconds >= 31497984 && TimeinSeconds !== Infinity) { return YDisplay + MDisplay; }
   return YDisplay + MDisplay + wDisplay + dDisplay + hDisplay + mDisplay + sDisplay;
 }
 export function formatSmallTime(TimeinSeconds) {
