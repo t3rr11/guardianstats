@@ -86,8 +86,8 @@ export class ActivityCard extends Component {
                 <div className="status-tags">
                   {
                     Object.keys(statusTags).map((statusTag) => {
-                      if(statusTags[statusTag].hasLink) { return ( statusTags[statusTag].hasTag ? (<div id={ statusTags[statusTag].id }><a href={ statusTags[statusTag].link } target="_blank">{ statusTags[statusTag].name }</a></div>) : null ) }
-                      else { return ( statusTags[statusTag].hasTag ? (<div id={ statusTags[statusTag].id }>{ statusTags[statusTag].name }</div>) : null ) }
+                      if(statusTags[statusTag].hasLink) { return ( statusTags[statusTag].hasTag ? (<div id={ statusTags[statusTag].id } key={ statusTags[statusTag].id }><a href={ statusTags[statusTag].link } target="_blank">{ statusTags[statusTag].name }</a></div>) : null ) }
+                      else { return ( statusTags[statusTag].hasTag ? (<div id={ statusTags[statusTag].id } key={ statusTags[statusTag].id }>{ statusTags[statusTag].name }</div>) : null ) }
                     })
                   }
                 </div>

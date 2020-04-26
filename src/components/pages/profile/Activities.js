@@ -17,6 +17,7 @@ var isMounted = true;
 export class Activities extends Component {
 
   PGCRs = { }
+  CompletionReasons = { }
 
   state = {
     status: { error: null, status: 'startUp', statusText: '' },
@@ -122,6 +123,11 @@ export class Activities extends Component {
       if(i < amount) {
         bungie.GetPGCR(activities[i].activityDetails.instanceId).then((pgcr) => { //eslint-disable-line no-loop-func
           count++;
+          for(let i in pgcr.entries) {
+            let completionReason = pgcr.entries[i].values.completionReason.basic;
+            if(!this.CompletionReasons[completionReason.value]) { this.CompletionReasons[completionReason.value] = []; }
+            this.CompletionReasons[completionReason.value].push(completionReason.displayValue);
+          }
           this.setState({ status: { status: 'gettingPGCRs', 'statusText': `Getting battle reports ${ count } / ${ amount }` } });
           this.PGCRs[pgcr.activityDetails.instanceId] = pgcr;
           if(count === amount) {
@@ -130,17 +136,23 @@ export class Activities extends Component {
               currentActivity: parseInt(activities[0].activityDetails.instanceId)
             });
             console.log("Finished Grabbing PGCRs...");
+            console.log(this.CompletionReasons);
           }
-        }, this);
+        });
       }
       else {
         if(isMounted) {
           await bungie.GetPGCR(activities[i].activityDetails.instanceId).then((pgcr) => { //eslint-disable-line no-loop-func
             overflowCount++;
+            for(let i in pgcr.entries) {
+              let completionReason = pgcr.entries[i].values.completionReason.basic;
+              if(!this.CompletionReasons[completionReason.value]) { this.CompletionReasons[completionReason.value] = []; }
+              this.CompletionReasons[completionReason.value].push(completionReason.displayValue);
+            }
             this.PGCRs[pgcr.activityDetails.instanceId] = pgcr;
             if(this.state.currentActivity == pgcr.activityDetails.instanceId) { this.makeActiveDisplay(this.state.currentActivity); }
-            if(overflowCount === activities.length) { console.log("Finished loading background activities..."); }
-          }, this);
+            if(overflowCount === activities.length) { console.log("Finished loading background activities..."); console.log(this.CompletionReasons); }
+          });
         }
       }
     }
