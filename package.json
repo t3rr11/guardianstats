@@ -7,15 +7,15 @@
     "axios": "^0.19.2",
     "dexie": "^2.0.4",
     "js-cookie": "^2.2.1",
-    "query-string": "^6.11.0",
+    "query-string": "^6.13.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-gesture-gallery": "^1.1.0",
     "react-gesture-responder": "^2.1.0",
     "react-lottie": "^1.2.3",
     "react-redux": "^7.2.0",
-    "react-router-dom": "^5.1.2",
-    "react-scripts": "3.0.1",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "^3.4.1",
     "react-vis": "^1.11.7"
   },
   "scripts": {
@@ -42,9 +42,9 @@
     ]
   },
   "devDependencies": {
-    "@babel/core": "^7.9.0",
-    "@babel/node": "^7.8.7",
-    "@babel/preset-env": "^7.9.0",
+    "@babel/core": "^7.10.2",
+    "@babel/node": "^7.10.1",
+    "@babel/preset-env": "^7.10.2",
     "gh-pages": "^2.2.0",
     "react-router-sitemap": "^1.2.0"
   }

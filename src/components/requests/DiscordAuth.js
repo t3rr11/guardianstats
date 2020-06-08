@@ -12,7 +12,7 @@ var discord_webhooks_url = "https://discordapp.com/api/webhooks";
 const encodedAuth = 'Basic ' + new Buffer(`${ client_id }:${ client_secret }`).toString('base64');
 
 export function linkWithDiscord() {
-  if(process.env.NODE_ENV === 'development') { window.location.href = `${ discord_login_url }?client_id=${ client_id }&redirect_uri=http://localhost:3000/dashboard&response_type=code&scope=${ encodeURI(scope) }`; }
+  if(process.env.NODE_ENV === 'development') { window.location.href = `${ discord_login_url }?client_id=${ client_id }&redirect_uri=${ redirect_uri }&response_type=code&scope=${ encodeURI(scope) }`; }
   else { window.location.href = `${ discord_login_url }?client_id=${ client_id }&redirect_uri=${ redirect_uri }&response_type=code&scope=${ encodeURI(scope) }`; }
 }
 
@@ -21,7 +21,7 @@ export async function getAccessToken(code) {
   fetch(discord_token_url, {
     method: 'POST',
     headers: new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' }),
-    body: `client_id=${client_id}&client_secret=${client_secret}&grant_type=authorization_code&code=${code}&redirect_uri=http://localhost:3000/dashboard&scope=${ encodeURI(scope) }`
+    body: `client_id=${client_id}&client_secret=${client_secret}&grant_type=authorization_code&code=${code}&redirect_uri=${redirect_uri}&scope=${ encodeURI(scope) }`
   })
   .then(async (response) => {
     response = JSON.parse(await response.text());
@@ -69,7 +69,7 @@ export async function RenewToken() {
   fetch(`https://discordapp.com/api/oauth2/token`, {
     method: 'POST',
     headers: new Headers({ 'Content-Type': 'application/x-www-form-urlencoded', }),
-    body: `client_id=${client_id}&client_secret=${client_secret}&grant_type=refresh_token&refresh_token=${ discordAuth.refresh_token }&redirect_uri=http://localhost:3000/dashboard&scope=${encodeURI(scope)}`
+    body: `client_id=${client_id}&client_secret=${client_secret}&grant_type=refresh_token&refresh_token=${ discordAuth.refresh_token }&redirect_uri=${ redirect_uri }&scope=${encodeURI(scope)}`
   })
   .then(async (response) => {
     response = JSON.parse(await response.text());

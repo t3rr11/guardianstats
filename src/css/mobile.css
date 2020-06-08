@@ -238,6 +238,7 @@
     .leftActivityContainer { grid-template-columns: 45px auto 45px 85px !important; }
     .activityTitle > span { width: 150px !important; }
     .activityTimePlayed { display: none !important; }
+    .getMarvinBtn { display: none; }
   /* Activities end */
 }
 @media only screen and (max-width: 400px) {

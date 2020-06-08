@@ -4,8 +4,9 @@ import * as Misc from '../../Misc';
 import * as ChartGen from './GenerateChart';
 
 let graphUpdateTimer = null;
-let updatingGraphs = false;
 let statusUpdateTimer = null;
+let updatingGraphs = false;
+let updatingStatus = false;
 
 export class Status extends Component {
 
@@ -13,7 +14,6 @@ export class Status extends Component {
     status: { error: null, status: 'startUp', statusText: 'Checking status...' },
     currentChart: 'overview',
     charts: null,
-    logs: null,
     stats: null,
     last_update: 0
   }
@@ -21,21 +21,25 @@ export class Status extends Component {
   async componentDidMount() {
     document.title = "Status - Guardianstats";
     await this.buildCharts();
+    await this.buildStatus();
+    this.setState({ status: { status: 'ready', statusText: 'Finished loading...' } });
+  }
+  async componentWillUnmount() {
+    clearInterval(graphUpdateTimer);
+    clearInterval(statusUpdateTimer);
+    graphUpdateTimer = null;
+    statusUpdateTimer = null;
   }
   async buildCharts() {
     let currentChart = 'overview'; if(localStorage.getItem("currentChart")) { currentChart = localStorage.getItem("currentChart") }
-    let charts, last_update, logs, stats;
-    await Promise.all([
-      await ChartGen.buildGraphDataSet(),
-      await ChartGen.buildStatusDataSet(this)
-    ]).then(async (data) => {
-      charts = data[0].charts;
-      last_update = data[0].last_update;
-      logs = data[1].logs;
-      stats = data[1].stats;
-    }).catch(async (err) => { console.log(err); this.setState({ status: { status: 'error', statusText: 'Failed to get graph data from server... Error logged in console.' } }) });
-    this.setState({ status: { status: 'ready', statusText: 'Finished loading...' }, currentChart, charts, logs, stats, last_update });
-    this.startTimers();
+    const { charts, last_update } = await ChartGen.buildGraphDataSet();
+    this.setState({ currentChart, charts, last_update });
+    this.startTimer("graph");
+  }
+  async buildStatus() {
+    const stats = await ChartGen.GetStatus();
+    this.setState({ stats });
+    this.startTimer("status");
   }
   onNearestX = (value, { index, event }) => {
     let charts = this.state.charts;
@@ -53,21 +57,39 @@ export class Status extends Component {
     localStorage.setItem("currentChart", chart);
     this.setState({ currentChart: chart });
   }
-  startTimers() {
-    if(graphUpdateTimer === null) { graphUpdateTimer = setInterval((e) => { if(new Date().getTime() - (this.state.last_update + 605000) > 0 && !updatingGraphs) { this.updateGraphs(); } }, 1000) }
-    if(statusUpdateTimer === null) { statusUpdateTimer = setInterval((e) => { this.updateStatus() }, 1000) }
+  startTimer(timer) {
+    if(timer === "graph") {
+      if(graphUpdateTimer === null) {
+        graphUpdateTimer = setInterval((e) => {
+          if(new Date().getTime() - (this.state.last_update + 605000) > 0 && !updatingGraphs) {
+            this.updateGraphs();
+          }
+        }, 1000);
+      }
+    }
+    else if(timer === "status") {
+      if(statusUpdateTimer === null) {
+        statusUpdateTimer = setInterval((e) => {
+          if(!updatingStatus) {
+            this.updateStatus();
+          }
+        }, 60000);
+      }
+    }
   }
   async updateGraphs() {
     updatingGraphs = true;
     const { charts, last_update } = await ChartGen.buildGraphDataSet();
-    if(this.state.last_update !== last_update) { this.setState({ status: { status: 'ready', statusText: 'Finished loading...' }, charts, last_update }) }
     this.setState({ status: { status: 'ready', statusText: 'Finished loading...' }, charts, last_update });
     console.log(new Date().toLocaleString() + ": Updated Graphs");
     updatingGraphs = false;
   }
   async updateStatus() {
-    const { logs, stats } = await ChartGen.buildStatusDataSet(this);
-    this.setState({ status: { status: 'ready', statusText: 'Finished loading...' }, logs, stats });
+    updatingStatus = true;
+    const stats = await ChartGen.GetStatus();
+    this.setState({ status: { status: 'ready', statusText: 'Finished loading...' }, stats });
+    console.log(new Date().toLocaleString() + ": Updated Status");
+    updatingStatus = false;
   }
 
   render() {
