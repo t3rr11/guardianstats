@@ -358,18 +358,75 @@ h3::selection { background-color: rgba(0.2, 0.2, 0.2, 0.2); }
     font-size: 14px;
     grid-template-columns: auto auto;
   }
-  .server-status-containers > div {
-    width: 250px;
-    height: fit-content;
+  .server-status-containers {
+    display: grid;
+    grid-template-columns: 325px 325px;
+    grid-template-rows: auto auto auto auto;
+  }
+  .server-status-containers > .report-container {
+    width: 640px;
+    height: auto;
+    display: grid;
+    grid-column: span 2;
+    grid-template-columns: 325px 325px;
+    grid-template-rows: auto auto auto auto;
+  }
+  .report-container > #report-info {
+    width: 640px;
+    background-color: var(--NavyBlue);
+    grid-column: span 2;
+    border: 1px var(--LightNavyBlue) solid;
+    padding: 10px;
+    margin: 0px 5px;
+  }
+  .report-container > #most-used-commands {
+    width: 320px;
     background-color: var(--NavyBlue);
     border: 1px var(--LightNavyBlue) solid;
-    display: block;
-    margin: 5px;
     padding: 10px;
+    margin: 0px 5px;
+  }
+  .report-container > #most-used-commands-session {
+    width: 315px;
+    background-color: var(--NavyBlue);
+    border: 1px var(--LightNavyBlue) solid;
+    padding: 10px;
+    margin: 0px 5px;
+  }
+  .report-container > #most-seasonal-item-broadcasts {
+    width: 320px;
+    background-color: var(--NavyBlue);
+    border: 1px var(--LightNavyBlue) solid;
+    padding: 10px;
+    margin: 5px;
+  }
+  .report-container > #most-seasonal-title-broadcasts {
+    width: 315px;
+    background-color: var(--NavyBlue);
+    border: 1px var(--LightNavyBlue) solid;
+    padding: 10px;
+    margin: 5px;
+  }
+  .report-container > #frontend-container {
+    width: 315px;
+    height: 200px;
+    background-color: var(--NavyBlue);
+    border: 1px var(--LightNavyBlue) solid;
+    float: right;
+    padding: 10px;
+    margin: 5px;
+  }
+  .report-container > #backend-container {
+    width: 320px;
+    height: 200px;
+    background-color: var(--NavyBlue);
+    border: 1px var(--LightNavyBlue) solid;
+    padding: 10px;
+    margin: 5px;
   }
   .overview-graphs {
     display: grid;
-    grid-template-columns: 350px 350px 350px 350px;
+    grid-template-columns: 350px 350px 350px;
   }
   .single-graph {
     display: inline-block;
