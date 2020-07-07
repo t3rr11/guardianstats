@@ -80,15 +80,14 @@ export class Status extends Component {
   async updateGraphs() {
     updatingGraphs = true;
     const { charts, last_update } = await ChartGen.buildGraphDataSet();
-    this.setState({ status: { status: 'ready', statusText: 'Finished loading...' }, charts, last_update });
+    this.setState({ charts, last_update });
     console.log(new Date().toLocaleString() + ": Updated Graphs");
     updatingGraphs = false;
   }
   async updateStatus() {
     updatingStatus = true;
     const stats = await ChartGen.GetStatus();
-    this.setState({ status: { status: 'ready', statusText: 'Finished loading...' }, stats });
-    console.log(new Date().toLocaleString() + ": Updated Status");
+    if(!stats.error) { this.setState({ stats }); console.log(new Date().toLocaleString() + ": Updated Status"); }
     updatingStatus = false;
   }
 

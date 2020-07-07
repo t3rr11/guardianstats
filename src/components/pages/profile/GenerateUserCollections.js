@@ -27,7 +27,6 @@ export function generate(profileInfo, Manifest) {
                             <div className="inspectCollectibleItemInfo">
                               { getItemInfo(ManifestCollectibles, collectible.collectibleHash, "name") }
                               { getItemInfo(ManifestCollectibles, collectible.collectibleHash, "description") }
-                              { getItemInfo(ManifestCollectibles, collectible.collectibleHash, "requirements") }
                             </div>
                           </div>
                         ))

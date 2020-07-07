@@ -172,7 +172,7 @@ export class ProfileCard extends Component {
               <span id="character-class">{ Misc.getClassName(characterData.classType) }</span>
               <span id="character-timePlayed">{ Misc.AddCommas(Math.round(timePlayed / 60)) } Hrs</span>
               <h3 id="character-light-level"><span id="light-level-icon">✧</span>{ characterData.light }</h3>
-              <h5 id="season-rank"><span id="season-rank-icon">SR</span>{ profileInfo.metrics.data.metrics[2076844101].objectiveProgress.progress }</h5>
+              <h5 id="season-rank"><span id="season-rank-icon">SR</span>0</h5>
             </div>
             <div className="profile-card-info">
               <div className="inspectTitles"> { UserDetails.getTitles(profileInfo) } </div>

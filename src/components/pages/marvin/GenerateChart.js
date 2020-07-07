@@ -47,39 +47,81 @@ export function generateChartPage(parent) {
   }
 }
 export function generateOverviewChart(parent) {
-  let stats = parent.state.stats.data.status;
+  let report = parent.state.stats.data;
+  let status = report.status;
   return (
     <div className="overview-container">
       <div className="overview-statistics">
         <div className="server-status-containers">
           <div className="report-container">
-            <h4 className="title">Marvin Report</h4>
-            <div>Report data here... Still under construction obviously, Working on backend.</div>
-          </div>
-          <div className="backend-container">
-            <h4 className="title">Backend Status</h4>
-            <div>Bungie API: { stats.backend.APIDisabled ? <span style={{ color: "tomato" }}>Offline</span> : <span style={{ color: "#259A58" }}>Online</span> }</div>
-            <div>Uptime: { Misc.formatTime(stats.backend.uptime / 1000) }</div>
-            <div>Scan Time: { Misc.formatTime(stats.backend.scanTime / 1000) }</div>
-            <div>Last Scan: { Misc.formatTime(stats.backend.lastScan / 1000) } ago</div>
-            <div>Total Scans: { Misc.AddCommas(stats.backend.scans) }</div>
-            <div>Max Scan Speed: { Misc.AddCommas(stats.backend.scanSpeed) } / sec</div>
-            <div>Current Scan Speed: { Misc.AddCommas(stats.backend.processingClans) } / sec</div>
-          </div>
-          <div className="frontend-container">
-            <h4 className="title">Frontend Status</h4>
-            <div>Marvin: <span style={{ color: "#259A58" }}>Online</span></div>
-            <div>Uptime: { Misc.formatTime(stats.frontend.uptime / 1000) }</div>
-            <div>Commands: { stats.frontend.commandsInput }</div>
-            <div>Users: { Misc.AddCommas(stats.frontend.users) }</div>
-            <div>Servers: { Misc.AddCommas(stats.frontend.servers) }</div>
+            <div id="report-info">
+              <h4 className="title">Marvin Report</h4>
+              <div>Still under construction, Implementing more over the next few days as well as mobile/laptop compatability. Page built for a 1920x1080 screen at the moment.</div>
+            </div>
+            <div id="backend-container">
+              <h5 className="title">Backend Status</h5>
+              <div>Bungie API: { status.backend.APIDisabled ? <span style={{ color: "tomato" }}>Offline</span> : <span style={{ color: "#259A58" }}>Online</span> }</div>
+              <div>Uptime: { Misc.formatTime(status.backend.uptime / 1000) }</div>
+              <div>Scan Time: { Misc.formatTime(status.backend.scanTime / 1000) }</div>
+              <div>Last Scan: { Misc.formatTime(status.backend.lastScan / 1000) } ago</div>
+              <div>Total Scans: { Misc.AddCommas(status.backend.scans) }</div>
+              <div>Max Scan Speed: { Misc.AddCommas(status.backend.scanSpeed) } / sec</div>
+              <div>Current Scan Speed: { Misc.AddCommas(status.backend.processingClans) } / sec</div>
+            </div>
+            <div id="frontend-container">
+              <h5 className="title">Frontend Status</h5>
+              <div>Marvin: <span style={{ color: "#259A58" }}>Online</span></div>
+              <div>Uptime: { Misc.formatTime(status.frontend.uptime / 1000) }</div>
+              <div>Commands: { status.frontend.commandsInput }</div>
+              <div>Users: { Misc.AddCommas(status.frontend.users) }</div>
+              <div>Servers: { Misc.AddCommas(status.frontend.servers) }</div>
+            </div>
+            <div id="most-used-commands">
+              <h5 className="title">Most used commands</h5>
+              <div>
+                {
+                  report.overall.commands.data.slice(0,5).map((command) => {
+                    return <div key={ command.name }>{ command.name }: { Misc.AddCommas(command.amount) }</div>
+                  })
+                }
+              </div>
+            </div>
+            <div id="most-used-commands-session">
+              <h5 className="title">Most used commands (session)</h5>
+              <div>
+                {
+                  report.session.commands.data.slice(0,5).map((command) => {
+                    return <div key={ command.name }>{ command.name }: { Misc.AddCommas(command.amount) }</div>
+                  })
+                }
+              </div>
+            </div>
+            <div id="most-seasonal-item-broadcasts">
+              <h5 className="title">Most seasonal item broadcasts</h5>
+              <div>
+                {
+                  report.overall.broadcasts.data[report.overall.broadcasts.data.length-1].items.slice(0,5).map((item) => {
+                    return <div key={ item.name }>{ item.name }: { Misc.AddCommas(item.amount) }</div>
+                  })
+                }
+              </div>
+            </div>
+            <div id="most-seasonal-title-broadcasts">
+              <h5 className="title">Most seasonal title broadcasts</h5>
+              <div>
+                {
+                  report.overall.broadcasts.data[report.overall.broadcasts.data.length-1].titles.slice(0,5).map((title) => {
+                    return <div key={ title.name }>{ title.name }: { Misc.AddCommas(title.amount) }</div>
+                  })
+                }
+              </div>
+            </div>
           </div>
         </div>
       </div>
       <div className="overview-graphs">
         <div className="single-graph"> { generateSingleChart(parent, 'users_all', "hourly_data", { width: 350, height: 170 }) } </div>
         <div className="single-graph"> { generateSingleChart(parent, 'players_all', "hourly_data", { width: 350, height: 170 }) } </div>
-        <div className="single-graph"> { generateSingleChart(parent, 'players_online', "hourly_data", { width: 350, height: 170 }) } </div>
         <div className="single-graph"> { generateSingleChart(parent, 'players_tracked', "hourly_data", { width: 350, height: 170 }) } </div>
         <div className="single-graph"> { generateSingleChart(parent, 'clans_tracked', "daily_data", { width: 350, height: 170 }) } </div>
         <div className="single-graph"> { generateSingleChart(parent, 'clans_all', "daily_data", { width: 350, height: 170 }) } </div>
@@ -88,6 +130,8 @@ export function generateOverviewChart(parent) {
         <div className="single-graph"> { generateSingleChart(parent, 'servers', "daily_data", { width: 350, height: 170 }) } </div>
         <div className="single-graph"> { generateSingleChart(parent, 'users_tracked', "daily_data", { width: 350, height: 170 }) } </div>
         <div className="single-graph"> { generateSingleChart(parent, 'broadcasts', "d_hourly_data", { width: 350, height: 170 }) } </div>
+        <div className="single-graph"> { generateSingleChart(parent, 'players_online', "hourly_data", { width: 350, height: 170 }) } </div>
+        <div className="single-graph"> { generateGuardianGamesChart(parent, 'guardian_games', "Online", "hourly_data", { width: 350, height: 170 }) } </div>
       </div>
     </div>
   )
@@ -122,6 +166,7 @@ export function generateSingleChart(parent, currentChart, data_set, size) {
 export function generateGuardianGamesChart(parent, currentChart, type, data_set, size) {
   const charts = parent.state.charts;
   const chart = charts.find(e => e.name === currentChart);
+  console.log(chart);
   let chartType = "";
   if(data_set.includes("hourly")){ if(data_set.includes("d_hourly")){ chartType = "24hr Difference" } else { chartType = "24hr Growth" } }
   else if(data_set.includes("daily")){ if(data_set.includes("d_daily")){ chartType = "Daily Difference" } else { chartType = "Daily Growth" } }

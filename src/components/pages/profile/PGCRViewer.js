@@ -268,7 +268,7 @@ const generateExtendedData = (ManifestItems, currentPGCR, currentActivity, modeT
   return allPlayers.map((playerData) => (
     <div key={ playerData.player.destinyUserInfo.membershipId } className={ modeType === "pvp" ? "pgcrExtendedInfo pvp" : (modeType === "gambit" ? "pgcrExtendedInfo pvp" : "pgcrExtendedInfo other") }>
       <div className="pgcrExtendedInfoStats">
-        <div className="innerDiv" style={{ backgroundImage: `url("https://bungie.net${ ManifestItems[playerData.player.emblemHash].secondaryIcon }"` }}>
+        <div className="innerDiv" style={{ backgroundImage: ManifestItems[playerData.player.emblemHash] !== undefined ? `url("https://bungie.net${ ManifestItems[playerData.player.emblemHash].secondaryIcon }"` : "" }}>
           <div className="pgcrExtendedPlayerName" onClick={ (() => updateProfileCard(parent, { "characterId": playerData.characterId, "membershipId": playerData.player.destinyUserInfo.membershipId, "membershipType": playerData.player.destinyUserInfo.membershipType }, modeType)) }>{ playerData.player.destinyUserInfo.displayName }</div>
         </div>
         <span>Class: { playerData.player.characterClass }</span>
@@ -349,7 +349,7 @@ const generateExtendedData = (ManifestItems, currentPGCR, currentActivity, modeT
         </div>
       : null
       }
-      <div className="pgcrExtendedInfoBG"><img alt="pgcrBGicon" className="pgcrExtendedInfoBGImage" style={{ backgroundImage: `url("https://bungie.net${ ManifestItems[playerData.player.emblemHash].secondarySpecial }")` }} /></div>
+      <div className="pgcrExtendedInfoBG"><img alt="pgcrBGicon" className="pgcrExtendedInfoBGImage" style={{ backgroundImage: ManifestItems[playerData.player.emblemHash] !== undefined ? `url("https://bungie.net${ ManifestItems[playerData.player.emblemHash].secondarySpecial }")` : "" }} /></div>
     </div>
   ))
 }

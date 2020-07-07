@@ -60,17 +60,9 @@ class App extends React.Component {
       if(localStorage.getItem("siteVersion") === this.state.siteVersion) {
         if(!await checks.checkSettingsExist()) { pageSettings.setDefaultSettings(); }
         this.loadManifest();
-        this.checkIfLive();
       }
       else { this.forceReset(); }
     }
-  }
-  async checkIfLive() {
-    fetch(`https://api.twitch.tv/helix/streams/?user_id=214472144`, { method: 'GET', headers: new Headers({ 'Content-Type': 'application/x-www-form-urlencoded', 'Client-id': '9mrfng8ubhs40gu19cksn69dq47gzy' }) })
-    .then(response => response.json()).then(data => {
-      if(data.data.length > 0) { this.setState({ isLive: true }); }
-      else { this.setState({ isLive: false }); }
-    }).catch((error) => { console.error(error); });
   }
   async loadManifest() {
     if(await checks.checkManifestExists()) {
