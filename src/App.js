@@ -35,7 +35,7 @@ import * as Misc from './components/Misc';
 //CSS
 import './css/style.css';
 class App extends React.Component {
-
+  
   state = {
     status: {
       status: 'startUp',

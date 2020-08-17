@@ -405,6 +405,11 @@
   font-size: 12px;
   color: #ccc;
 }
+.inspectCollectibleItemInfo > .hash {
+  padding: 5px;
+  font-size: 12px;
+  color: #ccc;
+}
 .inspectCollectibleItemInfo > .requirements {
   padding: 5px;
   font-size: 10px;

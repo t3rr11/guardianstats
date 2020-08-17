@@ -4,6 +4,7 @@ import * as globals from '../../scripts/Globals';
 export function generate(profileInfo, Manifest) {
   const ManifestCollectibles = globals.MANIFEST.DestinyCollectibleDefinition;
   const PresentationNodes = globals.MANIFEST.DestinyPresentationNodeDefinition;
+  const RecentCollectibles = profileInfo.profileCollectibles.data.recentCollectibleHashes;
   const ProfileCollectibles = profileInfo.profileCollectibles.data.collectibles;
   const CharacterCollectibles = profileInfo.characterCollectibles.data;
   const ObtainedItems = getObtainedItems(ProfileCollectibles, CharacterCollectibles, ManifestCollectibles);
@@ -11,6 +12,19 @@ export function generate(profileInfo, Manifest) {
   return (
     <div className="inspectBoxCollections">
       <div className="inspectBox">
+        <div className="inspectSubCategoryTitle">Recently Obtained Items</div>
+        {
+          RecentCollectibles.map(hash => (
+            <div key={ hash } id={ hash } className="inspectCollectibleItemContainer">
+              <img alt='Icon' src={ 'https://bungie.net' + ManifestCollectibles[hash].displayProperties.icon } className={ ObtainedItems[hash] ? null : "notAcquired" } />
+              <div className="inspectCollectibleItemInfo">
+                { getItemInfo(ManifestCollectibles, hash, "name") }
+                { getItemInfo(ManifestCollectibles, hash, "description") }
+                <div className="hash">{ hash }</div>
+              </div>
+            </div>
+          ))
+        }
         <div id="itemCategories">
           {
             ExoticNode.children.presentationNodes.map(category => (
