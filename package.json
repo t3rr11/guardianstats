@@ -4,7 +4,7 @@
   "private": true,
   "homepage": "https://guardianstats.com/",
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "dexie": "^2.0.4",
     "js-cookie": "^2.2.1",
     "query-string": "^6.13.0",
